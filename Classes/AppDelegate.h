@@ -38,6 +38,7 @@ public:
     AppDelegate();
     virtual ~AppDelegate();
 
+    //≥ı ºªØGL Ù–‘
     virtual void initGLContextAttrs();
 
     /**
