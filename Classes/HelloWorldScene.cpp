@@ -1,28 +1,6 @@
-/****************************************************************************
- Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
- 
- http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-
 #include "HelloWorldScene.h"
+#include "ui/CocosGUI.h"
+#include "SetPlayerScene.h"
 
 USING_NS_CC;
 
@@ -85,7 +63,7 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+    auto label = Label::createWithTTF("ZeldaGame", "fonts/Marker Felt.ttf", 48);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -114,6 +92,41 @@ bool HelloWorld::init()
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
+
+    // 开始游戏按钮
+    auto button = cocos2d::ui::Button::create("PlayButton.png", "PlayButtonClicked.png", "PlayButtonClicked.png");
+    button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
+    button->setContentSize(Size(300, 150));
+    button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
+    button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+        switch (type) 
+        {
+        case ui::Widget::TouchEventType::BEGAN:
+            CCLOG("Button Start Pressed");
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            CCLOG("Button Start Released");
+            break;
+        default:
+            break;
+        }
+        });
+    // 按钮点击事件监听器
+    button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            // 创建目标场景
+            auto scene = SetPlayerScene::createScene();
+
+            // 场景切换效果
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B(0, 255, 255)));
+
+            CCLOG("Button clicked, switching to SetPlayerScene.");
+        }
+        });
+    this->addChild(button);
+
+
+
     return true;
 }
 
