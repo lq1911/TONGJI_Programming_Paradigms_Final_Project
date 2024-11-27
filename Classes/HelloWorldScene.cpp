@@ -63,10 +63,10 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("Genshin Style Open World Adventure Game", "fonts/Marker Felt.ttf", 48);
+    auto label = Label::createWithTTF("Genshin Style Open World Adventure Game", "fonts/Lacquer.ttf", 48);
     if (label == nullptr)
     {
-        problemLoading("'fonts/Marker Felt.ttf'");
+        problemLoading("'fonts/Lacquer.ttf.ttf'");
     }
     else
     {
@@ -115,7 +115,7 @@ bool HelloWorld::init()
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
             auto scene = SetPlayerScene::createScene();          
-            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B(0, 255, 255))); // ³¡¾°ÇÐ»»
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
             CCLOG("Button clicked, switching to SetPlayerScene.");
         }
         });
