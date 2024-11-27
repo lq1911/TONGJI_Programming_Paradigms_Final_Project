@@ -63,7 +63,7 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    auto label = Label::createWithTTF("ZeldaGame", "fonts/Marker Felt.ttf", 48);
+    auto label = Label::createWithTTF("Genshin Style Open World Adventure Game", "fonts/Marker Felt.ttf", 48);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -94,7 +94,7 @@ bool HelloWorld::init()
     }
 
     // 开始游戏按钮
-    auto button = cocos2d::ui::Button::create("PlayButton.png", "PlayButtonClicked.png", "PlayButtonClicked.png");
+    auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
     button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
@@ -114,18 +114,12 @@ bool HelloWorld::init()
     // 按钮点击事件监听器
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
-            // 创建目标场景
-            auto scene = SetPlayerScene::createScene();
-
-            // 场景切换效果
-            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B(0, 255, 255)));
-
+            auto scene = SetPlayerScene::createScene();          
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B(0, 255, 255))); // 场景切换
             CCLOG("Button clicked, switching to SetPlayerScene.");
         }
         });
     this->addChild(button);
-
-
 
     return true;
 }
