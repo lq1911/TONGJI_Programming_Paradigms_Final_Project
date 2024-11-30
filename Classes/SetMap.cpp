@@ -12,7 +12,7 @@ bool SetMap::init() {
     }
 
     /*¼ÓÔØ³õÊ¼µØÍ¼*/
-    auto InitialMap = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
+    auto InitialMap = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
     this->addChild(InitialMap);
 
 
