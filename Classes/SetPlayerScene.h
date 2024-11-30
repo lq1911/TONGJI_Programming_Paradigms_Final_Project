@@ -16,6 +16,9 @@ public:
 
     Scene* selectRoleScene(); // 选择角色
     // void selectRoleScene();   // 选择角色
+
+    void ChangeToInitMap();  // 切换到初始地图
+
     CREATE_FUNC(SetPlayerScene);
 };
 
