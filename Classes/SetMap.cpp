@@ -13,14 +13,8 @@ bool SetMap::init() {
 
     /*¼ÓÔØ³õÊ¼µØÍ¼*/
     auto InitialMap = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
-   
+    this->addChild(InitialMap);
 
-    auto LayerWall = InitialMap->getLayer("StructWall");
-    auto LayerDecorations = InitialMap->getLayer("Decoration");
-    LayerWall->setVisible(true);
-    LayerDecorations->setVisible(true);
-
-    addChild(InitialMap);
 
     return true;
 }
