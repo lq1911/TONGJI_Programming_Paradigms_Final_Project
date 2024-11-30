@@ -29,7 +29,6 @@ public:
 
         // 可以在这里做一些额外的设置，例如添加背景音乐、UI 控件等
         
-
         return true;
     }
     CREATE_FUNC(MapScene);
