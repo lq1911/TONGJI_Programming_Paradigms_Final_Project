@@ -1,6 +1,7 @@
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
+#include "SetMap.h"
 
 USING_NS_CC;
 
