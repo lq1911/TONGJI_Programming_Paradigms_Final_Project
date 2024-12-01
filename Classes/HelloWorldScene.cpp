@@ -98,7 +98,7 @@ bool HelloWorld::init()
     }
  
     // 开始游戏按钮
-    /*auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
+    auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
     button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
@@ -123,10 +123,10 @@ bool HelloWorld::init()
             CCLOG("Button clicked, switching to SetPlayerScene.");
         }
         });
-    this->addChild(button);*/
+    this->addChild(button);
 
     //进入地图
-    auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
+    /*auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
     button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
@@ -153,7 +153,7 @@ bool HelloWorld::init()
         }
         });
     this->addChild(button);
-    return true;
+    return true;*/
 }
 
 
