@@ -1,7 +1,11 @@
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
+<<<<<<< HEAD
+#include "MapScene.h"
+=======
 #include "SetMap.h"
+>>>>>>> 0ee7b8e6563a1d22aa6c984b44b8fe088f61966d
 
 USING_NS_CC;
 
@@ -95,7 +99,7 @@ bool HelloWorld::init()
     }
  
     // 开始游戏按钮
-    auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
+    /*auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
     button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
@@ -120,8 +124,36 @@ bool HelloWorld::init()
             CCLOG("Button clicked, switching to SetPlayerScene.");
         }
         });
-    this->addChild(button);
+    this->addChild(button);*/
 
+    //进入地图
+    auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
+    button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
+    button->setContentSize(Size(300, 150));
+    button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
+    button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+        switch (type) 
+        {
+        case ui::Widget::TouchEventType::BEGAN:
+            CCLOG("Button Map Pressed");
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            CCLOG("Button Map Released");
+            break;
+        default:
+            break;
+        }
+        });
+    // 按钮点击事件监听器
+    button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            auto scene = MapScene::createScene();          
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // 场景切换
+
+            CCLOG("Button clicked, switching to MapScene.");
+        }
+        });
+    this->addChild(button);
     return true;
 }
 
