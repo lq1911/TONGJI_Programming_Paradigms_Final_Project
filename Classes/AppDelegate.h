@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 /****************************************************************************
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
@@ -24,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
->>>>>>> 0e952bc11e8cbf7136ae5bc085f9bb1da255c847
+
 #ifndef  _APP_DELEGATE_H_
 #define  _APP_DELEGATE_H_
 
@@ -41,10 +40,9 @@ public:
     AppDelegate();
     virtual ~AppDelegate();
 
-<<<<<<< HEAD
+
     //³õÊ¼»¯GLÊôÐÔ
-=======
->>>>>>> 0e952bc11e8cbf7136ae5bc085f9bb1da255c847
+
     virtual void initGLContextAttrs();
 
     /**

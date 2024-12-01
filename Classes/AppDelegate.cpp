@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 /****************************************************************************
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
@@ -24,7 +23,7 @@
  THE SOFTWARE.
  ****************************************************************************/
 
->>>>>>> 0e952bc11e8cbf7136ae5bc085f9bb1da255c847
+
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 
@@ -37,11 +36,8 @@ using namespace cocos2d::experimental;
 
 USING_NS_CC;
 
-<<<<<<< HEAD
 static cocos2d::Size designResolutionSize = cocos2d::Size(2360, 1440);
-=======
-static cocos2d::Size designResolutionSize = cocos2d::Size(480, 320);
->>>>>>> 0e952bc11e8cbf7136ae5bc085f9bb1da255c847
+
 static cocos2d::Size smallResolutionSize = cocos2d::Size(480, 320);
 static cocos2d::Size mediumResolutionSize = cocos2d::Size(1024, 768);
 static cocos2d::Size largeResolutionSize = cocos2d::Size(2048, 1536);
@@ -88,11 +84,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
 
     // turn on display FPS
-<<<<<<< HEAD
+
     director->setDisplayStats(false);
-=======
+
     director->setDisplayStats(true);
->>>>>>> 0e952bc11e8cbf7136ae5bc085f9bb1da255c847
+
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f / 60);
