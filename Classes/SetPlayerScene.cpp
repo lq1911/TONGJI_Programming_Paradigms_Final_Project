@@ -1,8 +1,8 @@
 #include <iostream>
 #include "SetPlayerScene.h"
+#include "Player.h"
 #include "ui/CocosGUI.h"
-#include "spine/spine-cocos2dx.h"
-#include "SetMap.h"
+
 
 USING_NS_CC;
 
@@ -127,6 +127,7 @@ Scene* SetPlayerScene::selectRoleScene() {
     auto select_role_scene = Scene::create();
     // 预先定义
     auto visibleSize = Director::getInstance()->getVisibleSize();
+    
     /* 加载背景图 */
     auto background = Sprite::create("Scene/SelectRoleScene.png");
     if (background) {  
@@ -135,26 +136,24 @@ Scene* SetPlayerScene::selectRoleScene() {
             visibleSize.height / background->getContentSize().height);
         select_role_scene->addChild(background, -10);
     }
+   
+    /* 文字提示选择角色 */
+    auto ChooseRoleTxt = Label::createWithTTF("Please choose your role!", "fonts/KuaiLe_Chinese.ttf", 60);
+    ChooseRoleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 200));
+    ChooseRoleTxt->setTextColor(Color4B(220, 220, 220, 255));
+    select_role_scene->addChild(ChooseRoleTxt);
     
     /* 加载第一个角色 */
-    /*
-    auto spineNode = spine::SkeletonAnimation::createWithFile("Role/Player/Arthur.json", "Role/Player/Arthur.atlas");
-    
-    if (spineNode) {
-        spineNode->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));    
-        spineNode->setScale(0.5f);  // 缩放比例
-        spineNode->setAnimation(0, "atk", false);  // 图层索引 0，动画名称 "idle"，循环播放 true
-        select_role_scene->addChild(spineNode);
-    }
-    else {
-        CCLOG("Failed to load Spine animation.");
-    }*/
+    auto panel_role = ui::Scale9Sprite::create("UI/Panel3.png");
+    panel_role->setPreferredSize(Size(800, 800));
+    panel_role->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+    select_role_scene->addChild(panel_role, -1);
+
+    /* 切换角色 */
+    Player player;
+    player.showPlayer("Arthur", select_role_scene, 0.55f, visibleSize.width / 2 - 30, visibleSize.height / 2 + 50);
+
+    //player.PlayerAttack("Longbow", select_role_scene, 3, 0.4, visibleSize.width / 2, visibleSize.height / 2);
 
     return select_role_scene;
-}
-
-/* 切换到初始地图 */
-void SetPlayerScene::ChangeToInitMap(Ref* sender) {
-    auto InitialMap = SetMap::createScene();
-    Director::getInstance()->replaceScene(InitialMap);
 }

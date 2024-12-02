@@ -11,12 +11,12 @@ BagManager* BagManager::_instance = nullptr;
 
 BagManager* BagManager::getInstance()
 {
-    // Èç¹ûÊµÀı²»´æÔÚ£¬´´½¨Ò»¸öĞÂµÄÊµÀı
+    // å¦‚æœå®ä¾‹ä¸å­˜åœ¨ï¼Œåˆ›å»ºä¸€ä¸ªæ–°çš„å®ä¾‹
     if (_instance == nullptr) {
-        _instance = new BagManager();  // ´´½¨ÊµÀı
-        _instance->init();  // ³õÊ¼»¯ÊµÀı£¨Èç¹ûĞèÒªµÄ»°£©
+        _instance = new BagManager();  // åˆ›å»ºå®ä¾‹
+        _instance->init();  // åˆå§‹åŒ–å®ä¾‹ï¼ˆå¦‚æœéœ€è¦çš„è¯ï¼‰
     }
-    return _instance;  // ·µ»ØÊµÀıÖ¸Õë
+    return _instance;  // è¿”å›å®ä¾‹æŒ‡é’ˆ
 }
 
 BagManager::BagManager() : _isBagOpen(false), _bagPanel(nullptr)
@@ -41,77 +41,70 @@ bool BagManager::init()
 {
     if (!Node::init()) 
     {
-        return false;  // ³õÊ¼»¯Ê§°Ü
+        return false;  // åˆå§‹åŒ–å¤±è´¥
     }
 
-    // ´´½¨±³°üÃæ°å£¬×÷Îª±³°üUIµÄÈİÆ÷
+    // åˆ›å»ºèƒŒåŒ…é¢æ¿ï¼Œä½œä¸ºèƒŒåŒ…UIçš„å®¹å™¨
     _bagPanel = Node::create();
-    this->addChild(_bagPanel);  // ½«±³°üÃæ°åÌí¼Óµ½µ±Ç°½Úµã
-    _bagPanel->setVisible(false);  // Ä¬ÈÏÇé¿öÏÂ±³°üÊÇÒş²ØµÄ
+    this->addChild(_bagPanel);  // å°†èƒŒåŒ…é¢æ¿æ·»åŠ åˆ°å½“å‰èŠ‚ç‚¹
+    _bagPanel->setVisible(false);  // é»˜è®¤æƒ…å†µä¸‹èƒŒåŒ…æ˜¯éšè—çš„
     
-    return true;  // ³õÊ¼»¯³É¹¦
+    return true;  // åˆå§‹åŒ–æˆåŠŸ
 }
 
 void BagManager::showBag()
 {
-    // Èç¹û±³°üÉĞÎ´´ò¿ª£¬Ôò´´½¨²¢ÏÔÊ¾±³°ü±³¾°
-    if (!_isBagOpen) 
+    // å¦‚æœèƒŒåŒ…å°šæœªæ‰“å¼€ï¼Œåˆ™åˆ›å»ºå¹¶æ˜¾ç¤ºèƒŒåŒ…èƒŒæ™¯
+    if (!_isBagOpen)
     {
-        _bagBackground = Sprite::create("bag_background.png");  // ±³°ü±³¾°Í¼
-        _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);  // ±³°ü¾ÓÖĞ
-        _bagPanel->addChild(_bagBackground);  // ½«±³¾°Ìí¼Óµ½Ãæ°åÖĞ
-        
+        // ç»˜åˆ¶èƒŒåŒ…é¢æ¿
+        createBagBackground();
 
-        // ´´½¨±³°ü±êÌâ
-        auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 8);
-        titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 10));
-        _bagBackground->addChild(titleLabel);
+        // è®¾ç½®ç‰©å“æ æ ¼å­å°ºå¯¸å’Œé—´éš”
+        float xStart = 35.0f;  // èµ·å§‹Xä½ç½®
+        float yStart = _bagBackground->getContentSize().height - 30.0f;  // èµ·å§‹Yä½ç½®ï¼ˆé è¿‘èƒŒåŒ…æ ‡é¢˜ä¸‹æ–¹ï¼‰
 
-        // ÉèÖÃÎïÆ·À¸¸ñ×Ó³ß´çºÍ¼ä¸ô
-        float xStart = 35.0f;  // ÆğÊ¼XÎ»ÖÃ
-        float yStart = _bagBackground->getContentSize().height - 30.0f;  // ÆğÊ¼YÎ»ÖÃ£¨¿¿½ü±³°ü±êÌâÏÂ·½£©
-
-        // ´´½¨5x8µÄÎïÆ·¸ñ×Ó
+        // åˆ›å»º5x8çš„ç‰©å“æ ¼å­
         vector<Button*> slots;
         for (int row = 0; row < 8; ++row)
         {
             for (int col = 0; col < 5; ++col)
             {
-                // ¼ÆËãÃ¿¸ö¸ñ×ÓµÄ×ø±ê
+                // è®¡ç®—æ¯ä¸ªæ ¼å­çš„åæ ‡
                 float xPos = xStart + col * 30;
                 float yPos = yStart - row * 30;
 
-                // ´´½¨¸ñ×Ó£¬Ê¹ÓÃSprite×÷Îª¸ñ×Ó
+                // åˆ›å»ºæ ¼å­ï¼Œä½¿ç”¨Spriteä½œä¸ºæ ¼å­
                 auto slot = Button::create("item_slot.png");
                 slot->setPosition(Vec2(xPos, yPos));
                 slot->addClickEventListener([=](Ref* sender) {
-                    // µã»÷¸ñ×ÓÊ±¼ì²éÊÇ·ñÓĞÎïÆ·
+                    // ç‚¹å‡»æ ¼å­æ—¶æ£€æŸ¥æ˜¯å¦æœ‰ç‰©å“
                     if (items[row * 5 + col] != NULL)
                     {
-                        // ´ò¿ªÎïÆ·ĞÅÏ¢Ãæ°å
+                        // æ‰“å¼€ç‰©å“ä¿¡æ¯é¢æ¿
                         auto itemInfoBackground = Sprite::create("item_info_background.png");
                         float itemInfoBackground_x = slot->getPosition().x + itemInfoBackground->getContentSize().width / 2 + slot->getContentSize().width / 2;
                         float itemInfoBackground_y = slot->getPosition().y - itemInfoBackground->getContentSize().height / 2 + slot->getContentSize().height / 2;
-                        itemInfoBackground->setPosition(Vec2(itemInfoBackground_x, itemInfoBackground_y)); // ½«±³¾°·ÅÖÃÔÚ¸ñ×ÓÅÔ±ß
+                        itemInfoBackground->setPosition(Vec2(itemInfoBackground_x, itemInfoBackground_y)); // å°†èƒŒæ™¯æ”¾ç½®åœ¨æ ¼å­æ—è¾¹
                         _bagBackground->addChild(itemInfoBackground);
 
-                        // ´´½¨¹Ø±Õ°´Å¥£¨¡Á°´Å¥£©
-                        auto closeButton = Button::create("close_button.png");  
-                        closeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width, itemInfoBackground->getContentSize().height)); // ÓÒÉÏ½ÇÎ»ÖÃ
+                        // åˆ›å»ºå…³é—­æŒ‰é’®ï¼ˆÃ—æŒ‰é’®ï¼‰
+                        auto closeButton = Button::create("close_button.png");
+                        closeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width, itemInfoBackground->getContentSize().height)); // å³ä¸Šè§’ä½ç½®
                         closeButton->addClickEventListener([=](Ref* sender) {
-                            // µã»÷¡Á°´Å¥Ê±ÒÆ³ı itemInfoBackground
-                            itemInfoBackground->removeFromParent();  // ´Ó¸¸½ÚµãÒÆ³ı
+                            // ç‚¹å‡»Ã—æŒ‰é’®æ—¶ç§»é™¤ itemInfoBackground
+                            itemInfoBackground->removeFromParent();  // ä»çˆ¶èŠ‚ç‚¹ç§»é™¤
                             });
 
-                        // ½«¹Ø±Õ°´Å¥Ìí¼Óµ½±³¾°ÖĞ
+                        // å°†å…³é—­æŒ‰é’®æ·»åŠ åˆ°èƒŒæ™¯ä¸­
                         itemInfoBackground->addChild(closeButton);
 
-                        // »ñÈ¡ÎïÆ·Ãû×Ö
-                       string itemName = items[row * 5 + col]->getName(); 
+                        // è·å–ç‰©å“åå­—
+                        string itemName = items[row * 5 + col]->getName();
 
-                        // ´´½¨²¢ÏÔÊ¾ÎïÆ·Ãû×ÖµÄ Label
-                        auto itemNameLabel = Label::createWithSystemFont(itemName, "Arial", 8); 
-                        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height-10));  // ·ÅÖÃÔÚ±³¾°ÉÏ·½
+                        // åˆ›å»ºå¹¶æ˜¾ç¤ºç‰©å“åå­—çš„ Label
+                        auto itemNameLabel = Label::createWithSystemFont(itemName, "Arial", 8);
+                        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 10));  // æ”¾ç½®åœ¨èƒŒæ™¯ä¸Šæ–¹
                         itemInfoBackground->addChild(itemNameLabel);
                     }
                     });
@@ -127,80 +120,11 @@ void BagManager::showBag()
         it2->image->setPosition(Vec2(slots[1]->getContentSize().width / 2, slots[1]->getContentSize().height / 2));
         slots[1]->addChild(it2->image);
         items[1] = it2;
-       
-        // ´´½¨½ÇÉ«Ãæ°å±³¾°
-        _characterBackground = Sprite::create("character_background.png");  // ½ÇÉ«Ãæ°å±³¾°Í¼
-        float characterX = _bagBackground->getPositionX() + _bagBackground->getContentSize().width / 2 + _characterBackground->getContentSize().width / 2;
-        float characterY = _bagBackground->getPositionY() + _bagBackground->getContentSize().height / 2 - _characterBackground->getContentSize().height / 2;
-        _characterBackground->setPosition(Vec2(characterX, characterY));  // ½ÇÉ«Ãæ°åÓÒÉÏ½Ç£¬½ô½ÓÔÚ±³°üÓÒ²à
-        _bagPanel->addChild(_characterBackground);  // ½«½ÇÉ«±³¾°Ìí¼Óµ½Ãæ°åÖĞ
 
-        // ´´½¨½ÇÉ«Ãæ°å±êÌâ
-        auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 8);
-        characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 10));
-        _characterBackground->addChild(characterTitleLabel);
+        // åˆ›å»ºè§’è‰²é¢æ¿
+        createCharacterPanel();
 
-        // »æÖÆ½ÇÉ«±³¾°Í¼Æ¬µÄ±ß¿ò£¬±ß¿ò´óĞ¡Îª±³¾°Í¼Æ¬µÄÒ»°ë£¬ÇÒÖĞĞÄÓë½ÇÉ«±³¾°ÖĞĞÄ¶ÔÆë
-        float borderWidth = _characterBackground->getContentSize().width / 2;
-        float borderHeight = _characterBackground->getContentSize().height / 2;
-
-        // ±ß¿òµÄÖĞĞÄ¶ÔÆëµ½½ÇÉ«±³¾°ÖĞĞÄ
-        Vec2 borderPosition = Vec2(borderWidth, borderHeight);
-
-        // ´´½¨Ò»¸ö DrawNode »æÖÆ±ß¿ò
-        auto drawNode = DrawNode::create();
-        _characterBackground->addChild(drawNode);  // ½« DrawNode Ìí¼Óµ½½ÇÉ«±³¾°ÖĞ
-
-        // »æÖÆ¾ØĞÎ±ß¿ò
-        drawNode->drawRect(
-            Vec2(borderPosition.x - borderWidth / 2, borderPosition.y - borderHeight / 2),  // ×óÏÂ½Ç
-            Vec2(borderPosition.x + borderWidth / 2, borderPosition.y + borderHeight / 2),  // ÓÒÉÏ½Ç
-            Color4F(1.0f, 1.0f, 1.0f, 1.0f)  // °×É«±ß¿ò
-        );
-       
-        // ÔÚ½ÇÉ«Ãæ°åÁ½±ßÌí¼Ó°´Å¥
-        // ÎäÆ÷
-        auto button1 = Button::create("item_slot.png");
-        button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y + borderHeight / 2 - 15));
-        button1->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button1);
-        auto labe1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 8); // Ìí¼Ó°´Å¥µã»÷ÊÂ¼ş
-        labe1->setPosition(Vec2(10, -6));// Ìí¼ÓÎÄ×Ö
-        button1->addChild(labe1);
-        // ·À¾ß
-        auto button2 = Button::create("item_slot.png");
-        button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y - borderHeight / 2 + 15));
-        button2->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button2);
-        auto labe2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 8);
-        labe2->setPosition(Vec2(10,-6));
-        button2->addChild(labe2);
-        // Ğ¬×Ó
-        auto button3 = Button::create("item_slot.png");
-        button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y + borderHeight / 2 - 15));
-        button3->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button3);
-        auto labe3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 8);
-        labe3->setPosition(Vec2(10, -6));
-        button3->addChild(labe3);
-        // ÊÎÆ·
-        auto button4 = Button::create("item_slot.png");
-        button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y - borderHeight / 2 + 15));
-        button4->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button4);
-        auto labe4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 8);
-        labe4->setPosition(Vec2(10, -6));
-        button4->addChild(labe4);
-
-        //ÏÔÊ¾½ÇÉ«µÄµÈ¼¶ºÍHP
-        auto characterLevel= Label::createWithTTF("Level:", "fonts/arial.ttf", 8);
-        characterLevel->setPosition(Vec2(12, 130));
-        _characterBackground->addChild(characterLevel);
-        auto characterHP = Label::createWithTTF("HP:", "fonts/arial.ttf", 8);
-        characterHP->setPosition(Vec2(15, 120));
-        _characterBackground->addChild(characterHP);
-
-        _bagPanel->setVisible(true);  // ÏÔÊ¾±³°üÃæ°å
+        _bagPanel->setVisible(true);  // æ˜¾ç¤ºèƒŒåŒ…é¢æ¿
         _isBagOpen = true;
     }
 }
@@ -209,16 +133,102 @@ void BagManager::hideBag()
 {
     if (_isBagOpen)
     {
-        _bagPanel->setVisible(false);  // Òş²Ø±³°üÃæ°å
-        _bagPanel->removeChild(_bagBackground);  // ÒÆ³ı±³¾°
-        _bagPanel->removeChild(_characterBackground);  // ÒÆ³ı½ÇÉ«Ãæ°å±³¾°
-        _bagBackground = nullptr;  // Çå³ı±³¾°Ö¸Õë
+        _bagPanel->setVisible(false);  // éšè—èƒŒåŒ…é¢æ¿
+        _bagPanel->removeChild(_bagBackground);  // ç§»é™¤èƒŒæ™¯
+        _bagPanel->removeChild(_characterBackground);  // ç§»é™¤è§’è‰²é¢æ¿èƒŒæ™¯
+        _bagBackground = nullptr;  // æ¸…é™¤èƒŒæ™¯æŒ‡é’ˆ
         _characterBackground = nullptr;
-        _isBagOpen = false;  // ¸üĞÂ×´Ì¬
+        _isBagOpen = false;  // æ›´æ–°çŠ¶æ€
     }
 }
 
 void BagManager::updateBagUI()
 {
   
+}
+
+// åˆ›å»ºèƒŒåŒ…èƒŒæ™¯
+void BagManager::createBagBackground()
+{
+    // è®¾ç½®èƒŒåŒ…èƒŒæ™¯å›¾ç‰‡
+    _bagBackground = Sprite::create("bag_background.png");
+    _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);
+    _bagPanel->addChild(_bagBackground);
+
+    // åˆ›å»ºèƒŒåŒ…æ ‡é¢˜
+    auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 8);
+    titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 10));
+    _bagBackground->addChild(titleLabel);
+}
+
+// åˆ›å»ºè§’è‰²é¢æ¿
+void BagManager::createCharacterPanel()
+{
+    // è®¾ç½®è§’è‰²é¢æ¿èƒŒæ™¯
+    _characterBackground = Sprite::create("character_background.png");
+    float characterBackground_x = _bagBackground->getPositionX() + _bagBackground->getContentSize().width / 2 + _characterBackground->getContentSize().width / 2;
+    float characterBackground_y = _bagBackground->getPositionY() + _bagBackground->getContentSize().height / 2 - _characterBackground->getContentSize().height / 2;
+    _characterBackground->setPosition(Vec2(characterBackground_x, characterBackground_y));
+    _bagPanel->addChild(_characterBackground);
+
+    // åˆ›å»ºè§’è‰²é¢æ¿æ ‡é¢˜
+    auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 8);
+    characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 10));
+    _characterBackground->addChild(characterTitleLabel);
+
+    // ç»˜åˆ¶è¾¹æ¡†
+    float borderWidth = _characterBackground->getContentSize().width / 2;
+    float borderHeight = _characterBackground->getContentSize().height / 2;
+
+    Vec2 borderPosition = Vec2(borderWidth, borderHeight);
+
+    auto drawNode = DrawNode::create();
+    _characterBackground->addChild(drawNode);
+
+    drawNode->drawRect(
+        Vec2(borderPosition.x - borderWidth / 2, borderPosition.y - borderHeight / 2),
+        Vec2(borderPosition.x + borderWidth / 2, borderPosition.y + borderHeight / 2),
+        Color4F(1.0f, 1.0f, 1.0f, 1.0f)
+    );
+    // åœ¨è§’è‰²é¢æ¿ä¸¤è¾¹æ·»åŠ è£…å¤‡æ 
+    // æ­¦å™¨
+    auto button1 = Button::create("item_slot.png");// æ·»åŠ æŒ‰é’®
+    button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y + borderHeight / 2 - 15));
+    button1->addClickEventListener([](Ref* sender) {});// æ·»åŠ æŒ‰é’®ç‚¹å‡»äº‹ä»¶
+    _characterBackground->addChild(button1);
+    auto labe1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 8);// æ·»åŠ æ–‡å­— 
+    labe1->setPosition(Vec2(10, -6));
+    button1->addChild(labe1);
+    // é˜²å…·
+    auto button2 = Button::create("item_slot.png");
+    button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y - borderHeight / 2 + 15));
+    button2->addClickEventListener([](Ref* sender) {});
+    _characterBackground->addChild(button2);
+    auto labe2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 8);
+    labe2->setPosition(Vec2(10, -6));
+    button2->addChild(labe2);
+    // é‹å­
+    auto button3 = Button::create("item_slot.png");
+    button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y + borderHeight / 2 - 15));
+    button3->addClickEventListener([](Ref* sender) {});
+    _characterBackground->addChild(button3);
+    auto labe3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 8);
+    labe3->setPosition(Vec2(10, -6));
+    button3->addChild(labe3);
+    // é¥°å“
+    auto button4 = Button::create("item_slot.png");
+    button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y - borderHeight / 2 + 15));
+    button4->addClickEventListener([](Ref* sender) {});
+    _characterBackground->addChild(button4);
+    auto labe4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 8);
+    labe4->setPosition(Vec2(10, -6));
+    button4->addChild(labe4);
+
+    //æ˜¾ç¤ºè§’è‰²çš„ç­‰çº§å’ŒHP
+    auto characterLevel = Label::createWithTTF("Level:", "fonts/arial.ttf", 8);
+    characterLevel->setPosition(Vec2(12, 130));
+    _characterBackground->addChild(characterLevel);
+    auto characterHP = Label::createWithTTF("HP:", "fonts/arial.ttf", 8);
+    characterHP->setPosition(Vec2(15, 120));
+    _characterBackground->addChild(characterHP);
 }
