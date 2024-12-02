@@ -17,9 +17,6 @@ public:
     // 获取单例实例
     static BagManager* getInstance();
 
-    // 背包内的物品
-    item* items[40];
-
     // 初始化背包管理器
     bool init();
 
@@ -44,6 +41,9 @@ private:
     // 背包的显示状态
     bool _isBagOpen;
 
+    // 背包内的物品
+    item* items[40];
+
     // 背包的UI面板
     cocos2d::Node* _bagPanel;
 
@@ -52,8 +52,15 @@ private:
 
     // 角色面板背景
     cocos2d::Sprite* _characterBackground;
+
     // 静态成员变量，用于存储单例实例
     static BagManager* _instance;
+
+    // 创建背包背景
+    void createBagBackground();
+
+    // 创建角色面板
+    void createCharacterPanel();
 
     // 禁止拷贝构造函数和赋值操作符
     BagManager(const BagManager&) = delete;

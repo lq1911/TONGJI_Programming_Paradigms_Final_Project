@@ -55,17 +55,10 @@ bool BagManager::init()
 void BagManager::showBag()
 {
     // 如果背包尚未打开，则创建并显示背包背景
-    if (!_isBagOpen) 
+    if (!_isBagOpen)
     {
-        _bagBackground = Sprite::create("bag_background.png");  // 背包背景图
-        _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);  // 背包居中
-        _bagPanel->addChild(_bagBackground);  // 将背景添加到面板中
-        
-
-        // 创建背包标题
-        auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 8);
-        titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 10));
-        _bagBackground->addChild(titleLabel);
+        // 绘制背包面板
+        createBagBackground();
 
         // 设置物品栏格子尺寸和间隔
         float xStart = 35.0f;  // 起始X位置
@@ -96,7 +89,7 @@ void BagManager::showBag()
                         _bagBackground->addChild(itemInfoBackground);
 
                         // 创建关闭按钮（×按钮）
-                        auto closeButton = Button::create("close_button.png");  
+                        auto closeButton = Button::create("close_button.png");
                         closeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width, itemInfoBackground->getContentSize().height)); // 右上角位置
                         closeButton->addClickEventListener([=](Ref* sender) {
                             // 点击×按钮时移除 itemInfoBackground
@@ -107,11 +100,11 @@ void BagManager::showBag()
                         itemInfoBackground->addChild(closeButton);
 
                         // 获取物品名字
-                       string itemName = items[row * 5 + col]->getName(); 
+                        string itemName = items[row * 5 + col]->getName();
 
                         // 创建并显示物品名字的 Label
-                        auto itemNameLabel = Label::createWithSystemFont(itemName, "Arial", 8); 
-                        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height-10));  // 放置在背景上方
+                        auto itemNameLabel = Label::createWithSystemFont(itemName, "Arial", 8);
+                        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 10));  // 放置在背景上方
                         itemInfoBackground->addChild(itemNameLabel);
                     }
                     });
@@ -127,78 +120,9 @@ void BagManager::showBag()
         it2->image->setPosition(Vec2(slots[1]->getContentSize().width / 2, slots[1]->getContentSize().height / 2));
         slots[1]->addChild(it2->image);
         items[1] = it2;
-       
+
         // 创建角色面板背景
-        _characterBackground = Sprite::create("character_background.png");  // 角色面板背景图
-        float characterX = _bagBackground->getPositionX() + _bagBackground->getContentSize().width / 2 + _characterBackground->getContentSize().width / 2;
-        float characterY = _bagBackground->getPositionY() + _bagBackground->getContentSize().height / 2 - _characterBackground->getContentSize().height / 2;
-        _characterBackground->setPosition(Vec2(characterX, characterY));  // 角色面板右上角，紧接在背包右侧
-        _bagPanel->addChild(_characterBackground);  // 将角色背景添加到面板中
-
-        // 创建角色面板标题
-        auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 8);
-        characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 10));
-        _characterBackground->addChild(characterTitleLabel);
-
-        // 绘制角色背景图片的边框，边框大小为背景图片的一半，且中心与角色背景中心对齐
-        float borderWidth = _characterBackground->getContentSize().width / 2;
-        float borderHeight = _characterBackground->getContentSize().height / 2;
-
-        // 边框的中心对齐到角色背景中心
-        Vec2 borderPosition = Vec2(borderWidth, borderHeight);
-
-        // 创建一个 DrawNode 绘制边框
-        auto drawNode = DrawNode::create();
-        _characterBackground->addChild(drawNode);  // 将 DrawNode 添加到角色背景中
-
-        // 绘制矩形边框
-        drawNode->drawRect(
-            Vec2(borderPosition.x - borderWidth / 2, borderPosition.y - borderHeight / 2),  // 左下角
-            Vec2(borderPosition.x + borderWidth / 2, borderPosition.y + borderHeight / 2),  // 右上角
-            Color4F(1.0f, 1.0f, 1.0f, 1.0f)  // 白色边框
-        );
-       
-        // 在角色面板两边添加按钮
-        // 武器
-        auto button1 = Button::create("item_slot.png");
-        button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y + borderHeight / 2 - 15));
-        button1->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button1);
-        auto labe1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 8); // 添加按钮点击事件
-        labe1->setPosition(Vec2(10, -6));// 添加文字
-        button1->addChild(labe1);
-        // 防具
-        auto button2 = Button::create("item_slot.png");
-        button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y - borderHeight / 2 + 15));
-        button2->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button2);
-        auto labe2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 8);
-        labe2->setPosition(Vec2(10,-6));
-        button2->addChild(labe2);
-        // 鞋子
-        auto button3 = Button::create("item_slot.png");
-        button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y + borderHeight / 2 - 15));
-        button3->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button3);
-        auto labe3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 8);
-        labe3->setPosition(Vec2(10, -6));
-        button3->addChild(labe3);
-        // 饰品
-        auto button4 = Button::create("item_slot.png");
-        button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y - borderHeight / 2 + 15));
-        button4->addClickEventListener([](Ref* sender) {});
-        _characterBackground->addChild(button4);
-        auto labe4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 8);
-        labe4->setPosition(Vec2(10, -6));
-        button4->addChild(labe4);
-
-        //显示角色的等级和HP
-        auto characterLevel= Label::createWithTTF("Level:", "fonts/arial.ttf", 8);
-        characterLevel->setPosition(Vec2(12, 130));
-        _characterBackground->addChild(characterLevel);
-        auto characterHP = Label::createWithTTF("HP:", "fonts/arial.ttf", 8);
-        characterHP->setPosition(Vec2(15, 120));
-        _characterBackground->addChild(characterHP);
+        createCharacterPanel();
 
         _bagPanel->setVisible(true);  // 显示背包面板
         _isBagOpen = true;
@@ -221,4 +145,90 @@ void BagManager::hideBag()
 void BagManager::updateBagUI()
 {
   
+}
+
+// 创建背包背景
+void BagManager::createBagBackground()
+{
+    // 设置背包背景图片
+    _bagBackground = Sprite::create("bag_background.png");
+    _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);
+    _bagPanel->addChild(_bagBackground);
+
+    // 创建背包标题
+    auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 8);
+    titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 10));
+    _bagBackground->addChild(titleLabel);
+}
+
+// 创建角色面板
+void BagManager::createCharacterPanel()
+{
+    // 设置角色面板背景
+    _characterBackground = Sprite::create("character_background.png");
+    float characterBackground_x = _bagBackground->getPositionX() + _bagBackground->getContentSize().width / 2 + _characterBackground->getContentSize().width / 2;
+    float characterBackground_y = _bagBackground->getPositionY() + _bagBackground->getContentSize().height / 2 - _characterBackground->getContentSize().height / 2;
+    _characterBackground->setPosition(Vec2(characterBackground_x, characterBackground_y));
+    _bagPanel->addChild(_characterBackground);
+
+    // 创建角色面板标题
+    auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 8);
+    characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 10));
+    _characterBackground->addChild(characterTitleLabel);
+
+    // 绘制边框
+    float borderWidth = _characterBackground->getContentSize().width / 2;
+    float borderHeight = _characterBackground->getContentSize().height / 2;
+
+    Vec2 borderPosition = Vec2(borderWidth, borderHeight);
+
+    auto drawNode = DrawNode::create();
+    _characterBackground->addChild(drawNode);
+
+    drawNode->drawRect(
+        Vec2(borderPosition.x - borderWidth / 2, borderPosition.y - borderHeight / 2),
+        Vec2(borderPosition.x + borderWidth / 2, borderPosition.y + borderHeight / 2),
+        Color4F(1.0f, 1.0f, 1.0f, 1.0f)
+    );
+    // 在角色面板两边添加装备栏
+    // 武器
+    auto button1 = Button::create("item_slot.png");// 添加按钮
+    button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y + borderHeight / 2 - 15));
+    button1->addClickEventListener([](Ref* sender) {});// 添加按钮点击事件
+    _characterBackground->addChild(button1);
+    auto labe1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 8);// 添加文字 
+    labe1->setPosition(Vec2(10, -6));
+    button1->addChild(labe1);
+    // 防具
+    auto button2 = Button::create("item_slot.png");
+    button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y - borderHeight / 2 + 15));
+    button2->addClickEventListener([](Ref* sender) {});
+    _characterBackground->addChild(button2);
+    auto labe2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 8);
+    labe2->setPosition(Vec2(10, -6));
+    button2->addChild(labe2);
+    // 鞋子
+    auto button3 = Button::create("item_slot.png");
+    button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y + borderHeight / 2 - 15));
+    button3->addClickEventListener([](Ref* sender) {});
+    _characterBackground->addChild(button3);
+    auto labe3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 8);
+    labe3->setPosition(Vec2(10, -6));
+    button3->addChild(labe3);
+    // 饰品
+    auto button4 = Button::create("item_slot.png");
+    button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y - borderHeight / 2 + 15));
+    button4->addClickEventListener([](Ref* sender) {});
+    _characterBackground->addChild(button4);
+    auto labe4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 8);
+    labe4->setPosition(Vec2(10, -6));
+    button4->addChild(labe4);
+
+    //显示角色的等级和HP
+    auto characterLevel = Label::createWithTTF("Level:", "fonts/arial.ttf", 8);
+    characterLevel->setPosition(Vec2(12, 130));
+    _characterBackground->addChild(characterLevel);
+    auto characterHP = Label::createWithTTF("HP:", "fonts/arial.ttf", 8);
+    characterHP->setPosition(Vec2(15, 120));
+    _characterBackground->addChild(characterHP);
 }
