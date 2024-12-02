@@ -1,7 +1,10 @@
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
+#include "MapScene.h"
+
 #include "SetMap.h"
+
 
 USING_NS_CC;
 
@@ -121,7 +124,35 @@ bool HelloWorld::init()
         });
     this->addChild(button);
 
-    return true;
+    //进入地图
+    /*auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
+    button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
+    button->setContentSize(Size(300, 150));
+    button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
+    button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+        switch (type) 
+        {
+        case ui::Widget::TouchEventType::BEGAN:
+            CCLOG("Button Map Pressed");
+            break;
+        case ui::Widget::TouchEventType::ENDED:
+            CCLOG("Button Map Released");
+            break;
+        default:
+            break;
+        }
+        });
+    // 按钮点击事件监听器
+    button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+        if (type == ui::Widget::TouchEventType::ENDED) {
+            auto scene = MapScene::createScene();          
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // 场景切换
+
+            CCLOG("Button clicked, switching to MapScene.");
+        }
+        });
+    this->addChild(button);
+    return true;*/
 }
 
 
