@@ -115,9 +115,8 @@ bool HelloWorld::init()
     // °´Å¥µã»÷ÊÂ¼þ¼àÌýÆ÷
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
-            auto scene = SetPlayerScene::createScene();
-            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
-            CCLOG("Button clicked, switching to SetPlayerScene.");
+            auto Map = SetMap::createScene();
+            Director::getInstance()->replaceScene(Map);
         }
         });
     this->addChild(button);
