@@ -2,6 +2,8 @@
 #include "SetPlayerScene.h"
 #include "Player.h"
 #include "ui/CocosGUI.h"
+#include "spine/spine-cocos2dx.h"
+#include "SetMap.h"
 
 USING_NS_CC;
 
@@ -155,4 +157,10 @@ Scene* SetPlayerScene::selectRoleScene() {
     //player.PlayerAttack("Longbow", select_role_scene, 3, 0.4, visibleSize.width / 2, visibleSize.height / 2);
 
     return select_role_scene;
+}
+
+/* ÇÐ»»µ½³õÊ¼µØÍ¼ */
+void SetPlayerScene::ChangeToInitMap(Ref* sender) {
+    auto InitialMap = SetMap::createScene();
+    Director::getInstance()->replaceScene(InitialMap);
 }
