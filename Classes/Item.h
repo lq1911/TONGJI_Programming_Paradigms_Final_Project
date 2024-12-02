@@ -18,7 +18,7 @@ public:
     item(const string& itemName, const string& imagePath)
         : name(itemName)
     {
-        image = cocos2d::Sprite::create(imagePath); // 创建物品图片
+        image = cocos2d::Sprite::create(imagePath); // 鍒涘缓鐗╁搧鍥剧墖
     }
     string getName() const
     {
