@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-cocos2d
-proj.win32
-build
-.cocos-project.json
-CMakeLists.txt
-proj.android
-=======
 cocos2d/
 proj.android/
 proj.ios_mac/
@@ -14,4 +6,4 @@ proj.win32/
 build/
 .cocos-project.json
 CMakeLists.txt
->>>>>>> 0e952bc11e8cbf7136ae5bc085f9bb1da255c847
+
