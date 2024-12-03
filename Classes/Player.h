@@ -8,20 +8,20 @@ USING_NS_CC;
 
 class Player {
 public:
-	/* ÏÔÊ¾Íæ¼Ò */
-	// who:½ÇÉ«Ãû×Ö
+	/* æ˜¾ç¤ºç©å®¶ */
+	// who:è§’è‰²åå­—
 	//	   Arthur/Longbow
-	// scene:³¡¾°Ö¸Õë,Òª½«½ÇÉ«´òÓ¡ÔÚÄÄ¸ö³¡¾°ÖĞ
-	// scale:Ëõ·Å±ÈÀı
-	// (x,y)´òÓ¡×ø±ê
+	// scene:åœºæ™¯æŒ‡é’ˆ,è¦å°†è§’è‰²æ‰“å°åœ¨å“ªä¸ªåœºæ™¯ä¸­
+	// scale:ç¼©æ”¾æ¯”ä¾‹
+	// (x,y)æ‰“å°åæ ‡
 	void showPlayer(std::string who, Scene* scene, float scale, int x, int y);
-	/* Íæ¼ÒÊÍ·Å¹¥»÷¼¼ÄÜ */
-	// who:½ÇÉ«Ãû×Ö
-	// scene:³¡¾°Ö¸Õë,Òª½«½ÇÉ«´òÓ¡ÔÚÄÄ¸ö³¡¾°ÖĞ
-	// idx:¼¼ÄÜÖÖÀà(1/2/3),1/2ÊÇÆÕÍ¨¹¥»÷3ÊÇ´óÕĞ
-	// scale:Ëõ·Å±ÈÀı
-	// (x,y)´òÓ¡×ø±ê
+	/* ç©å®¶é‡Šæ”¾æ”»å‡»æŠ€èƒ½ */
+	// who:è§’è‰²åå­—
+	// scene:åœºæ™¯æŒ‡é’ˆ,è¦å°†è§’è‰²æ‰“å°åœ¨å“ªä¸ªåœºæ™¯ä¸­
+	// idx:æŠ€èƒ½ç§ç±»(1/2/3),1/2æ˜¯æ™®é€šæ”»å‡»3æ˜¯å¤§æ‹›
+	// scale:ç¼©æ”¾æ¯”ä¾‹
+	// (x,y)æ‰“å°åæ ‡
 	void PlayerAttack(std::string who, Scene* scene, int idx, float scale, int x, int y);
-	/* ×ßÂ·¶¯»­ */
+	/* èµ°è·¯åŠ¨ç”» */
 	void PlayerMove(std::string who, Scene* scene, float scale, int x, int y, int direction);
 };

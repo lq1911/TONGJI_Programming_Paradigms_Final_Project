@@ -1,10 +1,7 @@
 #include "HelloWorldScene.h"
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
-#include "MapScene.h"
-
 #include "SetMap.h"
-
 
 USING_NS_CC;
 
@@ -97,9 +94,9 @@ bool HelloWorld::init()
         this->addChild(sprite, 0);
     }
  
-    // ¿ªÊ¼ÓÎÏ·°´Å¥
+    // å¼€å§‹æ¸¸æˆæŒ‰é’®
     auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
-    button->ignoreContentAdaptWithSize(false);  // ÆôÓÃÄÚÈÝ´óÐ¡ÊÊÅä
+    button->ignoreContentAdaptWithSize(false);  // å¯ç”¨å†…å®¹å¤§å°é€‚é…
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
@@ -115,19 +112,23 @@ bool HelloWorld::init()
             break;
         }
         });
-    // °´Å¥µã»÷ÊÂ¼þ¼àÌýÆ÷
+    // æŒ‰é’®ç‚¹å‡»äº‹ä»¶ç›‘å¬å™¨
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
+            auto Map = SetMap::createScene();
+            Director::getInstance()->replaceScene(Map); // åœºæ™¯åˆ‡æ¢
+                /*
             auto scene = SetPlayerScene::createScene();
-            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // åœºæ™¯åˆ‡æ¢
             CCLOG("Button clicked, switching to SetPlayerScene.");
+            */
         }
         });
     this->addChild(button);
 
-    //½øÈëµØÍ¼
+    //è¿›å…¥åœ°å›¾
     /*auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
-    button->ignoreContentAdaptWithSize(false);  // ÆôÓÃÄÚÈÝ´óÐ¡ÊÊÅä
+    button->ignoreContentAdaptWithSize(false);  // å¯ç”¨å†…å®¹å¤§å°é€‚é…
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
@@ -143,17 +144,16 @@ bool HelloWorld::init()
             break;
         }
         });
-    // °´Å¥µã»÷ÊÂ¼þ¼àÌýÆ÷
+    // æŒ‰é’®ç‚¹å‡»äº‹ä»¶ç›‘å¬å™¨
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
-            auto scene = MapScene::createScene();          
-            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
-
-            CCLOG("Button clicked, switching to MapScene.");
-        }
+		    auto scene = SetPlayerScene::createScene();
+		    Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // åœºæ™¯åˆ‡æ¢
+			CCLOG("Button clicked, switching to SetPlayerScene.");
+		}
         });
-    this->addChild(button);
-    return true;*/
+    this->addChild(button);*/
+    return true;
 }
 
 
