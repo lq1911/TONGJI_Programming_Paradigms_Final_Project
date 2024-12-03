@@ -116,7 +116,11 @@ bool HelloWorld::init()
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
             auto Map = SetMap::createScene();
+<<<<<<< HEAD
             Director::getInstance()->replaceScene(Map); // åœºæ™¯åˆ‡æ¢
+=======
+            Director::getInstance()->replaceScene(Map); // ³¡¾°ÇÐ»»
+>>>>>>> 860d2199f4b8cf74f301288d01d5f31f46e27774
                 /*
             auto scene = SetPlayerScene::createScene();
             Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // åœºæ™¯åˆ‡æ¢
@@ -148,7 +152,11 @@ bool HelloWorld::init()
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
 		    auto scene = SetPlayerScene::createScene();
+<<<<<<< HEAD
 		    Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // åœºæ™¯åˆ‡æ¢
+=======
+		    Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
+>>>>>>> 860d2199f4b8cf74f301288d01d5f31f46e27774
 			CCLOG("Button clicked, switching to SetPlayerScene.");
 		}
         });

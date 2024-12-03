@@ -157,4 +157,3 @@ Scene* SetPlayerScene::selectRoleScene() {
 
     return select_role_scene;
 }
-
