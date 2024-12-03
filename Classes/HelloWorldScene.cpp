@@ -22,23 +22,23 @@ bool HelloWorld::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
+    if (!Scene::init())
     {
         return false;
     }
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-    
+
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
 
     // add a "close" icon to exit the progress. it's an autorelease object
-   auto closeItem = MenuItemImage::create(
-                                           "CloseNormal.png",
-                                           "CloseSelected.png",
-                                           CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+    auto closeItem = MenuItemImage::create(
+        "CloseNormal.png",
+        "CloseSelected.png",
+        CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
     if (closeItem == nullptr ||
         closeItem->getContentSize().width <= 0 ||
@@ -48,9 +48,9 @@ bool HelloWorld::init()
     }
     else
     {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-        float y = origin.y + closeItem->getContentSize().height/2;
-        closeItem->setPosition(Vec2(x,y));
+        float x = origin.x + visibleSize.width - closeItem->getContentSize().width / 2;
+        float y = origin.y + closeItem->getContentSize().height / 2;
+        closeItem->setPosition(Vec2(x, y));
     }
 
     // create menu, it's an autorelease object
@@ -72,8 +72,8 @@ bool HelloWorld::init()
     else
     {
         // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
+        label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+            origin.y + visibleSize.height - label->getContentSize().height));
 
         // add the label as a child to this layer
         this->addChild(label, 1);
@@ -88,19 +88,19 @@ bool HelloWorld::init()
     else
     {
         // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+        sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
 
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
- 
-    // å¼€å§‹æ¸¸æˆæŒ‰é’®
+
+    // ¿ªÊ¼ÓÎÏ·°´Å¥
     auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
-    button->ignoreContentAdaptWithSize(false);  // å¯ç”¨å†…å®¹å¤§å°é€‚é…
+    button->ignoreContentAdaptWithSize(false);  // ÆôÓÃÄÚÈÝ´óÐ¡ÊÊÅä
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
-        switch (type) 
+        switch (type)
         {
         case ui::Widget::TouchEventType::BEGAN:
             CCLOG("Button Start Pressed");
@@ -112,31 +112,27 @@ bool HelloWorld::init()
             break;
         }
         });
-    // æŒ‰é’®ç‚¹å‡»äº‹ä»¶ç›‘å¬å™¨
+    // °´Å¥µã»÷ÊÂ¼þ¼àÌýÆ÷
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
             auto Map = SetMap::createScene();
-<<<<<<< HEAD
-            Director::getInstance()->replaceScene(Map); // åœºæ™¯åˆ‡æ¢
-=======
             Director::getInstance()->replaceScene(Map); // ³¡¾°ÇÐ»»
->>>>>>> 860d2199f4b8cf74f301288d01d5f31f46e27774
-                /*
-            auto scene = SetPlayerScene::createScene();
-            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // åœºæ™¯åˆ‡æ¢
-            CCLOG("Button clicked, switching to SetPlayerScene.");
-            */
+            /*
+        auto scene = SetPlayerScene::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
+        CCLOG("Button clicked, switching to SetPlayerScene.");
+        */
         }
         });
     this->addChild(button);
 
-    //è¿›å…¥åœ°å›¾
+    //½øÈëµØÍ¼
     /*auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
-    button->ignoreContentAdaptWithSize(false);  // å¯ç”¨å†…å®¹å¤§å°é€‚é…
+    button->ignoreContentAdaptWithSize(false);  // ÆôÓÃÄÚÈÝ´óÐ¡ÊÊÅä
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
-        switch (type) 
+        switch (type)
         {
         case ui::Widget::TouchEventType::BEGAN:
             CCLOG("Button Map Pressed");
@@ -148,17 +144,13 @@ bool HelloWorld::init()
             break;
         }
         });
-    // æŒ‰é’®ç‚¹å‡»äº‹ä»¶ç›‘å¬å™¨
+    // °´Å¥µã»÷ÊÂ¼þ¼àÌýÆ÷
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
-		    auto scene = SetPlayerScene::createScene();
-<<<<<<< HEAD
-		    Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // åœºæ™¯åˆ‡æ¢
-=======
-		    Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
->>>>>>> 860d2199f4b8cf74f301288d01d5f31f46e27774
-			CCLOG("Button clicked, switching to SetPlayerScene.");
-		}
+            auto scene = SetPlayerScene::createScene();
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
+            CCLOG("Button clicked, switching to SetPlayerScene.");
+        }
         });
     this->addChild(button);*/
     return true;
