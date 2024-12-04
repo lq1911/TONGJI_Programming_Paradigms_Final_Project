@@ -7,7 +7,7 @@ auto attackAction = MoveBy::create(1.0f, Vec2(100, 0));
 
 
 //攻击
-void Creature::Attack(Creature target,int idx) {
+void Creature::Attack(Node* target,int idx) {
 	//计算攻击范围
 	//如果target在攻击范围内
 	//target.Hurt(atk);
@@ -15,12 +15,12 @@ void Creature::Attack(Creature target,int idx) {
 	// 图片名前缀:除编号部分
 	string s;
 	if (idx == 1 || idx == 2)
-		s = "Role/Player/" + name + "/attack" + std::to_string(idx) + "/" + name + "_atk" + std::to_string(idx) + "_";
+		s = "Role/Player/" + role + "/attack" + std::to_string(idx) + "/" + role + "_atk" + std::to_string(idx) + "_";
 	else if (idx == 3)
-		s = "Role/Player/" + name + "/attack_final/" + name + "_final_";
+		s = "Role/Player/" + role + "/attack_final/" + role + "_final_";
 	// 帧数
 	int count = 0;
-	if (name == "Arthur") {
+	if (role == "Arthur") {
 		if (idx == 1)
 			count = 10;
 		else if (idx == 2)
@@ -28,7 +28,7 @@ void Creature::Attack(Creature target,int idx) {
 		else if (idx == 3)
 			count = 15;
 	}
-	else if (name == "Longbow") {
+	else if (role == "Longbow") {
 		if (idx == 1)
 			count = 7;
 		else if (idx == 2)
@@ -63,4 +63,26 @@ void Creature::Attack(Creature target,int idx) {
 void Creature::Show() {
 	mySprite->setPosition(Vec2(x, y));
 	scene->addChild(mySprite);
+}
+//update的重写
+//距离小于怪物攻击距离时，怪物攻击
+//距离小于怪物跟随距离时，怪物跟随
+//距离超过怪物跟随距离，怪物的状态回原态
+void Monster::update(float dt) {
+	float distance = target->getPosition().distance(getPosition());
+	if (distance < atk_range) {
+		Attack(target, 1);
+	}
+	else if (distance < follow_range) {
+		auto followAction = Follow::create(target);
+		this->runAction(followAction);
+	}
+	else {
+		state = State::WALKING;
+	}
+}
+
+//需要主循环作为前驱，在这里假定满足开始战斗条件
+void Monster::StartFight() {
+	
 }

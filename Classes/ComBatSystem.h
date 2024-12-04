@@ -11,9 +11,15 @@ struct Bonus {
 	int object;
 	Equipment equipment;
 };
-class Creature {
-private:
-	string name;//就是name
+
+enum class State {
+	IDLE, //空闲，静止，用于Npc
+	WALKING, //行走，随机，用于Npc和怪物
+	COMBATING // 战斗，用于怪物
+};
+class Creature:public Node {
+protected:
+	string role;//就是name
 	int hp;//基础生命
 	int mp;//基础魔力
 	int atk;//基础攻击值
@@ -21,21 +27,26 @@ private:
 	int def;//基础防御值
 	int speed;//速度
 	int level;//等级
-	Scene* scene;//所在场景？
+	
 	int x;//坐标
 	int y;
+	
+	State state;//战斗状态
 	Sprite* mySprite;//精灵
-
+	Scene* scene;//所在场景？
 public:
-	Creature(string name,int hp, int mp, int atk, int def, int speed, int level,int x,int y) :
-		name(name),hp(hp), mp(mp), atk(atk), def(def), speed(speed), level(level) {//缺少对scene的初始化
+	Creature(string role,int hp, int mp, int atk,int atk_range, int def, int speed, int level,int x,int y,State state) :
+		role(role),hp(hp), mp(mp), atk(atk),atk_range(atk_range), def(def), speed(speed), level(level),
+		scene(nullptr),mySprite(nullptr),state(state) {
 		Level_Bonus();
+		
 	}
 	// 空的构造函数，供调试
 	Creature() {
 		hp = 1;
 		mp = 1;
 		atk = 1;
+		atk_range = 20;
 		def = 1;
 		speed = 10;
 		level = 1;
@@ -43,7 +54,7 @@ public:
 	// 攻击,对s赋值时最好不要使用Player和Monster，或将Monster的图片也装进role/player文件夹里
 	//s = "Role/     ->Player<-     /" + name + "/attack" + std::to_string(idx) + "/" + name + "_atk" + std::to_string(idx) + "_";
 	//以下几个函数相同
-	virtual void Attack(Creature target,int idx);
+	virtual void Attack(Node* target,int idx);
 	//受伤
 	void Hurt(int atk);
 	//死亡
@@ -68,8 +79,8 @@ private:
 	int current_exp;//角色现有经验值
 	int next_level_exp;//达到下一级所需经验值
 public:
-	Player(string name, int hp, int mp, int atk, int def, int speed, int level, int x, int y) :
-		Creature(name, hp, mp, atk, def, speed, level, x, y) {
+	Player(string name, int hp, int mp, int atk,int atk_range, int def, int speed, int level, int x, int y,State state) :
+		Creature(name, hp, mp, atk,atk_range, def, speed, level, x, y,state),current_exp(0),next_level_exp(100) {
 		string s = "Role/Player/" + name + "/" + name;
 		auto mySprite = Sprite::create(s + ".png");
 		mySprite->setPosition(Vec2(x, y));
@@ -91,14 +102,19 @@ public:
 //怪物类
 class Monster :public Creature {
 private:
-	Bonus bonus;
+	int follow_range;
+	Bonus bonus;//击杀奖励
 	int base_exp;//怪物的基础经验值
+	Node* target;
 public:
-	Monster(string name, int hp, int mp, int atk, int def, int speed, int level, int x, int y) :
-		Creature(name, hp, mp, atk, def, speed, level, x, y) {
+	Monster(string name, int hp, int mp, int atk,int atk_range, int def, int speed, int level, int x, int y,State state,int exp,Bonus bonus,Player* player) :
+		Creature(name, hp, mp, atk,atk_range, def, speed, level, x, y,state),base_exp(exp),bonus(bonus){
 		Level_Bonus();
 		;//暂待
+		target = player;
+		this->scheduleUpdate();
 	}
+	void update(float dt)override;
 	//奖励
 	void Bonus();
 	//触发战斗
