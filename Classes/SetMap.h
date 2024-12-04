@@ -6,8 +6,10 @@
 
 class SetMap :public cocos2d::Scene {
 private:
-	MicroMap* MicroMap;
-	bool IsMicroMapVisible;
+	MicroMap* MicroMap;     // 微地图对象
+	bool IsMicroMapVisible;     // 微地图是否可见
+
+	int PlayerInWhichMap;  // 当前玩家所在的地图编号
 public:
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
