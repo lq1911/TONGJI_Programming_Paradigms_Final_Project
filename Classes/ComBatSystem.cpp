@@ -64,25 +64,90 @@ void Creature::Show() {
 	mySprite->setPosition(Vec2(x, y));
 	scene->addChild(mySprite);
 }
+//移动
+void Creature::Move() {
+
+}
+//Player获得奖励
+void Player::GetBonus(Bonus bonus) {
+	//经验奖励
+	current_exp += bonus.exp;
+	//升级
+	while (current_exp >= next_level_exp) {
+		current_exp -= next_level_exp;
+		level++;
+		Creature::Level_Bonus;
+		next_level_exp *= (1 + level * 0.1);
+	}
+	//物品奖励
+	//暂待，需物品和装备
+}
+
+
 //update的重写
 //距离小于怪物攻击距离时，怪物攻击
 //距离小于怪物跟随距离时，怪物跟随
 //距离超过怪物跟随距离，怪物的状态回原态
 void Monster::update(float dt) {
-	float distance = target->getPosition().distance(getPosition());
-	if (distance < atk_range) {
-		Attack(target, 1);
-	}
-	else if (distance < follow_range) {
-		auto followAction = Follow::create(target);
-		this->runAction(followAction);
-	}
-	else {
-		state = State::WALKING;
+	//怪物AI
+	ai.update(dt);
+	state = ai.GetState();
+	//根据状态实现对应行为
+}
+//怪物死亡机制
+void Monster::Die() {
+
+	target->GetBonus(bonus);
+
+	Creature::Die();
+}
+//等级加成
+void Creature::Level_Bonus() {
+	int hp = hp * level;
+	int mp = mp * level;
+	int atk = atk * level;
+	
+	int def = def * level;
+	int speed = speed * (0.05 * level + 1);
+
+}
+//怪物等级加成
+void Monster::Level_Bonus() {
+	Creature::Level_Bonus();
+	base_exp = base_exp * level;
+}
+void MonsterAI::update(float dt) {
+	switch (currentState) {
+	case MonsterState::PATROLLING:// 执行巡逻逻辑
+
+		if (shouldChasePlayer()) {
+			currentState = MonsterState::CHASE;
+		}
+		else if (shouldFlee()) {
+			currentState = MonsterState::FLEE;
+		}
+		break;
+	case MonsterState::CHASE:// 执行追踪玩家逻辑
+
+		if (shouldAttackPlayer()) {
+			currentState = MonsterState::ATTACK;
+		}
+		else if (shouldFlee()) {
+			currentState = MonsterState::FLEE;
+		}
+		break;
+	case MonsterState::ATTACK:	// 执行攻击逻辑
+
+		if (!shouldAttackPlayer()) {
+			currentState = MonsterState::CHASE;
+		}
+		else if (shouldFlee()) {
+			currentState = MonsterState::FLEE;
+		}
+		break;
 	}
 }
-
-//需要主循环作为前驱，在这里假定满足开始战斗条件
-void Monster::StartFight() {
-	
+//返回现状态
+MonsterState MonsterAI::GetState()const {
+	return currentState;
 }
