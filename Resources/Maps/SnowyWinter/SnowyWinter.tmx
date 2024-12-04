@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="1">
+ <tileset firstgid="1" source="SnowyWinterWholeAsset.tsx"/>
+ <tileset firstgid="257" source="MagicTelepoter.tsx"/>
+ <layer id="1" name="Ground" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmc0NgzAMhT0BI3SEbAD3im5ADj23bMDylaVYddMgmoCwnebwlL8e/N6HqRQ6AOiMqQ+jY3sXg3LBSx/W5MuSsOYpEvmxpDmxNynIN1fzCiPpfHOVqjnlTbtq4VFLf8TvWGeYB9bt4f0Ottgf3Urt0vmWMon7RDrbEqEH33io0VQRD18BD9RSAY+UpHM9StI5Nh6Nh2ZJ59h41M3jqiDTI3kMCrLd2x8Dk3S+R/AgSWdcysMymy2fVrigl/juAdd0t2WFCflxYaQ7rRHgbqlfOAt+V8f3LTCZ4fP+gea3yK92JjmeNXPJ8ayZSYl3jVxK/WtjszcHLVzw/+4J399yRzaPz8eVfVz7cH42D/om8gijD/X0iTn9hp95dkZeLPXH2XIb59LP9S9yFfHYYiSd9b/1R6pHGg+9egGNjvbn
+  </data>
+ </layer>
+ <layer id="3" name="Stairs" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzjkRACEUREEM4AAc4BDE74a/MMDVXfWCySYlAAAAAAAAdtdXH+AaOVSmfZIRan81BADAuz7s+gLd
+  </data>
+ </layer>
+ <layer id="7" name="HideItem" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2bENg0AMBVBuh4zHCIyQERImACYImTEuKZBMhyHvSZYs/eYXvuq67toe7ewGAAAAAAAAAMBRffLPn+VVDEnPLK/imfTM8ope0fkdM16w+/b+p9jnmKXt55Vt7/8T+xrzbft5ZXd8H//gB+/aCsA=
+  </data>
+ </layer>
+ <layer id="2" name="Decoration" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmLFOAzEMhgOo7ICON4CViaETqpg7VMyd6MoEK0/ES1JLF9W17EsOO5cY5ZcsVafT1V+c3+fLcwjh0VGsA6/7Y3w5iQeBwSPH+zFuSXw65DgwtTh0js7ROTpHYwEcNyj/2HcvHXJI8sAxjHHtmGOqBp44aA02Djm4Wuz+CYekFjlyfN0qx19yb4FjCPrca3NY5F2bI9e70F8/Eve8OuCA/vqduOfNAYekK+G6N467GRwDCSuGYYID1nmr4KMcXC9ZGfJIHLDOeyOOVM1XBTm0whw5fV3rp9IcS8358X+g92v8QBX3fu47dg4H7Rf4f6D3a/ygVS5HidljSty5bzz75ZTDUcoDVHhfcudBU9dzOJaoBTDsw4nFmiNVCwt/Y4bosaU5tP7mGEBwPhc9EcL5GR2n2N+kucXSG3hW2ZLcS/Q6/J635IizSsw//ub2pbRXpes/Y1BJ79PNxLNyhGuAeaik+qTqRlkkjl3GsyRxDBbCa0vrMncuSAn72ZIBxK0tt8cshP1cc37R6ql2AqO033cvVokopf2+s5zpa8qzJ7B6PdpSr0dbuph5/y/NgP0s
+  </data>
+ </layer>
+ <layer id="6" name="DetailsUpDeco" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2EEKwjAQBdCAR/AgPYILVwquXLlw4dbShQfw7iKkm1jINBnyf+p/ICXYxZ+0E3RC6NsFHcDJHR1ABOyEDuDgjA4gf2cXrxM0Rb19vL6hKfJuybr3fZ+x77v0Qz2BY937MX5YWfeeuYY12J/HGgx1eJxBDHV4nEEMddSy9gf7TMhSwxB+Z0IsdY0h/yzm//KHhe+8Z10lff7N/szc03oe0eNvjdYGwz2lfdKyv5b6IlXaJ5olY7Gc07X0HsmWPJL1EZKi3itZXyEpRERERLbhA8RwFAA=
+  </data>
+ </layer>
+ <layer id="5" name="House" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzkcRwgAUANFYp0QAEAQQggBKBFAigBIBlPhgNXyY+Zd9M3vfopB+M6IxTWhKZe5O2IzmtKCKlrk7YSuqaU0NbXJ3wra0oz0dqM3dCTvSic50oS53J+xKN7rTg/rcnbAnvehNHxpydyRJkiRJkiRJkiRJ0p99AeXxGHo=
+  </data>
+ </layer>
+ <layer id="4" name="MagicAndTelepoter" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1zEKgCAYhmG9QHWDOkG1NjU3uXSJztIlO0p/ZCAOSUPlD+8DHxIun5hYxgAAAHxrtn83AAAAAAAAd0b5dy8kpaSy57NGTnqvktqPTuk6ju6tpJP0fi0auaC75v0AAOAyJO6y1HwupkTP1HyutH4zhRZrNj82/zZ5Ln7/4/3gfOBNO2mmCzo=
+  </data>
+ </layer>
+</map>
