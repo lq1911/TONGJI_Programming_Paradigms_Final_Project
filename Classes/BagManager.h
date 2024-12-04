@@ -29,9 +29,17 @@ public:
     // 判断背包是否可见
     bool isBagVisible() const { return _isBagOpen; }
 
-    //更新背包UI
+    // 将物品添加到背包
+    void addItem(item* it);
+
+    // 更新背包UI
     void updateBagUI();
 
+    // 获取背包内物品数量
+    int getItemsNum()
+    {
+        return items_num;
+    }
 private:
     // 私有构造函数，禁止外部直接实例化
     BagManager();
@@ -43,6 +51,9 @@ private:
 
     // 背包内的物品
     item* items[40];
+
+    // 背包内物品数量
+    int items_num;
 
     // 背包的UI面板
     cocos2d::Node* _bagPanel;
@@ -61,6 +72,12 @@ private:
 
     // 创建角色面板
     void createCharacterPanel();
+
+    // 点击物品栏事件
+    void slot_click(Button* slot, int row, int col);
+
+    // 丢弃背包内的物品
+    void discardItems(int index);
 
     // 禁止拷贝构造函数和赋值操作符
     BagManager(const BagManager&) = delete;
