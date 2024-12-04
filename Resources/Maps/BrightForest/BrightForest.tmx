@@ -25,12 +25,12 @@
    eJzt1IEJgEAMBMHA91+OdqAdaD1+CyJiOGcqyMKRKgAAeN8yqtbx9RXPbbNhD+g4ZsMZ0GFXvaTsCu7yi3pJ+UU6eknpAAAAAPiDC3uWEy0=
   </data>
  </layer>
- <layer id="13" name="House" width="50" height="50">
+ <layer id="13" name="House" width="50" height="50" locked="1">
   <data encoding="base64" compression="zlib">
    eJztz7dOQ0EQRuG1G4JJPWCCedB5F7JJJdkBl+RgKMnBpjTJgIEjbQMtHiSK/0ifNLrF3J0QfjaaCGEM45jAJKYwjSxmMJsI/75F3riEZaxgFWtYRw55FBzumGPHPBYiYza+WfObY5vs3cI2drCLPezjAIc4crijyI4NlCJjtqLjHafsPcM5LnCJK1zjBre4c7ijzI5jnETGbGXHO2rsfcAjnvCMF9Txije8O9xRYUcV95ExW8XxjpZkCK1oQztS6EAnutCNnmTz/2nw/g98RsZsDcc7enljH/qRxgAGMYRhZDDicMdf9/0OpZRSSimllFJKKaWUUkoppZRSSin1+74AZo9LnA==
   </data>
  </layer>
- <layer id="12" name="Decorate" width="50" height="50">
+ <layer id="12" name="Decorate" width="50" height="50" locked="1">
   <data encoding="base64" compression="zlib">
    eJztmLtPVEEUh2caMBHtfDWohcZXI7FRQVAotfABidoqYKK0PhqhUSMoNRJwtQZrrcRaK7Gz8RH1D1ASpeJb9hLGm7m7O8y5M1yyv+TLDMPOnDPnTOZMrlJKPdVKjYOPdjJ/l2UNibXr1QvsvPS0dZj5RyxrSKydt8wc2OKeHturK7goK59bBWNj5sAW9/TYMV3BRaHyuQ0b22GHYatablzz4aIH8BAewSVHOwf4/UE4ZMyrlpta+fhu9M14dNfh1wQ8g8k6/E7rJOu3Q4dHnC/DFbiaGnc9UzMwC6+MsePMPxHonrkJt2AIzmPzAlzU7mfjLczBO2PsLGucM9bJipmP0j6PMHaN9jr0w4DjPj7CPHyCUjL3NbwxfmPGTEo2n2/T3oG7cE/gPLyHD8bf92FYVWImJZvPj2lHYQye1NjHGf1/G0s2n6dop+G5Xj0bKzqlVanM56Tfm/y/N/I+qvlsUye+dyb7SPqqC0577CPk+29F+Fwqsw+7+xO6knativH+I+4lg7k+vZyX5baaYsQ8D9WKuU/NWk/yqVkS+gJf4ZvnOtI1y1W/4Q8seK7jUrPyUBM2m2GTp23X+7+oCnkP5GkrxD0wyLo3dL62Qt4DWbYk8hTyHsiyJZGnkPdAli3JMxGz7kueiZh1X/JMxKz7kmchZt2XPAsx637sN6CUYr8BpbSe34BHtb1fNPVoe7+hYiuPb9YxlMc36xjK45t1Q8XVD/gJv2I74qm/8A8WYzviqc3UvhbYUvAa2Ir/u2FPwfdRVtsG2ENDDYXSEphboOI=
   </data>
