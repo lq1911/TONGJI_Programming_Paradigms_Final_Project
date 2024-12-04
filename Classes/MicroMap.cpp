@@ -7,9 +7,9 @@ bool MicroMap::init() {
 		return false;
 	}
 
-	OnEnterMicroMap();     //初始化大地图
+	this->OnEnterMicroMap();     //初始化大地图
 
-	return true;
+	return true;  
 }
 
 void MicroMap::OnEnterMicroMap() {
@@ -75,7 +75,7 @@ void MicroMap::UnlockReign(int ReignIndex) {
 	IsBlackFogVisited[ReignIndex] = true;
 
 	// 驱散探索图层黑雾
-	DisperseBlackFog(ReignIndex);
+	this->DisperseBlackFog(ReignIndex);
 }
 
 void MicroMap::update(float dt) {
