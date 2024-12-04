@@ -11,6 +11,8 @@ bool SetMap::init() {
         return false;
     }
 
+    PlayerInWhichMap = 0;     //初始化玩家位置在初始神庙
+
     //创建并添加小地图至地图场景
     MicroMap = MicroMap::create();
     MicroMap->setVisible(false);    //初始隐藏小地图
@@ -50,17 +52,11 @@ void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
         if (IsMicroMapVisible) {
             //进入小地图暂停游戏
             Director::getInstance()->pause();
-            MicroMap->setOpacity(0);    //设置小地图透明度
             MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
-
-            auto FadeIn = FadeIn::create(2.5f);
-            MicroMap->runAction(FadeIn);    //淡入小地图
         }   
         else {
-            auto FadeOut = FadeOut::create(2.5f);
 			MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
 			Director::getInstance()->resume();    //退出小地图恢复游戏
-			MicroMap->runAction(FadeOut);    //淡入小地图
 		}
     }
 }
