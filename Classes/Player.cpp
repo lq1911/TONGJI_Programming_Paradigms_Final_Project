@@ -2,7 +2,7 @@
 #include <string>
 #include "Player.h"
 
-/* ÏÔÊ¾Íæ¼Ò */
+/* æ˜¾ç¤ºçŽ©å®¶ */
 void Player::showPlayer(std::string who, Scene* scene, float scale, int x, int y) {
     std::string str;
     str = "Role/Player/" + who + "/" + who + ".png";
@@ -12,21 +12,21 @@ void Player::showPlayer(std::string who, Scene* scene, float scale, int x, int y
     scene->addChild(mySprite);
 }
 
-/* ¹¥»÷¶¯»­ */
+/* æ”»å‡»åŠ¨ç”» */
 void Player::PlayerAttack(std::string who, Scene* scene, int idx, float scale, int x, int y) {
-    // Í¼Æ¬ÃûÇ°×º:³ý±àºÅ²¿·Ö
+    // å›¾ç‰‡åå‰ç¼€:é™¤ç¼–å·éƒ¨åˆ†
     std::string s;
     if (idx == 1 || idx == 2)
         s = "Role/Player/" + who + "/attack" + std::to_string(idx) + "/" + who + "_atk" + std::to_string(idx) + "_";
     else if (idx == 3)
         s = "Role/Player/" + who + "/attack_final/" + who + "_final_";
 
-    // ¾«Áé³õÊ¼»¯
+    // ç²¾çµåˆå§‹åŒ–
     auto mySprite = Sprite::create(s + "0.png");
     mySprite->setPosition(Vec2(x, y));
     mySprite->setScale(scale);
 
-    // Ö¡Êý
+    // å¸§æ•°
     int count = 0;  
     if (who == "Arthur") {
         if (idx == 1) 
@@ -46,7 +46,7 @@ void Player::PlayerAttack(std::string who, Scene* scene, int idx, float scale, i
     }
     Vector<SpriteFrame*> animFrames;
    
-    // Ä£Äâ¶¯»­
+    // æ¨¡æ‹ŸåŠ¨ç”»
     animFrames.reserve(count);
     for (int i = 1; i <= count; i++) {
         auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
@@ -63,16 +63,16 @@ void Player::PlayerAttack(std::string who, Scene* scene, int idx, float scale, i
     Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
     Animate* animate = Animate::create(animation);
     // mySprite->runAction(RepeatForever::create(animate));
-    mySprite->runAction(animate);  // ²¥·ÅÒ»´Î
+    mySprite->runAction(animate);  // æ’­æ”¾ä¸€æ¬¡
     scene->addChild(mySprite);
 }
 
-/* ×ßÂ·¶¯»­ */
+/* èµ°è·¯åŠ¨ç”» */
 void Player::PlayerMove(std::string who, Scene* scene, float scale, int x, int y, int direction) {
-    // Í¼Æ¬ÃûÇ°×º
+    // å›¾ç‰‡åå‰ç¼€
     std::string s = "Role/Player/" + who + "/move/" + who + "_move_";
 
-    // ¾«Áé³õÊ¼»¯
+    // ç²¾çµåˆå§‹åŒ–
     auto mySprite = Sprite::create(s + "0.png");
     mySprite->setPosition(Vec2(x, y));
     mySprite->setScale(scale);
