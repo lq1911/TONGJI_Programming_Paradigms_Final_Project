@@ -1,7 +1,4 @@
 #include "HelloWorldScene.h"
-#include "ui/CocosGUI.h"
-#include "SetPlayerScene.h"
-#include "SetMap.h"
 
 USING_NS_CC;
 
@@ -27,91 +24,18 @@ bool HelloWorld::init()
         return false;
     }
 
+    //获取屏幕大小和原点
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
-    auto closeItem = MenuItemImage::create(
-        "CloseNormal.png",
-        "CloseSelected.png",
-        CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
-
-    if (closeItem == nullptr ||
-        closeItem->getContentSize().width <= 0 ||
-        closeItem->getContentSize().height <= 0)
-    {
-        problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    }
-    else
-    {
-        float x = origin.x + visibleSize.width - closeItem->getContentSize().width / 2;
-        float y = origin.y + closeItem->getContentSize().height / 2;
-        closeItem->setPosition(Vec2(x, y));
-    }
-
-    // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
-    menu->setPosition(Vec2::ZERO);
-    this->addChild(menu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-
-    auto label = Label::createWithTTF("Genshin Style Open World Adventure Game", "fonts/Lacquer.ttf", 48);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Lacquer.ttf.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-            origin.y + visibleSize.height - label->getContentSize().height));
-
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
-
-    // add "HelloWorld" splash screen"
-    auto sprite = Sprite::create("HelloWorld.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'HelloWorld.png'");
-    }
-    else
-    {
-        // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-
-        // add the sprite as a child to this layer
-        this->addChild(sprite, 0);
-    }
+    this->CreateBackground(visibleSize);    //创建游戏开始界面背景
 
     // 开始游戏按钮
     auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
     button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
-    button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
-        switch (type)
-        {
-        case ui::Widget::TouchEventType::BEGAN:
-            CCLOG("Button Start Pressed");
-            break;
-        case ui::Widget::TouchEventType::ENDED:
-            CCLOG("Button Start Released");
-            break;
-        default:
-            break;
-        }
-        });
+
     // 按钮点击事件监听器
     button->addTouchEventListener([](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
         if (type == ui::Widget::TouchEventType::ENDED) {
@@ -156,6 +80,14 @@ bool HelloWorld::init()
     return true;
 }
 
+void HelloWorld::CreateBackground(Size& visibleSize) {
+     //设置游戏的开始界面
+    auto Background = Sprite::create("StartBackground.jpg");    //游戏开始界面背景图
+    Background->setPosition(visibleSize.width / 2, visibleSize.height / 2);    // 设置背景图的位置为屏幕中心
+    Background->setScale(1.08f);    // 设置背景图的缩放比例
+    Background->setScaleY(1.4f);
+    this->addChild(Background);    //将背景图添加至当前场景
+}
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
