@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
+#include "windows.h"
 
 // #define USE_AUDIO_ENGINE 1
 
