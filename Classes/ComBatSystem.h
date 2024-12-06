@@ -1,8 +1,10 @@
+/*
 #ifndef __Combat_System_H__
 #define __Combat_System_H__
 #include "cocos2d.h"
 USING_NS_CC;
 using namespace std;
+
 struct Equipment {//交由背包完成
 	int a;
 };
@@ -154,3 +156,5 @@ public:
 	MonsterState GetState()const;
 };
 #endif// __Combat_System_H__
+
+*/

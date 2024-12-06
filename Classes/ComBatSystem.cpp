@@ -1,3 +1,4 @@
+/*
 #include "CombatSystem.h"
 USING_NS_CC;
 
@@ -151,3 +152,5 @@ void MonsterAI::update(float dt) {
 MonsterState MonsterAI::GetState()const {
 	return currentState;
 }
+
+*/
