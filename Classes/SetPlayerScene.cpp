@@ -1,10 +1,12 @@
 #include <iostream>
+#include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
 #include "Player.h"
-#include "ui/CocosGUI.h"
 #include "SetMap.h"
 
 USING_NS_CC;
+// 定义静态成员变量
+int SetPlayerScene::who = 0;  // 给静态成员变量初始化
 
 Scene* SetPlayerScene::createScene() {
     return SetPlayerScene::create();
@@ -127,27 +129,28 @@ Scene* SetPlayerScene::selectRoleScene() {
     auto select_role_scene = Scene::create();
     // 预先定义
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    
+
     /* 加载背景图 */
     auto background = Sprite::create("Scene/SelectRoleScene.png");
-    if (background) {  
+    if (background) {
         background->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
         background->setScale(visibleSize.width / background->getContentSize().width,
             visibleSize.height / background->getContentSize().height);
         select_role_scene->addChild(background, -10);
     }
-   
+
     /* 文字提示选择角色 */
     auto ChooseRoleTxt = Label::createWithTTF("Please choose your role!", "fonts/KuaiLe_Chinese.ttf", 60);
     ChooseRoleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 300));
     ChooseRoleTxt->setTextColor(Color4B(220, 220, 220, 255));
-    select_role_scene->addChild(ChooseRoleTxt);
-    
+    select_role_scene->addChild(ChooseRoleTxt, 0);
+
+    /* 选择角色 */
     // Player1按钮
     auto P1Button = ui::Button::create("UI/Border1.png", "UI/Border1Clicked.png");
     P1Button->ignoreContentAdaptWithSize(false);
     P1Button->setContentSize(Size(300, 300));
-    P1Button->setPosition(Vec2((visibleSize.width / 6)*1, visibleSize.height /2));
+    P1Button->setPosition(Vec2((visibleSize.width / 6) * 1, visibleSize.height / 2));
     select_role_scene->addChild(P1Button, 0);
     // Player1图像
     auto P1Sprite = Sprite::create("Role/Player1/1.png");
@@ -200,38 +203,33 @@ Scene* SetPlayerScene::selectRoleScene() {
     select_role_scene->addChild(P5Sprite);
 
     /* 跳转 */
-    // 按钮点击事件
     P1Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player1");
-       // SetMap::setPlayerWho("Player1");
+        who = Player1;
         auto scene = SetMap::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
-
     P2Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player2");
-        //who = "Player2";
+        who = Player2;
         auto scene = SetMap::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
-
     P3Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player3");
-        //who = "Player3";
+        who = Player3;
         auto scene = SetMap::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
-
     P4Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player4");
-       // who = "Player4";
+        who = Player4;
         auto scene = SetMap::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
-
     P5Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player5");
-       // who = "Player5";
+        who = Player5;
         auto scene = SetMap::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
@@ -246,8 +244,8 @@ Scene* SetPlayerScene::selectRoleScene() {
     // 添加监听器到事件分发器
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     //////////////////////////////////////////////////////////
-
     */
+
     return select_role_scene;
 }
 

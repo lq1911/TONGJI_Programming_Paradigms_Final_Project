@@ -1,5 +1,6 @@
 #include "SetMap.h"
 #include "Player.h"
+#include "SetPlayerScene.h"
 
 USING_NS_CC;
 
@@ -41,14 +42,13 @@ bool SetMap::init() {
     this->addChild(InitialMap);
 
     ///////////////////////
-    PLAYER = new Player("Player1", this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 5, 1);
+    // lq加的调试小人
+    PLAYER = new Player("Player"+std::to_string(SetPlayerScene::who+1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 5, 1);
     // 设置键盘监听器
     auto listener = EventListenerKeyboard::create();
-    listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this);  // 监听按键按下事件
-
-    // 添加监听器到事件分发器
+    listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this); 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-
+    ///////////////////////
 
 
     return true;

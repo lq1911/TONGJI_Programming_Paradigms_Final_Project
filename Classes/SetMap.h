@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "MicroMap.h"
 #include "Player.h"
+#include "SetPlayerScene.h"
 
 
 class SetMap :public cocos2d::Scene {
@@ -26,6 +27,14 @@ public:
 			PLAYER->Attack(LEFT);
 		else if (keyCode == EventKeyboard::KeyCode::KEY_D)
 			PLAYER->Attack(RIGHT);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+			PLAYER->Move(DOWN);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW)
+			PLAYER->Move(UP);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+			PLAYER->Move(LEFT);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+			PLAYER->Move(RIGHT);
 	}
 
 	/*生成场景函数*/
