@@ -2,7 +2,7 @@
 #include "SetPlayerScene.h"
 #include "Player.h"
 #include "ui/CocosGUI.h"
-
+#include "SetMap.h"
 
 USING_NS_CC;
 
@@ -139,21 +139,128 @@ Scene* SetPlayerScene::selectRoleScene() {
    
     /* 文字提示选择角色 */
     auto ChooseRoleTxt = Label::createWithTTF("Please choose your role!", "fonts/KuaiLe_Chinese.ttf", 60);
-    ChooseRoleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 200));
+    ChooseRoleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 300));
     ChooseRoleTxt->setTextColor(Color4B(220, 220, 220, 255));
     select_role_scene->addChild(ChooseRoleTxt);
     
-    /* 加载第一个角色 */
-    auto panel_role = ui::Scale9Sprite::create("UI/Panel3.png");
-    panel_role->setPreferredSize(Size(800, 800));
-    panel_role->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
-    select_role_scene->addChild(panel_role, -1);
+    // Player1按钮
+    auto P1Button = ui::Button::create("UI/Border1.png", "UI/Border1Clicked.png");
+    P1Button->ignoreContentAdaptWithSize(false);
+    P1Button->setContentSize(Size(300, 300));
+    P1Button->setPosition(Vec2((visibleSize.width / 6)*1, visibleSize.height /2));
+    select_role_scene->addChild(P1Button, 0);
+    // Player1图像
+    auto P1Sprite = Sprite::create("Role/Player1/1.png");
+    P1Sprite->setPosition(Vec2((visibleSize.width / 6) * 1, visibleSize.height / 2 + 30));
+    P1Sprite->setScale(1.2f);
+    select_role_scene->addChild(P1Sprite);
+    // Player2按钮
+    auto P2Button = ui::Button::create("UI/Border1.png", "UI/Border1Clicked.png");
+    P2Button->ignoreContentAdaptWithSize(false);
+    P2Button->setContentSize(Size(300, 300));
+    P2Button->setPosition(Vec2((visibleSize.width / 6) * 2, visibleSize.height / 2));
+    select_role_scene->addChild(P2Button, 0);
+    // Player2图像
+    auto P2Sprite = Sprite::create("Role/Player2/1.png");
+    P2Sprite->setPosition(Vec2((visibleSize.width / 6) * 2, visibleSize.height / 2 + 30));
+    P2Sprite->setScale(1.2f);
+    select_role_scene->addChild(P2Sprite);
+    // Player3按钮
+    auto P3Button = ui::Button::create("UI/Border1.png", "UI/Border1Clicked.png");
+    P3Button->ignoreContentAdaptWithSize(false);
+    P3Button->setContentSize(Size(300, 300));
+    P3Button->setPosition(Vec2((visibleSize.width / 6) * 3, visibleSize.height / 2));
+    select_role_scene->addChild(P3Button, 0);
+    // Player3图像
+    auto P3Sprite = Sprite::create("Role/Player3/1.png");
+    P3Sprite->setPosition(Vec2((visibleSize.width / 6) * 3, visibleSize.height / 2 + 30));
+    P3Sprite->setScale(1.2f);
+    select_role_scene->addChild(P3Sprite);
+    // Player4按钮
+    auto P4Button = ui::Button::create("UI/Border1.png", "UI/Border1Clicked.png");
+    P4Button->ignoreContentAdaptWithSize(false);
+    P4Button->setContentSize(Size(300, 300));
+    P4Button->setPosition(Vec2((visibleSize.width / 6) * 4, visibleSize.height / 2));
+    select_role_scene->addChild(P4Button, 0);
+    // Player4图像
+    auto P4Sprite = Sprite::create("Role/Player4/1.png");
+    P4Sprite->setPosition(Vec2((visibleSize.width / 6) * 4, visibleSize.height / 2 + 30));
+    P4Sprite->setScale(1.2f);
+    select_role_scene->addChild(P4Sprite);
+    // Player5按钮
+    auto P5Button = ui::Button::create("UI/Border1.png", "UI/Border1Clicked.png");
+    P5Button->ignoreContentAdaptWithSize(false);
+    P5Button->setContentSize(Size(300, 300));
+    P5Button->setPosition(Vec2((visibleSize.width / 6) * 5, visibleSize.height / 2));
+    select_role_scene->addChild(P5Button, 0);
+    // Player5图像
+    auto P5Sprite = Sprite::create("Role/Player5/1.png");
+    P5Sprite->setPosition(Vec2((visibleSize.width / 6) * 5, visibleSize.height / 2 + 20));
+    P5Sprite->setScale(1.1f);
+    select_role_scene->addChild(P5Sprite);
 
-    /* 切换角色 */
-    Player player;
-    player.showPlayer("Arthur", select_role_scene, 0.55f, visibleSize.width / 2 - 30, visibleSize.height / 2 + 50);
+    /* 跳转 */
+    // 按钮点击事件
+    P1Button->addClickEventListener([=](Ref* sender) mutable {
+        CCLOG("Choose Player1");
+       // SetMap::setPlayerWho("Player1");
+        auto scene = SetMap::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        });
 
-    //player.PlayerAttack("Longbow", select_role_scene, 3, 0.4, visibleSize.width / 2, visibleSize.height / 2);
+    P2Button->addClickEventListener([=](Ref* sender) mutable {
+        CCLOG("Choose Player2");
+        //who = "Player2";
+        auto scene = SetMap::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        });
 
+    P3Button->addClickEventListener([=](Ref* sender) mutable {
+        CCLOG("Choose Player3");
+        //who = "Player3";
+        auto scene = SetMap::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        });
+
+    P4Button->addClickEventListener([=](Ref* sender) mutable {
+        CCLOG("Choose Player4");
+       // who = "Player4";
+        auto scene = SetMap::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        });
+
+    P5Button->addClickEventListener([=](Ref* sender) mutable {
+        CCLOG("Choose Player5");
+       // who = "Player5";
+        auto scene = SetMap::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        });
+
+
+    /*
+    // PLAYER = new Player("Player1", select_role_scene, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 5, 1);
+    // 设置键盘监听器
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyPressed = CC_CALLBACK_2(SetPlayerScene::onKeyPressed, this);  // 监听按键按下事件
+
+    // 添加监听器到事件分发器
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    //////////////////////////////////////////////////////////
+
+    */
     return select_role_scene;
 }
+
+// 键盘按下的回调函数
+/*
+void SetPlayerScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+    if (keyCode == EventKeyboard::KeyCode::KEY_W) 
+        PLAYER->Attack(UP);
+    else if (keyCode == EventKeyboard::KeyCode::KEY_S) 
+        PLAYER->Attack(DOWN);
+    else if (keyCode == EventKeyboard::KeyCode::KEY_A) 
+        PLAYER->Attack(LEFT);
+    else if (keyCode == EventKeyboard::KeyCode::KEY_D) 
+        PLAYER->Attack(RIGHT);
+}
+*/
