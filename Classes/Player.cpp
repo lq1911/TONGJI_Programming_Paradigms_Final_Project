@@ -21,12 +21,9 @@ void Player::Attack(int dir) {
     else if (face_to == UP)
         start = 13;
 
-    // 当前帧索引
-    int currentFrame = 0;
-
     /* 帧动画 */
     Vector<SpriteFrame*> animFrames;
-    animFrames.reserve(8);
+    animFrames.reserve(9);
     for (int j = 0; j < 2; j++) {
         for (int i = start; i < start + 4; i++) {
             auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
@@ -40,10 +37,19 @@ void Player::Attack(int dir) {
             animFrames.pushBack(spriteFrame);
         }
     }
-    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    auto texture = Director::getInstance()->getTextureCache()->addImage("Role/"+who+"/" + std::to_string(start) + ".png");
+    float width = texture->getPixelsWide();
+    float height = texture->getPixelsHigh();
+    Rect rectInPixels(0, 0, width, height);
+    auto spriteFrame = SpriteFrame::createWithTexture(
+        texture,
+        CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+    );
+    animFrames.pushBack(spriteFrame);
+    // 播放
+    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
     Animate* animate = Animate::create(animation);
-
-    player->stopAllActions(); // 攻击前可停止之前动作保证连贯性
+    player->stopAllActions(); 
     player->runAction(animate);
 
     CCLOG("%s attack", who); 
@@ -51,33 +57,35 @@ void Player::Attack(int dir) {
 
 /* 走路动画 */
 void Player::Move(int dir) {
-    /*
-    std::string s;
-    s = "Role/" + who + "atk/";
-    int start = 1;
-    // 根据方向选择帧动画起始帧
+    /* 更改面朝方向 */
+    face_to = dir;
+
+    /* 图片名前缀:除编号部分 */
+    std::string s = "Role/" + who + "/";
+
+    /* 根据方向确认第一张图片及移动路径 */
     Vec2 moveBy;
+    int start = 1;
     if (face_to == DOWN) {
         start = 1;
-        moveBy = Vec2(0, -100);
+        moveBy = Vec2(0, -50);
     }
     else if (face_to == LEFT) {
         start = 5;
-        moveBy = Vec2(-100, 0);
+        moveBy = Vec2(-50, 0);
     }
     else if (face_to == RIGHT) {
         start = 9;
-        moveBy = Vec2(100, 0);
+        moveBy = Vec2(50, 0);
     }
     else if (face_to == UP) {
         start = 13;
-        moveBy = Vec2(0, 100);
+        moveBy = Vec2(0, 50);
     }
-
 
     // 创建帧动画
     Vector<SpriteFrame*> animFrames;
-    animFrames.reserve(4);
+    animFrames.reserve(5);
     for (int i = start; i < start + 4; i++) {
         auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
         float width = texture->getPixelsWide();
@@ -89,8 +97,17 @@ void Player::Move(int dir) {
         );
         animFrames.pushBack(spriteFrame);
     }
+    auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(start) + ".png");
+    float width = texture->getPixelsWide();
+    float height = texture->getPixelsHigh();
+    Rect rectInPixels(0, 0, width, height);
+    auto spriteFrame = SpriteFrame::createWithTexture(
+        texture,
+        CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+    );
+    animFrames.pushBack(spriteFrame);
 
-    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
     Animate* animate = Animate::create(animation);
 
     // 创建移动动作
@@ -100,9 +117,9 @@ void Player::Move(int dir) {
     auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);
 
     // 执行动作
+    player->stopAllActions();
     player->runAction(moveAndAnimate);
-    scene->addChild(player);
-    */
+
 }
 
 /* 等级加成 */
