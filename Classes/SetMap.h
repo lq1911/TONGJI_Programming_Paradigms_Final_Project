@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "MicroMap.h"
+#include "Player.h"
 
 
 class SetMap :public cocos2d::Scene {
@@ -14,7 +15,18 @@ private:
 
 	int PlayerInWhichMap;  // 当前玩家所在的地图编号
 public:
+	Player* PLAYER;
 
+	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_W)
+			PLAYER->Attack(UP);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_S)
+			PLAYER->Attack(DOWN);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_A)
+			PLAYER->Attack(LEFT);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_D)
+			PLAYER->Attack(RIGHT);
+	}
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();

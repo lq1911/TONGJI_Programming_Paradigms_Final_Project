@@ -1,4 +1,5 @@
 #include "SetMap.h"
+#include "Player.h"
 
 USING_NS_CC;
 
@@ -39,8 +40,21 @@ bool SetMap::init() {
     //添加初始地图至场景
     this->addChild(InitialMap);
 
+    ///////////////////////
+    PLAYER = new Player("Player1", this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 5, 1);
+    // 设置键盘监听器
+    auto listener = EventListenerKeyboard::create();
+    listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this);  // 监听按键按下事件
+
+    // 添加监听器到事件分发器
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+
+
     return true;
 }
+
+
 
 void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
     if (keyCode == EventKeyboard::KeyCode::KEY_M) {
