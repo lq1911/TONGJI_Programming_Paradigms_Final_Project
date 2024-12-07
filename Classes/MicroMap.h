@@ -8,10 +8,13 @@
 
 class MicroMap :public cocos2d::Layer {
 private:
+    cocos2d::Size visibleSize;    //屏幕大小
     cocos2d::Sprite* MicroMapSprite;    //微缩大地图精灵
+    cocos2d::Label* RegionLabel;    //区域名称标签
 
     std::vector<cocos2d::DrawNode*> BlackFogLayer;    //绘制黑雾层
     std::vector<cocos2d::Rect> MapReign;    //地图各区域or黑雾层对应区域
+   
     std::vector<std::string> ReignName;    //各区域名称
     std::vector<bool> IsBlackFogVisited;    //是否已经访问过的黑雾层
 
@@ -27,7 +30,7 @@ public:
     void OnEnterMicroMap();
 
     /*鼠标悬停在区域时触发的事件--解锁传送功能以及显示区域名字*/
-    void OnMouseOverReign();
+    void OnMouseMove(cocos2d::Event* event);
 
     /*驱散黑雾层*/
     void DisperseBlackFog(int ReignIndex);
@@ -35,8 +38,8 @@ public:
     /*解锁区域地图*/
     void UnlockReign(int ReignIndex);
 
-    /*更新微缩大地图*/
-    void update(float dt);
+    /*判断玩家是否在某个区域内*/
+    bool IsContainedReign(cocos2d::Rect& rect, cocos2d::Vec2& Pos);
 
    CREATE_FUNC(MicroMap);
 };
