@@ -35,6 +35,8 @@ public:
 			PLAYER->Move(LEFT);
 		else if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
 			PLAYER->Move(RIGHT);
+		else if (keyCode == EventKeyboard::KeyCode::KEY_T)
+			PLAYER->Hurt();
 	}
 
 	/*生成场景函数*/

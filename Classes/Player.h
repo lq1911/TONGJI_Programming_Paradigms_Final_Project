@@ -29,6 +29,7 @@ class Creature :public Node {
 };
 */
 
+
 enum dir {
 	LEFT,    // 0
 	RIGHT,   // 1
@@ -59,6 +60,8 @@ protected:
 public:
 	Sprite* player;
 	/* 构造函数 */
+	// who:玩家为Player1~Player5,NPC为npc1~npc5
+	
 	Player(std::string who,Scene* scene,int x,int y,float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
 		who(who), scene(scene), x(x), y(y), scale(scale), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level) {
 		face_to = DOWN;
@@ -68,9 +71,13 @@ public:
 		scene->addChild(player);
 	}
 
-	/* 玩家释放攻击技能 */
-	// dir为方向:LEFT RIGHT UP DOWN
-	virtual void Attack(int dir);
+	/* 释放攻击技能 */
+	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
+	// 对于部分怪物,无方向一说:Monster1树妖
+	virtual void Attack(int dir = DOWN);
+
+	/* 受伤动画 */
+	virtual void Hurt();
 	
 	/* 走路动画 */
 	virtual void Move(int dir);
