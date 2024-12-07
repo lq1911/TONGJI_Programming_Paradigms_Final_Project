@@ -57,24 +57,36 @@ protected:
 	int speed;       // 速度
 	int level;       // 等级
 
+	bool isDead;     // 生死状态
+
 public:
+	/* 精灵 */
 	Sprite* player;
+
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
-	
+	// speed默认设为50,atk_range默认设100
 	Player(std::string who,Scene* scene,int x,int y,float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
 		who(who), scene(scene), x(x), y(y), scale(scale), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level) {
 		face_to = DOWN;
+		isDead = false;
 		player = Sprite::create("Role/" + who + "/1.png" );
 		player->setPosition(Vec2(x, y));
 		player->setScale(scale);
 		scene->addChild(player);
 	}
 
+	/* 获取攻击范围 */
+	int getAtkRange() { return atk_range; }
+
+	/* 复活 */
+	virtual void Revive();
+
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
-	virtual void Attack(int dir = DOWN);
+	// opp为攻击对象
+	virtual void Attack(int dir = DOWN, Player* opp = nullptr);
 
 	/* 受伤动画 */
 	virtual void Hurt();
@@ -82,11 +94,10 @@ public:
 	/* 走路动画 */
 	virtual void Move(int dir);
 
+	/* 死亡 */
+	virtual void Die();
+
 	/* 等级加成 */
-	virtual void Level_Bonus();
-};
-
-class Monster {
-
+	virtual void LevelBonus();
 };
 

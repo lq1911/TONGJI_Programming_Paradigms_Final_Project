@@ -43,14 +43,14 @@ bool SetMap::init() {
 
     ///////////////////////
     // lq加的调试小人
-    PLAYER = new Player("Player"+std::to_string(SetPlayerScene::who+1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 5, 1);
+    PLAYER = new Player("Player"+std::to_string(SetPlayerScene::who+1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 50, 1);
     auto listener = EventListenerKeyboard::create();
     listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this); 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     // 加个npc
-    Player* npc1 = new Player("npc1", this, 600, 300, 1.0f, 0, 0, 0, 0, 0, 0, 0);
+    npc1 = new Player("npc1", this, 600, 300, 1.0f, 0, 0, 0, 0, 0, 50, 0);
     //加个树妖
-    Player* Monster1 = new Player("Monster1", this, 1000, 600, 1.0f, 0, 0, 0, 0, 0, 0, 0);
+    Monster1 = new Player("Monster1", this, 1000, 600, 1.0f, 0, 0, 0, 100, 0, 50, 0);
     ///////////////////////
 
 
