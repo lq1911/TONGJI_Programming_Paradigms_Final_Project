@@ -198,8 +198,8 @@ Scene* SetPlayerScene::selectRoleScene() {
     select_role_scene->addChild(P5Button, 0);
     // Player5Í¼Ïñ
     auto P5Sprite = Sprite::create("Role/Player5/1.png");
-    P5Sprite->setPosition(Vec2((visibleSize.width / 6) * 5, visibleSize.height / 2 + 20));
-    P5Sprite->setScale(1.1f);
+    P5Sprite->setPosition(Vec2((visibleSize.width / 6) * 5, visibleSize.height / 2 + 30));
+    P5Sprite->setScale(1.2f);
     select_role_scene->addChild(P5Sprite);
 
     /* Ìø×ª */

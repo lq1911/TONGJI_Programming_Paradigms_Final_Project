@@ -4,6 +4,30 @@
 
 /* 攻击动画 */
 void Player::Attack(int dir) {
+    if (who == "Monster1") {
+        Vector<SpriteFrame*> animFrames;
+        animFrames.reserve(8);
+        for (int i = 17; i <= 24; i++) {
+            auto texture = Director::getInstance()->getTextureCache()->addImage("Role/" + who + "/" + std::to_string(i) + ".png");
+            float width = texture->getPixelsWide();
+            float height = texture->getPixelsHigh();
+            Rect rectInPixels(0, 0, width, height);
+            auto spriteFrame = SpriteFrame::createWithTexture(
+                texture,
+                CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+            );
+            animFrames.pushBack(spriteFrame);
+        }
+        // 播放
+        Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        Animate* animate = Animate::create(animation);
+        player->stopAllActions();
+        player->runAction(animate);
+        CCLOG("%s attack", who);
+        // 退出
+        return;
+    }
+
     /* 更改面朝方向 */
     face_to = dir;
 
@@ -53,6 +77,67 @@ void Player::Attack(int dir) {
     player->runAction(animate);
 
     CCLOG("%s attack", who); 
+}
+
+/* 受伤动画 */
+void Player::Hurt() {
+    /* Monster1:树妖 */
+    if (who == "Monster1") {
+        Vector<SpriteFrame*> animFrames;
+        animFrames.reserve(4);
+        for (int i = 13; i <= 16; i++) {
+            auto texture = Director::getInstance()->getTextureCache()->addImage("Role/" + who + "/" + std::to_string(i) + ".png");
+            float width = texture->getPixelsWide();
+            float height = texture->getPixelsHigh();
+            Rect rectInPixels(0, 0, width, height);
+            auto spriteFrame = SpriteFrame::createWithTexture(
+                texture,
+                CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+            );
+            animFrames.pushBack(spriteFrame);
+        }
+        // 播放
+        Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+        Animate* animate = Animate::create(animation);
+        player->stopAllActions();
+        player->runAction(animate);
+        CCLOG("%s hurt", who);
+        return;
+    }
+
+    /* 玩家角色 */
+    std::string s = "Role/" + who + "atked/";
+    // 根据方向确认第一张图片
+    int start = 1;
+    if (face_to == DOWN)
+        start = 1;
+    else if (face_to == LEFT)
+        start = 5;
+    else if (face_to == RIGHT)
+        start = 9;
+    else if (face_to == UP)
+        start = 13;
+    // 帧动画
+    Vector<SpriteFrame*> animFrames;
+    animFrames.reserve(4);
+    for (int i = start; i < start + 4; i++) {
+        auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
+        float width = texture->getPixelsWide();
+        float height = texture->getPixelsHigh();
+        Rect rectInPixels(0, 0, width, height);
+        auto spriteFrame = SpriteFrame::createWithTexture(
+            texture,
+            CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+        );
+        animFrames.pushBack(spriteFrame);
+    }
+    // 播放
+    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
+    Animate* animate = Animate::create(animation);
+    player->stopAllActions();
+    player->runAction(animate);
+
+    CCLOG("%s hurt", who);
 }
 
 /* 走路动画 */
