@@ -5,6 +5,7 @@
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
 #include "SetMap.h"
+#include "CameraFollowScene.h"
 
 class HelloWorld : public cocos2d::Scene
 {

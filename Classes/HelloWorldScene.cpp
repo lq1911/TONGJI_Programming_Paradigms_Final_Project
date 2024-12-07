@@ -44,9 +44,15 @@ bool HelloWorld::init()
             auto Map = SetMap::createScene();
             Director::getInstance()->replaceScene(Map); // ³¡¾°ÇÐ»»
             */
-        auto scene = SetPlayerScene::createScene();
-        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
-        CCLOG("Button clicked, switching to SetPlayerScene.");
+
+
+            auto scene = SetPlayerScene::createScene();
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»
+            CCLOG("Button clicked, switching to SetPlayerScene.");
+
+            /*auto scene = CameraFollowScene::createScene();
+            Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK)); // ³¡¾°ÇÐ»»*/
+
         
         }
         });
