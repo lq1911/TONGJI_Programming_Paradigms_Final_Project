@@ -28,12 +28,23 @@ void Monster::Die() {
 	Creature::Die();
 }
 
-
+void Monster::Chase() {
+	Vec2 direction = target->getPosition() - this->getPosition();//方向
+	direction.normalize();//单位化
+	Vec2 newPosition = this->getPosition() + direction * this->GetSpeed() * deltatime;//这一帧移动方向
+	this->setPosition(newPosition);
+}
 //怪物等级加成
 void Monster::Level_Bonus() {
 	Creature::Level_Bonus();
 	base_exp = base_exp * level;
 }
+//返回follow_range
+int Monster::GetFollowRange()const {
+	return follow_range;
+}
+
+
 //ai的update
 void MonsterAI::update(float dt) {
 	switch (currentState) {
@@ -66,14 +77,31 @@ void MonsterAI::update(float dt) {
 		break;
 	}
 }
+//判断是否攻击
+bool MonsterAI::shouldAttackPlayer() {
+	float distance = monster->getPosition().distance(target->getPosition());
+	if (distance <= monster->GetATKRange()) {
+		return true;
+	}
+	return false;
+}
+//判断是否追踪
 bool MonsterAI::shouldChasePlayer() {
 	float distance = monster->getPosition().distance(target->getPosition());
-	if (distance > monster.) {
-		Vec2 direction = player->getPosition() - this->getPosition();
-		direction.normalize();
-		Vec2 newPosition = this->getPosition() + direction * speed * dt;
-		this->setPosition(newPosition);
+	if (distance < monster->GetFollowRange()&&distance>monster->GetATKRange()) {
+		return true;
 	}
+	return false;
+}
+bool MonsterAI::shouldFlee() {
+	if (current_hp < hp / 10) {
+		return ture;
+	}
+	else if (hp < 3 * target->GetATKValue()) {
+		return ture;
+	}
+
+
 }
 //返回现状态
 MonsterState MonsterAI::GetState()const {

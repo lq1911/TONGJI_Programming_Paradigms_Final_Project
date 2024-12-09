@@ -3,13 +3,14 @@
 #include "Player.h"
 
 /* 攻击动画 */
-void Player::Attack(int dir, Player* opp) {
+
+void Creature::Attack(int dir, Creature* opp) {
     // 死了,直接返回
     if (isDead)
         return;
 
     /* Monster1:树妖 */
-    if (who == "Monster1") {
+    if (who == "Monster1") {               //who就是Creature类中的role，按你意愿更改，可改Creature
         Vector<SpriteFrame*> animFrames;
         animFrames.reserve(8);
         for (int i = 17; i <= 24; i++) {
@@ -26,7 +27,7 @@ void Player::Attack(int dir, Player* opp) {
         // 播放
         Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         Animate* animate = Animate::create(animation);
-        player->stopAllActions();
+        player->stopAllActions();                        //player就是Creature类中的mySprite
         player->runAction(animate);
         CCLOG("%s attack", who);
         // 对手受伤动画
@@ -90,7 +91,7 @@ void Player::Attack(int dir, Player* opp) {
 }
 
 /* 受伤动画 */
-void Player::Hurt() {
+void Creature::Hurt() {
     // 死了,直接返回
     if (isDead) {
         return;
@@ -156,7 +157,7 @@ void Player::Hurt() {
 }
 
 /* 走路动画 */
-void Player::Move(int dir) {
+void Creature::Move(int dir) {
     // 死了,直接返回
     if (isDead) {
         return;
@@ -228,7 +229,7 @@ void Player::Move(int dir) {
 }
 
 /* 死亡 */
-void Player::Die() {
+void Creature::Die() {
     // 已经死了,直接返回
     if (isDead) {
         return;
@@ -248,82 +249,8 @@ void Player::Die() {
     player->setPosition(Vec2(player->getPosition().x, player->getPosition().y - 30));
 }
 
-/* 复活 */
-void Player::Revive() {
-    isDead = true;
-    face_to = DOWN;
-    player->stopAllActions();
-    player->setTexture("Role/" + who + "atked/17.png");
-    player->setPosition(Vec2(player->getPosition().x, player->getPosition().y + 30));
-}
 
-/* 等级加成 */
-void Player::LevelBonus() {
-    level++;
-}
-/*
-//攻击
-void Creature::Attack(Node* target, int idx) {
-    //计算攻击范围
-    //如果target在攻击范围内
-    //target.Hurt(atk);
-    //动画实现
-    // 图片名前缀:除编号部分
-    string s;
-    if (idx == 1 || idx == 2)
-        s = "Role/Player/" + role + "/attack" + std::to_string(idx) + "/" + role + "_atk" + std::to_string(idx) + "_";
-    else if (idx == 3)
-        s = "Role/Player/" + role + "/attack_final/" + role + "_final_";
-    // 帧数
-    int count = 0;
-    if (role == "Arthur") {
-        if (idx == 1)
-            count = 10;
-        else if (idx == 2)
-            count = 12;
-        else if (idx == 3)
-            count = 15;
-    }
-    else if (role == "Longbow") {
-        if (idx == 1)
-            count = 7;
-        else if (idx == 2)
-            count = 12;
-        else if (idx == 3)
-            count = 18;
-    }
-    // 帧动画准备
-    Vector<SpriteFrame*> animFrames;//储存动画帧的容器
-    animFrames.reserve(count);//分配内存
-    //创建（单个）动画对象，将其装入容器中
-    for (int i = 1; i <= count; i++) {
-        auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
-        float width = texture->getPixelsWide();
-        float height = texture->getPixelsHigh();
-        Rect rectInPixels(0, 0, width, height);
-        auto spriteFrame = SpriteFrame::createWithTexture(
-            texture,
-            CC_RECT_PIXELS_TO_POINTS(rectInPixels)
-        );
-        animFrames.pushBack(spriteFrame);
-    }
-    //动画
-    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
-    //Animate动作
-    Animate* animate = Animate::create(animation);
-    // mySprite->runAction(RepeatForever::create(animate));
-    mySprite->runAction(animate);  // 播放一次
-    scene->addChild(mySprite);//添加至场景
-}
-//静止
-void Creature::Show() {
-    mySprite->setPosition(Vec2(x, y));
-    scene->addChild(mySprite);
-}
-//移动
-void Creature::Move() {
 
-}
 //等级加成
 void Creature::Level_Bonus() {
     int hp = hp * level;
@@ -334,7 +261,18 @@ void Creature::Level_Bonus() {
     int speed = speed * (0.05 * level + 1);
 
 }
-
+// 返回speed
+int Creature::getSpeed()const {
+    return speed;
+}
+/* 复活 */
+void Player::Revive() {
+    isDead = true;
+    face_to = DOWN;
+    player->stopAllActions();
+    player->setTexture("Role/" + who + "atked/17.png");
+    player->setPosition(Vec2(player->getPosition().x, player->getPosition().y + 30));
+}
 //Player获得奖励
 void Player::GetBonus(Bonus bonus) {
     //经验奖励
@@ -349,4 +287,3 @@ void Player::GetBonus(Bonus bonus) {
     //物品奖励
     //暂待，需物品和装备
 }
-*/

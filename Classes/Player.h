@@ -7,7 +7,17 @@
 
 USING_NS_CC;
 using namespace std;
-/*
+struct Equipment {//交由背包完成
+	int a;
+};
+struct Object {
+	;
+};
+struct Bonus {
+	Object object;
+	Equipment equipment;
+	int exp = 0;
+};
 class Creature :public Node {
 protected:
 	string role;//就是name
@@ -21,9 +31,11 @@ protected:
 	int x;//坐标
 	int y;
 
-	Sprite* mySprite;//精灵
+	
 	Scene* scene;//所在场景？
 public:
+	Sprite* mySprite;//精灵//不建议放在public，下同
+	int face_to;    // 面朝方向dir
 	Creature(string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y) :
 		role(role), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level),
 		scene(nullptr), mySprite(nullptr) {
@@ -42,9 +54,9 @@ public:
 	// 攻击,对s赋值时最好不要使用Player和Monster，或将Monster的图片也装进role/player文件夹里
 	//s = "Role/     ->Player<-     /" + name + "/attack" + std::to_string(idx) + "/" + name + "_atk" + std::to_string(idx) + "_";
 	//以下几个函数相同
-	virtual void Attack(Node* target, int idx);
+	virtual void Attack(int dir = DOWN, Creature* opp = nullptr);
 	//受伤
-	void Hurt(int atk);
+	virtual void Hurt();
 	//死亡
 	virtual void Die();
 	//恢复
@@ -52,39 +64,21 @@ public:
 	// 静止
 	virtual void Show();
 	//移动
-	virtual void Move();
+	virtual void Move(int dir);
 	//等级加成
 	virtual void Level_Bonus();
 	// 转变场景
 	virtual void ChangeScene(Scene* sc) {//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
 		scene = sc;
 	}
+	//返回speed
+	int getSpeed()const;
+	
+	/* 获取攻击范围 */
+	int getAtkRange()const { return atk_range; }
 };
-//角色类
-class Player :public Creature {
-private:
-	int current_exp;//角色现有经验值
-	int next_level_exp;//达到下一级所需经验值
-public:
-	Player(string name, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y) :
-		Creature(name, hp, mp, atk, atk_range, def, speed, level, x, y), current_exp(0), next_level_exp(100) {
-		string s = "Role/Player/" + name + "/" + name;
-		auto mySprite = Sprite::create(s + ".png");
-		mySprite->setPosition(Vec2(x, y));
-		Level_Bonus();
-	}
-	//装备，加成数值，不考虑贴图,需要与背包对接,参数是一个Equipment结构体，结构体内需要含atk和def，即攻击和防御
-	void Equipment() {
-		;
-	}
-	// 技能，以组合技形式出现
-	void Combo();
-	//获得奖励，参数Bonus结构体,结构体内需含有经验值，物品部分交给背包
-	void GetBonus(Bonus bonus);
-	//战斗状态
-	void IsInCombat();
-};
-*/
+
+
 /*
 class Creature :public Node {
 	//以下几个函数相同
@@ -116,31 +110,27 @@ enum dir {
 	DOWN     // 3
 };
 
-class Player :public Node {
+class Player :public Creature {
+private:
+	int current_exp;//角色现有经验值
+	int next_level_exp;//达到下一级所需经验值
 protected:
-	/* 玩家角色 */
-	std::string who; // 玩家名字
+	 // 玩家名字在Creature类里已定义了:(
 
-	Scene* scene;    // 场景指针
+	
 
 	float scale;     // 缩放比例
 
-	int face_to;    // 面朝方向dir
+	
 	int x, y;       // 坐标
 
-	int hp;          // 基础生命
-	int mp;          // 基础魔力
-	int atk;         // 基础攻击值
-	int atk_range;   // 攻击范围
-	int def;         // 基础防御值
-	int speed;       // 速度
-	int level;       // 等级
+
 
 	bool isDead;     // 生死状态
 
 public:
-	/* 精灵 */
-	Sprite* player;
+	// 精灵//Creature中有了:( 
+
 
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
@@ -153,10 +143,12 @@ public:
 		player->setPosition(Vec2(x, y));
 		player->setScale(scale);
 		scene->addChild(player);
+		//string s = "Role/Player/" + name + "/" + name;
+		//auto mySprite = Sprite::create(s + ".png");
+		//mySprite->setPosition(Vec2(x, y));
+		//Level_Bonus();
 	}
 
-	/* 获取攻击范围 */
-	int getAtkRange() { return atk_range; }
 
 	/* 复活 */
 	virtual void Revive();
@@ -167,17 +159,22 @@ public:
 	// opp为攻击对象
 	virtual void Attack(int dir = DOWN, Player* opp = nullptr);
 
-	/* 受伤动画 */
-	virtual void Hurt();
+
+
+
+
+
+
 	
-	/* 走路动画 */
-	virtual void Move(int dir);
+	//装备，加成数值，不考虑贴图,需要与背包对接,参数是一个Equipment结构体，结构体内需要含atk和def，即攻击和防御
+	void Equipment() {
+		;
+	}
+	// 技能，以组合技形式出现
+	void Combo();
+	//获得奖励，参数Bonus结构体,结构体内需含有经验值，物品部分交给背包
+	void GetBonus(Bonus bonus);
 
-	/* 死亡 */
-	virtual void Die();
-
-	/* 等级加成 */
-	virtual void LevelBonus();
 };
 
 #endif __PLAYER_H__

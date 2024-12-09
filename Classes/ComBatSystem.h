@@ -4,19 +4,10 @@
 #include "cocos2d.h"
 #include "Player.h"
 USING_NS_CC;
+#define deltatime 1/60// 默认的帧数
 using namespace std;
 
-struct Equipment {//交由背包完成
-	int a;
-};
-struct Object {
-	;
-};
-struct Bonus {
-	Object object;
-	Equipment equipment;
-	int exp=0;
-};
+
 enum class State {
 	IDLE, //空闲，静止，用于Npc
 	WALKING, //行走，随机，用于Npc和怪物
@@ -63,7 +54,8 @@ public:
 	void Attack();
 	//寻路，徘徊，或静止
 	// 返回follow_range
-	int GetFollowRange();
+	int GetFollowRange()const;
+
 };
 //怪物AI类
 class MonsterAI {
@@ -71,6 +63,7 @@ private:
 	MonsterState currentState;//怪物状态
 	Player* target;
 	Monster* monster;
+
 public:
 	MonsterAI(Player* target,Monster*monster) : currentState(MonsterState::PATROLLING), target(target),monster(monster) {}//默认为巡逻
 	//判断是否追踪
