@@ -21,6 +21,7 @@ public:
 	Player* PLAYER;
 	// Ê÷ÑýMonster1
 	Player* Monster1;
+	Player* Monster2;
 	// NPC
 	Player* npc1;
 	// °´¼ü°ó¶¨

@@ -52,6 +52,8 @@ bool SetMap::init() {
     npc1 = new Player("npc1", this, 600, 300, 1.0f, 0, 0, 0, 0, 0, 50, 0);
     //加个树妖
     Monster1 = new Player("Monster1", this, 1000, 600, 1.0f, 0, 0, 0, 100, 0, 50, 0);
+    //加个哥布林
+    Monster2 = new Player("Monster2", this, 1500, 800, 3.0f, 0, 0, 0, 100, 0, 50, 0);
     ///////////////////////
 
 

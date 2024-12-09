@@ -51,13 +51,28 @@ public:
 	Sprite* mySprite; // 精灵
 	int face_to;      // 面朝方向
 
+	/* levelBonus */
+	void levelBonus() {
+		speed = speed * (0.05 * level + 1);
+		hp = level * hp;
+		mp = mp * level;
+		atk = atk * level;
+		def = def * level;
+	}
+
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	// 建议:speed默认设为50,atk_range默认设100
-	Creature(string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y) :
-		role(role), hp(hp* level), mp(mp* level), atk(atk* level), atk_range(atk_range), def(def* level), speed(speed* (0.05 * level + 1)), level(level),
-		scene(nullptr), mySprite(nullptr), face_to(DOWN), isDead(false) {
+	Creature(string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,int scale,Scene* scene) :
+		role(role), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level),scale(scale),
+		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr) {
+		// 精灵初始化
+		mySprite = Sprite::create("Role/" + role + "/1.png");
+		mySprite->setPosition(Vec2(x, y));
+		mySprite->setScale(scale);
+		scene->addChild(mySprite);
 		
+		levelBonus();
 	}
 
 	// 空的构造函数，供调试
@@ -74,12 +89,6 @@ public:
 		def = 1;
 		speed = 10;
 		level = 1;
-	}
-
-	/* 析构函数 */
-	~Creature() { 
-		scene = nullptr;
-		mySprite = nullptr;
 	}
 
 	/* 释放攻击技能 */
@@ -100,8 +109,10 @@ public:
 
 	/* 恢复 */
 	virtual void Heal();
-	
+
 	/* 移动 */
+	// Monster1:树妖,无法移动
+	// Monster2:哥布林,可四方向移动
 	virtual void Move(int dir);
 
 	/* 等级加成 */
@@ -114,7 +125,7 @@ public:
 
 	/* 获取速度speed */
 	int getSpeed()const { return speed; }
-	
+
 	/* 获取攻击范围atk_range */
 	int getAtkRange()const { return atk_range; }
 };
@@ -125,42 +136,20 @@ private:
 	int current_exp;       // 角色现有经验值
 	int next_level_exp;    // 达到下一级所需经验值
 protected:
-	 // 玩家名字在Creature类里已定义了:(	
-	
-	//int x, y;       // 坐标
+	// 玩家名字在Creature类里已定义了:(	
+
+   //int x, y;       // 坐标
 public:
 	// 精灵//Creature中有了:( 
-
-	/* 构造函数的辅助函数 */
-	void playerInit(string Role, Scene* Scene, int Scale, int Hp, int Mp, int Atk, int Atk_range, int Def, int Speed, int Level, int x, int y) {
-		// 基本信息初始化
-		role = Role;
-		scene = Scene;
-		scale = Scale;
-		// 属性初始化
-		face_to = DOWN;
-		isDead = false;
-		hp = Hp;
-		mp = Mp;
-		atk = Atk;
-		atk_range = Atk_range;
-		def = Def;
-		speed = Speed;
-		level = Level;
-		// 精灵初始化
-		mySprite= Sprite::create("Role/" + role + "/1.png");
-		mySprite->setPosition(Vec2(x, y));
-		mySprite->setScale(scale);
-		scene->addChild(mySprite);
-		// 其它
-		// Level_Bonus();
-	}
 
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	// 建议:speed默认设为50,atk_range默认设100
-	Player(std::string who,Scene* scene,int x,int y,float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) {
-		playerInit(who, scene, scale, hp, mp, atk, atk_range, def, speed, level, x, y);
+	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level):
+		Creature(who, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene) {
+		// 角色现有经验值、达到下一级所需经验值初始化条件记得改
+		current_exp = 0;
+		next_level_exp = 0;
 	}
 
 	/* 释放攻击技能 */
@@ -168,7 +157,7 @@ public:
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
 	//virtual void Attack(int dir = DOWN, Player* opp = nullptr);
-	
+
 	//装备，加成数值，不考虑贴图,需要与背包对接,参数是一个Equipment结构体，结构体内需要含atk和def，即攻击和防御
 	void Equipment() {
 		;
