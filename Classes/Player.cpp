@@ -3,18 +3,17 @@
 #include "Player.h"
 
 /* 攻击动画 */
-
 void Creature::Attack(int dir, Creature* opp) {
     // 死了,直接返回
     if (isDead)
         return;
 
     /* Monster1:树妖 */
-    if (who == "Monster1") {               //who就是Creature类中的role，按你意愿更改，可改Creature
+    if (role == "Monster1") {           
         Vector<SpriteFrame*> animFrames;
         animFrames.reserve(8);
         for (int i = 17; i <= 24; i++) {
-            auto texture = Director::getInstance()->getTextureCache()->addImage("Role/" + who + "/" + std::to_string(i) + ".png");
+            auto texture = Director::getInstance()->getTextureCache()->addImage("Role/" + role + "/" + std::to_string(i) + ".png");
             float width = texture->getPixelsWide();
             float height = texture->getPixelsHigh();
             Rect rectInPixels(0, 0, width, height);
@@ -27,9 +26,9 @@ void Creature::Attack(int dir, Creature* opp) {
         // 播放
         Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         Animate* animate = Animate::create(animation);
-        player->stopAllActions();                        //player就是Creature类中的mySprite
-        player->runAction(animate);
-        CCLOG("%s attack", who);
+        mySprite->stopAllActions();                        //player就是Creature类中的mySprite
+        mySprite->runAction(animate);
+        CCLOG("%s attack", role);
         // 对手受伤动画
         if (opp != nullptr) {
             opp->Hurt();
@@ -42,7 +41,7 @@ void Creature::Attack(int dir, Creature* opp) {
     // 更改面朝方向
     face_to = dir;
     // 图片名前缀:除编号部分
-    std::string s = "Role/" + who + "atk/";
+    std::string s = "Role/" + role + "atk/";
     // 根据方向确认第一张图片 
     int start = 1;
     if (face_to == DOWN)
@@ -69,7 +68,7 @@ void Creature::Attack(int dir, Creature* opp) {
             animFrames.pushBack(spriteFrame);
         }
     }
-    auto texture = Director::getInstance()->getTextureCache()->addImage("Role/"+who+"/" + std::to_string(start) + ".png");
+    auto texture = Director::getInstance()->getTextureCache()->addImage("Role/"+role+"/" + std::to_string(start) + ".png");
     float width = texture->getPixelsWide();
     float height = texture->getPixelsHigh();
     Rect rectInPixels(0, 0, width, height);
@@ -81,9 +80,9 @@ void Creature::Attack(int dir, Creature* opp) {
     // 播放
     Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
     Animate* animate = Animate::create(animation);
-    player->stopAllActions(); 
-    player->runAction(animate);
-    CCLOG("%s attack", who); 
+    mySprite->stopAllActions(); 
+    mySprite->runAction(animate);
+    CCLOG("%s attack", role); 
     // 对手受伤动画
     if (opp != nullptr) {
         opp->Hurt();
@@ -98,11 +97,11 @@ void Creature::Hurt() {
     }
 
     /* Monster1:树妖 */
-    if (who == "Monster1") {
+    if (role == "Monster1") {
         Vector<SpriteFrame*> animFrames;
         animFrames.reserve(4);
         for (int i = 13; i <= 16; i++) {
-            auto texture = Director::getInstance()->getTextureCache()->addImage("Role/" + who + "/" + std::to_string(i) + ".png");
+            auto texture = Director::getInstance()->getTextureCache()->addImage("Role/" + role + "/" + std::to_string(i) + ".png");
             float width = texture->getPixelsWide();
             float height = texture->getPixelsHigh();
             Rect rectInPixels(0, 0, width, height);
@@ -115,14 +114,14 @@ void Creature::Hurt() {
         // 播放
         Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         Animate* animate = Animate::create(animation);
-        player->stopAllActions();
-        player->runAction(animate);
-        CCLOG("%s hurt", who);
+        mySprite->stopAllActions();
+        mySprite->runAction(animate);
+        CCLOG("%s hurt", role);
         return;
     }
 
     /* 玩家角色 */
-    std::string s = "Role/" + who + "atked/";
+    std::string s = "Role/" + role + "atked/";
     // 根据方向确认第一张图片
     int start = 1;
     if (face_to == DOWN)
@@ -150,10 +149,57 @@ void Creature::Hurt() {
     // 播放
     Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.3f);
     Animate* animate = Animate::create(animation);
-    player->stopAllActions();
-    player->runAction(animate);
+    mySprite->stopAllActions();
+    mySprite->runAction(animate);
 
-    CCLOG("%s hurt", who);
+    CCLOG("%s hurt", role);
+}
+
+/* 恢复动画 */
+void Creature::Heal() {
+    // 死了,直接返回
+    if (isDead) {
+        return;
+    }
+
+    /* 玩家角色 */
+    std::string s = "Role/" + role + "atked/";
+    // 根据方向确认第一张图片
+    int start = 2;
+    if (face_to == DOWN)
+        start = 2;
+    else if (face_to == LEFT)
+        start = 4;
+    else if (face_to == RIGHT)
+        start = 6;
+    else if (face_to == UP)
+        start = 8;
+    // 帧动画
+    Vector<SpriteFrame*> animFrames;
+    animFrames.reserve(4);
+    vector<int> idx;
+    idx.push_back(start);
+    idx.push_back(17 + start / 2);
+    idx.push_back(17 + start / 2);
+    idx.push_back(start);
+    for (int i = 0; i < 4; i++) {
+        auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(idx[i]) + ".png");
+        float width = texture->getPixelsWide();
+        float height = texture->getPixelsHigh();
+        Rect rectInPixels(0, 0, width, height);
+        auto spriteFrame = SpriteFrame::createWithTexture(
+            texture,
+            CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+        );
+        animFrames.pushBack(spriteFrame);
+    }
+    // 播放
+    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+    Animate* animate = Animate::create(animation);
+    mySprite->stopAllActions();
+    mySprite->runAction(animate);
+
+    CCLOG("%s heal", role);
 }
 
 /* 走路动画 */
@@ -167,7 +213,7 @@ void Creature::Move(int dir) {
     face_to = dir;
 
     /* 图片名前缀:除编号部分 */
-    std::string s = "Role/" + who + "/";
+    std::string s = "Role/" + role + "/";
 
     /* 根据方向确认第一张图片及移动路径 */
     Vec2 moveBy;
@@ -223,8 +269,8 @@ void Creature::Move(int dir) {
     auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);
 
     // 执行动作
-    player->stopAllActions();
-    player->runAction(moveAndAnimate);
+    mySprite->stopAllActions();
+    mySprite->runAction(moveAndAnimate);
 
 }
 
@@ -238,45 +284,36 @@ void Creature::Die() {
     isDead = true;
     face_to = DOWN;
     /* Monster1:树妖 */
-    if (who == "Monster1") {
-        player->stopAllActions();
-        player->setTexture("Role/" + who + "/25.png");
+    if (role == "Monster1") {
+        mySprite->stopAllActions();
+        mySprite->setTexture("Role/" + role + "/25.png");
         return;
     }
     /* 玩家角色 */
-    player->stopAllActions();
-    player->setTexture("Role/" + who + "atked/17.png");
-    player->setPosition(Vec2(player->getPosition().x, player->getPosition().y - 30));
+    mySprite->stopAllActions();
+    mySprite->setTexture("Role/" + role + "atked/17.png");
+    mySprite->setPosition(Vec2(mySprite->getPosition().x, mySprite->getPosition().y - 30));
 }
 
-
-
-//等级加成
-void Creature::Level_Bonus() {
-    int hp = hp * level;
-    int mp = mp * level;
-    int atk = atk * level;
-
-    int def = def * level;
-    int speed = speed * (0.05 * level + 1);
-
-}
-// 返回speed
-int Creature::getSpeed()const {
-    return speed;
-}
 /* 复活 */
-void Player::Revive() {
-    isDead = true;
+void Creature::Revive() {
+    if (!isDead) {
+        return;
+    }
+    isDead = false;
     face_to = DOWN;
-    player->stopAllActions();
-    player->setTexture("Role/" + who + "atked/17.png");
-    player->setPosition(Vec2(player->getPosition().x, player->getPosition().y + 30));
+    mySprite->stopAllActions();
+    mySprite->setTexture("Role/" + role + "atked/17.png");
+    mySprite->setPosition(Vec2(mySprite->getPosition().x, mySprite->getPosition().y + 30));
 }
+
 //Player获得奖励
 void Player::GetBonus(Bonus bonus) {
     //经验奖励
     current_exp += bonus.exp;
+
+    // Creature::Level_Bonus;报错,记得改
+    /*
     //升级
     while (current_exp >= next_level_exp) {
         current_exp -= next_level_exp;
@@ -286,4 +323,5 @@ void Player::GetBonus(Bonus bonus) {
     }
     //物品奖励
     //暂待，需物品和装备
+    */
 }

@@ -1,4 +1,4 @@
-
+/*
 #ifndef __Combat_System_H__
 #define __Combat_System_H__
 #include "cocos2d.h"
@@ -79,3 +79,4 @@ public:
 };
 #endif// __Combat_System_H__
 
+*/

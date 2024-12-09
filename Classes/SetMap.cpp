@@ -43,6 +43,7 @@ bool SetMap::init() {
 
     ///////////////////////
     // lq加的调试小人
+    
     PLAYER = new Player("Player"+std::to_string(SetPlayerScene::who+1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 50, 1);
     auto listener = EventListenerKeyboard::create();
     listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this); 

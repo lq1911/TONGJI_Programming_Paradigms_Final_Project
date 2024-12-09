@@ -1,4 +1,4 @@
-
+/*
 #include "CombatSystem.h"
 #include "Player.h"
 USING_NS_CC;
@@ -108,3 +108,4 @@ MonsterState MonsterAI::GetState()const {
 	return currentState;
 }
 
+*/
