@@ -56,11 +56,60 @@ bool SetMap::init() {
     Monster2 = new Player("Monster2", this, 1500, 800, 3.0f, 0, 0, 0, 100, 0, 50, 0);
     ///////////////////////
 
+    this->CameraFollowPlayer();    //注册摄像机跟随玩家的函数
 
     return true;
 }
 
+void SetMap::CameraFollowPlayer() {
+    // 获取默认摄像机
+    Camera* camera = getDefaultCamera();
 
+    // 设置摄像机的初始位置
+    float cameraZ = 600;
+
+    Vec2 playerPosition = PLAYER->mySprite->getPosition();
+
+    Vec3 cameraPosition(playerPosition.x, playerPosition.y, cameraZ);
+    camera->setPosition3D(cameraPosition);
+
+    // 注册鼠标滚轮事件
+    auto listener = EventListenerMouse::create();
+    listener->onMouseScroll = [=](EventMouse* event) {
+        // 获取滚轮的滚动方向
+        float scrollY = event->getScrollY();
+
+        // 获取当前摄像机的位置
+        Vec3 cameraPosition = camera->getPosition3D();
+
+        // 根据滚轮的方向改变摄像机的Z轴高度
+        // 向上滚动，Z轴值增加，摄像机向前
+        // 向下滚动，Z轴值减少，摄像机向后
+        cameraPosition.z += scrollY * 10.0f;  // 10.0f是控制滚动灵敏度的系数，可以调整
+
+        // 限制摄像机的高度（Z轴范围）
+        cameraPosition.z = std::min(cameraPosition.z, 600.0f);  // 最大高度
+        cameraPosition.z = std::max(cameraPosition.z, 200.0f);  // 最小高度
+
+        // 设置摄像机的位置
+        camera->setPosition3D(cameraPosition);
+
+        CCLOG("Camera Position: %f, %f, %f", cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        };
+
+    // 获取事件调度器并添加监听器
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+
+    // 在每一帧更新时更新摄像机位置并限制其范围
+    schedule([=](float dt) {
+        Vec3 cameraPosition = camera->getPosition3D();     // 获取当前摄像机的位置
+        Vec2 playerPosition = PLAYER->mySprite->getPosition();    //获取玩家位置
+       
+        // 根据玩家位置更新摄像机的位置
+        camera->setPosition3D(Vec3(playerPosition.x, playerPosition.y, cameraPosition.z));
+        }, "camera_update_key");
+}
 
 void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
     if (keyCode == EventKeyboard::KeyCode::KEY_M) {
