@@ -40,11 +40,12 @@ bool SetMap::init() {
 
     //添加初始地图至场景
     this->addChild(InitialMap);
-
+    InitialObstacle(InitialMap);    //初始化障碍物
+  
     ///////////////////////
     // lq加的调试小人
     
-    PLAYER = new Player("Player"+std::to_string(SetPlayerScene::who+1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 50, 1);
+    PLAYER = new Player("Player"+std::to_string(SetPlayerScene::who+1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 50, 1);
     auto listener = EventListenerKeyboard::create();
     listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this); 
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
@@ -128,4 +129,42 @@ void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			Director::getInstance()->resume();    //退出小地图恢复游戏
 		}
     }
+}
+
+void SetMap::InitialObstacle(cocos2d::TMXTiledMap* tileMap) {
+    TMXObjectGroup* objectLayer = tileMap->getObjectGroup("Obstacles");    //获取障碍物组
+    if (objectLayer) {
+        //遍历障碍物组，获取障碍物的位置信息
+        auto obstacles = objectLayer->getObjects();
+
+        for (const auto& obj : obstacles) {
+            ValueMap obstacle = obj.asValueMap();
+
+            // 根据对象类型读取其属性
+            // 障碍物全为矩形
+            float x = obstacle["x"].asFloat();
+            float y = obstacle["y"].asFloat();
+            float width = obstacle["width"].asFloat();
+            float height = obstacle["height"].asFloat();
+
+            // 创建矩形区域
+            Rect obstacleRect(x, y, width, height);
+
+            // 这里可以存储或使用这个区域来进行碰撞检测
+            // 比如添加到一个障碍物列表中
+            ObstacleList.push_back(obstacleRect);
+        }
+    }
+}
+
+bool SetMap::IsMoveable(cocos2d::Vec2& pos) {
+    for (const auto& obstacle : ObstacleList) {
+        if (obstacle.containsPoint(pos))     //判断是否与障碍物发生碰撞
+        {
+            CCLOG("Can't move to this position");
+            return false;
+        }
+    }
+    CCLOG("Can move to this position");
+    return true;
 }

@@ -63,7 +63,7 @@ public:
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	// 建议:speed默认设为50,atk_range默认设100
-	Creature(string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,int scale,Scene* scene) :
+	Creature(string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,float scale,Scene* scene) :
 		role(role), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level),scale(scale),
 		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr) {
 		// 精灵初始化
@@ -168,6 +168,7 @@ public:
 
 	//获得奖励，参数Bonus结构体,结构体内需含有经验值，物品部分交给背包
 	void GetBonus(Bonus bonus);
+
 };
 
-#endif __PLAYER_H__
+#endif //__PLAYER_H__

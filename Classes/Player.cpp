@@ -265,6 +265,7 @@ void Creature::Move(int dir) {
     // 创建移动动作
     auto moveAction = MoveBy::create(0.3f, moveBy);
 
+
     // 同时执行动画和移动
     auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);
 
