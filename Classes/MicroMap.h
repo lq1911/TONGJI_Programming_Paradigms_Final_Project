@@ -38,10 +38,9 @@ public:
     /*解锁区域地图*/
     void UnlockReign(int ReignIndex);
 
-    /*判断玩家是否在某个区域内*/
-    bool IsContainedReign(cocos2d::Rect& rect, cocos2d::Vec2& Pos);
+    /*判断玩家是否在某个区域内,TypeId为0时表示为矩形，TypeId为1时表示为圆形*/
+    bool IsContainedReign(cocos2d::Rect& rect, cocos2d::Vec2& Pos, int TypeId);
 
    CREATE_FUNC(MicroMap);
 };
-
 #endif // __MICRO_MAP_H__

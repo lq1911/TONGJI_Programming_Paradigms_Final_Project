@@ -43,31 +43,41 @@ void MicroMap::OnEnterMicroMap() {
 	MapReign.push_back({ visibleSize.width / 2,visibleSize.height,visibleSize.width / 2,visibleSize.height / 2 });    //初始化沙漠黑雾
 	MapReign.push_back({ visibleSize.width / 2,visibleSize.height / 2,visibleSize.width / 2,visibleSize.height / 2 });    //初始化雪地黑雾
 
+	MapReign.push_back({ visibleSize.width / 2,visibleSize.height / 2,visibleSize.height / 4,0 });    //初始化初始区域黑雾，其中前两个记录的是圆心坐标
+
+
 	//初始化各区域名字
 	ReignName.push_back("ForestArea");
 	ReignName.push_back("VolcanoArea");
 	ReignName.push_back("DesertArea");
 	ReignName.push_back("SnowyArea");
+	ReignName.push_back("RebirthTemple");
 
 	// 为每个区域分配空间,否则黑雾层未分配空间会发生向量越界
-
 	BlackFogLayer.resize(MapReign.size()); 
 	for (unsigned int i = 0; i < MapReign.size(); ++i) {
 		//创建黑雾层
 		BlackFogLayer[i] = cocos2d::DrawNode::create();
 		
-		//设置每个区域的矩形右上角
-		cocos2d::Vec2 destination;
-		destination.x = MapReign[i].origin.x + MapReign[i].size.width;
-		destination.y = MapReign[i].origin.y - MapReign[i].size.height;
+		if (i < 4) {    //前四个为矩形
+			//设置每个区域的矩形右上角
+			cocos2d::Vec2 destination;
+			destination.x = MapReign[i].origin.x + MapReign[i].size.width;
+			destination.y = MapReign[i].origin.y - MapReign[i].size.height;
 
-		//绘制每个区域黑雾
-		BlackFogLayer[i]->drawSolidRect(MapReign[i].origin, destination, Color4F::BLACK);    //设置黑雾的颜色为黑色,透明度为0
-		BlackFogLayer[i]->drawRect(MapReign[i].origin, destination, Color4F::WHITE);    //设置白色边框
+			//绘制每个区域黑雾
+			BlackFogLayer[i]->drawSolidRect(MapReign[i].origin, destination, Color4F::BLACK);    //设置黑雾的颜色为黑色,透明度为0
+			BlackFogLayer[i]->drawRect(MapReign[i].origin, destination, Color4F::WHITE);    //设置白色边框
+		}
+		else {    //初始区域为圆形
+			BlackFogLayer[i]->drawSolidCircle(MapReign[i].origin, MapReign[i].size.width, 0, 360, Color4F::BLACK);    //设置黑雾的颜色为黑色,透明度为0
+			BlackFogLayer[i]->drawCircle(MapReign[i].origin, MapReign[i].size.width, 0, 360, false, Color4F::WHITE);    //设置白色边框
+		}
+
 		IsBlackFogVisited.push_back(false);    //初始化黑雾为未被探索的状态
-
 		this->addChild(BlackFogLayer[i]);    //添加黑雾到层
 	}
+	
 }
 
 void MicroMap::DisperseBlackFog(int ReignIndex) {
@@ -86,13 +96,19 @@ void MicroMap::UnlockReign(int ReignIndex) {
 	this->DisperseBlackFog(ReignIndex);
 }
 
-bool MicroMap::IsContainedReign(cocos2d::Rect& rect, cocos2d::Vec2& Pos) {
-	//判断Pos是否在rect内
-	if (Pos.x >= rect.origin.x && Pos.x <= rect.origin.x + rect.size.width &&
-		Pos.y <= rect.origin.y && Pos.y >= rect.origin.y - rect.size.height)
-		return true;
-	else
-		return false;
+bool MicroMap::IsContainedReign(cocos2d::Rect& rect, cocos2d::Vec2& Pos, int TypeId) {
+	if (TypeId == 0) {
+		//判断Pos是否在rect内
+		if (Pos.x >= rect.origin.x && Pos.x <= rect.origin.x + rect.size.width &&
+			Pos.y <= rect.origin.y && Pos.y >= rect.origin.y - rect.size.height)
+			return true;
+		else
+			return false;
+	}
+	else {
+		//判断Pos是否在圆内
+		return rect.origin.distance(Pos) <= rect.size.width;    //这里判断，后面为圆的半径
+	}
 }
 
 void MicroMap::OnMouseMove(Event* event) {
@@ -109,9 +125,22 @@ void MicroMap::OnMouseMove(Event* event) {
 	ScreenSize.y = visibleSize.height - mouseY;
 
 	for (unsigned int i = 0; i < MapReign.size(); ++i) {
-		if (IsContainedReign(MapReign[i], ScreenSize)&&IsBlackFogVisited[i]) {
-			RegionLabel->setString(ReignName[i]);
-			break;
+		int TypeId = 0;
+		if (i == 4)
+			TypeId = 1;    //当i等于4的时候，说明是初始区域，初始区域为圆形
+
+		if (IsBlackFogVisited[i]) {
+			if (i < 4) {
+				if (IsContainedReign(MapReign[i], ScreenSize, TypeId) && !IsContainedReign(MapReign[4], ScreenSize, 1)) {
+					RegionLabel->setString(ReignName[i]);
+					break;
+				}
+			}
+			else
+				if (IsContainedReign(MapReign[i], ScreenSize, TypeId)) {
+					RegionLabel->setString(ReignName[i]);
+					break;
+				}
 		}
 	}
 
