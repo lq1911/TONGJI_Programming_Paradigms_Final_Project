@@ -9,8 +9,6 @@
 
 class SetMap :public cocos2d::Scene {
 private:
-
-
 	MicroMap* MicroMap;     // 微地图对象
 	bool IsMicroMapVisible;     // 微地图是否可见
 
@@ -68,6 +66,8 @@ public:
 	// 键盘事件处理,按下M键切换显示微地图
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
+	/*设置摄像机跟随玩家移动*/
+	void CameraFollowPlayer();
 
 	CREATE_FUNC(SetMap);
 };
