@@ -1,6 +1,5 @@
-/*
-#include "CombatSystem.h"
-#include "Player.h"
+
+#include "Monster.h"
 USING_NS_CC;
 
 
@@ -31,12 +30,12 @@ void Monster::Die() {
 void Monster::Chase() {
 	Vec2 direction = target->getPosition() - this->getPosition();//方向
 	direction.normalize();//单位化
-	Vec2 newPosition = this->getPosition() + direction * this->getSpeed() * deltatime;//这一帧移动方向
+	Vec2 newPosition = this->getPosition() + direction * this->getSpeed() * DELTATIME;//这一帧移动方向
 	this->setPosition(newPosition);
 }
 //怪物等级加成
-void Monster::Level_Bonus() {
-	Creature::Level_Bonus();
+void Monster::levelBonus() {
+	Creature::levelBonus();
 	base_exp = base_exp * level;
 }
 //返回follow_range
@@ -97,8 +96,8 @@ bool MonsterAI::shouldFlee() {
 	if (monster->getCurrentHp() < monster->getHp() / 10) {
 		return true;
 	}
-	else if (hp < 3 * target->getAtk()) {
-		return ture;
+	else if (monster->getCurrentHp() < 3 * target->DamageCal(target,monster)) {
+		return true;
 	}
 
 
@@ -108,4 +107,3 @@ MonsterState MonsterAI::GetState()const {
 	return currentState;
 }
 
-*/

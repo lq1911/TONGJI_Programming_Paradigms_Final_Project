@@ -1,10 +1,11 @@
-/*
-#ifndef __Combat_System_H__
-#define __Combat_System_H__
+
+#ifndef __MONSTER_H__
+#define __MONSTER_H__
 #include "cocos2d.h"
+#include "Creature.h"
 #include "Player.h"
 USING_NS_CC;
-#define deltatime 1/60// Ä¬ÈÏµÄÖ¡Êý
+#define DELTATIME 1/60// Ä¬ÈÏµÄÖ¡Êý
 using namespace std;
 
 
@@ -32,10 +33,10 @@ private:
 	MonsterState state;
 public:
 	Monster(string name, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,
-		MonsterState state, int exp, Bonus bonus, Player* player, int follow_range) :
-		Creature(name, hp, mp, atk, atk_range, def, speed, level, x, y),
+		MonsterState state, int exp, Bonus bonus, Player* player, int follow_range,float scale,Scene*scene) :
+		Creature(name, hp, mp, atk, atk_range, def, speed, level, x, y,scale,scene),
 		base_exp(exp), bonus(bonus), follow_range(follow_range),state(state) {
-		Level_Bonus();
+		levelBonus();
 		bonus.exp = base_exp;
 		;//ÔÝ´ý
 		target = player;
@@ -43,15 +44,13 @@ public:
 		// this->scheduleUpdate();
 	}
 	void update(float dt)override;
-	void Level_Bonus()override;
+	void levelBonus()override;
 	//ËÀÍö
 	void Die()override;
 	// Ö´ÐÐÑ²ÂßÂß¼­
 	void Patrol();
 	// ×·×Ù
 	void Chase();
-	// ¹¥»÷Íæ¼Ò
-	void Attack();
 	//Ñ°Â·£¬ÅÇ»²£¬»ò¾²Ö¹
 	// ·µ»Øfollow_range
 	int GetFollowRange()const;
@@ -77,6 +76,5 @@ public:
 	//·µ»ØÏÖ×´Ì¬
 	MonsterState GetState()const;
 };
-#endif// __Combat_System_H__
+#endif __MONSTER_H__
 
-*/
