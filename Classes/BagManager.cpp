@@ -23,11 +23,9 @@ BagManager* BagManager::getInstance()
 BagManager::BagManager() : _isBagOpen(false), _bagPanel(nullptr)
 {
     for (int i = 0; i < 40; i++)
-    {
         items[i] = nullptr;
-       
-    }
     items_num = 0;
+    
 }
 
 BagManager::~BagManager()
@@ -53,8 +51,9 @@ bool BagManager::init()
     return true;  // 初始化成功
 }
 
-void BagManager::showBag()
+void BagManager::showBag(Player& _player)
 {
+    player = _player;
     // 如果背包尚未打开，则创建并显示背包背景
     if (!_isBagOpen)
     {
@@ -70,6 +69,7 @@ void BagManager::showBag()
         _bagPanel->setVisible(true);  // 显示背包面板
         _isBagOpen = true;
     }
+    _player = player;
 }
 
 void BagManager::hideBag()
@@ -125,6 +125,8 @@ void BagManager::updateBagUI()
                 }
             }
         }
+    // 更新角色面板
+    createCharacterPanel();
 }
 
 // 创建背包背景
@@ -138,6 +140,8 @@ void BagManager::createBagBackground()
     // 创建背包标题
     auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 8);
     titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 10));
+    // 设置字体颜色为金色 (RGB: 255, 215, 0)
+    titleLabel->setTextColor(Color4B(255, 215, 0, 255));
     _bagBackground->addChild(titleLabel);
 }
 
@@ -154,6 +158,8 @@ void BagManager::createCharacterPanel()
     // 创建角色面板标题
     auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 8);
     characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 10));
+    // 设置字体颜色为金色 (RGB: 255, 215, 0)
+    characterTitleLabel->setTextColor(Color4B(255, 215, 0, 255));
     _characterBackground->addChild(characterTitleLabel);
 
     // 绘制边框
@@ -171,46 +177,206 @@ void BagManager::createCharacterPanel()
         Color4F(1.0f, 1.0f, 1.0f, 1.0f)
     );
     // 在角色面板两边添加装备栏
+    
     // 武器
     auto button1 = Button::create("item_slot.png");// 添加按钮
     button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y + borderHeight / 2 - 15));
     button1->addClickEventListener([](Ref* sender) {});// 添加按钮点击事件
     _characterBackground->addChild(button1);
-    auto labe1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 8);// 添加文字 
-    labe1->setPosition(Vec2(10, -6));
-    button1->addChild(labe1);
-    // 防具
+    auto label1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 8);// 添加文字 
+    label1->setPosition(Vec2(10, -6));
+    button1->addChild(label1);
+
+    // 获取玩家的武器图像并设置到武器栏
+    if (player._weapon != nullptr) 
+    {
+        // 获取武器图像并设置
+        auto weaponImage = player._weapon->image;
+        weaponImage->retain(); // 保证图像对象不被销毁
+        weaponImage->removeFromParent(); // 移除当前的父节点
+        if (weaponImage != nullptr) 
+        {
+            weaponImage->setPosition(Vec2(button1->getContentSize().width / 2, button1->getContentSize().height / 2));
+            button1->addChild(weaponImage);  // 将图像添加到武器栏按钮中
+        }
+    }
+
+    // 添加关闭按钮，如果装备栏有装备，就卸下装备
+    auto closeButton1 = Button::create("close_button.png");
+    closeButton1->setPosition(Vec2(button1->getContentSize().width, button1->getContentSize().height)); // 右上角位置
+    closeButton1->addClickEventListener([=](Ref* sender) {
+        if (player._weapon != nullptr)
+        {
+            player.atk -= player._weapon->increase_attack;
+            auto _item = dynamic_cast<item*>(player._weapon); // 将武器类指针转换为物品类指针
+            player._weapon = nullptr; // 将角色武器指针置为空指针
+            addItem(_item); // 将卸下的装备放回物品栏
+        }
+        });
+    button1->addChild(closeButton1);
+
+
+    // 护甲
     auto button2 = Button::create("item_slot.png");
     button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y - borderHeight / 2 + 15));
     button2->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button2);
-    auto labe2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 8);
-    labe2->setPosition(Vec2(10, -6));
-    button2->addChild(labe2);
+    auto label2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 8);
+    label2->setPosition(Vec2(10, -6));
+    button2->addChild(label2);
+
+    // 获取玩家的护甲图像并设置到护甲栏
+    if (player._armor != nullptr)
+    {
+        // 获取护甲图像并设置
+        auto armorImage = player._armor->image;
+        armorImage->retain(); // 保证图像对象不被销毁
+        armorImage->removeFromParent(); // 移除当前的父节点
+        if (armorImage != nullptr)
+        {
+            armorImage->setPosition(Vec2(button2->getContentSize().width / 2, button2->getContentSize().height / 2));
+            button2->addChild(armorImage);  // 将图像添加到护甲栏按钮中
+        }
+    }
+
+    // 添加关闭按钮，如果装备栏有装备，就卸下装备
+    auto closeButton2 = Button::create("close_button.png");
+    closeButton2->setPosition(Vec2(button2->getContentSize().width, button2->getContentSize().height)); // 右上角位置
+    closeButton2->addClickEventListener([=](Ref* sender) {
+        if (player._armor != nullptr)
+        {
+            player.def -= player._armor->increase_defense;
+            auto _item = dynamic_cast<item*>(player._armor);
+            player._armor = nullptr;
+            addItem(_item);
+        }
+        });
+    button2->addChild(closeButton2);
+
+
     // 鞋子
     auto button3 = Button::create("item_slot.png");
     button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y + borderHeight / 2 - 15));
     button3->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button3);
-    auto labe3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 8);
-    labe3->setPosition(Vec2(10, -6));
-    button3->addChild(labe3);
+    auto label3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 8);
+    label3->setPosition(Vec2(10, -6));
+    button3->addChild(label3);
+
+    // 获取玩家的鞋子图像并设置到鞋子栏
+    if (player._shoes != nullptr)
+    {
+        // 获取鞋子图像并设置
+        auto shoesImage = player._shoes->image;
+        shoesImage->retain(); // 保证图像对象不被销毁
+        shoesImage->removeFromParent(); // 移除当前的父节点
+        if (shoesImage != nullptr)
+        {
+            shoesImage->setPosition(Vec2(button3->getContentSize().width / 2, button3->getContentSize().height / 2));
+            button3->addChild(shoesImage);  // 将图像添加到鞋子栏按钮中
+        }
+    }
+
+    // 添加关闭按钮，如果装备栏有装备，就卸下装备
+    auto closeButton3 = Button::create("close_button.png");
+    closeButton3->setPosition(Vec2(button3->getContentSize().width, button3->getContentSize().height)); // 右上角位置
+    closeButton3->addClickEventListener([=](Ref* sender) {
+        if (player._shoes != nullptr)
+        {
+            player.speed -= player._shoes->increase_speed;
+            auto _item = dynamic_cast<item*>(player._shoes);
+            player._shoes = nullptr;
+            addItem(_item);
+        }
+        });
+    button3->addChild(closeButton3);
+
+
     // 饰品
     auto button4 = Button::create("item_slot.png");
     button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y - borderHeight / 2 + 15));
     button4->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button4);
-    auto labe4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 8);
-    labe4->setPosition(Vec2(10, -6));
-    button4->addChild(labe4);
+    auto label4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 8);
+    label4->setPosition(Vec2(10, -6));
+    button4->addChild(label4);
 
-    //显示角色的等级和HP
-    auto characterLevel = Label::createWithTTF("Level:", "fonts/arial.ttf", 8);
-    characterLevel->setPosition(Vec2(12, 130));
+    // 获取玩家的饰品图像并设置到饰品栏
+    if (player._accessories != nullptr)
+    {
+        // 获取饰品图像并设置
+        auto accessoriesImage = player._accessories->image;
+        accessoriesImage->retain(); // 保证图像对象不被销毁
+        accessoriesImage->removeFromParent(); // 移除当前的父节点
+        if (accessoriesImage != nullptr)
+        {
+            accessoriesImage->setPosition(Vec2(button4->getContentSize().width / 2, button4->getContentSize().height / 2));
+            button4->addChild(accessoriesImage);  // 将图像添加到饰品栏按钮中
+        }
+    }
+
+    // 添加关闭按钮，如果装备栏有装备，就卸下装备
+    auto closeButton4 = Button::create("close_button.png");
+    closeButton4->setPosition(Vec2(button4->getContentSize().width, button4->getContentSize().height)); // 右上角位置
+    closeButton4->addClickEventListener([=](Ref* sender) {
+        if (player._accessories != nullptr)
+        {
+            player.atk -= player._accessories->increase_attack;
+            player.def -= player._accessories->increase_defense;
+            player.speed -= player._accessories->increase_speed;
+            auto _item = dynamic_cast<item*>(player._accessories);
+            player._accessories = nullptr;
+            addItem(_item);
+        }
+        });
+    button4->addChild(closeButton4);
+
+    //显示角色的等级、HP、MP
+    // 等级
+    string player_level = "Level: " + to_string(player.level);
+    auto characterLevel = Label::createWithTTF(player_level, "fonts/arial.ttf", 8);
+    // 设置锚点，从左边开始
+    characterLevel->setAnchorPoint(Vec2(0, 0.5));
+    characterLevel->setPosition(Vec2(110, 130));
     _characterBackground->addChild(characterLevel);
-    auto characterHP = Label::createWithTTF("HP:", "fonts/arial.ttf", 8);
-    characterHP->setPosition(Vec2(15, 120));
+    // HP
+    string player_HP = "HP: " + to_string(player.hp);
+    auto characterHP = Label::createWithTTF(player_HP, "fonts/arial.ttf", 8);
+    // 设置锚点，从左边开始
+    characterHP->setAnchorPoint(Vec2(0, 0.5));
+    characterHP->setPosition(Vec2(1, 130));
     _characterBackground->addChild(characterHP);
+    // MP
+    string player_MP = "MP: " + to_string(player.mp);
+    auto characterMP = Label::createWithTTF(player_MP, "fonts/arial.ttf", 8);
+    // 设置锚点，从左边开始
+    characterMP->setAnchorPoint(Vec2(0, 0.5));
+    characterMP->setPosition(Vec2(1, 120));
+    _characterBackground->addChild(characterMP);
+
+    // 显示角色的攻击力、防御力、速度
+    // 攻击力
+    string player_attack = "Attack: " + to_string(player.atk);
+    auto characterAttack = Label::createWithTTF(player_attack, "fonts/arial.ttf", 8);
+    // 设置锚点，从左边开始
+    characterAttack->setAnchorPoint(Vec2(0, 0.5));
+    characterAttack->setPosition(Vec2(50, 130));
+    _characterBackground->addChild(characterAttack);
+    // 防御力
+    string player_defense = "Defense: " + to_string(player.def);
+    auto characterDefense = Label::createWithTTF(player_defense, "fonts/arial.ttf", 8);
+    // 设置锚点，从左边开始
+    characterDefense->setAnchorPoint(Vec2(0, 0.5));
+    characterDefense->setPosition(Vec2(50, 120));
+    _characterBackground->addChild(characterDefense);
+
+    // 速度
+    string player_speed = "Speed: " + to_string(player.speed);
+    auto characterSpeed = Label::createWithTTF(player_speed, "fonts/arial.ttf", 8);
+    // 设置锚点，从左边开始
+    characterSpeed->setAnchorPoint(Vec2(0, 0.5));
+    characterSpeed->setPosition(Vec2(110, 120));
+    _characterBackground->addChild(characterSpeed);
 }
 
 // 点击物品栏事件
@@ -265,12 +431,15 @@ void BagManager::slot_click(Button* slot, int row, int col)
         useButton->addClickEventListener([=](Ref* sender) {
             if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col]))
             {
-
+                // 装备该物品
+                equipItem(row * 5 + col);
+                itemInfoBackground->removeFromParent();  // 丢弃后关闭物品信息面板
             }
             else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col]))
             {
-                // 物品发挥功能
-                items[row * 5 + col]->itemFunction();
+                auto consumption=dynamic_cast<consumable*>(items[row * 5 + col]);
+                player.hp += consumption->add_HP;
+                dynamic_cast<item*>(items[row * 5 + col]);
                 // 丢弃该物品
                 discardItems(row * 5 + col);
                 itemInfoBackground->removeFromParent();  // 丢弃后关闭物品信息面板
@@ -315,7 +484,6 @@ void BagManager::addItem(item* it)
         return; // 无效物品，退出函数
     if (items_num < 40) // 背包没有满时才可以添加物品
     {
-
         int location = 0;
         // 找到空的物品栏
         for (int i = 0; i < 40; i++)
@@ -340,18 +508,94 @@ void BagManager::discardItems(int index)
     {
         // 移除物品的图像（从其父节点移除）
         items[index]->image->removeFromParent();
-
         // 清除物品数据
         delete items[index];  // 删除物品对象
         items[index] = nullptr; // 清空该位置
-
         // 更新物品数量
         items_num--;
-
         // 如果背包UI已经显示，刷新UI
         if (_isBagOpen)
-        {
             updateBagUI();
+    }
+}
+
+// 将背包内的物品装备到角色身上
+void BagManager::equipItem(int index)
+{
+    if (items[index] != nullptr)
+    {
+        if (auto weaponItem = dynamic_cast<weapon*>(items[index])) // 物品是武器类
+        {
+            if (player._weapon == nullptr)
+            {
+                // 更新角色武器指针
+                player._weapon = weaponItem;
+                // 增加角色攻击力
+                player.atk += player._weapon->increase_attack;
+                // 不可以清除物品信息
+                items[index] = nullptr; // 清空该位置
+                // 更新物品数量
+                items_num--;
+                // 如果背包UI已经显示，刷新UI
+                if (_isBagOpen)
+                    updateBagUI();
+            }
+        }
+        else if (auto armorItem = dynamic_cast<armor*>(items[index])) // 物品是护甲类
+        {
+            if (player._armor == nullptr)
+            {
+                // 更新角色护甲指针
+                player._armor = armorItem;
+                // 增加角色的防御值
+                player.def += player._armor->increase_defense;
+                // 不可以清除物品信息
+                items[index] = nullptr; // 清空该位置
+                // 更新物品数量
+                items_num--;
+                // 如果背包UI已经显示，刷新UI
+                if (_isBagOpen)
+                    updateBagUI();
+            }
+        }
+        else if (auto shoesItem = dynamic_cast<shoes*>(items[index])) // 物品是鞋子类
+        {
+            if (player._shoes == nullptr)
+            {
+                // 更新角色鞋子指针
+                player._shoes = shoesItem;
+                // 增加角色的速度
+                player.speed += player._shoes->increase_speed;
+                // 不可以清除物品信息
+                items[index] = nullptr; // 清空该位置
+                // 更新物品数量
+                items_num--;
+                // 如果背包UI已经显示，刷新UI
+                if (_isBagOpen)
+                    updateBagUI();
+            }
+        }
+        else if (auto accessoriesItem = dynamic_cast<accessories*>(items[index])) // 物品是饰品类
+        {
+            if (player._accessories == nullptr)
+            {
+                // 更新角色饰品指针
+                player._accessories = accessoriesItem;
+                // 增加角色攻击力
+                player.atk += player._accessories->increase_attack;
+                // 增加角色的防御值
+                player.def += player._accessories->increase_defense;
+                // 增加角色的速度
+                player.speed += player._accessories->increase_speed;
+                // 不可以清除物品信息
+                items[index] = nullptr; // 清空该位置
+                // 更新物品数量
+                items_num--;
+                // 如果背包UI已经显示，刷新UI
+                if (_isBagOpen)
+                    updateBagUI();
+            }
         }
     }
+
 }

@@ -8,11 +8,6 @@
 USING_NS_CC;
 using namespace std;
 
-//交由背包完成
-struct Equipment {
-	int a;
-};
-
 struct Object {
 	;
 };
@@ -158,10 +153,17 @@ public:
 	// opp为攻击对象
 	//virtual void Attack(int dir = DOWN, Player* opp = nullptr);
 
-	//装备，加成数值，不考虑贴图,需要与背包对接,参数是一个Equipment结构体，结构体内需要含atk和def，即攻击和防御
-	void Equipment() {
-		;
-	}
+	// 角色的武器
+	weapon* _weapon;
+
+	// 角色的护甲
+	armor* _armor;
+
+	// 角色的鞋子
+	shoes* _shoes;
+
+	// 角色的饰品
+	accessories* _accessories;
 
 	// 技能，以组合技形式出现
 	void Combo();
@@ -169,6 +171,24 @@ public:
 	//获得奖励，参数Bonus结构体,结构体内需含有经验值，物品部分交给背包
 	void GetBonus(Bonus bonus);
 
+	// 赋值运算符重载
+	Player& operator=(const Player& other)
+	{
+		if (this == &other)  // 自赋值检查
+			return *this;
+		level = other.level;
+		hp = other.hp;
+		mp = other.hp;
+		atk = other.atk;
+		def = other.def;
+		speed = other.speed;
+		_weapon = other._weapon;
+		_armor = other._armor;
+		_shoes = other._shoes;
+		_accessories = other._accessories;
+
+		return *this;
+	}
 };
 
 #endif //__PLAYER_H__
