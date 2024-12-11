@@ -69,10 +69,9 @@ void BagManager::showBag(Player& _player)
         _bagPanel->setVisible(true);  // 显示背包面板
         _isBagOpen = true;
     }
-    _player = player;
 }
 
-void BagManager::hideBag()
+void BagManager::hideBag(Player& _player)
 {
     if (_isBagOpen)
     {
@@ -82,6 +81,7 @@ void BagManager::hideBag()
         _bagBackground = nullptr;  // 清除背景指针
         _characterBackground = nullptr;
         _isBagOpen = false;  // 更新状态
+        _player = player;
     }
 }
 

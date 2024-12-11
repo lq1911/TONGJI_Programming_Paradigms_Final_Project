@@ -22,7 +22,7 @@ public:
     void showBag(Player& _player);
 
     // 隐藏背包
-    void hideBag();
+    void hideBag(Player& _player);
 
     // 判断背包是否可见
     bool isBagVisible() const { return _isBagOpen; }
