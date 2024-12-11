@@ -101,7 +101,7 @@ void BagManager::updateBagUI()
             int index = row * 5 + col;
 
             // 添加物品栏
-            auto slot = Button::create("item_slot.png");
+            auto slot = Button::create("Bag/item_slot.png");
             slot->setPosition(Vec2(xPos, yPos));
             slot->addClickEventListener([=](Ref* sender) {
                 slot_click(slot, row, col);
@@ -109,20 +109,21 @@ void BagManager::updateBagUI()
             _bagBackground->addChild(slot);
             if (items[index] != NULL)
             {
-                if (items[index]->image->getParent() == nullptr)// 图像是否有父节点
-                {
-                    // 设置物品图像的位置并添加到按钮格子
-                    items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
-                    slot->addChild(items[index]->image);// 添加父节点
-                    items[index]->image->retain();
-                }
-                else
-                {
-                    items[index]->image->removeFromParent();// 移除当前的父节点
-                    items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
-                    slot->addChild(items[index]->image);
-                    items[index]->image->retain();// 保证图像对象不被销毁
-                }
+                if(items[index]->image!=nullptr)
+                    if (items[index]->image->getParent() == nullptr)// 图像是否有父节点
+                    {
+                        // 设置物品图像的位置并添加到按钮格子
+                        items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
+                        slot->addChild(items[index]->image);// 添加父节点
+                        items[index]->image->retain();
+                    }
+                    else
+                    {
+                        items[index]->image->removeFromParent();// 移除当前的父节点
+                        items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
+                        slot->addChild(items[index]->image);
+                        items[index]->image->retain();// 保证图像对象不被销毁
+                    }
             }
         }
     // 更新角色面板
@@ -133,7 +134,7 @@ void BagManager::updateBagUI()
 void BagManager::createBagBackground()
 {
     // 设置背包背景图片
-    _bagBackground = Sprite::create("bag_background.png");
+    _bagBackground = Sprite::create("Bag/bag_background.png");
     _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);
     _bagPanel->addChild(_bagBackground);
 
@@ -149,7 +150,7 @@ void BagManager::createBagBackground()
 void BagManager::createCharacterPanel()
 {
     // 设置角色面板背景
-    _characterBackground = Sprite::create("character_background.png");
+    _characterBackground = Sprite::create("Bag/character_background.png");
     float characterBackground_x = _bagBackground->getPositionX() + _bagBackground->getContentSize().width / 2 + _characterBackground->getContentSize().width / 2;
     float characterBackground_y = _bagBackground->getPositionY() + _bagBackground->getContentSize().height / 2 - _characterBackground->getContentSize().height / 2;
     _characterBackground->setPosition(Vec2(characterBackground_x, characterBackground_y));
@@ -179,7 +180,7 @@ void BagManager::createCharacterPanel()
     // 在角色面板两边添加装备栏
     
     // 武器
-    auto button1 = Button::create("item_slot.png");// 添加按钮
+    auto button1 = Button::create("Bag/item_slot.png");// 添加按钮
     button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y + borderHeight / 2 - 15));
     button1->addClickEventListener([](Ref* sender) {});// 添加按钮点击事件
     _characterBackground->addChild(button1);
@@ -202,7 +203,7 @@ void BagManager::createCharacterPanel()
     }
 
     // 添加关闭按钮，如果装备栏有装备，就卸下装备
-    auto closeButton1 = Button::create("close_button.png");
+    auto closeButton1 = Button::create("Bag/close_button.png");
     closeButton1->setPosition(Vec2(button1->getContentSize().width, button1->getContentSize().height)); // 右上角位置
     closeButton1->addClickEventListener([=](Ref* sender) {
         if (player._weapon != nullptr)
@@ -217,7 +218,7 @@ void BagManager::createCharacterPanel()
 
 
     // 护甲
-    auto button2 = Button::create("item_slot.png");
+    auto button2 = Button::create("Bag/item_slot.png");
     button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y - borderHeight / 2 + 15));
     button2->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button2);
@@ -240,7 +241,7 @@ void BagManager::createCharacterPanel()
     }
 
     // 添加关闭按钮，如果装备栏有装备，就卸下装备
-    auto closeButton2 = Button::create("close_button.png");
+    auto closeButton2 = Button::create("Bag/close_button.png");
     closeButton2->setPosition(Vec2(button2->getContentSize().width, button2->getContentSize().height)); // 右上角位置
     closeButton2->addClickEventListener([=](Ref* sender) {
         if (player._armor != nullptr)
@@ -255,7 +256,7 @@ void BagManager::createCharacterPanel()
 
 
     // 鞋子
-    auto button3 = Button::create("item_slot.png");
+    auto button3 = Button::create("Bag/item_slot.png");
     button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y + borderHeight / 2 - 15));
     button3->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button3);
@@ -278,7 +279,7 @@ void BagManager::createCharacterPanel()
     }
 
     // 添加关闭按钮，如果装备栏有装备，就卸下装备
-    auto closeButton3 = Button::create("close_button.png");
+    auto closeButton3 = Button::create("Bag/close_button.png");
     closeButton3->setPosition(Vec2(button3->getContentSize().width, button3->getContentSize().height)); // 右上角位置
     closeButton3->addClickEventListener([=](Ref* sender) {
         if (player._shoes != nullptr)
@@ -293,7 +294,7 @@ void BagManager::createCharacterPanel()
 
 
     // 饰品
-    auto button4 = Button::create("item_slot.png");
+    auto button4 = Button::create("Bag/item_slot.png");
     button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y - borderHeight / 2 + 15));
     button4->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button4);
@@ -316,7 +317,7 @@ void BagManager::createCharacterPanel()
     }
 
     // 添加关闭按钮，如果装备栏有装备，就卸下装备
-    auto closeButton4 = Button::create("close_button.png");
+    auto closeButton4 = Button::create("Bag/close_button.png");
     closeButton4->setPosition(Vec2(button4->getContentSize().width, button4->getContentSize().height)); // 右上角位置
     closeButton4->addClickEventListener([=](Ref* sender) {
         if (player._accessories != nullptr)
@@ -386,14 +387,14 @@ void BagManager::slot_click(Button* slot, int row, int col)
     if (items[row * 5 + col] != NULL)
     {
         // 打开物品信息面板
-        auto itemInfoBackground = Sprite::create("item_info_background.png");
+        auto itemInfoBackground = Sprite::create("Bag/item_info_background.png");
         float itemInfoBackground_x = slot->getPosition().x + itemInfoBackground->getContentSize().width / 2 + slot->getContentSize().width / 2;
         float itemInfoBackground_y = slot->getPosition().y - itemInfoBackground->getContentSize().height / 2 + slot->getContentSize().height / 2;
         itemInfoBackground->setPosition(Vec2(itemInfoBackground_x, itemInfoBackground_y)); // 将背景放置在格子旁边
         _bagBackground->addChild(itemInfoBackground, 10);
 
         // 创建关闭按钮（×按钮）
-        auto closeButton = Button::create("close_button.png");
+        auto closeButton = Button::create("Bag/close_button.png");
         closeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width, itemInfoBackground->getContentSize().height)); // 右上角位置
         closeButton->addClickEventListener([=](Ref* sender) {
             // 点击×按钮时移除 itemInfoBackground
@@ -426,7 +427,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
         itemInfoBackground->addChild(itemDescriptionLabel);
 
         // 创建使用物品按钮
-        auto useButton = Button::create("use_button.png");
+        auto useButton = Button::create("Bag/use_button.png");
         useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 40));
         useButton->addClickEventListener([=](Ref* sender) {
             if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col]))
@@ -462,7 +463,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
         }
 
         // 创建丢弃物品按钮
-        auto dicardButton = Button::create("use_button.png");
+        auto dicardButton = Button::create("Bag/use_button.png");
         dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 60));
         dicardButton->addClickEventListener([=](Ref* sender) {
             // 丢弃该物品

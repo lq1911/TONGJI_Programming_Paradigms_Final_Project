@@ -5,6 +5,7 @@
 #include "MicroMap.h"
 #include "Player.h"
 #include "SetPlayerScene.h"
+#include "BagManager.h"
 
 class SetMap :public cocos2d::Scene {
 private:
@@ -26,19 +27,20 @@ public:
 	Player* npc1;
 	// 按键绑定
 
+	
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		Vec2 moveBy;
 		int speed = 1;
 
-		if (keyCode == EventKeyboard::KeyCode::KEY_W)
+		if (keyCode == EventKeyboard::KeyCode::KEY_I)
 			PLAYER->Attack(UP);
-		else if (keyCode == EventKeyboard::KeyCode::KEY_S)
+		else if (keyCode == EventKeyboard::KeyCode::KEY_K)
 			PLAYER->Attack(DOWN);
-		else if (keyCode == EventKeyboard::KeyCode::KEY_A)
+		else if (keyCode == EventKeyboard::KeyCode::KEY_J)
 			PLAYER->Attack(LEFT);
-		else if (keyCode == EventKeyboard::KeyCode::KEY_D)
+		else if (keyCode == EventKeyboard::KeyCode::KEY_L)
 			PLAYER->Attack(RIGHT);
-		else if (keyCode == EventKeyboard::KeyCode::KEY_DOWN_ARROW)
+		else if (keyCode == EventKeyboard::KeyCode::KEY_S)
 		{
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
@@ -46,8 +48,7 @@ public:
 			if (IsMoveable(targetPosition))
 				PLAYER->Move(DOWN);
 		}
-		
-		else if (keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW)
+		else if (keyCode == EventKeyboard::KeyCode::KEY_W)
 		{
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
@@ -55,7 +56,7 @@ public:
 			if (IsMoveable(targetPosition))
 				PLAYER->Move(UP);
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW)
+		else if (keyCode == EventKeyboard::KeyCode::KEY_A)
 		{
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
@@ -63,7 +64,7 @@ public:
 			if (IsMoveable(targetPosition))
 				PLAYER->Move(LEFT);
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW)
+		else if (keyCode == EventKeyboard::KeyCode::KEY_D)
 		{ 
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
@@ -83,6 +84,55 @@ public:
 		else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
 			PLAYER->Heal();
 			//PLAYER->Die();
+		}
+
+		// 按下B键之后的逻辑:背包
+		else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
+			
+			if (BagManager::getInstance()->isBagVisible())
+				// 隐藏背包
+				BagManager::getInstance()->hideBag(*PLAYER);
+			else
+				// 打开背包
+				BagManager::getInstance()->showBag(*PLAYER);
+		}
+		else if (keyCode == EventKeyboard::KeyCode::KEY_P)
+		{
+			goods _goods;
+			if (BagManager::getInstance()->getItemsNum() % 5 == 0)
+			{
+				weapon* it1 = new weapon(_goods.icon_sword);
+				BagManager::getInstance()->addItem(it1);
+				return;
+			}
+
+			if (BagManager::getInstance()->getItemsNum() % 5 == 1)
+			{
+				consumable* it2 = new consumable(_goods.pumkin);
+				BagManager::getInstance()->addItem(it2);
+				return;
+			}
+
+			if (BagManager::getInstance()->getItemsNum() % 5 == 2)
+			{
+				accessories* it3 = new accessories(_goods.bomb);
+				BagManager::getInstance()->addItem(it3);
+				return;
+			}
+
+			if (BagManager::getInstance()->getItemsNum() % 5 == 3)
+			{
+				armor* it4 = new armor(_goods.icon_conselet);
+				BagManager::getInstance()->addItem(it4);
+				return;
+			}
+
+			if (BagManager::getInstance()->getItemsNum() % 5 == 4)
+			{
+				shoes* it5 = new shoes(_goods.boots);
+				BagManager::getInstance()->addItem(it5);
+				return;
+			}
 		}
 	}
 	//////////////////////////////////////////////////////////////

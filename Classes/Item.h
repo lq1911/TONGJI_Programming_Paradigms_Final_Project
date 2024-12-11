@@ -224,11 +224,11 @@ public:
     accessories bomb;
 
     goods()
-        : pumkin("pumpkin", "Pumpkin.png", "Restore your health"),   // 初始化南瓜
-        icon_sword("sword", "sword.png", "Increase your attack power"),  // 初始化铁剑
-        icon_conselet("conselet", "conselet.png", "Increase your defense"), // 初始化铁甲
-        boots("boots", "boots.png", "Increase your speed"), // 初始化靴子
-        bomb("bumb", "bumb.png", "Increase your attack power") // 初始化火药
+        : pumkin("pumpkin", "goods/Pumpkin.png", "Restore your health"),   // 初始化南瓜
+        icon_sword("sword", "goods/sword.png", "Increase your attack power"),  // 初始化铁剑
+        icon_conselet("conselet", "goods/conselet.png", "Increase your defense"), // 初始化铁甲
+        boots("boots", "goods/boots.png", "Increase your speed"), // 初始化靴子
+        bomb("bumb", "goods/bumb.png", "Increase your attack power") // 初始化火药
     {
         // 设置数值
         pumkin.add_HP = 10;  

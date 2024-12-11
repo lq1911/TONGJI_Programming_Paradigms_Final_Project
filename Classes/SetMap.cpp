@@ -55,6 +55,10 @@ bool SetMap::init() {
     Monster1 = new Player("Monster1", this, 1000, 600, 1.0f, 0, 0, 0, 100, 0, 50, 0);
     //加个哥布林
     Monster2 = new Player("Monster2", this, 1500, 800, 3.0f, 0, 0, 0, 100, 0, 50, 0);
+    // 背包
+    BagManager* bagManager = BagManager::getInstance();
+    if(bagManager->getParent()==nullptr)
+        this->addChild(bagManager);
     ///////////////////////
 
     this->CameraFollowPlayer();    //注册摄像机跟随玩家的函数

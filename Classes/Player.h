@@ -42,9 +42,18 @@ public:
 		// 角色现有经验值、达到下一级所需经验值初始化条件记得改
 		current_exp = 0;
 		next_level_exp = 0;
+		_weapon = nullptr;
+		_armor = nullptr;
+		_shoes = nullptr;
+		_accessories = nullptr;
 	}
 	// 调试用构造函数
-	Player() :Creature("Player1", 1, 1, 1, 1, 1, 50, 1, 500, 500, 1.0f, nullptr) { ; }
+	Player()  {
+		_weapon = nullptr;
+		_armor = nullptr;
+		_shoes = nullptr;
+		_accessories = nullptr;
+	}
 
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
