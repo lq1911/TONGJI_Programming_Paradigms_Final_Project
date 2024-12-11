@@ -1,4 +1,4 @@
-
+/*
 #include "Monster.h"
 USING_NS_CC;
 
@@ -106,4 +106,4 @@ bool MonsterAI::shouldFlee() {
 MonsterState MonsterAI::GetState()const {
 	return currentState;
 }
-
+*/

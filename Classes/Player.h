@@ -5,6 +5,8 @@
 #include <string>
 #include "cocos2d.h"
 #include "Creature.h"
+#include "Item.h"
+
 USING_NS_CC;
 using namespace std;
 
@@ -14,7 +16,8 @@ struct Object {
 
 struct Bonus {
 	Object object;
-	Equipment equipment;
+	//报错，暂时注释掉
+	//Equipment equipment;
 	int exp = 0;
 };
 
@@ -40,6 +43,8 @@ public:
 		current_exp = 0;
 		next_level_exp = 0;
 	}
+	// 调试用构造函数
+	Player() :Creature("Player1", 1, 1, 1, 1, 1, 50, 1, 500, 500, 1.0f, nullptr) { ; }
 
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
@@ -60,7 +65,7 @@ public:
 	accessories* _accessories;
 
 	// 技能，以组合技形式出现
-	void Combo();
+	//void Combo();
 
 	//获得奖励，参数Bonus结构体,结构体内需含有经验值，物品部分交给背包
 	void GetBonus(Bonus bonus);
@@ -83,6 +88,7 @@ public:
 
 		return *this;
 	}
+	friend class BagManager;
 };
 
 #endif //__PLAYER_H__

@@ -1,4 +1,4 @@
-
+/*
 #ifndef __MONSTER_H__
 #define __MONSTER_H__
 #include "cocos2d.h"
@@ -78,3 +78,4 @@ public:
 };
 #endif __MONSTER_H__
 
+*/
