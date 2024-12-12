@@ -27,6 +27,7 @@ protected:
 	int def;          // 基础防御值
 	int speed;        // 速度
 	int level;        // 等级
+	int x, y;         // 初始坐标
 
 	float scale;      // 缩放比例
 	Scene* scene;     // 场景指针
@@ -39,7 +40,7 @@ public:
 	// 建议:speed默认设为50,atk_range默认设100
 	Creature(std::string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y, float scale, Scene* scene) :
 		role(role), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level), scale(scale),
-		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr), current_hp(hp), current_mp(mp) {
+		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr), current_hp(hp), current_mp(mp),x(x),y(y) {
 		
 		// 精灵初始化
 		mySprite = Sprite::create("Role/" + role + "/1.png");
@@ -118,5 +119,13 @@ public:
 	int getDef()const{ return def; }
 	// 返回攻击范围atk_range
 	int getAtkRange()const { return atk_range; }
+
+	// 返回坐标
+	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
+	// 更新坐标
+	void updateXY() {
+		x = mySprite->getPosition().x;
+		y = mySprite->getPosition().y;
+	}
 };
 #endif __CREATURE_H__

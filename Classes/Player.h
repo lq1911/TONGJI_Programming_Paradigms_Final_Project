@@ -94,7 +94,7 @@ public:
 		_armor = other._armor;
 		_shoes = other._shoes;
 		_accessories = other._accessories;
-
+		
 		return *this;
 	}
 	friend class BagManager;
