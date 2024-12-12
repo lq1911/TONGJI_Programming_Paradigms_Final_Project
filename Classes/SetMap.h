@@ -1,11 +1,14 @@
 #ifndef __SET_MAP_H__
 #define __SET_MAP_H__
 
+#include <vector>
 #include "cocos2d.h"
 #include "MicroMap.h"
 #include "Player.h"
 #include "SetPlayerScene.h"
 #include "BagManager.h"
+
+USING_NS_CC;
 
 class SetMap :public cocos2d::Scene {
 private:
@@ -18,6 +21,8 @@ private:
 
 public:
 	////////////////////////////////////////////////////////////////
+	/* 按键是否按下:W/S/A/D*/
+	std::vector<bool> isKeyPressed = { false,false,false,false };
 	// 玩家
 	Player* PLAYER;
 	// 树妖Monster1
@@ -25,13 +30,42 @@ public:
 	Player* Monster2;
 	// NPC
 	Player* npc1;
-	// 按键绑定
+
 
 	
+	
+	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_W) {
+			if (isKeyPressed[0]) {
+				isKeyPressed[0] = false;
+				this->unschedule("MoveUP");
+			}
+		}
+		else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
+			if (isKeyPressed[1]) {
+				isKeyPressed[1] = false;
+				this->unschedule("MoveDOWN");
+			}
+		}
+		else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
+			if (isKeyPressed[2]) {
+				isKeyPressed[2] = false;
+				this->unschedule("MoveLEFT");
+			}
+		}
+		else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
+			if (isKeyPressed[3]) {
+				isKeyPressed[3] = false;
+				this->unschedule("MoveRIGHT");
+			}
+		}
+	}
+
+	// 按键绑定
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		Vec2 moveBy;
 		int speed = 1;
-
+		/* 攻击:I/K/J/L */
 		if (keyCode == EventKeyboard::KeyCode::KEY_I)
 			PLAYER->Attack(UP);
 		else if (keyCode == EventKeyboard::KeyCode::KEY_K)
@@ -40,39 +74,57 @@ public:
 			PLAYER->Attack(LEFT);
 		else if (keyCode == EventKeyboard::KeyCode::KEY_L)
 			PLAYER->Attack(RIGHT);
-		else if (keyCode == EventKeyboard::KeyCode::KEY_S)
-		{
+		/* 移动:W/S/A/D */
+		else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-
-			if (IsMoveable(targetPosition))
-				PLAYER->Move(DOWN);
+			if (IsMoveable(targetPosition)) {
+				if (!isKeyPressed[0]) {
+					isKeyPressed[0] = true;
+					this->schedule([&](float dt) {
+						PLAYER->Move(UP);
+						}, 0.34f, "MoveUP");
+				}
+			}
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_W)
-		{
+		else if (keyCode == EventKeyboard::KeyCode::KEY_S){
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-
-			if (IsMoveable(targetPosition))
-				PLAYER->Move(UP);
+			if (IsMoveable(targetPosition)) {
+				if (!isKeyPressed[1]) {
+					isKeyPressed[1] = true;
+					this->schedule([&](float dt) {
+						PLAYER->Move(DOWN);
+						}, 0.34f, "MoveDOWN");
+				}
+			}	
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_A)
-		{
+		else if (keyCode == EventKeyboard::KeyCode::KEY_A){
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-
-			if (IsMoveable(targetPosition))
-				PLAYER->Move(LEFT);
+			if (IsMoveable(targetPosition)) {
+				if (!isKeyPressed[2]) {
+					isKeyPressed[2] = true;
+					this->schedule([&](float dt) {
+						PLAYER->Move(LEFT);
+						}, 0.34f, "MoveLEFT");
+				}
+			}
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_D)
-		{ 
+		else if (keyCode == EventKeyboard::KeyCode::KEY_D){ 
 			moveBy = Vec2(0, -speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-
-			if (IsMoveable(targetPosition))
-				PLAYER->Move(RIGHT);
+			if (IsMoveable(targetPosition)) {
+				if (!isKeyPressed[3]) {
+					isKeyPressed[3] = true;
+					this->schedule([&](float dt) {
+						PLAYER->Move(RIGHT);
+						}, 0.34f, "MoveRIGHT");
+				}
+			}
 		}
-			// 测试Monster1攻击效果用，记得删
+
+		// 测试Monster1攻击效果用，记得删
 		else if (keyCode == EventKeyboard::KeyCode::KEY_T) {
 			int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
 			int dy = Monster1->mySprite->getPosition().y - PLAYER->mySprite->getPosition().y;
@@ -82,7 +134,8 @@ public:
 				Monster1->Attack();
 		}
 		else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
-			PLAYER->Heal();
+			Monster2->Attack(UP);
+			//PLAYER->Heal();
 			//PLAYER->Die();
 		}
 
@@ -96,8 +149,7 @@ public:
 				// 打开背包
 				BagManager::getInstance()->showBag(*PLAYER);
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_P)
-		{
+		else if (keyCode == EventKeyboard::KeyCode::KEY_P){
 			goods _goods;
 			if (BagManager::getInstance()->getItemsNum() % 5 == 0)
 			{

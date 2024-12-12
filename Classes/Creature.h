@@ -1,8 +1,9 @@
 #ifndef __CREATURE_H__
 #define __CREATURE_H__
 #include "cocos2d.h"
+
 USING_NS_CC;
-using namespace std;
+
 /* 方向 */
 enum dir {
 	LEFT,    // 0
@@ -11,25 +12,24 @@ enum dir {
 	DOWN     // 3
 };
 
-
 /* 生物基类 */
 class Creature :public Node {
 protected:
-	string role;     // 角色名:用于检索图片素材
+	std::string role;   // 角色名:用于检索图片素材
 
-	bool isDead;     // 生死状态
-	int hp;          // 总生命
-	int current_hp;  // 现生命
-	int mp;          // 总魔力
-	int current_mp;  // 现魔力
-	int atk;         // 基础攻击值
-	int atk_range;   // 攻击范围
-	int def;         // 基础防御值
-	int speed;       // 速度
-	int level;       // 等级
+	bool isDead;      // 生死状态
+	int hp;           // 总生命
+	int current_hp;   // 现生命
+	int mp;           // 总魔力
+	int current_mp;   // 现魔力
+	int atk;          // 基础攻击值
+	int atk_range;    // 攻击范围
+	int def;          // 基础防御值
+	int speed;        // 速度
+	int level;        // 等级
 
-	float scale;     // 缩放比例
-	Scene* scene;    // 场景指针
+	float scale;      // 缩放比例
+	Scene* scene;     // 场景指针
 public:
 	Sprite* mySprite; // 精灵
 	int face_to;      // 面朝方向
@@ -37,9 +37,10 @@ public:
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	// 建议:speed默认设为50,atk_range默认设100
-	Creature(string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y, float scale, Scene* scene) :
+	Creature(std::string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y, float scale, Scene* scene) :
 		role(role), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level), scale(scale),
-		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr) {
+		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr), current_hp(hp), current_mp(mp) {
+		
 		// 精灵初始化
 		mySprite = Sprite::create("Role/" + role + "/1.png");
 		mySprite->setPosition(Vec2(x, y));
@@ -57,7 +58,9 @@ public:
 		mySprite = nullptr;
 		isDead = false;
 		hp = 1;
+		current_hp = 1;
 		mp = 1;
+		current_mp = 1;
 		atk = 1;
 		atk_range = 20;
 		def = 1;
@@ -86,39 +89,34 @@ public:
 
 	/* 移动 */
 	// Monster1:树妖,无法移动
-	// Monster2:哥布林,可四方向移动
 	virtual void Move(int dir);
 
-	virtual void levelBonus() {
-		speed = speed * (0.05 * level + 1);
-		hp = level * hp;
-		mp = mp * level;
-		atk = atk * level;
-		def = def * level;
-	}
-
-
 	/* 转变场景 */
-	virtual void ChangeScene(Scene* sc) { //需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
-		scene = sc;
-	}
-	// 计算伤害
+	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
+	virtual void ChangeScene(Scene* sc) { scene = sc; }
+
+	/* 等级加成 */
+	virtual void levelBonus();
+
+	/* 计算伤害 */
 	int DamageCal(Creature*, Creature*);
-	/* 获取速度speed */
+	
+	/* 返回变量值 */
+	// 返回速度speed
 	int getSpeed()const { return speed; }
-	// 获得总hp
-	int getHp()const;
-	// 获得现hp
-	int getCurrentHp()const;
-	// 获得总mp
-	int getMp()const;
-	// 获得现mp
-	int getCurrentMp()const;
-	// 获得atk
-	int getAtk()const;
-	// 获得def
-	int getDef()const;
-	/* 获取攻击范围atk_range */
+	// 返回总hp
+	int getHp()const { return hp; }
+	// 返回现hp
+	int getCurrentHp()const{ return current_hp; }
+	// 返回总mp
+	int getMp()const{ return mp; }
+	// 返回现mp
+	int getCurrentMp()const{ return current_mp; }
+	// 返回atk
+	int getAtk()const{ return atk; }
+	// 返回def
+	int getDef()const{ return def; }
+	// 返回攻击范围atk_range
 	int getAtkRange()const { return atk_range; }
 };
 #endif __CREATURE_H__

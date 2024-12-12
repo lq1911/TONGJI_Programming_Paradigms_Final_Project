@@ -43,18 +43,21 @@ bool SetMap::init() {
     InitialObstacle(InitialMap);    //初始化障碍物
   
     ///////////////////////
-    // lq加的调试小人
-    
-    PLAYER = new Player("Player"+std::to_string(SetPlayerScene::who+1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 50, 1);
+    // 键盘监听
     auto listener = EventListenerKeyboard::create();
-    listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this); 
+    listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this);
+    listener->onKeyReleased = CC_CALLBACK_2(SetMap::KeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+    
+    // lq加的调试小人
+    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 50, 1);
     // 加个npc
     npc1 = new Player("npc1", this, 600, 300, 1.0f, 0, 0, 0, 0, 0, 50, 0);
-    //加个树妖
+    // 加个树妖
     Monster1 = new Player("Monster1", this, 1000, 600, 1.0f, 0, 0, 0, 100, 0, 50, 0);
-    //加个哥布林
-    Monster2 = new Player("Monster2", this, 1500, 800, 3.0f, 0, 0, 0, 100, 0, 50, 0);
+    // 加个Monster2
+    Monster2 = new Player("Monster2", this, 1500, 800, 0.5f, 0, 0, 0, 100, 0, 50, 0);
+   
     // 背包
     BagManager* bagManager = BagManager::getInstance();
     if(bagManager->getParent()==nullptr)

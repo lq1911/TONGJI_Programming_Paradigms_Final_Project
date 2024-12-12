@@ -12,7 +12,7 @@ BagManager* BagManager::_instance = nullptr;
 BagManager* BagManager::getInstance()
 {
     // 如果实例不存在，创建一个新的实例
-    if (_instance == nullptr) 
+    if (_instance == nullptr)
     {
         _instance = new BagManager();  // 创建实例
         _instance->init();  // 初始化实例
@@ -25,14 +25,13 @@ BagManager::BagManager() : _isBagOpen(false), _bagPanel(nullptr)
     for (int i = 0; i < 40; i++)
         items[i] = nullptr;
     items_num = 0;
-    
 }
 
 BagManager::~BagManager()
 {
-    if (_bagPanel) 
+    if (_bagPanel)
         _bagPanel->removeFromParent();
-    if (_bagBackground) 
+    if (_bagBackground)
         _bagBackground->release();
     if (_characterBackground)
         _characterBackground->release();
@@ -40,14 +39,14 @@ BagManager::~BagManager()
 
 bool BagManager::init()
 {
-    if (!Node::init()) 
+    if (!Node::init())
         return false;  // 初始化失败
 
     // 创建背包面板，作为背包UI的容器
     _bagPanel = Node::create();
     this->addChild(_bagPanel);  // 将背包面板添加到当前节点
     _bagPanel->setVisible(false);  // 默认情况下背包是隐藏的
-    
+
     return true;  // 初始化成功
 }
 
@@ -88,16 +87,16 @@ void BagManager::hideBag(Player& _player)
 void BagManager::updateBagUI()
 {
     // 设置物品栏格子尺寸和间隔
-    float xStart = 35.0f;  // 起始X位置
-    float yStart = _bagBackground->getContentSize().height - 30.0f;  // 起始Y位置（靠近背包标题下方）
+    float xStart = 75.0f;  // 起始X位置
+    float yStart = _bagBackground->getContentSize().height - 80.0f;  // 起始Y位置（靠近背包标题下方）
 
     // 创建5x8的物品格子
     for (int row = 0; row < 8; ++row)
         for (int col = 0; col < 5; ++col)
         {
             // 计算每个格子的坐标
-            float xPos = xStart + col * 30;
-            float yPos = yStart - row * 30;
+            float xPos = xStart + col * 80;
+            float yPos = yStart - row * 70;
             int index = row * 5 + col;
 
             // 添加物品栏
@@ -109,21 +108,20 @@ void BagManager::updateBagUI()
             _bagBackground->addChild(slot);
             if (items[index] != NULL)
             {
-                if(items[index]->image!=nullptr)
-                    if (items[index]->image->getParent() == nullptr)// 图像是否有父节点
-                    {
-                        // 设置物品图像的位置并添加到按钮格子
-                        items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
-                        slot->addChild(items[index]->image);// 添加父节点
-                        items[index]->image->retain();
-                    }
-                    else
-                    {
-                        items[index]->image->removeFromParent();// 移除当前的父节点
-                        items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
-                        slot->addChild(items[index]->image);
-                        items[index]->image->retain();// 保证图像对象不被销毁
-                    }
+                if (items[index]->image->getParent() == nullptr)// 图像是否有父节点
+                {
+                    // 设置物品图像的位置并添加到按钮格子
+                    items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
+                    slot->addChild(items[index]->image);// 添加父节点
+                    items[index]->image->retain();
+                }
+                else
+                {
+                    items[index]->image->removeFromParent();// 移除当前的父节点
+                    items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
+                    slot->addChild(items[index]->image);
+                    items[index]->image->retain();// 保证图像对象不被销毁
+                }
             }
         }
     // 更新角色面板
@@ -135,12 +133,13 @@ void BagManager::createBagBackground()
 {
     // 设置背包背景图片
     _bagBackground = Sprite::create("Bag/bag_background.png");
+    //  _bagBackground->setPosition(Vec2(player.mySprite->getPosition().x, player.mySprite->getPosition().y));
     _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);
     _bagPanel->addChild(_bagBackground);
 
     // 创建背包标题
-    auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 8);
-    titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 10));
+    auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 32);
+    titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     titleLabel->setTextColor(Color4B(255, 215, 0, 255));
     _bagBackground->addChild(titleLabel);
@@ -157,8 +156,8 @@ void BagManager::createCharacterPanel()
     _bagPanel->addChild(_characterBackground, -1);
 
     // 创建角色面板标题
-    auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 8);
-    characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 10));
+    auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 32);
+    characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     characterTitleLabel->setTextColor(Color4B(255, 215, 0, 255));
     _characterBackground->addChild(characterTitleLabel);
@@ -178,24 +177,24 @@ void BagManager::createCharacterPanel()
         Color4F(1.0f, 1.0f, 1.0f, 1.0f)
     );
     // 在角色面板两边添加装备栏
-    
+
     // 武器
     auto button1 = Button::create("Bag/item_slot.png");// 添加按钮
-    button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y + borderHeight / 2 - 15));
+    button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y + borderHeight / 2 - 30));
     button1->addClickEventListener([](Ref* sender) {});// 添加按钮点击事件
     _characterBackground->addChild(button1);
-    auto label1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 8);// 添加文字 
-    label1->setPosition(Vec2(10, -6));
+    auto label1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 16);// 添加文字 
+    label1->setPosition(Vec2(20, -6));
     button1->addChild(label1);
 
     // 获取玩家的武器图像并设置到武器栏
-    if (player._weapon != nullptr) 
+    if (player._weapon != nullptr)
     {
         // 获取武器图像并设置
         auto weaponImage = player._weapon->image;
         weaponImage->retain(); // 保证图像对象不被销毁
         weaponImage->removeFromParent(); // 移除当前的父节点
-        if (weaponImage != nullptr) 
+        if (weaponImage != nullptr)
         {
             weaponImage->setPosition(Vec2(button1->getContentSize().width / 2, button1->getContentSize().height / 2));
             button1->addChild(weaponImage);  // 将图像添加到武器栏按钮中
@@ -219,11 +218,11 @@ void BagManager::createCharacterPanel()
 
     // 护甲
     auto button2 = Button::create("Bag/item_slot.png");
-    button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 15, borderPosition.y - borderHeight / 2 + 15));
+    button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y - borderHeight / 2 + 30));
     button2->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button2);
-    auto label2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 8);
-    label2->setPosition(Vec2(10, -6));
+    auto label2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 16);
+    label2->setPosition(Vec2(20, -6));
     button2->addChild(label2);
 
     // 获取玩家的护甲图像并设置到护甲栏
@@ -257,11 +256,11 @@ void BagManager::createCharacterPanel()
 
     // 鞋子
     auto button3 = Button::create("Bag/item_slot.png");
-    button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y + borderHeight / 2 - 15));
+    button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y + borderHeight / 2 - 30));
     button3->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button3);
-    auto label3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 8);
-    label3->setPosition(Vec2(10, -6));
+    auto label3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 16);
+    label3->setPosition(Vec2(20, -6));
     button3->addChild(label3);
 
     // 获取玩家的鞋子图像并设置到鞋子栏
@@ -280,7 +279,7 @@ void BagManager::createCharacterPanel()
 
     // 添加关闭按钮，如果装备栏有装备，就卸下装备
     auto closeButton3 = Button::create("Bag/close_button.png");
-    closeButton3->setPosition(Vec2(button3->getContentSize().width, button3->getContentSize().height)); // 右上角位置
+    closeButton3->setPosition(Vec2(0, button3->getContentSize().height)); // 右上角位置
     closeButton3->addClickEventListener([=](Ref* sender) {
         if (player._shoes != nullptr)
         {
@@ -295,11 +294,11 @@ void BagManager::createCharacterPanel()
 
     // 饰品
     auto button4 = Button::create("Bag/item_slot.png");
-    button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 15, borderPosition.y - borderHeight / 2 + 15));
+    button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y - borderHeight / 2 + 30));
     button4->addClickEventListener([](Ref* sender) {});
     _characterBackground->addChild(button4);
-    auto label4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 8);
-    label4->setPosition(Vec2(10, -6));
+    auto label4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 16);
+    label4->setPosition(Vec2(20, -6));
     button4->addChild(label4);
 
     // 获取玩家的饰品图像并设置到饰品栏
@@ -318,7 +317,7 @@ void BagManager::createCharacterPanel()
 
     // 添加关闭按钮，如果装备栏有装备，就卸下装备
     auto closeButton4 = Button::create("Bag/close_button.png");
-    closeButton4->setPosition(Vec2(button4->getContentSize().width, button4->getContentSize().height)); // 右上角位置
+    closeButton4->setPosition(Vec2(0, button4->getContentSize().height)); // 右上角位置
     closeButton4->addClickEventListener([=](Ref* sender) {
         if (player._accessories != nullptr)
         {
@@ -335,48 +334,48 @@ void BagManager::createCharacterPanel()
     //显示角色的等级、HP、MP
     // 等级
     string player_level = "Level: " + to_string(player.level);
-    auto characterLevel = Label::createWithTTF(player_level, "fonts/arial.ttf", 8);
+    auto characterLevel = Label::createWithTTF(player_level, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterLevel->setAnchorPoint(Vec2(0, 0.5));
-    characterLevel->setPosition(Vec2(110, 130));
+    characterLevel->setPosition(Vec2(200, 320));
     _characterBackground->addChild(characterLevel);
     // HP
     string player_HP = "HP: " + to_string(player.hp);
-    auto characterHP = Label::createWithTTF(player_HP, "fonts/arial.ttf", 8);
+    auto characterHP = Label::createWithTTF(player_HP, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterHP->setAnchorPoint(Vec2(0, 0.5));
-    characterHP->setPosition(Vec2(1, 130));
+    characterHP->setPosition(Vec2(1, 320));
     _characterBackground->addChild(characterHP);
     // MP
     string player_MP = "MP: " + to_string(player.mp);
-    auto characterMP = Label::createWithTTF(player_MP, "fonts/arial.ttf", 8);
+    auto characterMP = Label::createWithTTF(player_MP, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterMP->setAnchorPoint(Vec2(0, 0.5));
-    characterMP->setPosition(Vec2(1, 120));
+    characterMP->setPosition(Vec2(1, 300));
     _characterBackground->addChild(characterMP);
 
     // 显示角色的攻击力、防御力、速度
     // 攻击力
     string player_attack = "Attack: " + to_string(player.atk);
-    auto characterAttack = Label::createWithTTF(player_attack, "fonts/arial.ttf", 8);
+    auto characterAttack = Label::createWithTTF(player_attack, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterAttack->setAnchorPoint(Vec2(0, 0.5));
-    characterAttack->setPosition(Vec2(50, 130));
+    characterAttack->setPosition(Vec2(80, 320));
     _characterBackground->addChild(characterAttack);
     // 防御力
     string player_defense = "Defense: " + to_string(player.def);
-    auto characterDefense = Label::createWithTTF(player_defense, "fonts/arial.ttf", 8);
+    auto characterDefense = Label::createWithTTF(player_defense, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterDefense->setAnchorPoint(Vec2(0, 0.5));
-    characterDefense->setPosition(Vec2(50, 120));
+    characterDefense->setPosition(Vec2(80, 300));
     _characterBackground->addChild(characterDefense);
 
     // 速度
     string player_speed = "Speed: " + to_string(player.speed);
-    auto characterSpeed = Label::createWithTTF(player_speed, "fonts/arial.ttf", 8);
+    auto characterSpeed = Label::createWithTTF(player_speed, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterSpeed->setAnchorPoint(Vec2(0, 0.5));
-    characterSpeed->setPosition(Vec2(110, 120));
+    characterSpeed->setPosition(Vec2(200, 300));
     _characterBackground->addChild(characterSpeed);
 }
 
@@ -409,26 +408,26 @@ void BagManager::slot_click(Button* slot, int row, int col)
         string itemDescription = items[row * 5 + col]->getDescription();
 
         // 创建并显示物品名字的 Label
-        auto itemNameLabel = Label::createWithSystemFont(itemName, "Arial", 10);
+        auto itemNameLabel = Label::createWithSystemFont(itemName, "Arial", 24);
         // 设置字体颜色为金色 (RGB: 255, 215, 0)
         itemNameLabel->setTextColor(Color4B(255, 215, 0, 255)); // Color4B的第四个参数是透明度
-        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 5));  // 放置在背景上方
+        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 10));  // 放置在背景上方
         itemInfoBackground->addChild(itemNameLabel);
 
         // 创建并显示物品描述的 Label
-        auto itemDescriptionLabel = Label::createWithSystemFont(itemDescription, "Arial", 8);
+        auto itemDescriptionLabel = Label::createWithSystemFont(itemDescription, "Arial", 16);
         // 设置锚点
         itemDescriptionLabel->setAnchorPoint(Vec2(0, 0.5));
         // 设置文本最大宽度为物品信息背景的宽度（可以适当留个边距）
         float maxWidth = itemInfoBackground->getContentSize().width - 10;  // 留点左右边距
         // 设置最大宽度和高度
         itemDescriptionLabel->setDimensions(maxWidth, 0);
-        itemDescriptionLabel->setPosition(Vec2(5, itemInfoBackground->getContentSize().height - 20));  // 放置在背景上方
+        itemDescriptionLabel->setPosition(Vec2(10, itemInfoBackground->getContentSize().height - 30));  // 放置在背景上方
         itemInfoBackground->addChild(itemDescriptionLabel);
 
         // 创建使用物品按钮
         auto useButton = Button::create("Bag/use_button.png");
-        useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 40));
+        useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 100));
         useButton->addClickEventListener([=](Ref* sender) {
             if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col]))
             {
@@ -438,7 +437,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
             }
             else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col]))
             {
-                auto consumption=dynamic_cast<consumable*>(items[row * 5 + col]);
+                auto consumption = dynamic_cast<consumable*>(items[row * 5 + col]);
                 player.hp += consumption->add_HP;
                 dynamic_cast<item*>(items[row * 5 + col]);
                 // 丢弃该物品
@@ -451,20 +450,20 @@ void BagManager::slot_click(Button* slot, int row, int col)
         // 根据物品的类型为按钮添加不同的文字
         if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col])) // 物品是装备类
         {
-            auto itemEquipLabel = Label::createWithSystemFont("equip", "Arial", 7); // 按钮上显示的是装备
+            auto itemEquipLabel = Label::createWithSystemFont("equip", "Arial", 16); // 按钮上显示的是装备
             itemEquipLabel->setPosition(Vec2(useButton->getContentSize().width / 2, useButton->getContentSize().height / 2)); // 设置位置
             useButton->addChild(itemEquipLabel);
         }
         else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col])) // 物品是消耗品类
         {
-            auto itemConsumeLabel = Label::createWithSystemFont("consume", "Arial", 7); // 按钮上显示的是消耗
+            auto itemConsumeLabel = Label::createWithSystemFont("consume", "Arial", 16); // 按钮上显示的是消耗
             itemConsumeLabel->setPosition(Vec2(useButton->getContentSize().width / 2, useButton->getContentSize().height / 2)); // 设置位置
             useButton->addChild(itemConsumeLabel);
         }
 
         // 创建丢弃物品按钮
         auto dicardButton = Button::create("Bag/use_button.png");
-        dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 60));
+        dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 130));
         dicardButton->addClickEventListener([=](Ref* sender) {
             // 丢弃该物品
             discardItems(row * 5 + col);
@@ -472,7 +471,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
             }); // 添加鼠标点击事件
         itemInfoBackground->addChild(dicardButton);
         // 为按钮添加文字
-        auto itemDiscardLabel = Label::createWithSystemFont("discard", "Arial", 7); // 按钮上显示的是丢弃
+        auto itemDiscardLabel = Label::createWithSystemFont("discard", "Arial", 16); // 按钮上显示的是丢弃
         itemDiscardLabel->setPosition(Vec2(dicardButton->getContentSize().width / 2, dicardButton->getContentSize().height / 2)); // 设置位置
         dicardButton->addChild(itemDiscardLabel);
     }

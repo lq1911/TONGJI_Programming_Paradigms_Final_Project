@@ -12,8 +12,8 @@ void Creature::Attack(int dir, Creature* opp) {
         animFrames.reserve(8);
         for (int i = 17; i <= 24; i++) {
             auto texture = Director::getInstance()->getTextureCache()->addImage("Role/" + role + "/" + std::to_string(i) + ".png");
-            float width = texture->getPixelsWide();
-            float height = texture->getPixelsHigh();
+            float width = float(texture->getPixelsWide());
+            float height = float(texture->getPixelsHigh());
             Rect rectInPixels(0, 0, width, height);
             auto spriteFrame = SpriteFrame::createWithTexture(
                 texture,
@@ -24,7 +24,7 @@ void Creature::Attack(int dir, Creature* opp) {
         // 播放
         Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         Animate* animate = Animate::create(animation);
-        mySprite->stopAllActions();                        //player就是Creature类中的mySprite
+        mySprite->stopAllActions();    
         mySprite->runAction(animate);
         CCLOG("%s attack", role);
         // 对手受伤动画
@@ -35,7 +35,7 @@ void Creature::Attack(int dir, Creature* opp) {
         return;
     }
 
-    /* 玩家角色 */
+    /* 玩家角色+Monster2+Monster3 */
     // 更改面朝方向
     face_to = dir;
     // 图片名前缀:除编号部分
@@ -118,7 +118,7 @@ void Creature::Hurt() {
         return;
     }
 
-    /* 玩家角色 */
+    /* 玩家角色+Monster2+Monster3 */
     std::string s = "Role/" + role + "atked/";
     // 根据方向确认第一张图片
     int start = 1;
@@ -156,30 +156,32 @@ void Creature::Hurt() {
 /* 恢复动画 */
 void Creature::Heal() {
     // 死了,直接返回
-    if (isDead) {
+    if (isDead) 
         return;
-    }
+    // 不是玩家,直接返回
+    if ((role != "Player1" && role != "Player2" && role != "Player3" && role != "Player4" && role != "Player5"))
+        return;
 
     /* 玩家角色 */
     std::string s = "Role/" + role + "atked/";
     // 根据方向确认第一张图片
-    int start = 2;
+    int start = 0;
     if (face_to == DOWN)
-        start = 2;
+        start = 0;
     else if (face_to == LEFT)
-        start = 4;
+        start = 1;
     else if (face_to == RIGHT)
-        start = 6;
+        start = 2;
     else if (face_to == UP)
-        start = 8;
+        start = 3;
     // 帧动画
     Vector<SpriteFrame*> animFrames;
     animFrames.reserve(4);
-    vector<int> idx;
-    idx.push_back(start);
-    idx.push_back(17 + start / 2);
-    idx.push_back(17 + start / 2);
-    idx.push_back(start);
+    std::vector<int> idx;
+    idx.push_back(start * 4 + 2);
+    idx.push_back(18 + start);
+    idx.push_back(18 + start);
+    idx.push_back(start * 4 + 2);
     for (int i = 0; i < 4; i++) {
         auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(idx[i]) + ".png");
         float width = texture->getPixelsWide();
@@ -263,14 +265,12 @@ void Creature::Move(int dir) {
     // 创建移动动作
     auto moveAction = MoveBy::create(0.3f, moveBy);
 
-
     // 同时执行动画和移动
     auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);
 
     // 执行动作
     mySprite->stopAllActions();
     mySprite->runAction(moveAndAnimate);
-
 }
 
 /* 死亡 */
@@ -296,40 +296,27 @@ void Creature::Die() {
 
 /* 复活 */
 void Creature::Revive() {
-    if (!isDead) {
+    // 还没死或者不是玩家
+    if (!isDead || (role != "Player1" && role != "Player2" && role != "Player3" && role != "Player4" && role != "Player5"))
         return;
-    }
+
     isDead = false;
     face_to = DOWN;
     mySprite->stopAllActions();
     mySprite->setTexture("Role/" + role + "atked/17.png");
     mySprite->setPosition(Vec2(mySprite->getPosition().x, mySprite->getPosition().y + 30));
 }
-// 返回a对b的伤害
+
+/* 等级加成 */
+void Creature::levelBonus() {
+    speed = speed * (0.05 * level + 1);
+    hp = level * hp;
+    mp = mp * level;
+    atk = atk * level;
+    def = def * level;
+}
+
+/* 返回a对b的伤害 */
 int Creature::DamageCal(Creature* a, Creature* b) {
     return a->getAtk() - b->getDef();
-}
-// 获得总hp
-int Creature::getHp()const {
-    return hp;
-}
-// 获得现hp
-int Creature::getCurrentHp()const {
-    return current_hp;
-}
-// 获得总mp
-int Creature::getMp()const {
-    return mp;
-}
-// 获得现mp
-int Creature::getCurrentMp()const {
-    return current_mp;
-}
-// 获得atk
-int Creature::getAtk()const {
-    return atk;
-}
-// 获得def
-int Creature::getDef()const {
-    return def;
 }
