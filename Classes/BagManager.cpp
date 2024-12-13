@@ -11,13 +11,13 @@ BagManager* BagManager::_instance = nullptr;
 
 BagManager* BagManager::getInstance()
 {
-    // Èç¹ûÊµÀı²»´æÔÚ£¬´´½¨Ò»¸öĞÂµÄÊµÀı
+    // å¦‚æœå®ä¾‹ä¸å­˜åœ¨ï¼Œåˆ›å»ºä¸€ä¸ªæ–°çš„å®ä¾‹
     if (_instance == nullptr)
     {
-        _instance = new BagManager();  // ´´½¨ÊµÀı
-        _instance->init();  // ³õÊ¼»¯ÊµÀı
+        _instance = new BagManager();  // åˆ›å»ºå®ä¾‹
+        _instance->init();  // åˆå§‹åŒ–å®ä¾‹
     }
-    return _instance;  // ·µ»ØÊµÀıÖ¸Õë
+    return _instance;  // è¿”å›å®ä¾‹æŒ‡é’ˆ
 }
 
 BagManager::BagManager() : _isBagOpen(false), _bagPanel(nullptr)
@@ -40,32 +40,32 @@ BagManager::~BagManager()
 bool BagManager::init()
 {
     if (!Node::init())
-        return false;  // ³õÊ¼»¯Ê§°Ü
+        return false;  // åˆå§‹åŒ–å¤±è´¥
 
-    // ´´½¨±³°üÃæ°å£¬×÷Îª±³°üUIµÄÈİÆ÷
+    // åˆ›å»ºèƒŒåŒ…é¢æ¿ï¼Œä½œä¸ºèƒŒåŒ…UIçš„å®¹å™¨
     _bagPanel = Node::create();
-    this->addChild(_bagPanel);  // ½«±³°üÃæ°åÌí¼Óµ½µ±Ç°½Úµã
-    _bagPanel->setVisible(false);  // Ä¬ÈÏÇé¿öÏÂ±³°üÊÇÒş²ØµÄ
+    this->addChild(_bagPanel);  // å°†èƒŒåŒ…é¢æ¿æ·»åŠ åˆ°å½“å‰èŠ‚ç‚¹
+    _bagPanel->setVisible(false);  // é»˜è®¤æƒ…å†µä¸‹èƒŒåŒ…æ˜¯éšè—çš„
 
-    return true;  // ³õÊ¼»¯³É¹¦
+    return true;  // åˆå§‹åŒ–æˆåŠŸ
 }
 
 void BagManager::showBag(Player& _player)
 {
     player = _player;
-    // Èç¹û±³°üÉĞÎ´´ò¿ª£¬Ôò´´½¨²¢ÏÔÊ¾±³°ü±³¾°
+    // å¦‚æœèƒŒåŒ…å°šæœªæ‰“å¼€ï¼Œåˆ™åˆ›å»ºå¹¶æ˜¾ç¤ºèƒŒåŒ…èƒŒæ™¯
     if (!_isBagOpen)
     {
-        // ´´½¨±³°ü±³¾°
+        // åˆ›å»ºèƒŒåŒ…èƒŒæ™¯
         createBagBackground();
 
-        // ¸üĞÂÎïÆ·À¸ÄÚµÄÎïÆ·
+        // æ›´æ–°ç‰©å“æ å†…çš„ç‰©å“
         updateBagUI();
 
-        // ´´½¨½ÇÉ«Ãæ°å
+        // åˆ›å»ºè§’è‰²é¢æ¿
         createCharacterPanel();
 
-        _bagPanel->setVisible(true);  // ÏÔÊ¾±³°üÃæ°å
+        _bagPanel->setVisible(true);  // æ˜¾ç¤ºèƒŒåŒ…é¢æ¿
         _isBagOpen = true;
     }
 }
@@ -74,32 +74,32 @@ void BagManager::hideBag(Player& _player)
 {
     if (_isBagOpen)
     {
-        _bagPanel->setVisible(false);  // Òş²Ø±³°üÃæ°å
-        _bagPanel->removeChild(_bagBackground);  // ÒÆ³ı±³¾°
-        _bagPanel->removeChild(_characterBackground);  // ÒÆ³ı½ÇÉ«Ãæ°å±³¾°
-        _bagBackground = nullptr;  // Çå³ı±³¾°Ö¸Õë
+        _bagPanel->setVisible(false);  // éšè—èƒŒåŒ…é¢æ¿
+        _bagPanel->removeChild(_bagBackground);  // ç§»é™¤èƒŒæ™¯
+        _bagPanel->removeChild(_characterBackground);  // ç§»é™¤è§’è‰²é¢æ¿èƒŒæ™¯
+        _bagBackground = nullptr;  // æ¸…é™¤èƒŒæ™¯æŒ‡é’ˆ
         _characterBackground = nullptr;
-        _isBagOpen = false;  // ¸üĞÂ×´Ì¬
+        _isBagOpen = false;  // æ›´æ–°çŠ¶æ€
         _player = player;
     }
 }
 
 void BagManager::updateBagUI()
 {
-    // ÉèÖÃÎïÆ·À¸¸ñ×Ó³ß´çºÍ¼ä¸ô
-    float xStart = 75.0f;  // ÆğÊ¼XÎ»ÖÃ
-    float yStart = _bagBackground->getContentSize().height - 80.0f;  // ÆğÊ¼YÎ»ÖÃ£¨¿¿½ü±³°ü±êÌâÏÂ·½£©
+    // è®¾ç½®ç‰©å“æ æ ¼å­å°ºå¯¸å’Œé—´éš”
+    float xStart = 75.0f;  // èµ·å§‹Xä½ç½®
+    float yStart = _bagBackground->getContentSize().height - 80.0f;  // èµ·å§‹Yä½ç½®ï¼ˆé è¿‘èƒŒåŒ…æ ‡é¢˜ä¸‹æ–¹ï¼‰
 
-    // ´´½¨5x8µÄÎïÆ·¸ñ×Ó
+    // åˆ›å»º5x8çš„ç‰©å“æ ¼å­
     for (int row = 0; row < 8; ++row)
         for (int col = 0; col < 5; ++col)
         {
-            // ¼ÆËãÃ¿¸ö¸ñ×ÓµÄ×ø±ê
+            // è®¡ç®—æ¯ä¸ªæ ¼å­çš„åæ ‡
             float xPos = xStart + col * 80;
             float yPos = yStart - row * 70;
             int index = row * 5 + col;
 
-            // Ìí¼ÓÎïÆ·À¸
+            // æ·»åŠ ç‰©å“æ 
             auto slot = Button::create("Bag/item_slot.png");
             slot->setPosition(Vec2(xPos, yPos));
             slot->addClickEventListener([=](Ref* sender) {
@@ -108,61 +108,60 @@ void BagManager::updateBagUI()
             _bagBackground->addChild(slot);
             if (items[index] != NULL)
             {
-                if (items[index]->image->getParent() == nullptr)// Í¼ÏñÊÇ·ñÓĞ¸¸½Úµã
+                if (items[index]->image->getParent() == nullptr)// å›¾åƒæ˜¯å¦æœ‰çˆ¶èŠ‚ç‚¹
                 {
-                    // ÉèÖÃÎïÆ·Í¼ÏñµÄÎ»ÖÃ²¢Ìí¼Óµ½°´Å¥¸ñ×Ó
+                    // è®¾ç½®ç‰©å“å›¾åƒçš„ä½ç½®å¹¶æ·»åŠ åˆ°æŒ‰é’®æ ¼å­
                     items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
-                    slot->addChild(items[index]->image);// Ìí¼Ó¸¸½Úµã
+                    slot->addChild(items[index]->image);// æ·»åŠ çˆ¶èŠ‚ç‚¹
                     items[index]->image->retain();
                 }
                 else
                 {
-                    items[index]->image->removeFromParent();// ÒÆ³ıµ±Ç°µÄ¸¸½Úµã
+                    items[index]->image->removeFromParent();// ç§»é™¤å½“å‰çš„çˆ¶èŠ‚ç‚¹
                     items[index]->image->setPosition(Vec2(slot->getContentSize().width / 2, slot->getContentSize().height / 2));
                     slot->addChild(items[index]->image);
-                    items[index]->image->retain();// ±£Ö¤Í¼Ïñ¶ÔÏó²»±»Ïú»Ù
+                    items[index]->image->retain();// ä¿è¯å›¾åƒå¯¹è±¡ä¸è¢«é”€æ¯
                 }
             }
         }
-    // ¸üĞÂ½ÇÉ«Ãæ°å
+    // æ›´æ–°è§’è‰²é¢æ¿
     createCharacterPanel();
 }
 
-// ´´½¨±³°ü±³¾°
+// åˆ›å»ºèƒŒåŒ…èƒŒæ™¯
 void BagManager::createBagBackground()
 {
-    // ÉèÖÃ±³°ü±³¾°Í¼Æ¬
+    // è®¾ç½®èƒŒåŒ…èƒŒæ™¯å›¾ç‰‡
     _bagBackground = Sprite::create("Bag/bag_background.png");
-    //  _bagBackground->setPosition(Vec2(player.mySprite->getPosition().x, player.mySprite->getPosition().y));
-    _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);
+    _bagBackground->setPosition(Vec2(player.x, player.y));
     _bagPanel->addChild(_bagBackground);
 
-    // ´´½¨±³°ü±êÌâ
+    // åˆ›å»ºèƒŒåŒ…æ ‡é¢˜
     auto titleLabel = Label::createWithTTF("MY_BAG", "fonts/arial.ttf", 32);
     titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 20));
-    // ÉèÖÃ×ÖÌåÑÕÉ«Îª½ğÉ« (RGB: 255, 215, 0)
+    // è®¾ç½®å­—ä½“é¢œè‰²ä¸ºé‡‘è‰² (RGB: 255, 215, 0)
     titleLabel->setTextColor(Color4B(255, 215, 0, 255));
     _bagBackground->addChild(titleLabel);
 }
 
-// ´´½¨½ÇÉ«Ãæ°å
+// åˆ›å»ºè§’è‰²é¢æ¿
 void BagManager::createCharacterPanel()
 {
-    // ÉèÖÃ½ÇÉ«Ãæ°å±³¾°
+    // è®¾ç½®è§’è‰²é¢æ¿èƒŒæ™¯
     _characterBackground = Sprite::create("Bag/character_background.png");
     float characterBackground_x = _bagBackground->getPositionX() + _bagBackground->getContentSize().width / 2 + _characterBackground->getContentSize().width / 2;
     float characterBackground_y = _bagBackground->getPositionY() + _bagBackground->getContentSize().height / 2 - _characterBackground->getContentSize().height / 2;
     _characterBackground->setPosition(Vec2(characterBackground_x, characterBackground_y));
     _bagPanel->addChild(_characterBackground, -1);
 
-    // ´´½¨½ÇÉ«Ãæ°å±êÌâ
+    // åˆ›å»ºè§’è‰²é¢æ¿æ ‡é¢˜
     auto characterTitleLabel = Label::createWithTTF("MY_CHARACTER", "fonts/arial.ttf", 32);
     characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 20));
-    // ÉèÖÃ×ÖÌåÑÕÉ«Îª½ğÉ« (RGB: 255, 215, 0)
+    // è®¾ç½®å­—ä½“é¢œè‰²ä¸ºé‡‘è‰² (RGB: 255, 215, 0)
     characterTitleLabel->setTextColor(Color4B(255, 215, 0, 255));
     _characterBackground->addChild(characterTitleLabel);
 
-    // »æÖÆ±ß¿ò
+    // ç»˜åˆ¶è¾¹æ¡†
     float borderWidth = _characterBackground->getContentSize().width / 2;
     float borderHeight = _characterBackground->getContentSize().height / 2;
 
@@ -176,47 +175,47 @@ void BagManager::createCharacterPanel()
         Vec2(borderPosition.x + borderWidth / 2, borderPosition.y + borderHeight / 2),
         Color4F(1.0f, 1.0f, 1.0f, 1.0f)
     );
-    // ÔÚ½ÇÉ«Ãæ°åÁ½±ßÌí¼Ó×°±¸À¸
+    // åœ¨è§’è‰²é¢æ¿ä¸¤è¾¹æ·»åŠ è£…å¤‡æ 
 
-    // ÎäÆ÷
-    auto button1 = Button::create("Bag/item_slot.png");// Ìí¼Ó°´Å¥
+    // æ­¦å™¨
+    auto button1 = Button::create("Bag/item_slot.png");// æ·»åŠ æŒ‰é’®
     button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y + borderHeight / 2 - 30));
-    button1->addClickEventListener([](Ref* sender) {});// Ìí¼Ó°´Å¥µã»÷ÊÂ¼ş
+    button1->addClickEventListener([](Ref* sender) {});// æ·»åŠ æŒ‰é’®ç‚¹å‡»äº‹ä»¶
     _characterBackground->addChild(button1);
-    auto label1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 16);// Ìí¼ÓÎÄ×Ö 
+    auto label1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 16);// æ·»åŠ æ–‡å­— 
     label1->setPosition(Vec2(20, -6));
     button1->addChild(label1);
 
-    // »ñÈ¡Íæ¼ÒµÄÎäÆ÷Í¼Ïñ²¢ÉèÖÃµ½ÎäÆ÷À¸
+    // è·å–ç©å®¶çš„æ­¦å™¨å›¾åƒå¹¶è®¾ç½®åˆ°æ­¦å™¨æ 
     if (player._weapon != nullptr)
     {
-        // »ñÈ¡ÎäÆ÷Í¼Ïñ²¢ÉèÖÃ
+        // è·å–æ­¦å™¨å›¾åƒå¹¶è®¾ç½®
         auto weaponImage = player._weapon->image;
-        weaponImage->retain(); // ±£Ö¤Í¼Ïñ¶ÔÏó²»±»Ïú»Ù
-        weaponImage->removeFromParent(); // ÒÆ³ıµ±Ç°µÄ¸¸½Úµã
+        weaponImage->retain(); // ä¿è¯å›¾åƒå¯¹è±¡ä¸è¢«é”€æ¯
+        weaponImage->removeFromParent(); // ç§»é™¤å½“å‰çš„çˆ¶èŠ‚ç‚¹
         if (weaponImage != nullptr)
         {
             weaponImage->setPosition(Vec2(button1->getContentSize().width / 2, button1->getContentSize().height / 2));
-            button1->addChild(weaponImage);  // ½«Í¼ÏñÌí¼Óµ½ÎäÆ÷À¸°´Å¥ÖĞ
+            button1->addChild(weaponImage);  // å°†å›¾åƒæ·»åŠ åˆ°æ­¦å™¨æ æŒ‰é’®ä¸­
         }
     }
 
-    // Ìí¼Ó¹Ø±Õ°´Å¥£¬Èç¹û×°±¸À¸ÓĞ×°±¸£¬¾ÍĞ¶ÏÂ×°±¸
+    // æ·»åŠ å…³é—­æŒ‰é’®ï¼Œå¦‚æœè£…å¤‡æ æœ‰è£…å¤‡ï¼Œå°±å¸ä¸‹è£…å¤‡
     auto closeButton1 = Button::create("Bag/close_button.png");
-    closeButton1->setPosition(Vec2(button1->getContentSize().width, button1->getContentSize().height)); // ÓÒÉÏ½ÇÎ»ÖÃ
+    closeButton1->setPosition(Vec2(button1->getContentSize().width, button1->getContentSize().height)); // å³ä¸Šè§’ä½ç½®
     closeButton1->addClickEventListener([=](Ref* sender) {
         if (player._weapon != nullptr)
         {
             player.atk -= player._weapon->increase_attack;
-            auto _item = dynamic_cast<item*>(player._weapon); // ½«ÎäÆ÷ÀàÖ¸Õë×ª»»ÎªÎïÆ·ÀàÖ¸Õë
-            player._weapon = nullptr; // ½«½ÇÉ«ÎäÆ÷Ö¸ÕëÖÃÎª¿ÕÖ¸Õë
-            addItem(_item); // ½«Ğ¶ÏÂµÄ×°±¸·Å»ØÎïÆ·À¸
+            auto _item = dynamic_cast<item*>(player._weapon); // å°†æ­¦å™¨ç±»æŒ‡é’ˆè½¬æ¢ä¸ºç‰©å“ç±»æŒ‡é’ˆ
+            player._weapon = nullptr; // å°†è§’è‰²æ­¦å™¨æŒ‡é’ˆç½®ä¸ºç©ºæŒ‡é’ˆ
+            addItem(_item); // å°†å¸ä¸‹çš„è£…å¤‡æ”¾å›ç‰©å“æ 
         }
         });
     button1->addChild(closeButton1);
 
 
-    // »¤¼×
+    // æŠ¤ç”²
     auto button2 = Button::create("Bag/item_slot.png");
     button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y - borderHeight / 2 + 30));
     button2->addClickEventListener([](Ref* sender) {});
@@ -225,23 +224,23 @@ void BagManager::createCharacterPanel()
     label2->setPosition(Vec2(20, -6));
     button2->addChild(label2);
 
-    // »ñÈ¡Íæ¼ÒµÄ»¤¼×Í¼Ïñ²¢ÉèÖÃµ½»¤¼×À¸
+    // è·å–ç©å®¶çš„æŠ¤ç”²å›¾åƒå¹¶è®¾ç½®åˆ°æŠ¤ç”²æ 
     if (player._armor != nullptr)
     {
-        // »ñÈ¡»¤¼×Í¼Ïñ²¢ÉèÖÃ
+        // è·å–æŠ¤ç”²å›¾åƒå¹¶è®¾ç½®
         auto armorImage = player._armor->image;
-        armorImage->retain(); // ±£Ö¤Í¼Ïñ¶ÔÏó²»±»Ïú»Ù
-        armorImage->removeFromParent(); // ÒÆ³ıµ±Ç°µÄ¸¸½Úµã
+        armorImage->retain(); // ä¿è¯å›¾åƒå¯¹è±¡ä¸è¢«é”€æ¯
+        armorImage->removeFromParent(); // ç§»é™¤å½“å‰çš„çˆ¶èŠ‚ç‚¹
         if (armorImage != nullptr)
         {
             armorImage->setPosition(Vec2(button2->getContentSize().width / 2, button2->getContentSize().height / 2));
-            button2->addChild(armorImage);  // ½«Í¼ÏñÌí¼Óµ½»¤¼×À¸°´Å¥ÖĞ
+            button2->addChild(armorImage);  // å°†å›¾åƒæ·»åŠ åˆ°æŠ¤ç”²æ æŒ‰é’®ä¸­
         }
     }
 
-    // Ìí¼Ó¹Ø±Õ°´Å¥£¬Èç¹û×°±¸À¸ÓĞ×°±¸£¬¾ÍĞ¶ÏÂ×°±¸
+    // æ·»åŠ å…³é—­æŒ‰é’®ï¼Œå¦‚æœè£…å¤‡æ æœ‰è£…å¤‡ï¼Œå°±å¸ä¸‹è£…å¤‡
     auto closeButton2 = Button::create("Bag/close_button.png");
-    closeButton2->setPosition(Vec2(button2->getContentSize().width, button2->getContentSize().height)); // ÓÒÉÏ½ÇÎ»ÖÃ
+    closeButton2->setPosition(Vec2(button2->getContentSize().width, button2->getContentSize().height)); // å³ä¸Šè§’ä½ç½®
     closeButton2->addClickEventListener([=](Ref* sender) {
         if (player._armor != nullptr)
         {
@@ -254,7 +253,7 @@ void BagManager::createCharacterPanel()
     button2->addChild(closeButton2);
 
 
-    // Ğ¬×Ó
+    // é‹å­
     auto button3 = Button::create("Bag/item_slot.png");
     button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y + borderHeight / 2 - 30));
     button3->addClickEventListener([](Ref* sender) {});
@@ -263,23 +262,23 @@ void BagManager::createCharacterPanel()
     label3->setPosition(Vec2(20, -6));
     button3->addChild(label3);
 
-    // »ñÈ¡Íæ¼ÒµÄĞ¬×ÓÍ¼Ïñ²¢ÉèÖÃµ½Ğ¬×ÓÀ¸
+    // è·å–ç©å®¶çš„é‹å­å›¾åƒå¹¶è®¾ç½®åˆ°é‹å­æ 
     if (player._shoes != nullptr)
     {
-        // »ñÈ¡Ğ¬×ÓÍ¼Ïñ²¢ÉèÖÃ
+        // è·å–é‹å­å›¾åƒå¹¶è®¾ç½®
         auto shoesImage = player._shoes->image;
-        shoesImage->retain(); // ±£Ö¤Í¼Ïñ¶ÔÏó²»±»Ïú»Ù
-        shoesImage->removeFromParent(); // ÒÆ³ıµ±Ç°µÄ¸¸½Úµã
+        shoesImage->retain(); // ä¿è¯å›¾åƒå¯¹è±¡ä¸è¢«é”€æ¯
+        shoesImage->removeFromParent(); // ç§»é™¤å½“å‰çš„çˆ¶èŠ‚ç‚¹
         if (shoesImage != nullptr)
         {
             shoesImage->setPosition(Vec2(button3->getContentSize().width / 2, button3->getContentSize().height / 2));
-            button3->addChild(shoesImage);  // ½«Í¼ÏñÌí¼Óµ½Ğ¬×ÓÀ¸°´Å¥ÖĞ
+            button3->addChild(shoesImage);  // å°†å›¾åƒæ·»åŠ åˆ°é‹å­æ æŒ‰é’®ä¸­
         }
     }
 
-    // Ìí¼Ó¹Ø±Õ°´Å¥£¬Èç¹û×°±¸À¸ÓĞ×°±¸£¬¾ÍĞ¶ÏÂ×°±¸
+    // æ·»åŠ å…³é—­æŒ‰é’®ï¼Œå¦‚æœè£…å¤‡æ æœ‰è£…å¤‡ï¼Œå°±å¸ä¸‹è£…å¤‡
     auto closeButton3 = Button::create("Bag/close_button.png");
-    closeButton3->setPosition(Vec2(0, button3->getContentSize().height)); // ÓÒÉÏ½ÇÎ»ÖÃ
+    closeButton3->setPosition(Vec2(0, button3->getContentSize().height)); // å³ä¸Šè§’ä½ç½®
     closeButton3->addClickEventListener([=](Ref* sender) {
         if (player._shoes != nullptr)
         {
@@ -292,7 +291,7 @@ void BagManager::createCharacterPanel()
     button3->addChild(closeButton3);
 
 
-    // ÊÎÆ·
+    // é¥°å“
     auto button4 = Button::create("Bag/item_slot.png");
     button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y - borderHeight / 2 + 30));
     button4->addClickEventListener([](Ref* sender) {});
@@ -301,23 +300,23 @@ void BagManager::createCharacterPanel()
     label4->setPosition(Vec2(20, -6));
     button4->addChild(label4);
 
-    // »ñÈ¡Íæ¼ÒµÄÊÎÆ·Í¼Ïñ²¢ÉèÖÃµ½ÊÎÆ·À¸
+    // è·å–ç©å®¶çš„é¥°å“å›¾åƒå¹¶è®¾ç½®åˆ°é¥°å“æ 
     if (player._accessories != nullptr)
     {
-        // »ñÈ¡ÊÎÆ·Í¼Ïñ²¢ÉèÖÃ
+        // è·å–é¥°å“å›¾åƒå¹¶è®¾ç½®
         auto accessoriesImage = player._accessories->image;
-        accessoriesImage->retain(); // ±£Ö¤Í¼Ïñ¶ÔÏó²»±»Ïú»Ù
-        accessoriesImage->removeFromParent(); // ÒÆ³ıµ±Ç°µÄ¸¸½Úµã
+        accessoriesImage->retain(); // ä¿è¯å›¾åƒå¯¹è±¡ä¸è¢«é”€æ¯
+        accessoriesImage->removeFromParent(); // ç§»é™¤å½“å‰çš„çˆ¶èŠ‚ç‚¹
         if (accessoriesImage != nullptr)
         {
             accessoriesImage->setPosition(Vec2(button4->getContentSize().width / 2, button4->getContentSize().height / 2));
-            button4->addChild(accessoriesImage);  // ½«Í¼ÏñÌí¼Óµ½ÊÎÆ·À¸°´Å¥ÖĞ
+            button4->addChild(accessoriesImage);  // å°†å›¾åƒæ·»åŠ åˆ°é¥°å“æ æŒ‰é’®ä¸­
         }
     }
 
-    // Ìí¼Ó¹Ø±Õ°´Å¥£¬Èç¹û×°±¸À¸ÓĞ×°±¸£¬¾ÍĞ¶ÏÂ×°±¸
+    // æ·»åŠ å…³é—­æŒ‰é’®ï¼Œå¦‚æœè£…å¤‡æ æœ‰è£…å¤‡ï¼Œå°±å¸ä¸‹è£…å¤‡
     auto closeButton4 = Button::create("Bag/close_button.png");
-    closeButton4->setPosition(Vec2(0, button4->getContentSize().height)); // ÓÒÉÏ½ÇÎ»ÖÃ
+    closeButton4->setPosition(Vec2(0, button4->getContentSize().height)); // å³ä¸Šè§’ä½ç½®
     closeButton4->addClickEventListener([=](Ref* sender) {
         if (player._accessories != nullptr)
         {
@@ -331,267 +330,267 @@ void BagManager::createCharacterPanel()
         });
     button4->addChild(closeButton4);
 
-    //ÏÔÊ¾½ÇÉ«µÄµÈ¼¶¡¢HP¡¢MP
-    // µÈ¼¶
+    //æ˜¾ç¤ºè§’è‰²çš„ç­‰çº§ã€HPã€MP
+    // ç­‰çº§
     string player_level = "Level: " + to_string(player.level);
     auto characterLevel = Label::createWithTTF(player_level, "fonts/arial.ttf", 16);
-    // ÉèÖÃÃªµã£¬´Ó×ó±ß¿ªÊ¼
+    // è®¾ç½®é”šç‚¹ï¼Œä»å·¦è¾¹å¼€å§‹
     characterLevel->setAnchorPoint(Vec2(0, 0.5));
     characterLevel->setPosition(Vec2(200, 320));
     _characterBackground->addChild(characterLevel);
     // HP
     string player_HP = "HP: " + to_string(player.hp);
     auto characterHP = Label::createWithTTF(player_HP, "fonts/arial.ttf", 16);
-    // ÉèÖÃÃªµã£¬´Ó×ó±ß¿ªÊ¼
+    // è®¾ç½®é”šç‚¹ï¼Œä»å·¦è¾¹å¼€å§‹
     characterHP->setAnchorPoint(Vec2(0, 0.5));
     characterHP->setPosition(Vec2(1, 320));
     _characterBackground->addChild(characterHP);
     // MP
     string player_MP = "MP: " + to_string(player.mp);
     auto characterMP = Label::createWithTTF(player_MP, "fonts/arial.ttf", 16);
-    // ÉèÖÃÃªµã£¬´Ó×ó±ß¿ªÊ¼
+    // è®¾ç½®é”šç‚¹ï¼Œä»å·¦è¾¹å¼€å§‹
     characterMP->setAnchorPoint(Vec2(0, 0.5));
     characterMP->setPosition(Vec2(1, 300));
     _characterBackground->addChild(characterMP);
 
-    // ÏÔÊ¾½ÇÉ«µÄ¹¥»÷Á¦¡¢·ÀÓùÁ¦¡¢ËÙ¶È
-    // ¹¥»÷Á¦
+    // æ˜¾ç¤ºè§’è‰²çš„æ”»å‡»åŠ›ã€é˜²å¾¡åŠ›ã€é€Ÿåº¦
+    // æ”»å‡»åŠ›
     string player_attack = "Attack: " + to_string(player.atk);
     auto characterAttack = Label::createWithTTF(player_attack, "fonts/arial.ttf", 16);
-    // ÉèÖÃÃªµã£¬´Ó×ó±ß¿ªÊ¼
+    // è®¾ç½®é”šç‚¹ï¼Œä»å·¦è¾¹å¼€å§‹
     characterAttack->setAnchorPoint(Vec2(0, 0.5));
     characterAttack->setPosition(Vec2(80, 320));
     _characterBackground->addChild(characterAttack);
-    // ·ÀÓùÁ¦
+    // é˜²å¾¡åŠ›
     string player_defense = "Defense: " + to_string(player.def);
     auto characterDefense = Label::createWithTTF(player_defense, "fonts/arial.ttf", 16);
-    // ÉèÖÃÃªµã£¬´Ó×ó±ß¿ªÊ¼
+    // è®¾ç½®é”šç‚¹ï¼Œä»å·¦è¾¹å¼€å§‹
     characterDefense->setAnchorPoint(Vec2(0, 0.5));
     characterDefense->setPosition(Vec2(80, 300));
     _characterBackground->addChild(characterDefense);
 
-    // ËÙ¶È
+    // é€Ÿåº¦
     string player_speed = "Speed: " + to_string(player.speed);
     auto characterSpeed = Label::createWithTTF(player_speed, "fonts/arial.ttf", 16);
-    // ÉèÖÃÃªµã£¬´Ó×ó±ß¿ªÊ¼
+    // è®¾ç½®é”šç‚¹ï¼Œä»å·¦è¾¹å¼€å§‹
     characterSpeed->setAnchorPoint(Vec2(0, 0.5));
     characterSpeed->setPosition(Vec2(200, 300));
     _characterBackground->addChild(characterSpeed);
 }
 
-// µã»÷ÎïÆ·À¸ÊÂ¼ş
+// ç‚¹å‡»ç‰©å“æ äº‹ä»¶
 void BagManager::slot_click(Button* slot, int row, int col)
 {
-    // µã»÷¸ñ×ÓÊ±¼ì²éÊÇ·ñÓĞÎïÆ·
+    // ç‚¹å‡»æ ¼å­æ—¶æ£€æŸ¥æ˜¯å¦æœ‰ç‰©å“
     if (items[row * 5 + col] != NULL)
     {
-        // ´ò¿ªÎïÆ·ĞÅÏ¢Ãæ°å
+        // æ‰“å¼€ç‰©å“ä¿¡æ¯é¢æ¿
         auto itemInfoBackground = Sprite::create("Bag/item_info_background.png");
         float itemInfoBackground_x = slot->getPosition().x + itemInfoBackground->getContentSize().width / 2 + slot->getContentSize().width / 2;
         float itemInfoBackground_y = slot->getPosition().y - itemInfoBackground->getContentSize().height / 2 + slot->getContentSize().height / 2;
-        itemInfoBackground->setPosition(Vec2(itemInfoBackground_x, itemInfoBackground_y)); // ½«±³¾°·ÅÖÃÔÚ¸ñ×ÓÅÔ±ß
+        itemInfoBackground->setPosition(Vec2(itemInfoBackground_x, itemInfoBackground_y)); // å°†èƒŒæ™¯æ”¾ç½®åœ¨æ ¼å­æ—è¾¹
         _bagBackground->addChild(itemInfoBackground, 10);
 
-        // ´´½¨¹Ø±Õ°´Å¥£¨¡Á°´Å¥£©
+        // åˆ›å»ºå…³é—­æŒ‰é’®ï¼ˆÃ—æŒ‰é’®ï¼‰
         auto closeButton = Button::create("Bag/close_button.png");
-        closeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width, itemInfoBackground->getContentSize().height)); // ÓÒÉÏ½ÇÎ»ÖÃ
+        closeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width, itemInfoBackground->getContentSize().height)); // å³ä¸Šè§’ä½ç½®
         closeButton->addClickEventListener([=](Ref* sender) {
-            // µã»÷¡Á°´Å¥Ê±ÒÆ³ı itemInfoBackground
-            itemInfoBackground->removeFromParent();  // ´Ó¸¸½ÚµãÒÆ³ı
+            // ç‚¹å‡»Ã—æŒ‰é’®æ—¶ç§»é™¤ itemInfoBackground
+            itemInfoBackground->removeFromParent();  // ä»çˆ¶èŠ‚ç‚¹ç§»é™¤
             });
 
-        // ½«¹Ø±Õ°´Å¥Ìí¼Óµ½±³¾°ÖĞ
+        // å°†å…³é—­æŒ‰é’®æ·»åŠ åˆ°èƒŒæ™¯ä¸­
         itemInfoBackground->addChild(closeButton);
 
-        // »ñÈ¡ÎïÆ·Ãû×Ö
+        // è·å–ç‰©å“åå­—
         string itemName = items[row * 5 + col]->getName();
         string itemDescription = items[row * 5 + col]->getDescription();
 
-        // ´´½¨²¢ÏÔÊ¾ÎïÆ·Ãû×ÖµÄ Label
+        // åˆ›å»ºå¹¶æ˜¾ç¤ºç‰©å“åå­—çš„ Label
         auto itemNameLabel = Label::createWithSystemFont(itemName, "Arial", 24);
-        // ÉèÖÃ×ÖÌåÑÕÉ«Îª½ğÉ« (RGB: 255, 215, 0)
-        itemNameLabel->setTextColor(Color4B(255, 215, 0, 255)); // Color4BµÄµÚËÄ¸ö²ÎÊıÊÇÍ¸Ã÷¶È
-        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 10));  // ·ÅÖÃÔÚ±³¾°ÉÏ·½
+        // è®¾ç½®å­—ä½“é¢œè‰²ä¸ºé‡‘è‰² (RGB: 255, 215, 0)
+        itemNameLabel->setTextColor(Color4B(255, 215, 0, 255)); // Color4Bçš„ç¬¬å››ä¸ªå‚æ•°æ˜¯é€æ˜åº¦
+        itemNameLabel->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 10));  // æ”¾ç½®åœ¨èƒŒæ™¯ä¸Šæ–¹
         itemInfoBackground->addChild(itemNameLabel);
 
-        // ´´½¨²¢ÏÔÊ¾ÎïÆ·ÃèÊöµÄ Label
+        // åˆ›å»ºå¹¶æ˜¾ç¤ºç‰©å“æè¿°çš„ Label
         auto itemDescriptionLabel = Label::createWithSystemFont(itemDescription, "Arial", 16);
-        // ÉèÖÃÃªµã
+        // è®¾ç½®é”šç‚¹
         itemDescriptionLabel->setAnchorPoint(Vec2(0, 0.5));
-        // ÉèÖÃÎÄ±¾×î´ó¿í¶ÈÎªÎïÆ·ĞÅÏ¢±³¾°µÄ¿í¶È£¨¿ÉÒÔÊÊµ±Áô¸ö±ß¾à£©
-        float maxWidth = itemInfoBackground->getContentSize().width - 10;  // Áôµã×óÓÒ±ß¾à
-        // ÉèÖÃ×î´ó¿í¶ÈºÍ¸ß¶È
+        // è®¾ç½®æ–‡æœ¬æœ€å¤§å®½åº¦ä¸ºç‰©å“ä¿¡æ¯èƒŒæ™¯çš„å®½åº¦ï¼ˆå¯ä»¥é€‚å½“ç•™ä¸ªè¾¹è·ï¼‰
+        float maxWidth = itemInfoBackground->getContentSize().width - 10;  // ç•™ç‚¹å·¦å³è¾¹è·
+        // è®¾ç½®æœ€å¤§å®½åº¦å’Œé«˜åº¦
         itemDescriptionLabel->setDimensions(maxWidth, 0);
-        itemDescriptionLabel->setPosition(Vec2(10, itemInfoBackground->getContentSize().height - 30));  // ·ÅÖÃÔÚ±³¾°ÉÏ·½
+        itemDescriptionLabel->setPosition(Vec2(10, itemInfoBackground->getContentSize().height - 30));  // æ”¾ç½®åœ¨èƒŒæ™¯ä¸Šæ–¹
         itemInfoBackground->addChild(itemDescriptionLabel);
 
-        // ´´½¨Ê¹ÓÃÎïÆ·°´Å¥
+        // åˆ›å»ºä½¿ç”¨ç‰©å“æŒ‰é’®
         auto useButton = Button::create("Bag/use_button.png");
         useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 100));
         useButton->addClickEventListener([=](Ref* sender) {
             if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col]))
             {
-                // ×°±¸¸ÃÎïÆ·
+                // è£…å¤‡è¯¥ç‰©å“
                 equipItem(row * 5 + col);
-                itemInfoBackground->removeFromParent();  // ¶ªÆúºó¹Ø±ÕÎïÆ·ĞÅÏ¢Ãæ°å
+                itemInfoBackground->removeFromParent();  // ä¸¢å¼ƒåå…³é—­ç‰©å“ä¿¡æ¯é¢æ¿
             }
             else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col]))
             {
                 auto consumption = dynamic_cast<consumable*>(items[row * 5 + col]);
                 player.hp += consumption->add_HP;
                 dynamic_cast<item*>(items[row * 5 + col]);
-                // ¶ªÆú¸ÃÎïÆ·
+                // ä¸¢å¼ƒè¯¥ç‰©å“
                 discardItems(row * 5 + col);
-                itemInfoBackground->removeFromParent();  // ¶ªÆúºó¹Ø±ÕÎïÆ·ĞÅÏ¢Ãæ°å
+                itemInfoBackground->removeFromParent();  // ä¸¢å¼ƒåå…³é—­ç‰©å“ä¿¡æ¯é¢æ¿
             }
-            }); // Ìí¼ÓÊó±êµã»÷ÊÂ¼ş
+            }); // æ·»åŠ é¼ æ ‡ç‚¹å‡»äº‹ä»¶
         itemInfoBackground->addChild(useButton);
 
-        // ¸ù¾İÎïÆ·µÄÀàĞÍÎª°´Å¥Ìí¼Ó²»Í¬µÄÎÄ×Ö
-        if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col])) // ÎïÆ·ÊÇ×°±¸Àà
+        // æ ¹æ®ç‰©å“çš„ç±»å‹ä¸ºæŒ‰é’®æ·»åŠ ä¸åŒçš„æ–‡å­—
+        if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col])) // ç‰©å“æ˜¯è£…å¤‡ç±»
         {
-            auto itemEquipLabel = Label::createWithSystemFont("equip", "Arial", 16); // °´Å¥ÉÏÏÔÊ¾µÄÊÇ×°±¸
-            itemEquipLabel->setPosition(Vec2(useButton->getContentSize().width / 2, useButton->getContentSize().height / 2)); // ÉèÖÃÎ»ÖÃ
+            auto itemEquipLabel = Label::createWithSystemFont("equip", "Arial", 16); // æŒ‰é’®ä¸Šæ˜¾ç¤ºçš„æ˜¯è£…å¤‡
+            itemEquipLabel->setPosition(Vec2(useButton->getContentSize().width / 2, useButton->getContentSize().height / 2)); // è®¾ç½®ä½ç½®
             useButton->addChild(itemEquipLabel);
         }
-        else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col])) // ÎïÆ·ÊÇÏûºÄÆ·Àà
+        else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col])) // ç‰©å“æ˜¯æ¶ˆè€—å“ç±»
         {
-            auto itemConsumeLabel = Label::createWithSystemFont("consume", "Arial", 16); // °´Å¥ÉÏÏÔÊ¾µÄÊÇÏûºÄ
-            itemConsumeLabel->setPosition(Vec2(useButton->getContentSize().width / 2, useButton->getContentSize().height / 2)); // ÉèÖÃÎ»ÖÃ
+            auto itemConsumeLabel = Label::createWithSystemFont("consume", "Arial", 16); // æŒ‰é’®ä¸Šæ˜¾ç¤ºçš„æ˜¯æ¶ˆè€—
+            itemConsumeLabel->setPosition(Vec2(useButton->getContentSize().width / 2, useButton->getContentSize().height / 2)); // è®¾ç½®ä½ç½®
             useButton->addChild(itemConsumeLabel);
         }
 
-        // ´´½¨¶ªÆúÎïÆ·°´Å¥
+        // åˆ›å»ºä¸¢å¼ƒç‰©å“æŒ‰é’®
         auto dicardButton = Button::create("Bag/use_button.png");
         dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 130));
         dicardButton->addClickEventListener([=](Ref* sender) {
-            // ¶ªÆú¸ÃÎïÆ·
+            // ä¸¢å¼ƒè¯¥ç‰©å“
             discardItems(row * 5 + col);
-            itemInfoBackground->removeFromParent();  // ¶ªÆúºó¹Ø±ÕÎïÆ·ĞÅÏ¢Ãæ°å
-            }); // Ìí¼ÓÊó±êµã»÷ÊÂ¼ş
+            itemInfoBackground->removeFromParent();  // ä¸¢å¼ƒåå…³é—­ç‰©å“ä¿¡æ¯é¢æ¿
+            }); // æ·»åŠ é¼ æ ‡ç‚¹å‡»äº‹ä»¶
         itemInfoBackground->addChild(dicardButton);
-        // Îª°´Å¥Ìí¼ÓÎÄ×Ö
-        auto itemDiscardLabel = Label::createWithSystemFont("discard", "Arial", 16); // °´Å¥ÉÏÏÔÊ¾µÄÊÇ¶ªÆú
-        itemDiscardLabel->setPosition(Vec2(dicardButton->getContentSize().width / 2, dicardButton->getContentSize().height / 2)); // ÉèÖÃÎ»ÖÃ
+        // ä¸ºæŒ‰é’®æ·»åŠ æ–‡å­—
+        auto itemDiscardLabel = Label::createWithSystemFont("discard", "Arial", 16); // æŒ‰é’®ä¸Šæ˜¾ç¤ºçš„æ˜¯ä¸¢å¼ƒ
+        itemDiscardLabel->setPosition(Vec2(dicardButton->getContentSize().width / 2, dicardButton->getContentSize().height / 2)); // è®¾ç½®ä½ç½®
         dicardButton->addChild(itemDiscardLabel);
     }
 }
 
-// ½«ÎïÆ·Ìí¼Óµ½±³°ü
+// å°†ç‰©å“æ·»åŠ åˆ°èƒŒåŒ…
 void BagManager::addItem(item* it)
 {
     if (it == nullptr || it->image == nullptr)
-        return; // ÎŞĞ§ÎïÆ·£¬ÍË³öº¯Êı
-    if (items_num < 40) // ±³°üÃ»ÓĞÂúÊ±²Å¿ÉÒÔÌí¼ÓÎïÆ·
+        return; // æ— æ•ˆç‰©å“ï¼Œé€€å‡ºå‡½æ•°
+    if (items_num < 40) // èƒŒåŒ…æ²¡æœ‰æ»¡æ—¶æ‰å¯ä»¥æ·»åŠ ç‰©å“
     {
         int location = 0;
-        // ÕÒµ½¿ÕµÄÎïÆ·À¸
+        // æ‰¾åˆ°ç©ºçš„ç‰©å“æ 
         for (int i = 0; i < 40; i++)
             if (items[i] == NULL)
             {
                 location = i;
                 break;
             }
-        items[location] = it; // ¸üĞÂÎïÆ·À¸
-        it->image->retain(); // ±£Ö¤ÎïÆ·Í¼ÏñµÄÉúÃüÖÜÆÚ
+        items[location] = it; // æ›´æ–°ç‰©å“æ 
+        it->image->retain(); // ä¿è¯ç‰©å“å›¾åƒçš„ç”Ÿå‘½å‘¨æœŸ
         if (_isBagOpen)
             updateBagUI();
-        items_num++; // ÎïÆ·ÊıÁ¿¼Ó1
+        items_num++; // ç‰©å“æ•°é‡åŠ 1
     }
 }
 
-// ½«ÎïÆ·´Ó±³°üÖĞ¶ªÆú
+// å°†ç‰©å“ä»èƒŒåŒ…ä¸­ä¸¢å¼ƒ
 void BagManager::discardItems(int index)
 {
-    // È·±£ÎïÆ·´æÔÚ
+    // ç¡®ä¿ç‰©å“å­˜åœ¨
     if (items[index] != nullptr)
     {
-        // ÒÆ³ıÎïÆ·µÄÍ¼Ïñ£¨´ÓÆä¸¸½ÚµãÒÆ³ı£©
+        // ç§»é™¤ç‰©å“çš„å›¾åƒï¼ˆä»å…¶çˆ¶èŠ‚ç‚¹ç§»é™¤ï¼‰
         items[index]->image->removeFromParent();
-        // Çå³ıÎïÆ·Êı¾İ
-        delete items[index];  // É¾³ıÎïÆ·¶ÔÏó
-        items[index] = nullptr; // Çå¿Õ¸ÃÎ»ÖÃ
-        // ¸üĞÂÎïÆ·ÊıÁ¿
+        // æ¸…é™¤ç‰©å“æ•°æ®
+        delete items[index];  // åˆ é™¤ç‰©å“å¯¹è±¡
+        items[index] = nullptr; // æ¸…ç©ºè¯¥ä½ç½®
+        // æ›´æ–°ç‰©å“æ•°é‡
         items_num--;
-        // Èç¹û±³°üUIÒÑ¾­ÏÔÊ¾£¬Ë¢ĞÂUI
+        // å¦‚æœèƒŒåŒ…UIå·²ç»æ˜¾ç¤ºï¼Œåˆ·æ–°UI
         if (_isBagOpen)
             updateBagUI();
     }
 }
 
-// ½«±³°üÄÚµÄÎïÆ·×°±¸µ½½ÇÉ«ÉíÉÏ
+// å°†èƒŒåŒ…å†…çš„ç‰©å“è£…å¤‡åˆ°è§’è‰²èº«ä¸Š
 void BagManager::equipItem(int index)
 {
     if (items[index] != nullptr)
     {
-        if (auto weaponItem = dynamic_cast<weapon*>(items[index])) // ÎïÆ·ÊÇÎäÆ÷Àà
+        if (auto weaponItem = dynamic_cast<weapon*>(items[index])) // ç‰©å“æ˜¯æ­¦å™¨ç±»
         {
             if (player._weapon == nullptr)
             {
-                // ¸üĞÂ½ÇÉ«ÎäÆ÷Ö¸Õë
+                // æ›´æ–°è§’è‰²æ­¦å™¨æŒ‡é’ˆ
                 player._weapon = weaponItem;
-                // Ôö¼Ó½ÇÉ«¹¥»÷Á¦
+                // å¢åŠ è§’è‰²æ”»å‡»åŠ›
                 player.atk += player._weapon->increase_attack;
-                // ²»¿ÉÒÔÇå³ıÎïÆ·ĞÅÏ¢
-                items[index] = nullptr; // Çå¿Õ¸ÃÎ»ÖÃ
-                // ¸üĞÂÎïÆ·ÊıÁ¿
+                // ä¸å¯ä»¥æ¸…é™¤ç‰©å“ä¿¡æ¯
+                items[index] = nullptr; // æ¸…ç©ºè¯¥ä½ç½®
+                // æ›´æ–°ç‰©å“æ•°é‡
                 items_num--;
-                // Èç¹û±³°üUIÒÑ¾­ÏÔÊ¾£¬Ë¢ĞÂUI
+                // å¦‚æœèƒŒåŒ…UIå·²ç»æ˜¾ç¤ºï¼Œåˆ·æ–°UI
                 if (_isBagOpen)
                     updateBagUI();
             }
         }
-        else if (auto armorItem = dynamic_cast<armor*>(items[index])) // ÎïÆ·ÊÇ»¤¼×Àà
+        else if (auto armorItem = dynamic_cast<armor*>(items[index])) // ç‰©å“æ˜¯æŠ¤ç”²ç±»
         {
             if (player._armor == nullptr)
             {
-                // ¸üĞÂ½ÇÉ«»¤¼×Ö¸Õë
+                // æ›´æ–°è§’è‰²æŠ¤ç”²æŒ‡é’ˆ
                 player._armor = armorItem;
-                // Ôö¼Ó½ÇÉ«µÄ·ÀÓùÖµ
+                // å¢åŠ è§’è‰²çš„é˜²å¾¡å€¼
                 player.def += player._armor->increase_defense;
-                // ²»¿ÉÒÔÇå³ıÎïÆ·ĞÅÏ¢
-                items[index] = nullptr; // Çå¿Õ¸ÃÎ»ÖÃ
-                // ¸üĞÂÎïÆ·ÊıÁ¿
+                // ä¸å¯ä»¥æ¸…é™¤ç‰©å“ä¿¡æ¯
+                items[index] = nullptr; // æ¸…ç©ºè¯¥ä½ç½®
+                // æ›´æ–°ç‰©å“æ•°é‡
                 items_num--;
-                // Èç¹û±³°üUIÒÑ¾­ÏÔÊ¾£¬Ë¢ĞÂUI
+                // å¦‚æœèƒŒåŒ…UIå·²ç»æ˜¾ç¤ºï¼Œåˆ·æ–°UI
                 if (_isBagOpen)
                     updateBagUI();
             }
         }
-        else if (auto shoesItem = dynamic_cast<shoes*>(items[index])) // ÎïÆ·ÊÇĞ¬×ÓÀà
+        else if (auto shoesItem = dynamic_cast<shoes*>(items[index])) // ç‰©å“æ˜¯é‹å­ç±»
         {
             if (player._shoes == nullptr)
             {
-                // ¸üĞÂ½ÇÉ«Ğ¬×ÓÖ¸Õë
+                // æ›´æ–°è§’è‰²é‹å­æŒ‡é’ˆ
                 player._shoes = shoesItem;
-                // Ôö¼Ó½ÇÉ«µÄËÙ¶È
+                // å¢åŠ è§’è‰²çš„é€Ÿåº¦
                 player.speed += player._shoes->increase_speed;
-                // ²»¿ÉÒÔÇå³ıÎïÆ·ĞÅÏ¢
-                items[index] = nullptr; // Çå¿Õ¸ÃÎ»ÖÃ
-                // ¸üĞÂÎïÆ·ÊıÁ¿
+                // ä¸å¯ä»¥æ¸…é™¤ç‰©å“ä¿¡æ¯
+                items[index] = nullptr; // æ¸…ç©ºè¯¥ä½ç½®
+                // æ›´æ–°ç‰©å“æ•°é‡
                 items_num--;
-                // Èç¹û±³°üUIÒÑ¾­ÏÔÊ¾£¬Ë¢ĞÂUI
+                // å¦‚æœèƒŒåŒ…UIå·²ç»æ˜¾ç¤ºï¼Œåˆ·æ–°UI
                 if (_isBagOpen)
                     updateBagUI();
             }
         }
-        else if (auto accessoriesItem = dynamic_cast<accessories*>(items[index])) // ÎïÆ·ÊÇÊÎÆ·Àà
+        else if (auto accessoriesItem = dynamic_cast<accessories*>(items[index])) // ç‰©å“æ˜¯é¥°å“ç±»
         {
             if (player._accessories == nullptr)
             {
-                // ¸üĞÂ½ÇÉ«ÊÎÆ·Ö¸Õë
+                // æ›´æ–°è§’è‰²é¥°å“æŒ‡é’ˆ
                 player._accessories = accessoriesItem;
-                // Ôö¼Ó½ÇÉ«¹¥»÷Á¦
+                // å¢åŠ è§’è‰²æ”»å‡»åŠ›
                 player.atk += player._accessories->increase_attack;
-                // Ôö¼Ó½ÇÉ«µÄ·ÀÓùÖµ
+                // å¢åŠ è§’è‰²çš„é˜²å¾¡å€¼
                 player.def += player._accessories->increase_defense;
-                // Ôö¼Ó½ÇÉ«µÄËÙ¶È
+                // å¢åŠ è§’è‰²çš„é€Ÿåº¦
                 player.speed += player._accessories->increase_speed;
-                // ²»¿ÉÒÔÇå³ıÎïÆ·ĞÅÏ¢
-                items[index] = nullptr; // Çå¿Õ¸ÃÎ»ÖÃ
-                // ¸üĞÂÎïÆ·ÊıÁ¿
+                // ä¸å¯ä»¥æ¸…é™¤ç‰©å“ä¿¡æ¯
+                items[index] = nullptr; // æ¸…ç©ºè¯¥ä½ç½®
+                // æ›´æ–°ç‰©å“æ•°é‡
                 items_num--;
-                // Èç¹û±³°üUIÒÑ¾­ÏÔÊ¾£¬Ë¢ĞÂUI
+                // å¦‚æœèƒŒåŒ…UIå·²ç»æ˜¾ç¤ºï¼Œåˆ·æ–°UI
                 if (_isBagOpen)
                     updateBagUI();
             }
