@@ -12,18 +12,18 @@
             "scale": 0.33,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 822.7272727272727,
-                "y": 233.33333333333337
+                "x": 798.4848484848485,
+                "y": 800
             }
         },
         "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertItem.tsx": {
-            "scaleInDock": 0.75
+            "scaleInDock": 0.125
         },
         "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertRoad.tsx": {
             "scaleInDock": 1
         },
         "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertRock.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 0.33
         },
         "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/Telepoter.tsx": {
             "scaleInDock": 1
@@ -47,7 +47,7 @@
             "scale": 0.46015625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 783.4295415959253,
+                "x": 800.8149405772496,
                 "y": 799.7283531409167
             }
         },
@@ -61,7 +61,7 @@
             "scale": 0.46015625,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 783.4295415959253,
+                "x": 800.8149405772496,
                 "y": 799.7283531409167
             }
         },
@@ -74,10 +74,10 @@
         },
         "Forest_Snow_Ecotonal.tmx": {
             "scale": 0.46015625,
-            "selectedLayer": 5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 866.0101867572156,
-                "y": 869.2699490662139
+                "x": 800.8149405772496,
+                "y": 799.7283531409167
             }
         }
     },
