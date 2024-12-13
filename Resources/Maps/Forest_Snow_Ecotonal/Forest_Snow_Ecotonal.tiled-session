@@ -1,0 +1,103 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Forest_Snow_Ecotonal.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "全部文件 (*)",
+    "fileStates": {
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DeathDesert.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 822.7272727272727,
+                "y": 233.33333333333337
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertItem.tsx": {
+            "scaleInDock": 0.75
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertRoad.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertRock.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/Telepoter.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthGrass.tsx": {
+            "scaleInDock": 0.75
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthItems.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthPlants.tsx": {
+            "scaleInDock": 0.5
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthStoneGround.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthStruct.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx": {
+            "scale": 0.46015625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 783.4295415959253,
+                "y": 799.7283531409167
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthWall.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/MagicTelepoter.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinter.tmx": {
+            "scale": 0.46015625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 783.4295415959253,
+                "y": 799.7283531409167
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinterWholeAsset.tsx": {
+            "scaleInDock": 0.33
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/tf_A1_ashlands_3.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "Forest_Snow_Ecotonal.tmx": {
+            "scale": 0.46015625,
+            "selectedLayer": 5,
+            "viewCenter": {
+                "x": 866.0101867572156,
+                "y": 869.2699490662139
+            }
+        }
+    },
+    "map.height": 50,
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": "3",
+    "map.width": 50,
+    "openFiles": [
+        "Forest_Snow_Ecotonal.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DeathDesert.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinter.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/tf_A1_ashlands_3.tsx"
+    ],
+    "project": "Forest_Snow_Ecotonal.tiled-project",
+    "recentFiles": [
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/tf_A1_ashlands_3.tsx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinter.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DeathDesert.tmx",
+        "Forest_Snow_Ecotonal.tmx"
+    ]
+}

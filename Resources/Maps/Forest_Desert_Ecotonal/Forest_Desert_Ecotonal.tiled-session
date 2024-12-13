@@ -1,0 +1,109 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Forest_Desert_Ecotonal.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "全部文件 (*)",
+    "fileStates": {
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/BrightForest.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1294.6666666666665,
+                "y": 1080
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/Grassland Tileset.tsx": {
+            "scaleInDock": 0.25
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/Pack 1 expansion.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/Reg tree wall.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/TX Props.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/TX Struct.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DeathDesert.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 162.66666666666669,
+                "y": 757.3333333333333
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertItem.tsx": {
+            "scaleInDock": 0.33
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertRoad.tsx": {
+            "scaleInDock": 0.25
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DesertRock.tsx": {
+            "scaleInDock": 0.33
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/Telepoter.tsx": {
+            "scaleInDock": 0.33
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthGrass.tsx": {
+            "scaleInDock": 0.5
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthItems.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthPlants.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthStoneGround.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthStruct.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx": {
+            "scale": 0.46015625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 799.728353140917,
+                "y": 799.7283531409167
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthWall.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/MagicTelepoter.tsx": {
+            "scaleInDock": 1
+        },
+        "Forest_Desert_Ecotonal.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 1024.2424242424242,
+                "y": 833.3333333333334
+            }
+        }
+    },
+    "map.height": 50,
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": "3",
+    "map.width": 50,
+    "openFiles": [
+        "Forest_Desert_Ecotonal.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/BrightForest.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DeathDesert.tmx"
+    ],
+    "project": "Forest_Desert_Ecotonal.tiled-project",
+    "recentFiles": [
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/DeathDesert/DeathDesert.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/BrightForest/BrightForest.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx",
+        "Forest_Desert_Ecotonal.tmx"
+    ]
+}

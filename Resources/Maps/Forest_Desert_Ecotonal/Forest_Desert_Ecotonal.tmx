@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
+ <tileset firstgid="1" source="../RebirthTemple/RebirthGrass.tsx"/>
+ <tileset firstgid="65" source="../DeathDesert/DesertItem.tsx"/>
+ <tileset firstgid="2049" source="../BrightForest/Grassland Tileset.tsx"/>
+ <layer id="1" name="Grass" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztWGuT0zAM9AEHpVwh5dojBxTKG8JzyuND4f//LpQZayr2Vm6ctD0z0w87rWLZlqxdJ/ZJCOGG4KbgVHBbcEcwEtwSnJh2azekfS64EDwS1BGN01/tF4KXPX5xvLuCseCeYBLnfSCoBGfQrnYDtrYvBM8EzwXLiCbh39ofYnvuL443FTwUnJP1HEH7LNpNtLV+TfSdOf4pm9WwbX8leJ0x3qXgseAJWc8qXOWa9ce2p9DexWY1bMf8KPiUMR7yFddHeWHjbQLX04iMh31ZH+vfcvu+qYenz5Q+zsj6sLnHTjwVjMd8WB87v66j1oPpk9nIN8atSYzJxqXrpntCFes3NX7MZ1tuOv8QfTC+1nGNJpAP0+cytk0SPiy3kbF1/qH6YLpbxJhsPsxP+TpP+LDcKmNrvYbqw7MXJB/kiPrjc+1z4eRWGxvzyNUHzu3xsTH5oGbYnqBcwfjR1l/cr3L1gbzdxsdF2HDM9kMN105/z9a6aR65+kDeIv9wnZvwL1+0H9ZiGa6+T1J8R53n6gPrrPzz3hMeX6xPHbrzG983ffWB8ZwHzvUqrmkbY8tPto9qDsuQ971lx9J65OoD82A1sO+JFpbPdh+tTXuK32xf07H66gPzYDlo/JafNpbTBGy8qjespfXblT4sjzQHxk/8VvGA8U5ILa3fd8GPsPme66sP5JHHT/s+nCeA8c7JnNbvt+BPzGOIPiyPtu33msciAYx3Bc/s+Wcdn7V1eSN4K3gneC/4FdFVHy1SfGTnD/vf+iOvWG4r8qyty2fBF8FXwTfBTyeenP3dfj8xndr/1h95hbUYO3nYdjveisSXe56eho12bXwNxGr9Mb7c+dBekfbc8/Rl2GgX40O+9zmv97W77s/WZvzO6a/2uuf8u9JHjr2O2Nf4Q/Th2Q3YuJ/NyLNdzb9P/rL7LdzjrlMfXe972X0x7sGl6UPv69j5XMHux0rWh3e346FUfXh3Ox5K0QfyyLvb8VCCPth3ViofhhL0wc5DegYbqrdD6oN9Z+kZrPTvK7xv8s5gQ/h+aH14Oez7e2of749dny9KeX9ch30o/pauj1LsQ/H3qI+jPv5HuxR+H/Vx1EeJ9l+yXKKw
+  </data>
+ </layer>
+ <layer id="2" name="Desert" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztl9ENwjAMRN2KtjMAE8ACwCTAFLAQMAEsQJkEGADBApQfzF8V4daQSvFVPemkRvk5Jy+WS4SrVY9ozb6FDuKpPddwaEEdd67h0YI6RgnROMGvo+PKltrCVdd3bam7D1tqS7/apERb9i4NncRPZ85/YV/B6+hnRAP2MAudxE9zzr9gL8HrOEZEOfsUhU7ipyfnL9gv8DomMdGUPYtDJ/FTx5UtIXNVZgmZqzJLyFyVWULjSmIJjSuJJTSuJJaQuKpiComrKqaQuKpiCoUriSmEflXOJjFltV9J2SWmrPYrKXsdV9buQ8pex5W1+/iXK2vv/Ft2zUyFwJVmprLElXTWmpnKEleac0eYdzXnbn3e1bxld661+B+lZcc6V1p2rHKl5emX7xBqqkeF5qqpHoXGVe6s3X0Urgpn7e5//AZuH0LC
+  </data>
+ </layer>
+ <layer id="3" name="Forest" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzVmGFq60AQg5uGLnuAtMQncIx9grTY979VXbyCr3rb9zOZEQxJkxSkGWl2cakvL2Wv7BjqUdm1LE1Ddh2l/q6sKPBVZh1v9ajsOq71qCG5v+Z6lPKe1WNrPWpr3F1PFizIB2exJNOxQQdnsSXTUWxfSY++y4LhP/sqk44F+2r4Q08GbNhXvGtl21fK89bJSCYdxWbAe0qmmRTkYmmZ9z2cAcVyMZuWLHn/4TiB79rRkEELefod3vdwZIjvZH5SXnSuUGNEFPDlLBbbxdfgWsRrw/1E98QBs/D8R8PUPCWuS6feWv5naI2Gq/V565R+s0JrNMzWZ5YyMkNnVF+t1meW5rFCZ9Ssq/dr/e2l016ve50bX+nk85VI8P6T//teH42vdPL5SiR4pi/gf2u7jNr4fCUS3Esj+H/u9dU+P9V/vRYJ5PYzizv46/XSKouOETqoZ2xFz0UDud3/0KHP6bloIDdyVzHn98De6uXjbpo4M76PpIV7aDT+Z+RGM+P7SDnRHjphDuy5+v6J30hnpJxoD5Ejez5Bi84Xn1kEMB89nl/QwvxE1nE2X7mHeI5EOxepQf6Rr3wuPEf8XHy2FvZ0gr/cb/y7dy4+e3e5P5QD9rp3T5Qe+u6ZPhs7/EbrtbT6Pub/nJ+sg7127+jMUBZ8HzNTH6bp0ZCHLrWvSbu2t4/pRWVE9WjIQ9ynzMcIDX52vEODMqJ6NMhvtLp1+FPHDRr8nvxofAOZWFcV
+  </data>
+ </layer>
+ <layer id="4" name="DesDecorate" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztll8KAVEUh8/8qTHv1kDJDpQxyV6wCAqL8OgJ2cREKE92YgWKM42bMTHR0L3nOF+d3Obp993fOA0AP6Yl3Qk+p+sB9LzHZyuCHnN0WDDwkD7MgksfXDzkvTIL1cexdB+KqD6oe8R91Bh4KJo+zMp+8qs7SxGCm0dA3KOCDlUGfYR+MtT7UB7xCHrY4uxw9rqDFMS2ABwc19KdRBDMomHrTiA8oy27SgstvPeQwd0P0GHIwCML5X4OqTPlfjyiubN0mHhQ5vwHHYzRcWKwZ95OjVLP13jeGOyRt1PTHpf4TOC7NzL4rgWAEcN+To7uBPm8+/1Xd3+fpQjZXZX1Uv/9vuEeMek99WoHLwl4CILwXa4biTdE
+  </data>
+ </layer>
+ <layer id="5" name="FrsDecorate" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztlbkNAjEURB2aDqAGaIajBI4SOErgJoGIm4gaoAYoiUlWa1nalbnk/2GeNIGzGWn+2BhCCCHkf1naVCsb281nODOHKJhDFr+Wo1owpgbVoUYhrqdXSHI04b0FtaGO4hxdeO9BfWigOMcQ3kfQGJoozrGG9w20hXaKc2iHeyUL7pUs8vZK083k7ZX0m7nYVFcnRxFeS45f6Tdzs6nuTo4yvFYcv9JvJiuHj/Q/PjQHIe/g75T/1oK/U/6bxEFjn+bY24W3uVl9kpzviAynwL+D9xIXyT16BvYoLqE9kt630B6xb+QbSL+PhCk8znJ8armPPTweFPhMeADVS0Tm
+  </data>
+ </layer>
+</map>

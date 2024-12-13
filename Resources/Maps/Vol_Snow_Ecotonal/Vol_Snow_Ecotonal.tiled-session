@@ -1,0 +1,112 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Vol_Snow_Ecotonal.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "全部文件 (*)",
+    "fileStates": {
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthGrass.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthItems.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthPlants.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthStoneGround.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthStruct.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx": {
+            "scale": 0.33,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 706.0606060606061,
+                "y": 709.0909090909091
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthWall.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/MagicTelepoter.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinter.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1496,
+                "y": 1880
+            }
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinterWholeAsset.tsx": {
+            "scaleInDock": 0.75
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/TX Props.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/tf_A1_ashlands_3.tsx": {
+            "scaleInDock": 0.75
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/tf_A5_ashlands_3.tsx": {
+            "scaleInDock": 0.33
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/tf_B_ashlands_3.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/volcano.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2104,
+                "y": 1488
+            }
+        },
+        "TX Tileset Grass.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "Vol_Snow_Ecotonal.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 788,
+                "y": 1144
+            }
+        },
+        "spritesheet.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/Vol_Snow_Ecotonal",
+    "map.height": 50,
+    "map.lastUsedFormat": "tmx",
+    "map.layerDataFormat": "3",
+    "map.width": 50,
+    "openFiles": [
+        "Vol_Snow_Ecotonal.tmx",
+        "TX Tileset Grass.tsx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/volcano.tmx",
+        "spritesheet.tsx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinter.tmx"
+    ],
+    "project": "Vol_Snow_Ecotonal.tiled-project",
+    "recentFiles": [
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/SnowyWinter/SnowyWinter.tmx",
+        "spritesheet.tsx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/volcano/volcano.tmx",
+        "D:/cocos2d-x-4.0/project/Zelda/Resources/Maps/RebirthTemple/RebirthTemple.tmx",
+        "TX Tileset Grass.tsx",
+        "Vol_Snow_Ecotonal.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
