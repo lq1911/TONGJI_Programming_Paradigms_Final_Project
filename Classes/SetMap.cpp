@@ -44,7 +44,7 @@ bool SetMap::init() {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // lq加的调试小人
-    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 50, 1);
+    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 500, 1);
 
     // 加个npc
     npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
@@ -208,7 +208,7 @@ void SetMap::LoadMap() {
     //InitialObstacle(Vol_Forest);    //初始化障碍物
 
     //加载森林雪地边界
-    auto Forest_Snow= TMXTiledMap::create("Maps/Forest_Snow_Ecotonal/Forest_Snow_Ecotonal.tmx");
+    auto Desert_Snow= TMXTiledMap::create("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx");
     //InitialObstacle(Forest_Snow);    //初始化障碍物
 
     //加载森林沙漠边界
@@ -255,16 +255,16 @@ void SetMap::LoadMap() {
 	this->addChild(Vol_Snow);
 
 	//设置火山森林边界
-	Vol_Forest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height));
+    Vol_Forest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2));
 	Vol_Forest->setScale(1.0f);
 	Vol_Forest->setAnchorPoint(Vec2(0.5f, 0.5f));
 	this->addChild(Vol_Forest);
 
 	//设置森林雪地边界,看上去是森林雪地实则是沙漠和雪地
-	Forest_Snow->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2));
-	Forest_Snow->setScale(1.0f);
-	Forest_Snow->setAnchorPoint(Vec2(0.5f, 0.5f));
-	this->addChild(Forest_Snow);
+	Desert_Snow->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2));
+	Desert_Snow->setScale(1.0f);
+	Desert_Snow->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Desert_Snow);
 
 	//设置森林沙漠边界
 	Forest_Desert->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 - RebirthTempleHeight - Derivation));

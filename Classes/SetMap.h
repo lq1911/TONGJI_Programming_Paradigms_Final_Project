@@ -62,7 +62,7 @@ public:
 	/* °ó¶¨¼üÅÌ:Pressed */
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		Vec2 moveBy;
-		int speed = 1;
+		int speed = 30;
 		/* ¹¥»÷:I/K/J/L */
 		if (keyCode == EventKeyboard::KeyCode::KEY_I)
 			PLAYER->Attack(UP);
@@ -74,7 +74,7 @@ public:
 			PLAYER->Attack(RIGHT);
 		/* ÒÆ¶¯:W/S/A/D */
 		else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
-			moveBy = Vec2(0, -speed);
+			moveBy = Vec2(0, speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[0]) {
@@ -98,7 +98,7 @@ public:
 			}	
 		}
 		else if (keyCode == EventKeyboard::KeyCode::KEY_A){
-			moveBy = Vec2(0, -speed);
+			moveBy = Vec2(-speed, 0);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[2]) {
@@ -110,7 +110,7 @@ public:
 			}
 		}
 		else if (keyCode == EventKeyboard::KeyCode::KEY_D){ 
-			moveBy = Vec2(0, -speed);
+			moveBy = Vec2(speed, 0);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[3]) {

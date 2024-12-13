@@ -65,7 +65,7 @@ public:
 		atk = 1;
 		atk_range = 20;
 		def = 1;
-		speed = 10;
+		speed = 300;
 		level = 1;
 	}
 
