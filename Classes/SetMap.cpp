@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "SetPlayerScene.h"
 
-#define Derivation 244
+#define Derivation 243
 
 USING_NS_CC;
 
@@ -229,7 +229,7 @@ void SetMap::LoadMap() {
 	this->addChild(Volcano);
 
 	//设置雪地为初始地图右上角
-	SnowyWinter->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth - Derivation, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
+	SnowyWinter->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
 	SnowyWinter->setScale(1.0f);
 	SnowyWinter->setAnchorPoint(Vec2(0.5f, 0.5f));
 	this->addChild(SnowyWinter);
