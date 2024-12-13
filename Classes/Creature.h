@@ -123,7 +123,7 @@ public:
 	// 返回坐标
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
 	// 更新坐标
-	Vec2 updateXY() {
+	void updateXY() {
 		x = mySprite->getPosition().x;
 		y = mySprite->getPosition().y;
 	}
