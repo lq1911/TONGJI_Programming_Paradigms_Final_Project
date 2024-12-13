@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "SetPlayerScene.h"
 
+#define Derivation 244
+
 USING_NS_CC;
 
 Scene* SetMap::createScene() {
@@ -173,54 +175,100 @@ void SetMap::LoadMap() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
 
     /*****************************************在这里对各个地图进行加载处理********************************************/
-    // 加载地图
+    // 加载初始地图
     auto RebirthTemple = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
     float RebirthTempleWidth = RebirthTemple->getTileSize().width * RebirthTemple->getMapSize().width;
     float RebirthTempleHeight = RebirthTemple->getTileSize().height * RebirthTemple->getMapSize().height;
     CCLOG("RebirthTempleWidth:  %f RebirthTempleHeight: %f",RebirthTempleWidth, RebirthTempleHeight);
     RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));    ////设置地图锚点为中心
-    InitialObstacle(RebirthTemple);    //初始化障碍物
+    //InitialObstacle(RebirthTemple);    //初始化障碍物
 
+    // 加载火山地图
     auto Volcano = TMXTiledMap::create("Maps/volcano/volcano.tmx");
-    InitialObstacle(Volcano);    //初始化障碍物
+    //InitialObstacle(Volcano);    //初始化障碍物
 
+    // 加载雪地地图
     auto SnowyWinter= TMXTiledMap::create("Maps/SnowyWinter/SnowyWinter.tmx");
-    InitialObstacle(SnowyWinter);    //初始化障碍物
+    //InitialObstacle(SnowyWinter);    //初始化障碍物
 
+    // 加载沙漠地图
     auto DeathDesert = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
-    InitialObstacle(DeathDesert);    //初始化障碍物
+    //InitialObstacle(DeathDesert);    //初始化障碍物
 
+    // 加载森林地图
     auto BrightForest = TMXTiledMap::create("Maps/BrightForest/BrightForest.tmx");
-    InitialObstacle(BrightForest);    //初始化障碍物
+    //InitialObstacle(BrightForest);    //初始化障碍物
+
+    //加载火山雪地边界
+    auto Vol_Snow= TMXTiledMap::create("Maps/Vol_Snow_Ecotonal/Vol_Snow_Ecotonal.tmx");
+    //InitialObstacle(Vol_Snow);    //初始化障碍物
+
+    //加载火山森林边界
+    auto Vol_Forest= TMXTiledMap::create("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx");
+    //InitialObstacle(Vol_Forest);    //初始化障碍物
+
+    //加载森林雪地边界
+    auto Forest_Snow= TMXTiledMap::create("Maps/Forest_Snow_Ecotonal/Forest_Snow_Ecotonal.tmx");
+    //InitialObstacle(Forest_Snow);    //初始化障碍物
+
+    //加载森林沙漠边界
+    auto Forest_Desert= TMXTiledMap::create("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx");
+    //InitialObstacle(Forest_Desert);    //初始化障碍物
 
     /************************************开始对各个地图进行显示处理******************************************/
     //初始化初始地图位置
-    RebirthTemple->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 ));
-    RebirthTemple->setScale(1.0f);
-    RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));
-    this->addChild(RebirthTemple);
+	RebirthTemple->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	RebirthTemple->setScale(1.0f);
+	RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(RebirthTemple);
 
-    //设置火山地图为初始地图左上角
-    Volcano->setPosition(Vec2(visibleSize.width / 2  - RebirthTempleWidth, visibleSize.height / 2  + RebirthTempleHeight));
-    Volcano->setScale(1.0f);    
-    Volcano->setAnchorPoint(Vec2(0.5f, 0.5f));
-    this->addChild(Volcano);
+	//设置火山地图为初始地图左上角
+	Volcano->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
+	Volcano->setScale(1.0f);
+	Volcano->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Volcano);
 
-    //设置雪地为初始地图右上角
-    SnowyWinter->setPosition(Vec2(visibleSize.width / 2  + RebirthTempleWidth, visibleSize.height / 2  + RebirthTempleHeight));
-    SnowyWinter->setScale(1.0f);
-    SnowyWinter->setAnchorPoint(Vec2(0.5f, 0.5f));
-    this->addChild(SnowyWinter);
+	//设置雪地为初始地图右上角
+	SnowyWinter->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth - Derivation, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
+	SnowyWinter->setScale(1.0f);
+	SnowyWinter->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(SnowyWinter);
 
-    //设置死亡沙漠为初始地图右下角
-    DeathDesert->setPosition(Vec2(visibleSize.width / 2  + RebirthTempleWidth, visibleSize.height / 2  - RebirthTempleHeight));
-    DeathDesert->setScale(1.0f);
-    DeathDesert->setAnchorPoint(Vec2(0.5f, 0.5f));
-    this->addChild(DeathDesert);
+	//设置死亡沙漠为初始地图右下角
+	DeathDesert->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2 - RebirthTempleHeight - Derivation));
+	DeathDesert->setScale(1.0f);
+	DeathDesert->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(DeathDesert);
 
-    //设置明亮森林为初始地图左下角
-    BrightForest->setPosition(Vec2(visibleSize.width / 2  - RebirthTempleWidth, visibleSize.height / 2 - RebirthTempleHeight));
-    BrightForest->setScale(1.0f);
-    BrightForest->setAnchorPoint(Vec2(0.5f, 0.5f));
-    this->addChild(BrightForest);
+	//设置明亮森林为初始地图左下角
+	BrightForest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2 - RebirthTempleHeight - Derivation));
+	BrightForest->setScale(1.0f);
+	BrightForest->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(BrightForest);
+
+
+	/********************************设置分界地图的位置**************************************/
+	//设置火山雪地边界
+	Vol_Snow->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
+	Vol_Snow->setScale(1.0f);
+	Vol_Snow->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Vol_Snow);
+
+	//设置火山森林边界
+	Vol_Forest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height));
+	Vol_Forest->setScale(1.0f);
+	Vol_Forest->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Vol_Forest);
+
+	//设置森林雪地边界,看上去是森林雪地实则是沙漠和雪地
+	Forest_Snow->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2));
+	Forest_Snow->setScale(1.0f);
+	Forest_Snow->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Forest_Snow);
+
+	//设置森林沙漠边界
+	Forest_Desert->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 - RebirthTempleHeight - Derivation));
+	Forest_Desert->setScale(1.0f);
+	Forest_Desert->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Forest_Desert);
 }
