@@ -52,6 +52,7 @@ bool BagManager::init()
 
 void BagManager::showBag(Player& _player)
 {
+    _player.updateXY();
     player = _player;
     // 如果背包尚未打开，则创建并显示背包背景
     if (!_isBagOpen)
@@ -134,6 +135,7 @@ void BagManager::createBagBackground()
     // 设置背包背景图片
     _bagBackground = Sprite::create("Bag/bag_background.png");
     //  _bagBackground->setPosition(Vec2(player.mySprite->getPosition().x, player.mySprite->getPosition().y));
+    _bagBackground->setPosition(Vec2(player.x, player.y));
     _bagBackground->setPosition(Director::getInstance()->getVisibleSize() / 2);
     _bagPanel->addChild(_bagBackground);
 

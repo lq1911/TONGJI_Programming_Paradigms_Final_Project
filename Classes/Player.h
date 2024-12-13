@@ -80,6 +80,7 @@ public:
 	void GetBonus(Bonus bonus);
 
 	// 赋值运算符重载
+	// 赋值运算符重载
 	Player& operator=(const Player& other)
 	{
 		if (this == &other)  // 自赋值检查
@@ -94,7 +95,12 @@ public:
 		_armor = other._armor;
 		_shoes = other._shoes;
 		_accessories = other._accessories;
-		
+		if (other.mySprite != nullptr)
+		{
+			x = other.getXY().x;
+			y = other.getXY().y;
+		}
+
 		return *this;
 	}
 	friend class BagManager;
