@@ -208,6 +208,9 @@ public:
 	/*判断某个位置是否可以移动*/
 	bool IsMoveable(cocos2d::Vec2& pos);
 
+	/*加载地图*/
+	void LoadMap();
+
 	CREATE_FUNC(SetMap);
 };
 

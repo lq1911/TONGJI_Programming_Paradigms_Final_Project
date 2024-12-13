@@ -28,19 +28,11 @@ bool SetMap::init() {
     KeyListener->onKeyPressed = CC_CALLBACK_2(SetMap::onKeyPressed, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(KeyListener, this);
 
-    // 加载 TMX 文件
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     /*加载初始地图*/
-    auto InitialMap = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
-    InitialMap->setAnchorPoint(Vec2(0.5, 0.5));
-    InitialMap->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    InitialMap->setScale(1.0f);
-
-    //添加初始地图至场景
-    this->addChild(InitialMap);
-    InitialObstacle(InitialMap);    //初始化障碍物
+    this->LoadMap();
   
     ///////////////////////
     // 键盘监听
@@ -78,7 +70,6 @@ void SetMap::CameraFollowPlayer() {
     float cameraZ = 600;
 
     Vec2 playerPosition = PLAYER->mySprite->getPosition();
-
     Vec3 cameraPosition(playerPosition.x, playerPosition.y, cameraZ);
     camera->setPosition3D(cameraPosition);
 
@@ -97,7 +88,7 @@ void SetMap::CameraFollowPlayer() {
         cameraPosition.z += scrollY * 10.0f;  // 10.0f是控制滚动灵敏度的系数，可以调整
 
         // 限制摄像机的高度（Z轴范围）
-        cameraPosition.z = std::min(cameraPosition.z, 600.0f);  // 最大高度
+        cameraPosition.z = std::min(cameraPosition.z, 2000.0f);  // 最大高度
         cameraPosition.z = std::max(cameraPosition.z, 200.0f);  // 最小高度
 
         // 设置摄像机的位置
@@ -175,4 +166,61 @@ bool SetMap::IsMoveable(cocos2d::Vec2& pos) {
     }
     CCLOG("Can move to this position");
     return true;
+}
+
+void SetMap::LoadMap() {
+    //获取屏幕尺寸
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    /*****************************************在这里对各个地图进行加载处理********************************************/
+    // 加载地图
+    auto RebirthTemple = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
+    float RebirthTempleWidth = RebirthTemple->getTileSize().width * RebirthTemple->getMapSize().width;
+    float RebirthTempleHeight = RebirthTemple->getTileSize().height * RebirthTemple->getMapSize().height;
+    CCLOG("RebirthTempleWidth:  %f RebirthTempleHeight: %f",RebirthTempleWidth, RebirthTempleHeight);
+    RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));    ////设置地图锚点为中心
+    InitialObstacle(RebirthTemple);    //初始化障碍物
+
+    auto Volcano = TMXTiledMap::create("Maps/volcano/volcano.tmx");
+    InitialObstacle(Volcano);    //初始化障碍物
+
+    auto SnowyWinter= TMXTiledMap::create("Maps/SnowyWinter/SnowyWinter.tmx");
+    InitialObstacle(SnowyWinter);    //初始化障碍物
+
+    auto DeathDesert = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
+    InitialObstacle(DeathDesert);    //初始化障碍物
+
+    auto BrightForest = TMXTiledMap::create("Maps/BrightForest/BrightForest.tmx");
+    InitialObstacle(BrightForest);    //初始化障碍物
+
+    /************************************开始对各个地图进行显示处理******************************************/
+    //初始化初始地图位置
+    RebirthTemple->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 ));
+    RebirthTemple->setScale(1.0f);
+    RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));
+    this->addChild(RebirthTemple);
+
+    //设置火山地图为初始地图左上角
+    Volcano->setPosition(Vec2(visibleSize.width / 2  - RebirthTempleWidth, visibleSize.height / 2  + RebirthTempleHeight));
+    Volcano->setScale(1.0f);    
+    Volcano->setAnchorPoint(Vec2(0.5f, 0.5f));
+    this->addChild(Volcano);
+
+    //设置雪地为初始地图右上角
+    SnowyWinter->setPosition(Vec2(visibleSize.width / 2  + RebirthTempleWidth, visibleSize.height / 2  + RebirthTempleHeight));
+    SnowyWinter->setScale(1.0f);
+    SnowyWinter->setAnchorPoint(Vec2(0.5f, 0.5f));
+    this->addChild(SnowyWinter);
+
+    //设置死亡沙漠为初始地图右下角
+    DeathDesert->setPosition(Vec2(visibleSize.width / 2  + RebirthTempleWidth, visibleSize.height / 2  - RebirthTempleHeight));
+    DeathDesert->setScale(1.0f);
+    DeathDesert->setAnchorPoint(Vec2(0.5f, 0.5f));
+    this->addChild(DeathDesert);
+
+    //设置明亮森林为初始地图左下角
+    BrightForest->setPosition(Vec2(visibleSize.width / 2  - RebirthTempleWidth, visibleSize.height / 2 - RebirthTempleHeight));
+    BrightForest->setScale(1.0f);
+    BrightForest->setAnchorPoint(Vec2(0.5f, 0.5f));
+    this->addChild(BrightForest);
 }
