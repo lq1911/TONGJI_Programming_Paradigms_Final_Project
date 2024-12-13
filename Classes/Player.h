@@ -100,7 +100,6 @@ public:
 			x = other.getXY().x;
 			y = other.getXY().y;
 		}
-
 		return *this;
 	}
 	friend class BagManager;
