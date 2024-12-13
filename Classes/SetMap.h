@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "SetPlayerScene.h"
 #include "BagManager.h"
+#include "NPC.h"
 
 USING_NS_CC;
 
@@ -29,11 +30,9 @@ public:
 	Player* Monster1;
 	Player* Monster2;
 	// NPC
-	Player* npc1;
+	NPC* npc1;
 
-
-	
-	
+	/* °ó¶¨¼üÅÌ:Released */
 	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 		if (keyCode == EventKeyboard::KeyCode::KEY_W) {
 			if (isKeyPressed[0]) {
@@ -60,8 +59,7 @@ public:
 			}
 		}
 	}
-
-	// °´¼ü°ó¶¨
+	/* °ó¶¨¼üÅÌ:Pressed */
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		Vec2 moveBy;
 		int speed = 1;
@@ -134,7 +132,8 @@ public:
 				Monster1->Attack();
 		}
 		else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
-			Monster2->Attack(UP);
+			npc1->Chat();
+			//Monster2->Attack(UP);
 			//PLAYER->Heal();
 			//PLAYER->Die();
 		}
