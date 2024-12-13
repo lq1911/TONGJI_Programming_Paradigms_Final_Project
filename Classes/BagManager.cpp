@@ -76,8 +76,7 @@ void BagManager::hideBag(Player& _player)
     if (_isBagOpen)
     {
         _bagPanel->setVisible(false);  // 隐藏背包面板
-        _bagPanel->removeChild(_bagBackground);  // 移除背景
-        _bagPanel->removeChild(_characterBackground);  // 移除角色面板背景
+        _bagPanel->removeAllChildren();  // 移除背景
         _bagBackground = nullptr;  // 清除背景指针
         _characterBackground = nullptr;
         _isBagOpen = false;  // 更新状态
