@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="1">
+ <tileset firstgid="1" source="../RebirthTemple/RebirthGrass.tsx"/>
+ <tileset firstgid="65" source="../SnowyWinter/SnowyWinterWholeAsset.tsx"/>
+ <tileset firstgid="321" source="../DeathDesert/DesertItem.tsx"/>
+ <tileset firstgid="2305" source="../volcano/tf_A1_ashlands_3.tsx"/>
+ <tileset firstgid="2737" source="../RebirthTemple/RebirthPlants.tsx"/>
+ <layer id="1" name="Grass" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztWWtT3DAMFIW2B5QSaA9C2wP//1+JOpOdEcvKeXAtDpMP+8Enn15Z2VJyYmafHKeOM8fJStfnjgvHpePbitc3jlvHD8fPFa8fHL8cvx1/Vrxuhd9bfWz10eK6FX5v9fEx6+Oz44vjq2Nn78/3pfVxNcQCxJha4P/YGr7uh1iALKZW6oHX8PEwxAJwTDGW/8X/LJdqf5QfAjim745rR2d1vrLN3cj+2jrmEvZZP/ZH/yLfOKY7x72jtzpf2U43sr+2jrmEfdaP/dG/jH9/Y3l0PDmKkGOtYugHOcum8D/m8jF51tgf/XsLn7MYyiBnbu5mAPZYR2fH7684DsQAOXOzI6hcQwZ7rKO3Zf0V24pyzlWxl/cPc7MPyGKAHPZZR7Fl/RX7GuWcq8ivyHf2oxYDy+b0V7Xzmn2N9cE+wqfe6vcD11SsK5bNmT/4vI78ZF/VfcG2i+n6YUQeqefU27z5g8/rGj/Z1pivXL8R8B/PgXUVmzd/xPO6dl8oTqhzMfOZgbyoPqgT9qfOH6xL8Zk5oc7FzGcG+LwXdnrh39T5XM0jWb7hmzqPFLh/iv3HQdguwr8p87l6ruh3VL6Lvebr3nR/FOst+g4s7c+4P1KIelW+FV8P9ro/4npTcsWpufP5VYLIJcXPY84nilNz318xFxQnxuaNsfmktla6lry/Yi4oTsT6yXrcpfOG4tS/fH+FumHOjd2DNf3qv2WGf0vm5XheZnOaurcz/Vmfdez3u7DD533kXG2Gxvk8Vg872o/fj/V+Fz7yeR/rBs9G8a2Y7o+yexX78ftb64PzVbsPIuf4jMv0Z/fq1P9PrQ91DyJXzO8YA8eZ6c/6mKn/n1of6h7M6ieLoYXvH+oezOonq5sWvn8ov9R+9RzW+P1Dxbt9H9y+D7bw/aKF+mhh3Qq/t/r4WPXxDAQ7kEY=
+  </data>
+ </layer>
+ <layer id="2" name="Snow" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1FsKgDAMRNGs0CVk/8vQn4AUWvuIicV7YP5ETYZWRUSvHB3RW3qeJ+ORYs+ryZwj+puee7OYN94d2Vkpq4/Rvp7mkKBOvPtqyTqzM32u8Ni1V18RWv/tdZdlsRm87rIvqXWz2xxmppvd1M4RAAAAAAAAAAAAgP84AVNrocU=
+  </data>
+ </layer>
+ <layer id="3" name="Desert" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1TEKgDAQRcHoabz/rfQUkkJIETBgILsyA7+z2EcKSwEAAAAAAID5zm31Bd/VhmcZtfdn6+jdnq3jrSFDx0jDXzpGv4u+K8ANM3bs62/wHjqiTkes6Yi1+v+4AbKu8MI=
+  </data>
+ </layer>
+ <layer id="4" name="SnowDecorate" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1EsKgDAMhOHcH3qE3NVVoMb0gQsd8f82tRZhhqhmetrbARZ28/nN556S843k3D45U1Hl8sH9OFM0yjXroq7ZOftuF7W+btf59F36Nff9guji3T6u1WaRVf+sai7q31H1rvhiBQAAAAAAAAAAAADg7w5fFhrH
+  </data>
+ </layer>
+ <layer id="5" name="Water" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0kEKgDAMRNFuvZr3P5BbFxYpZqZJ/B+67fAgYxAREVFE5/H8KjUzVLStWjLbvlqyeCIcGYxqh9vXxeH2OMKRy+Gw4MCBAwcOn8HhcBjUDpdB6XAaVA63AUd/xw4DDhx/N7xtVjbct6PbcTMKx+zvlS3V3RMREXXtAozK92I=
+  </data>
+ </layer>
+ <layer id="6" name="GrassDecorate" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztlscNwzAMRX3W/oukDZA2QNoAThkg7R5eDCgCJYsGY/M7esC/2iQ/i6qqUCj8AxNXVVPSjDQnLdzQEXVjSXGvSGvShrQFzWNHce9JB4ftTU2xnkkXh+3NnWJ9kJ7u25sj6eTlgeSV7w0XN4pXvjdcHjGvLMPNSuPVlXQDyYOblZRXVqkT9Ufaa/6svEhvL9bUXkMi9Aqpz3xCr5D6LMVY+wxlJ4eEfYY6LyGo82L5DSPpDctvGElvpN4w4Q3tG8kutbyvJLGl3jBDYzk2bcqdGA6u9ojvKi4Py3sqBtdDiLsAsYc4EHuogZsJpB5qiO1VtLsRmwmLdyNV29hMaM28pq+p2sb2qtbMS3xtyzmnttw3NO6GxNe2nHNqq1k36b9zc865yZp1k/67S84a3/jV3dd4A/VdNwsgvh0LhTHzAbyedFI=
+  </data>
+ </layer>
+</map>
