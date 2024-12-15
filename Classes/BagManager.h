@@ -7,6 +7,7 @@
 #include <vector>
 #include "Item.h"
 #include "player.h"
+#include "task.h"
 
 USING_NS_CC;
 using namespace std;
@@ -67,6 +68,9 @@ private:
     // 角色面板背景
     cocos2d::Sprite* _characterBackground;
 
+    // 任务面板背景
+    cocos2d::Sprite* _taskBackground;
+
     // 静态成员变量，用于存储单例实例
     static BagManager* _instance;
 
@@ -87,6 +91,21 @@ private:
 
     // 更新背包UI
     void updateBagUI();
+
+    // 创建打开任务面板按钮
+    void createTaskButton();
+
+    // 创建任务面板
+    void createTaskPanel();
+
+    // 接受的主线任务
+    vector<task> myMainlineTask;
+    
+    // 接受的支线任务
+    vector<task> myLineQuest;
+
+    // 更新任务界面UI
+    void updateTaskUI();
 
     // 禁止拷贝构造函数和赋值操作符
     BagManager(const BagManager&) = delete;
