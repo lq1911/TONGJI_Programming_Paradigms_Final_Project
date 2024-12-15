@@ -20,6 +20,9 @@ private:
 
 	std::vector<cocos2d::Rect>ObstacleList;  // 障碍物列表
 
+	Camera* camera = getDefaultCamera();
+	Camera* camera_in_micro_map;
+
 public:
 	////////////////////////////////////////////////////////////////
 	/* 按键是否按下:W/S/A/D*/
@@ -37,7 +40,6 @@ public:
 	/* 绑定键盘:Pressed */
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	//////////////////////////////////////////////////////////////
-
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
