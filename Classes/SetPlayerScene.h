@@ -4,6 +4,7 @@
 #include <string>
 #include "cocos2d.h"
 #include "Player.h"
+#include "LearningScene.h"
 
 /* 角色姓名:用于表示选择的角色 */
 enum Who { Player1, Player2, Player3, Player4, Player5 };
@@ -18,10 +19,6 @@ public:
     static cocos2d::Scene* createScene();      
     virtual bool init();        // 初始场景:输入姓名
     Scene* selectRoleScene();   // 选择角色
- 
-
-    // 键盘按下的回调函数
-    // void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
     CREATE_FUNC(SetPlayerScene);
 };

@@ -7,32 +7,27 @@ Scene* HelloWorld::createScene()
     return HelloWorld::create();
 }
 
-// Print useful error message instead of segfaulting when files are not there.
 static void problemLoading(const char* filename)
 {
     printf("Error while loading: %s/n", filename);
     printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp/n");
 }
 
-// on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
     if (!Scene::init())
     {
         return false;
     }
 
-    //获取屏幕大小和原点
+    // 获取屏幕大小和原点
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
     this->CreateBackground(visibleSize);    //创建游戏开始界面背景
 
     // 开始游戏按钮
     auto button = cocos2d::ui::Button::create("Button/PlayButton.png", "Button/PlayButtonClicked.png", "Button/PlayButtonClicked.png");
-    button->ignoreContentAdaptWithSize(false);  // 启用内容大小适配
+    button->ignoreContentAdaptWithSize(false); 
     button->setContentSize(Size(300, 150));
     button->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y - 300));
 
@@ -78,12 +73,12 @@ bool HelloWorld::init()
 }
 
 void HelloWorld::CreateBackground(Size& visibleSize) {
-     //设置游戏的开始界面
-    auto Background = Sprite::create("StartBackground.jpg");    //游戏开始界面背景图
-    Background->setPosition(visibleSize.width / 2, visibleSize.height / 2);    // 设置背景图的位置为屏幕中心
-    Background->setScale(1.08f);    // 设置背景图的缩放比例
+    // 设置游戏的开始界面
+    auto Background = Sprite::create("Scene/StartBackground.jpg");    
+    Background->setPosition(visibleSize.width / 2, visibleSize.height / 2);    
+    Background->setScale(1.08f);  
     Background->setScaleY(1.4f);
-    this->addChild(Background);    //将背景图添加至当前场景
+    this->addChild(Background);    
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
@@ -92,9 +87,6 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     Director::getInstance()->end();
 
     /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
-
-
 }

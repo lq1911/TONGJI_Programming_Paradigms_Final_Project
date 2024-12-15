@@ -230,35 +230,11 @@ Scene* SetPlayerScene::selectRoleScene() {
     P5Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player5");
         who = Player5;
+
         auto scene = SetMap::createScene();
+        //auto scene = LearningScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
 
-
-    /*
-    // PLAYER = new Player("Player1", select_role_scene, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 5, 1);
-    // 设置键盘监听器
-    auto listener = EventListenerKeyboard::create();
-    listener->onKeyPressed = CC_CALLBACK_2(SetPlayerScene::onKeyPressed, this);  // 监听按键按下事件
-
-    // 添加监听器到事件分发器
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    //////////////////////////////////////////////////////////
-    */
-
     return select_role_scene;
 }
-
-// 键盘按下的回调函数
-/*
-void SetPlayerScene::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
-    if (keyCode == EventKeyboard::KeyCode::KEY_W) 
-        PLAYER->Attack(UP);
-    else if (keyCode == EventKeyboard::KeyCode::KEY_S) 
-        PLAYER->Attack(DOWN);
-    else if (keyCode == EventKeyboard::KeyCode::KEY_A) 
-        PLAYER->Attack(LEFT);
-    else if (keyCode == EventKeyboard::KeyCode::KEY_D) 
-        PLAYER->Attack(RIGHT);
-}
-*/

@@ -27,6 +27,7 @@ void NPC::Chat() {
     auto chatPanel = Sprite::create("UI/Panel4.png");
     chatPanel->setContentSize(Size(1800, 330));
     chatPanel->setPosition(where); 
+	chatPanel->setOpacity(190);
     scene->addChild(chatPanel, 2);
 
 	/* 加入npc */
@@ -45,7 +46,7 @@ void NPC::Chat() {
 	switch (stringMap[role]) {
 	case 1:
 		npc1([=]() {
-			// 当 npc1 的对话逻辑完成后，移除UI
+			//当 npc1的对话逻辑完成后，移除UI
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
 			log("npc1-chat over.");
@@ -61,10 +62,6 @@ void NPC::Chat() {
 		
 		break;
 	}
-
-	/* 移除UI */
-//	npcSprite->removeFromParent();
-//	chatPanel->removeFromParent();
 
 }
 
