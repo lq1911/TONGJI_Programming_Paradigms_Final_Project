@@ -69,6 +69,7 @@ public:
 		level = 1;
 	}
 
+
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
@@ -122,10 +123,5 @@ public:
 
 	// 返回坐标
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
-	// 更新坐标
-	void updateXY() {
-		x = mySprite->getPosition().x;
-		y = mySprite->getPosition().y;
-	}
 };
 #endif __CREATURE_H__
