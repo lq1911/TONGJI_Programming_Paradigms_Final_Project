@@ -34,7 +34,7 @@
  </layer>
  <layer id="4" name="MagicAndTelepoter" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1zEOQDAYhuH2ArgBJ8BqMpu6uISz9JKO4m9UIh00BqryPsmXRrp8+hOhFAAAwLtmnboBAAAAAAC4Msq/eyEpJZXer3NkpLeV1H41md6HO/9W0kn6H8zDyXkeAAAchsi3LLb/FVOkZ2z/q2ymvc8WrVa/Nmmb3Bc+/+E8eD/wpA2Njgqi
+   eJzt1zEKwkAQRuHsBTSNtZ5AbVNZW6XJIbT3FntJj+KEJCBRWYSE/Wd5HwxB08zLKuKtKsMj9wILoUMLHVro0EKHFm8dXfj+vreOX+jQQocWOrTQoYUOLXRooUMLHVpK6djlXgAfLvbffWOztanD8Nqj1vaONvvx2jrt6J//0eZkcy7gPHqezwMAgEmT+C1L3VdxTeyZuq8qOt373T1Uz/F6yLvJ/+af//l58P3Aml67dRfP
   </data>
  </layer>
  <objectgroup id="8" name="Obstacles">

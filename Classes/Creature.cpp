@@ -271,9 +271,11 @@ Animate* Creature::Move(int dir) {
 
     // Ö´ĞĞ¶¯×÷
     mySprite->stopAllActions();
+    
     mySprite->runAction(moveAndAnimate);
 
     return animate;
+    log("Move");
 }
 
 /* ËÀÍö */

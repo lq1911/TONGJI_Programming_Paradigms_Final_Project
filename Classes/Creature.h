@@ -4,7 +4,7 @@
 
 USING_NS_CC;
 
-/* æ–¹å‘ */
+/* ·½Ïò */
 enum dir {
 	LEFT,    // 0
 	RIGHT,   // 1
@@ -12,37 +12,37 @@ enum dir {
 	DOWN     // 3
 };
 
-/* ç”Ÿç‰©åŸºç±» */
+/* ÉúÎï»ùÀà */
 class Creature :public Node {
 protected:
-	std::string role;   // è§’è‰²å:ç”¨äºŽæ£€ç´¢å›¾ç‰‡ç´ æ
+	std::string role;   // ½ÇÉ«Ãû:ÓÃÓÚ¼ìË÷Í¼Æ¬ËØ²Ä
 
-	bool isDead;      // ç”Ÿæ­»çŠ¶æ€
-	int hp;           // æ€»ç”Ÿå‘½
-	int current_hp;   // çŽ°ç”Ÿå‘½
-	int mp;           // æ€»é­”åŠ›
-	int current_mp;   // çŽ°é­”åŠ›
-	int atk;          // åŸºç¡€æ”»å‡»å€¼
-	int atk_range;    // æ”»å‡»èŒƒå›´
-	int def;          // åŸºç¡€é˜²å¾¡å€¼
-	int speed;        // é€Ÿåº¦
-	int level;        // ç­‰çº§
-	int x, y;         // åˆå§‹åæ ‡
+	bool isDead;      // ÉúËÀ×´Ì¬
+	int hp;           // ×ÜÉúÃü
+	int current_hp;   // ÏÖÉúÃü
+	int mp;           // ×ÜÄ§Á¦
+	int current_mp;   // ÏÖÄ§Á¦
+	int atk;          // »ù´¡¹¥»÷Öµ
+	int atk_range;    // ¹¥»÷·¶Î§
+	int def;          // »ù´¡·ÀÓùÖµ
+	int speed;        // ËÙ¶È
+	int level;        // µÈ¼¶
+	int x, y;         // Î»ÖÃ
 
-	float scale;      // ç¼©æ”¾æ¯”ä¾‹
-	Scene* scene;     // åœºæ™¯æŒ‡é’ˆ
+	float scale;      // Ëõ·Å±ÈÀý
+	Scene* scene;     // ³¡¾°Ö¸Õë
 public:
-	Sprite* mySprite; // ç²¾çµ
-	int face_to;      // é¢æœæ–¹å‘
+	Sprite* mySprite; // ¾«Áé
+	int face_to;      // Ãæ³¯·½Ïò
 
-	/* æž„é€ å‡½æ•° */
-	// who:çŽ©å®¶ä¸ºPlayer1~Player5,NPCä¸ºnpc1~npc5
-	// å»ºè®®:speedé»˜è®¤è®¾ä¸º50,atk_rangeé»˜è®¤è®¾100
+	/* ¹¹Ôìº¯Êý */
+	// who:Íæ¼ÒÎªPlayer1~Player5,NPCÎªnpc1~npc5
+	// ½¨Òé:speedÄ¬ÈÏÉèÎª50,atk_rangeÄ¬ÈÏÉè100
 	Creature(std::string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y, float scale, Scene* scene) :
 		role(role), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level), scale(scale),
-		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr), current_hp(hp), current_mp(mp),x(x),y(y) {
-		
-		// ç²¾çµåˆå§‹åŒ–
+		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr), current_hp(hp), current_mp(mp), x(x), y(y) {
+
+		// ¾«Áé³õÊ¼»¯
 		mySprite = Sprite::create("Role/" + role + "/1.png");
 		mySprite->setPosition(Vec2(x, y));
 		mySprite->setScale(scale);
@@ -51,7 +51,7 @@ public:
 		levelBonus();
 	}
 
-	// ç©ºçš„æž„é€ å‡½æ•°ï¼Œä¾›è°ƒè¯•
+	// ¿ÕµÄ¹¹Ôìº¯Êý£¬¹©µ÷ÊÔ
 	Creature() {
 		scale = 1.0f;
 		scene = nullptr;
@@ -69,60 +69,60 @@ public:
 		level = 1;
 	}
 
-	/* é‡Šæ”¾æ”»å‡»æŠ€èƒ½ */
-	// dirä¸ºæ–¹å‘:LEFT RIGHT UP DOWN,é»˜è®¤ä¸ºDOWN
-	// å¯¹äºŽéƒ¨åˆ†æ€ªç‰©,æ— æ–¹å‘ä¸€è¯´:Monster1æ ‘å¦–
-	// oppä¸ºæ”»å‡»å¯¹è±¡
+	/* ÊÍ·Å¹¥»÷¼¼ÄÜ */
+	// dirÎª·½Ïò:LEFT RIGHT UP DOWN,Ä¬ÈÏÎªDOWN
+	// ¶ÔÓÚ²¿·Ö¹ÖÎï,ÎÞ·½ÏòÒ»Ëµ:Monster1Ê÷Ñý
+	// oppÎª¹¥»÷¶ÔÏó
 	virtual Animate* Attack(int dir = DOWN, Creature* opp = nullptr);
 
-	/* å—ä¼¤ */
+	/* ÊÜÉË */
 	virtual void Hurt();
 
-	/* æ­»äº¡ */
-	// æ­»äº¡åŽç§»åŠ¨ã€æ”»å‡»æŠ€èƒ½å‡è¢«é”å®šï¼Œç›´è‡³å¤æ´»
+	/* ËÀÍö */
+	// ËÀÍöºóÒÆ¶¯¡¢¹¥»÷¼¼ÄÜ¾ù±»Ëø¶¨£¬Ö±ÖÁ¸´»î
 	virtual void Die();
 
-	/* å¤æ´» */
+	/* ¸´»î */
 	virtual void Revive();
 
-	/* æ¢å¤ */
+	/* »Ö¸´ */
 	virtual void Heal();
 
-	/* ç§»åŠ¨ */
-	// Monster1:æ ‘å¦–,æ— æ³•ç§»åŠ¨
+	/* ÒÆ¶¯ */
+	// Monster1:Ê÷Ñý,ÎÞ·¨ÒÆ¶¯
 	virtual Animate* Move(int dir);
 
-	/* è½¬å˜åœºæ™¯ */
-	//éœ€è¦ä¿®æ”¹ï¼Œä¸Žåœ°å›¾å¯¹æŽ¥ï¼Œéœ€è¦åœ°å›¾ç±»è¿”å›žGetSceneçš„å€¼ï¼ˆä¸€ä¸ªç±»åž‹ä¸ºScene*çš„scene)
+	/* ×ª±ä³¡¾° */
+	//ÐèÒªÐÞ¸Ä£¬ÓëµØÍ¼¶Ô½Ó£¬ÐèÒªµØÍ¼Àà·µ»ØGetSceneµÄÖµ£¨Ò»¸öÀàÐÍÎªScene*µÄscene)
 	virtual void ChangeScene(Scene* sc) { scene = sc; }
 
-	/* ç­‰çº§åŠ æˆ */
+	/* µÈ¼¶¼Ó³É */
 	virtual void levelBonus();
 
-	/* è®¡ç®—ä¼¤å®³ */
+	/* ¼ÆËãÉËº¦ */
 	int DamageCal(Creature*, Creature*);
-	
-	/* è¿”å›žå˜é‡å€¼ */
-	// è¿”å›žé€Ÿåº¦speed
+
+	/* ·µ»Ø±äÁ¿Öµ */
+	// ·µ»ØËÙ¶Èspeed
 	int getSpeed()const { return speed; }
-	// è¿”å›žæ€»hp
+	// ·µ»Ø×Ühp
 	int getHp()const { return hp; }
-	// è¿”å›žçŽ°hp
-	int getCurrentHp()const{ return current_hp; }
-	// è¿”å›žæ€»mp
-	int getMp()const{ return mp; }
-	// è¿”å›žçŽ°mp
-	int getCurrentMp()const{ return current_mp; }
-	// è¿”å›žatk
-	int getAtk()const{ return atk; }
-	// è¿”å›ždef
-	int getDef()const{ return def; }
-	// è¿”å›žæ”»å‡»èŒƒå›´atk_range
+	// ·µ»ØÏÖhp
+	int getCurrentHp()const { return current_hp; }
+	// ·µ»Ø×Ümp
+	int getMp()const { return mp; }
+	// ·µ»ØÏÖmp
+	int getCurrentMp()const { return current_mp; }
+	// ·µ»Øatk
+	int getAtk()const { return atk; }
+	// ·µ»Ødef
+	int getDef()const { return def; }
+	// ·µ»Ø¹¥»÷·¶Î§atk_range
 	int getAtkRange()const { return atk_range; }
 
-	// è¿”å›žåæ ‡
+	// ·µ»Ø×ø±ê
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
-	// æ›´æ–°åæ ‡
+	// ¸üÐÂ×ø±ê
 	void updateXY() {
 		x = mySprite->getPosition().x;
 		y = mySprite->getPosition().y;

@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "SetPlayerScene.h"
 
+#define Derivation 243
+
 USING_NS_CC;
 
 Scene* SetMap::createScene() {
@@ -28,19 +30,11 @@ bool SetMap::init() {
     KeyListener->onKeyPressed = CC_CALLBACK_2(SetMap::onKeyPressed, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(KeyListener, this);
 
-    // 加载 TMX 文件
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
     /*加载初始地图*/
-    auto InitialMap = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
-    InitialMap->setAnchorPoint(Vec2(0.5, 0.5));
-    InitialMap->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
-    InitialMap->setScale(1.0f);
-
-    //添加初始地图至场景
-    this->addChild(InitialMap);
-    InitialObstacle(InitialMap);    //初始化障碍物
+    this->LoadMap();
   
     ///////////////////////
     // 键盘监听
@@ -50,15 +44,19 @@ bool SetMap::init() {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // lq加的调试小人
-    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 50, 1);
+    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, 
+        visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 500, 1);
 
     // 加个npc
     npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
+  
+        Bonus b;
     // 加个树妖
-    Monster1 = new Player("Monster1", this, 1000, 600, 1.0f, 0, 0, 0, 100, 0, 50, 0);
+    Monster1 = new Monster("Monster1",100000, 600, 20,20,20, 100, 2, 50, 100, 0, b, PLAYER,1000,1,this);
+    this->addChild(Monster1);
     // 加个Monster2
-    Monster2 = new Player("Monster2", this, 1500, 800, 0.5f, 0, 0, 0, 100, 0, 50, 0);
-   
+    Monster2 = new Monster("Monster2", 100000, 600, 20, 20, 20, 100, 2, 1000, 100, 0, b, PLAYER, 1000, 1, this);
+    this->addChild(Monster2);
     // 背包
     BagManager* bagManager = BagManager::getInstance();
     if(bagManager->getParent()==nullptr)
@@ -78,7 +76,6 @@ void SetMap::CameraFollowPlayer() {
     float cameraZ = 600;
 
     Vec2 playerPosition = PLAYER->mySprite->getPosition();
-
     Vec3 cameraPosition(playerPosition.x, playerPosition.y, cameraZ);
     camera->setPosition3D(cameraPosition);
 
@@ -97,7 +94,7 @@ void SetMap::CameraFollowPlayer() {
         cameraPosition.z += scrollY * 10.0f;  // 10.0f是控制滚动灵敏度的系数，可以调整
 
         // 限制摄像机的高度（Z轴范围）
-        cameraPosition.z = std::min(cameraPosition.z, 600.0f);  // 最大高度
+        cameraPosition.z = std::min(cameraPosition.z, 2000.0f);  // 最大高度
         cameraPosition.z = std::max(cameraPosition.z, 200.0f);  // 最小高度
 
         // 设置摄像机的位置
@@ -175,4 +172,107 @@ bool SetMap::IsMoveable(cocos2d::Vec2& pos) {
     }
     CCLOG("Can move to this position");
     return true;
+}
+
+void SetMap::LoadMap() {
+    //获取屏幕尺寸
+    auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    /*****************************************在这里对各个地图进行加载处理********************************************/
+    // 加载初始地图
+    auto RebirthTemple = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
+    float RebirthTempleWidth = RebirthTemple->getTileSize().width * RebirthTemple->getMapSize().width;
+    float RebirthTempleHeight = RebirthTemple->getTileSize().height * RebirthTemple->getMapSize().height;
+    CCLOG("RebirthTempleWidth:  %f RebirthTempleHeight: %f",RebirthTempleWidth, RebirthTempleHeight);
+    RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));    ////设置地图锚点为中心
+    //InitialObstacle(RebirthTemple);    //初始化障碍物
+
+    // 加载火山地图
+    auto Volcano = TMXTiledMap::create("Maps/volcano/volcano.tmx");
+    //InitialObstacle(Volcano);    //初始化障碍物
+
+    // 加载雪地地图
+    auto SnowyWinter= TMXTiledMap::create("Maps/SnowyWinter/SnowyWinter.tmx");
+    //InitialObstacle(SnowyWinter);    //初始化障碍物
+
+    // 加载沙漠地图
+    auto DeathDesert = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
+    //InitialObstacle(DeathDesert);    //初始化障碍物
+
+    // 加载森林地图
+    auto BrightForest = TMXTiledMap::create("Maps/BrightForest/BrightForest.tmx");
+    //InitialObstacle(BrightForest);    //初始化障碍物
+
+    //加载火山雪地边界
+    auto Vol_Snow= TMXTiledMap::create("Maps/Vol_Snow_Ecotonal/Vol_Snow_Ecotonal.tmx");
+    //InitialObstacle(Vol_Snow);    //初始化障碍物
+
+    //加载火山森林边界
+    auto Vol_Forest= TMXTiledMap::create("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx");
+    //InitialObstacle(Vol_Forest);    //初始化障碍物
+
+    //加载森林雪地边界
+    auto Desert_Snow= TMXTiledMap::create("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx");
+    //InitialObstacle(Forest_Snow);    //初始化障碍物
+
+    //加载森林沙漠边界
+    auto Forest_Desert= TMXTiledMap::create("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx");
+    //InitialObstacle(Forest_Desert);    //初始化障碍物
+
+    /************************************开始对各个地图进行显示处理******************************************/
+    //初始化初始地图位置
+	RebirthTemple->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	RebirthTemple->setScale(1.0f);
+	RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(RebirthTemple);
+
+	//设置火山地图为初始地图左上角
+	Volcano->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
+	Volcano->setScale(1.0f);
+	Volcano->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Volcano);
+
+	//设置雪地为初始地图右上角
+	SnowyWinter->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
+	SnowyWinter->setScale(1.0f);
+	SnowyWinter->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(SnowyWinter);
+
+	//设置死亡沙漠为初始地图右下角
+	DeathDesert->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2 - RebirthTempleHeight - Derivation));
+	DeathDesert->setScale(1.0f);
+	DeathDesert->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(DeathDesert);
+
+	//设置明亮森林为初始地图左下角
+	BrightForest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2 - RebirthTempleHeight - Derivation));
+	BrightForest->setScale(1.0f);
+	BrightForest->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(BrightForest);
+
+
+	/********************************设置分界地图的位置**************************************/
+	//设置火山雪地边界
+	Vol_Snow->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + RebirthTempleHeight + Derivation));
+	Vol_Snow->setScale(1.0f);
+	Vol_Snow->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Vol_Snow);
+
+	//设置火山森林边界
+    Vol_Forest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2));
+	Vol_Forest->setScale(1.0f);
+	Vol_Forest->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Vol_Forest);
+
+	//设置森林雪地边界,看上去是森林雪地实则是沙漠和雪地
+	Desert_Snow->setPosition(Vec2(visibleSize.width / 2 + RebirthTempleWidth + Derivation, visibleSize.height / 2));
+	Desert_Snow->setScale(1.0f);
+	Desert_Snow->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Desert_Snow);
+
+	//设置森林沙漠边界
+	Forest_Desert->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 - RebirthTempleHeight - Derivation));
+	Forest_Desert->setScale(1.0f);
+	Forest_Desert->setAnchorPoint(Vec2(0.5f, 0.5f));
+	this->addChild(Forest_Desert);
 }

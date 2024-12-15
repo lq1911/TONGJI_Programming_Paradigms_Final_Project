@@ -15,8 +15,8 @@ struct Object {
 };
 
 struct Bonus {
-	Object object;
-	//æŠ¥é”™ï¼Œæš‚æ—¶æ³¨é‡ŠæŽ‰
+	//Object object;
+	//±¨´í£¬ÔÝÊ±×¢ÊÍµô
 	//Equipment equipment;
 	int exp = 0;
 };
@@ -25,21 +25,21 @@ struct Bonus {
 
 class Player :public Creature {
 private:
-	int current_exp;       // è§’è‰²çŽ°æœ‰ç»éªŒå€¼
-	int next_level_exp;    // è¾¾åˆ°ä¸‹ä¸€çº§æ‰€éœ€ç»éªŒå€¼
+	int current_exp;       // ½ÇÉ«ÏÖÓÐ¾­ÑéÖµ
+	int next_level_exp;    // ´ïµ½ÏÂÒ»¼¶ËùÐè¾­ÑéÖµ
 protected:
-	// çŽ©å®¶åå­—åœ¨Creatureç±»é‡Œå·²å®šä¹‰äº†:(	
+	// Íæ¼ÒÃû×ÖÔÚCreatureÀàÀïÒÑ¶¨ÒåÁË:(	
 
-   //int x, y;       // åæ ‡
+   //int x, y;       // ×ø±ê
 public:
-	// ç²¾çµ//Creatureä¸­æœ‰äº†:( 
+	// ¾«Áé//CreatureÖÐÓÐÁË:( 
 
-	/* æž„é€ å‡½æ•° */
-	// who:çŽ©å®¶ä¸ºPlayer1~Player5,NPCä¸ºnpc1~npc5
-	// å»ºè®®:speedé»˜è®¤è®¾ä¸º50,atk_rangeé»˜è®¤è®¾100
-	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level):
+	/* ¹¹Ôìº¯Êý */
+	// who:Íæ¼ÒÎªPlayer1~Player5,NPCÎªnpc1~npc5
+	// ½¨Òé:speedÄ¬ÈÏÉèÎª50,atk_rangeÄ¬ÈÏÉè100
+	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
 		Creature(who, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene) {
-		// è§’è‰²çŽ°æœ‰ç»éªŒå€¼ã€è¾¾åˆ°ä¸‹ä¸€çº§æ‰€éœ€ç»éªŒå€¼åˆå§‹åŒ–æ¡ä»¶è®°å¾—æ”¹
+		// ½ÇÉ«ÏÖÓÐ¾­ÑéÖµ¡¢´ïµ½ÏÂÒ»¼¶ËùÐè¾­ÑéÖµ³õÊ¼»¯Ìõ¼þ¼ÇµÃ¸Ä
 		current_exp = 0;
 		next_level_exp = 0;
 		_weapon = nullptr;
@@ -47,43 +47,42 @@ public:
 		_shoes = nullptr;
 		_accessories = nullptr;
 	}
-	// è°ƒè¯•ç”¨æž„é€ å‡½æ•°
-	Player()  {
+	// µ÷ÊÔÓÃ¹¹Ôìº¯Êý
+	Player() {
 		_weapon = nullptr;
 		_armor = nullptr;
 		_shoes = nullptr;
 		_accessories = nullptr;
 	}
 
-	/* é‡Šæ”¾æ”»å‡»æŠ€èƒ½ */
-	// dirä¸ºæ–¹å‘:LEFT RIGHT UP DOWN,é»˜è®¤ä¸ºDOWN
-	// å¯¹äºŽéƒ¨åˆ†æ€ªç‰©,æ— æ–¹å‘ä¸€è¯´:Monster1æ ‘å¦–
-	// oppä¸ºæ”»å‡»å¯¹è±¡
+	/* ÊÍ·Å¹¥»÷¼¼ÄÜ */
+	// dirÎª·½Ïò:LEFT RIGHT UP DOWN,Ä¬ÈÏÎªDOWN
+	// ¶ÔÓÚ²¿·Ö¹ÖÎï,ÎÞ·½ÏòÒ»Ëµ:Monster1Ê÷Ñý
+	// oppÎª¹¥»÷¶ÔÏó
 	//virtual void Attack(int dir = DOWN, Player* opp = nullptr);
 
-	// è§’è‰²çš„æ­¦å™¨
+	// ½ÇÉ«µÄÎäÆ÷
 	weapon* _weapon;
 
-	// è§’è‰²çš„æŠ¤ç”²
+	// ½ÇÉ«µÄ»¤¼×
 	armor* _armor;
 
-	// è§’è‰²çš„éž‹å­
+	// ½ÇÉ«µÄÐ¬×Ó
 	shoes* _shoes;
 
-	// è§’è‰²çš„é¥°å“
+	// ½ÇÉ«µÄÊÎÆ·
 	accessories* _accessories;
 
-	// æŠ€èƒ½ï¼Œä»¥ç»„åˆæŠ€å½¢å¼å‡ºçŽ°
+	// ¼¼ÄÜ£¬ÒÔ×éºÏ¼¼ÐÎÊ½³öÏÖ
 	//void Combo();
 
-	//èŽ·å¾—å¥–åŠ±ï¼Œå‚æ•°Bonusç»“æž„ä½“,ç»“æž„ä½“å†…éœ€å«æœ‰ç»éªŒå€¼ï¼Œç‰©å“éƒ¨åˆ†äº¤ç»™èƒŒåŒ…
+	//»ñµÃ½±Àø£¬²ÎÊýBonus½á¹¹Ìå,½á¹¹ÌåÄÚÐèº¬ÓÐ¾­ÑéÖµ£¬ÎïÆ·²¿·Ö½»¸ø±³°ü
 	void GetBonus(Bonus bonus);
 
-	// èµ‹å€¼è¿ç®—ç¬¦é‡è½½
-	// èµ‹å€¼è¿ç®—ç¬¦é‡è½½
+	// ¸³ÖµÔËËã·ûÖØÔØ
 	Player& operator=(const Player& other)
 	{
-		if (this == &other)  // è‡ªèµ‹å€¼æ£€æŸ¥
+		if (this == &other)  // ×Ô¸³Öµ¼ì²é
 			return *this;
 		level = other.level;
 		hp = other.hp;
@@ -100,6 +99,12 @@ public:
 			x = other.getXY().x;
 			y = other.getXY().y;
 		}
+		if (mySprite == nullptr)
+		{
+			mySprite = Sprite::create("Role/" + other.role + "/1.png");
+			mySprite->setVisible(false);
+		}
+
 		return *this;
 	}
 	friend class BagManager;

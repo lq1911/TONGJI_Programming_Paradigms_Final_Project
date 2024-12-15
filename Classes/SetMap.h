@@ -8,7 +8,7 @@
 #include "SetPlayerScene.h"
 #include "BagManager.h"
 #include "NPC.h"
-
+#include "Monster.h"
 USING_NS_CC;
 
 class SetMap :public cocos2d::Scene {
@@ -27,8 +27,8 @@ public:
 	// 玩家
 	Player* PLAYER;
 	// 树妖Monster1
-	Player* Monster1;
-	Player* Monster2;
+	Monster* Monster1;
+	Monster* Monster2;
 	// NPC
 	NPC* npc1;
 
@@ -62,7 +62,7 @@ public:
 	/* 绑定键盘:Pressed */
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		Vec2 moveBy;
-		int speed = 1;
+		int speed = 30;
 		/* 攻击:I/K/J/L */
 		if (keyCode == EventKeyboard::KeyCode::KEY_I)
 			PLAYER->Attack(UP);
@@ -74,7 +74,7 @@ public:
 			PLAYER->Attack(RIGHT);
 		/* 移动:W/S/A/D */
 		else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
-			moveBy = Vec2(0, -speed);
+			moveBy = Vec2(0, speed);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[0]) {
@@ -98,7 +98,7 @@ public:
 			}	
 		}
 		else if (keyCode == EventKeyboard::KeyCode::KEY_A){
-			moveBy = Vec2(0, -speed);
+			moveBy = Vec2(-speed, 0);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[2]) {
@@ -110,7 +110,7 @@ public:
 			}
 		}
 		else if (keyCode == EventKeyboard::KeyCode::KEY_D){ 
-			moveBy = Vec2(0, -speed);
+			moveBy = Vec2(speed, 0);
 			Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[3]) {
@@ -127,7 +127,7 @@ public:
 			int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
 			int dy = Monster1->mySprite->getPosition().y - PLAYER->mySprite->getPosition().y;
 			if (std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(Monster1->getAtkRange(), 2))
-				Monster1->Attack(DOWN, PLAYER);
+				Monster1->Attack();
 			else
 				Monster1->Attack();
 		}
@@ -206,6 +206,9 @@ public:
 
 	/*判断某个位置是否可以移动*/
 	bool IsMoveable(cocos2d::Vec2& pos);
+
+	/*加载地图*/
+	void LoadMap();
 
 	CREATE_FUNC(SetMap);
 };

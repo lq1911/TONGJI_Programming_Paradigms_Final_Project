@@ -1,4 +1,4 @@
-/*
+
 #include "Monster.h"
 USING_NS_CC;
 
@@ -6,18 +6,28 @@ USING_NS_CC;
 // 基本动作
 auto attackAction = MoveBy::create(1.0f, Vec2(100, 0));
 
-
-
-
 //update的重写
 //距离小于怪物攻击距离时，怪物攻击
 //距离小于怪物跟随距离时，怪物跟随
 //距离超过怪物跟随距离，怪物的状态回原态
 void Monster::update(float dt) {
 	//怪物AI
-	ai.update(dt);
-	state = ai.GetState();
+	
+	ai->update(dt);
+	state = ai->GetState();
 	//根据状态实现对应行为
+	if (state == MonsterState::ATTACK) {
+		Attack();
+	}
+	else if (state == MonsterState::CHASE) {
+		Chase();
+	}
+	else if (state == MonsterState::FLEE) {
+		Flee();
+	}
+	else {
+		;
+	}
 }
 //怪物死亡机制
 void Monster::Die() {
@@ -26,12 +36,79 @@ void Monster::Die() {
 
 	Creature::Die();
 }
-
-void Monster::Chase() {
-	Vec2 direction = target->getPosition() - this->getPosition();//方向
+void Monster::Attack() {
+	log("Monster:Attack*****************************************************************");
+	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//方向
 	direction.normalize();//单位化
-	Vec2 newPosition = this->getPosition() + direction * this->getSpeed() * DELTATIME;//这一帧移动方向
-	this->setPosition(newPosition);
+	log("direction:%f%f", direction.x, direction.y);
+	if (abs(direction.x) > abs(direction.y)) {
+		if (direction.x > 0) {
+			Creature::Attack(1, target);
+		}
+		else {
+			Creature::Attack(0, target);
+		}
+	}
+	else {
+		if (direction.y) {
+			Creature::Attack(2, target);
+		}
+		else {
+			Creature::Attack(3, target);
+		}
+	}
+}
+void Monster::Chase() {
+	log("Monster:Chase*****************************************************************");
+	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//方向
+	direction.normalize();//单位化
+	log("direction:%f%f", direction.x, direction.y);
+	if (abs(direction.x) > abs(direction.y)) {
+		if (direction.x > 0) {
+			Move(1);
+		}
+		else {
+			Move(0);
+		}
+	}
+	else {
+		if (direction.y) {
+			Move(2);
+		}
+		else {
+			Move(3);
+		}
+	}
+
+}
+void Monster::Flee() {
+	
+		log("Monster:Flee*****************************************************************");
+		Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//方向
+		direction.normalize();//单位化
+	
+	log("direction:%f%f", direction.x, direction.y);
+	log("speed:%d", speed);
+	
+	if (abs(direction.x) > abs(direction.y)) {
+		log("a");
+		if (direction.x ) {
+			Creature::Move(0);
+		}
+		else {
+			Creature::Move(1);
+		}
+	}
+	else {
+		log("b");
+		
+		if (direction.y) {
+			Creature::Move(3);
+		}
+		else {
+			Creature::Move(2);
+		}
+	}
 }
 //怪物等级加成
 void Monster::levelBonus() {
@@ -106,4 +183,4 @@ bool MonsterAI::shouldFlee() {
 MonsterState MonsterAI::GetState()const {
 	return currentState;
 }
-*/
+
