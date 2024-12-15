@@ -19,7 +19,7 @@
  </layer>
  <layer id="2" name="Decoration" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmLFOAzEMhgOo7ICON4CViaETqpg7VMyd6MoEK0/ES1JLF9W17EsOO5cY5ZcsVafT1V+c3+fLcwjh0VGsA6/7Y3w5iQeBwSPH+zFuSXw65DgwtTh0js7ROTpHYwEcNyj/2HcvHXJI8sAxjHHtmGOqBp44aA02Djm4Wuz+CYekFjlyfN0qx19yb4FjCPrca3NY5F2bI9e70F8/Eve8OuCA/vqduOfNAYekK+G6N467GRwDCSuGYYID1nmr4KMcXC9ZGfJIHLDOeyOOVM1XBTm0whw5fV3rp9IcS8358X+g92v8QBX3fu47dg4H7Rf4f6D3a/ygVS5HidljSty5bzz75ZTDUcoDVHhfcudBU9dzOJaoBTDsw4nFmiNVCwt/Y4bosaU5tP7mGEBwPhc9EcL5GR2n2N+kucXSG3hW2ZLcS/Q6/J635IizSsw//ub2pbRXpes/Y1BJ79PNxLNyhGuAeaik+qTqRlkkjl3GsyRxDBbCa0vrMncuSAn72ZIBxK0tt8cshP1cc37R6ql2AqO033cvVokopf2+s5zpa8qzJ7B6PdpSr0dbuph5/y/NgP0s
+   eJztmL9OAzEMxgOo7ICON4CVmQlVnTtUzJ3owMIEK0/ES4Kls3AtO3+wr0lQPslSdTpdv18c+3x5DSHcdxSPQdZHR3GnMPTI8fIT1yzeG/BWynEQcnFowNvgGBy1Y3C0FcBxRfxj3z1vwFsph6ba3nJimuOyY45YDnri4DlYd8gh5WL3Tzg01fYqRU5dt8rxF+8tcEzB7r02h4fv2hy5tQv99S1xz6YDDuivn4l7njvg0HShXO+N46aAY2LhxTBFOGCdtwY+/l9SL1k58mgcsM57J45UzlcLcliVygXXbcRjCxy5z/figN5vqQeu0tmghIP3C/o/0Pst9WBVLscSs0dM0rkvnv1KyuFYqga46L6UzoNi13M4TpELYNiHXxZvjlQuPOqbMmCNnZrDWt8SAwjO57AmQjg+o5OE73ZtbvGsDTqrbJn3JXodfc97cuCsgv7xt7Qvtb2qXf+agwv3G+dYR56VI5oDysOl5SeVN86icewynqVJYvAQXVueF6wbr55L69mTASStrbTHPETrueb8YtVDbQOzrN93T15GjLJ+33nO9DXVc01QjXy0pZGPtnRWeP830koHxg==
   </data>
  </layer>
  <layer id="6" name="DetailsUpDeco" width="50" height="50">
@@ -32,9 +32,9 @@
    eJztzkcRwgAUANFYp0QAEAQQggBKBFAigBIBlPhgNXyY+Zd9M3vfopB+M6IxTWhKZe5O2IzmtKCKlrk7YSuqaU0NbXJ3wra0oz0dqM3dCTvSic50oS53J+xKN7rTg/rcnbAnvehNHxpydyRJkiRJkiRJkiRJ0p99AeXxGHo=
   </data>
  </layer>
- <layer id="4" name="MagicAndTelepoter" width="50" height="50">
+ <layer id="4" name="MagicAndTelepoter" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJzt1zEKwkAQRuHsBTSNtZ5AbVNZW6XJIbT3FntJj+KEJCBRWYSE/Wd5HwxB08zLKuKtKsMj9wILoUMLHVro0EKHFm8dXfj+vreOX+jQQocWOrTQoYUOLXRooUMLHVpK6djlXgAfLvbffWOztanD8Nqj1vaONvvx2jrt6J//0eZkcy7gPHqezwMAgEmT+C1L3VdxTeyZuq8qOt373T1Uz/F6yLvJ/+af//l58P3Aml67dRfP
+   eJzt1zEOQDAYhuH2ArgBJ8BqMpu6uISz9JKO4m9UIh00BqryPsmXRrp8+hOhFAAAwLtmnboBAAAAAAC4Msq/eyEpJZXer3NkpLeV1H41md6HO/9W0kn6H8zDyXkeAAAchsi3LLb/FVOkZ2z/q2ymvc8WrVa/Nmmb3Bc+/+E8eD/wpA2Njgqi
   </data>
  </layer>
  <objectgroup id="8" name="Obstacles">
