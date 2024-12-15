@@ -33,6 +33,11 @@ bool SetMap::init() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	//创建小地图摄像机
+	camera_in_micro_map = Camera::createOrthographic(visibleSize.width, visibleSize.height, 1.0f, 10000.0f);
+	camera_in_micro_map->setVisible(false);    //初始隐藏小地图摄像机
+	this->addChild(camera_in_micro_map);
+
     /*加载初始地图*/
     this->LoadMap();
   
@@ -68,9 +73,6 @@ bool SetMap::init() {
 }
 
 void SetMap::CameraFollowPlayer() {
-    // 获取默认摄像机
-    Camera* camera = getDefaultCamera();
-
     // 设置摄像机的初始位置
     float cameraZ = 600;
 
@@ -105,7 +107,6 @@ void SetMap::CameraFollowPlayer() {
     // 获取事件调度器并添加监听器
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
 
-
     // 在每一帧更新时更新摄像机位置并限制其范围
     schedule([=](float dt) {
         Vec3 cameraPosition = camera->getPosition3D();     // 获取当前摄像机的位置
@@ -120,17 +121,48 @@ void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
     if (keyCode == EventKeyboard::KeyCode::KEY_M) {
         // 切换小地图显示状态
         IsMicroMapVisible = !IsMicroMapVisible;
+		
+		// 设置摄像机的初始位置
+		float cameraZ = 6000.0f;
 
+		Vec3 camera_in_micro_map_Position(0, 0, cameraZ);
+		camera_in_micro_map->setPosition3D(camera_in_micro_map_Position);
+
+
+		auto microMapMouseListener = EventListenerMouse::create();
         /*此处切换小地图显示，进入小地图时首先隐藏初始地图，退出小地图之后再显示初始地图
           让玩家在进入小地图之前就暂停游戏，退出小地图之后再恢复游戏，防止玩家在打开地图的时候发生意外*/
         if (IsMicroMapVisible) {
             //进入小地图暂停游戏
             Director::getInstance()->pause();
-            MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
+			camera_in_micro_map->setVisible(true);//将小地图添加至小地图摄像机
+			camera->setVisible(false);    //将初始摄像机隐藏
+
+			// 启用小地图监听器
+			if (!microMapMouseListener) {
+				microMapMouseListener->onMouseScroll = [=](EventMouse* event) {
+					float scrollY = event->getScrollY();
+					Vec3 cameraPosition_in_micro_map = camera_in_micro_map->getPosition3D();
+					cameraPosition_in_micro_map.z += scrollY * 10.0f;
+					
+					camera_in_micro_map->setPosition3D(cameraPosition_in_micro_map);
+					CCLOG("Micro Map Camera Position: %f, %f, %f", cameraPosition_in_micro_map.x, cameraPosition_in_micro_map.y, cameraPosition_in_micro_map.z);
+					};
+				_eventDispatcher->addEventListenerWithSceneGraphPriority(microMapMouseListener, this);
+			}
+			/////////////////////////////////////////////////////
+
+           // MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
         }   
         else {
-			MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
+			//MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
+
+			camera_in_micro_map->setVisible(false);    //将小地图摄像机隐藏
+			camera->setVisible(true);    //将小地图摄像机恢复至初始位置
 			Director::getInstance()->resume();    //退出小地图恢复游戏
+
+			_eventDispatcher->removeEventListener(microMapMouseListener);
+			microMapMouseListener = nullptr;	
 		}
     }
 }
