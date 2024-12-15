@@ -275,3 +275,157 @@ void SetMap::LoadMap() {
 	Forest_Desert->setAnchorPoint(Vec2(0.5f, 0.5f));
 	this->addChild(Forest_Desert);
 }
+
+void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+	Vec2 moveBy;
+	int speed = 30;
+	/* 攻击:I/K/J/L */
+	if (keyCode == EventKeyboard::KeyCode::KEY_I)
+		PLAYER->Attack(UP);
+	else if (keyCode == EventKeyboard::KeyCode::KEY_K)
+		PLAYER->Attack(DOWN);
+	else if (keyCode == EventKeyboard::KeyCode::KEY_J)
+		PLAYER->Attack(LEFT);
+	else if (keyCode == EventKeyboard::KeyCode::KEY_L)
+		PLAYER->Attack(RIGHT);
+	/* 移动:W/S/A/D */
+	else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
+		moveBy = Vec2(0, speed);
+		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
+		if (IsMoveable(targetPosition)) {
+			if (!isKeyPressed[0]) {
+				isKeyPressed[0] = true;
+				this->schedule([&](float dt) {
+					PLAYER->Move(UP);
+					}, 0.34f, "MoveUP");
+			}
+		}
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
+		moveBy = Vec2(0, -speed);
+		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
+		if (IsMoveable(targetPosition)) {
+			if (!isKeyPressed[1]) {
+				isKeyPressed[1] = true;
+				this->schedule([&](float dt) {
+					PLAYER->Move(DOWN);
+					}, 0.34f, "MoveDOWN");
+			}
+		}
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
+		moveBy = Vec2(-speed, 0);
+		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
+		if (IsMoveable(targetPosition)) {
+			if (!isKeyPressed[2]) {
+				isKeyPressed[2] = true;
+				this->schedule([&](float dt) {
+					PLAYER->Move(LEFT);
+					}, 0.34f, "MoveLEFT");
+			}
+		}
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
+		moveBy = Vec2(speed, 0);
+		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
+		if (IsMoveable(targetPosition)) {
+			if (!isKeyPressed[3]) {
+				isKeyPressed[3] = true;
+				this->schedule([&](float dt) {
+					PLAYER->Move(RIGHT);
+					}, 0.34f, "MoveRIGHT");
+			}
+		}
+	}
+
+	// 测试Monster1攻击效果用，记得删
+	else if (keyCode == EventKeyboard::KeyCode::KEY_T) {
+		int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
+		int dy = Monster1->mySprite->getPosition().y - PLAYER->mySprite->getPosition().y;
+		if (std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(Monster1->getAtkRange(), 2))
+			Monster1->Attack();
+		else
+			Monster1->Attack();
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
+		npc1->Chat();
+		//Monster2->Attack(UP);
+		//PLAYER->Heal();
+		//PLAYER->Die();
+	}
+
+	// 按下B键之后的逻辑:背包
+	else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
+
+		if (BagManager::getInstance()->isBagVisible())
+			// 隐藏背包
+			BagManager::getInstance()->hideBag(*PLAYER);
+		else
+			// 打开背包
+			BagManager::getInstance()->showBag(*PLAYER);
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_P) {
+		goods _goods;
+		if (BagManager::getInstance()->getItemsNum() % 5 == 0)
+		{
+			weapon* it1 = new weapon(_goods.icon_sword);
+			BagManager::getInstance()->addItem(it1);
+			return;
+		}
+
+		if (BagManager::getInstance()->getItemsNum() % 5 == 1)
+		{
+			consumable* it2 = new consumable(_goods.pumkin);
+			BagManager::getInstance()->addItem(it2);
+			return;
+		}
+
+		if (BagManager::getInstance()->getItemsNum() % 5 == 2)
+		{
+			accessories* it3 = new accessories(_goods.bomb);
+			BagManager::getInstance()->addItem(it3);
+			return;
+		}
+
+		if (BagManager::getInstance()->getItemsNum() % 5 == 3)
+		{
+			armor* it4 = new armor(_goods.icon_conselet);
+			BagManager::getInstance()->addItem(it4);
+			return;
+		}
+
+		if (BagManager::getInstance()->getItemsNum() % 5 == 4)
+		{
+			shoes* it5 = new shoes(_goods.boots);
+			BagManager::getInstance()->addItem(it5);
+			return;
+		}
+	}
+}
+
+void SetMap::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
+		if (isKeyPressed[0]) {
+			isKeyPressed[0] = false;
+			this->unschedule("MoveUP");
+		}
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
+		if (isKeyPressed[1]) {
+			isKeyPressed[1] = false;
+			this->unschedule("MoveDOWN");
+		}
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
+		if (isKeyPressed[2]) {
+			isKeyPressed[2] = false;
+			this->unschedule("MoveLEFT");
+		}
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
+		if (isKeyPressed[3]) {
+			isKeyPressed[3] = false;
+			this->unschedule("MoveRIGHT");
+		}
+	}
+}
