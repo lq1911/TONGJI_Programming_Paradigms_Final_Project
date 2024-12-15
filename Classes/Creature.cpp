@@ -238,8 +238,8 @@ Animate* Creature::Move(int dir) {
 
     // 创建帧动画
     Vector<SpriteFrame*> animFrames;
-    animFrames.reserve(5);
-    for (int i = start; i < start + 4; i++) {
+    animFrames.reserve(4);
+    for (int i = start+1; i < start + 4; i++) {
         auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
         float width = texture->getPixelsWide();
         float height = texture->getPixelsHigh();
@@ -264,7 +264,7 @@ Animate* Creature::Move(int dir) {
     Animate* animate = Animate::create(animation);
 
     // 创建移动动作
-    auto moveAction = MoveBy::create(0.3f, moveBy);
+    auto moveAction = MoveBy::create(0.9f, moveBy);
 
     // 同时执行动画和移动
     auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);

@@ -79,9 +79,10 @@ public:
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[0]) {
 					isKeyPressed[0] = true;
+					PLAYER->Move(UP);
 					this->schedule([&](float dt) {
 						PLAYER->Move(UP);
-						}, 0.34f, "MoveUP");
+						}, 0.8f, "MoveUP");
 				}
 			}
 		}
@@ -91,9 +92,10 @@ public:
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[1]) {
 					isKeyPressed[1] = true;
+					PLAYER->Move(DOWN);
 					this->schedule([&](float dt) {
 						PLAYER->Move(DOWN);
-						}, 0.34f, "MoveDOWN");
+						}, 0.8f, "MoveDOWN");
 				}
 			}	
 		}
@@ -103,9 +105,10 @@ public:
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[2]) {
 					isKeyPressed[2] = true;
+					PLAYER->Move(LEFT);
 					this->schedule([&](float dt) {
 						PLAYER->Move(LEFT);
-						}, 0.34f, "MoveLEFT");
+						}, 0.8f, "MoveLEFT");
 				}
 			}
 		}
@@ -115,9 +118,10 @@ public:
 			if (IsMoveable(targetPosition)) {
 				if (!isKeyPressed[3]) {
 					isKeyPressed[3] = true;
+					PLAYER->Move(RIGHT);
 					this->schedule([&](float dt) {
 						PLAYER->Move(RIGHT);
-						}, 0.34f, "MoveRIGHT");
+						}, 0.8f, "MoveRIGHT");
 				}
 			}
 		}
