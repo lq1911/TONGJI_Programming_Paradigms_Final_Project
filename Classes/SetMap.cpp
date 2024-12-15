@@ -295,9 +295,10 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		if (IsMoveable(targetPosition)) {
 			if (!isKeyPressed[0]) {
 				isKeyPressed[0] = true;
+				PLAYER->Move(UP);
 				this->schedule([&](float dt) {
 					PLAYER->Move(UP);
-					}, 0.34f, "MoveUP");
+					}, 0.8f, "MoveUP");
 			}
 		}
 	}
@@ -307,9 +308,10 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		if (IsMoveable(targetPosition)) {
 			if (!isKeyPressed[1]) {
 				isKeyPressed[1] = true;
+				PLAYER->Move(DOWN);
 				this->schedule([&](float dt) {
 					PLAYER->Move(DOWN);
-					}, 0.34f, "MoveDOWN");
+					}, 0.8f, "MoveDOWN");
 			}
 		}
 	}
@@ -319,9 +321,10 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		if (IsMoveable(targetPosition)) {
 			if (!isKeyPressed[2]) {
 				isKeyPressed[2] = true;
+				PLAYER->Move(LEFT);
 				this->schedule([&](float dt) {
 					PLAYER->Move(LEFT);
-					}, 0.34f, "MoveLEFT");
+					}, 0.8f, "MoveLEFT");
 			}
 		}
 	}
@@ -331,9 +334,10 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		if (IsMoveable(targetPosition)) {
 			if (!isKeyPressed[3]) {
 				isKeyPressed[3] = true;
+				PLAYER->Move(RIGHT);
 				this->schedule([&](float dt) {
 					PLAYER->Move(RIGHT);
-					}, 0.34f, "MoveRIGHT");
+					}, 0.8f, "MoveRIGHT");
 			}
 		}
 	}
@@ -353,8 +357,7 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		//PLAYER->Heal();
 		//PLAYER->Die();
 	}
-
-	// 按下B键之后的逻辑:背包
+	/* B/P:背包 */
 	else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
 
 		if (BagManager::getInstance()->isBagVisible())
@@ -372,28 +375,24 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			BagManager::getInstance()->addItem(it1);
 			return;
 		}
-
 		if (BagManager::getInstance()->getItemsNum() % 5 == 1)
 		{
 			consumable* it2 = new consumable(_goods.pumkin);
 			BagManager::getInstance()->addItem(it2);
 			return;
 		}
-
 		if (BagManager::getInstance()->getItemsNum() % 5 == 2)
 		{
 			accessories* it3 = new accessories(_goods.bomb);
 			BagManager::getInstance()->addItem(it3);
 			return;
 		}
-
 		if (BagManager::getInstance()->getItemsNum() % 5 == 3)
 		{
 			armor* it4 = new armor(_goods.icon_conselet);
 			BagManager::getInstance()->addItem(it4);
 			return;
 		}
-
 		if (BagManager::getInstance()->getItemsNum() % 5 == 4)
 		{
 			shoes* it5 = new shoes(_goods.boots);
