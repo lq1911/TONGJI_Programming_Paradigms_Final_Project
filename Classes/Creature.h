@@ -73,7 +73,7 @@ public:
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
-	virtual void Attack(int dir = DOWN, Creature* opp = nullptr);
+	virtual Animate* Attack(int dir = DOWN, Creature* opp = nullptr);
 
 	/* 受伤 */
 	virtual void Hurt();
@@ -90,7 +90,7 @@ public:
 
 	/* 移动 */
 	// Monster1:树妖,无法移动
-	virtual void Move(int dir);
+	virtual Animate* Move(int dir);
 
 	/* 转变场景 */
 	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)

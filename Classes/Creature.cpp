@@ -1,10 +1,10 @@
 #include "Creature.h"
 
 /* 攻击动画 */
-void Creature::Attack(int dir, Creature* opp) {
+Animate* Creature::Attack(int dir, Creature* opp) {
     // 死了,直接返回
     if (isDead)
-        return;
+        return nullptr;
 
     /* Monster1:树妖 */
     if (role == "Monster1") {
@@ -32,7 +32,7 @@ void Creature::Attack(int dir, Creature* opp) {
             opp->Hurt();
         }
         // 退出
-        return;
+        return animate;
     }
 
     /* 玩家角色+Monster2+Monster3 */
@@ -85,6 +85,7 @@ void Creature::Attack(int dir, Creature* opp) {
     if (opp != nullptr) {
         opp->Hurt();
     }
+    return animate;
 }
 
 /* 受伤动画 */
@@ -203,10 +204,10 @@ void Creature::Heal() {
 }
 
 /* 走路动画 */
-void Creature::Move(int dir) {
+Animate* Creature::Move(int dir) {
     // 死了,直接返回
     if (isDead) {
-        return;
+        return nullptr;
     }
 
     /* 更改面朝方向 */
@@ -271,6 +272,8 @@ void Creature::Move(int dir) {
     // 执行动作
     mySprite->stopAllActions();
     mySprite->runAction(moveAndAnimate);
+
+    return animate;
 }
 
 /* 死亡 */

@@ -20,7 +20,11 @@ public:
 	/* 判断是否在触发范围内 */
 	bool isTrigger();
 
+	/* 互动 */
 	void Chat();
+
+	/* npc1 */
+	void npc1(std::function<void()> callback);
 };
 
 
