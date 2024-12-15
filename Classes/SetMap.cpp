@@ -44,15 +44,19 @@ bool SetMap::init() {
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
     // lq加的调试小人
-    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 500, 1);
+    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, 
+        visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 500, 1);
 
     // 加个npc
     npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
+  
+        Bonus b;
     // 加个树妖
-    Monster1 = new Player("Monster1", this, 1000, 600, 1.0f, 0, 0, 0, 100, 0, 50, 0);
+    Monster1 = new Monster("Monster1",100000, 600, 20,20,20, 100, 2, 50, 100, 0, b, PLAYER,1000,1,this);
+    this->addChild(Monster1);
     // 加个Monster2
-    Monster2 = new Player("Monster2", this, 1500, 800, 0.5f, 0, 0, 0, 100, 0, 50, 0);
-   
+    Monster2 = new Monster("Monster2", 100000, 600, 20, 20, 20, 100, 2, 1000, 100, 0, b, PLAYER, 1000, 1, this);
+    this->addChild(Monster2);
     // 背包
     BagManager* bagManager = BagManager::getInstance();
     if(bagManager->getParent()==nullptr)

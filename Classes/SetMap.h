@@ -8,7 +8,7 @@
 #include "SetPlayerScene.h"
 #include "BagManager.h"
 #include "NPC.h"
-
+#include "Monster.h"
 USING_NS_CC;
 
 class SetMap :public cocos2d::Scene {
@@ -27,8 +27,8 @@ public:
 	// Íæ¼Ò
 	Player* PLAYER;
 	// Ê÷ÑýMonster1
-	Player* Monster1;
-	Player* Monster2;
+	Monster* Monster1;
+	Monster* Monster2;
 	// NPC
 	NPC* npc1;
 
@@ -127,7 +127,7 @@ public:
 			int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
 			int dy = Monster1->mySprite->getPosition().y - PLAYER->mySprite->getPosition().y;
 			if (std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(Monster1->getAtkRange(), 2))
-				Monster1->Attack(DOWN, PLAYER);
+				Monster1->Attack();
 			else
 				Monster1->Attack();
 		}
