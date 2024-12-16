@@ -72,7 +72,7 @@ void Monster::Attack() {
 	}
 }
 void Monster::Chase() {
-	static int nums = 0;
+	static int nums = 40;
 	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//怪物指向角色方向
 	Vec2 pos = target->mySprite->getPosition();
 	Vec2 mon = this->mySprite->getPosition();

@@ -263,10 +263,10 @@ void Creature::Move(int dir) {
     Animate* animate = Animate::create(animation);
 
     // 创建移动动作
-    auto moveAction = MoveBy::create(0.3f, moveBy);
+    auto moveAction = MoveBy::create(0.8f, moveBy);  //！！！四帧动画跑0.2f*4=0.8秒，所以这里0.8秒才是合适的移动时间
 
     // 同时执行动画和移动
-    auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);
+    auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
 
     // 执行动作
     mySprite->stopAllActions();
