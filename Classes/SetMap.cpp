@@ -56,10 +56,10 @@ bool SetMap::init() {
   
         Bonus b;
     // 加个树妖
-    Monster1 = new Monster("Monster1",100000, 600, 20,20,20, 100, 2, 50, 100, 0, b, PLAYER,1000,1,this);
-    this->addChild(Monster1);
+   // Monster1 = new Monster("Monster1",100000, 600, 20,20,20, 100, 2, 50, 100, 0, b, PLAYER,1000,1,this);
+    //this->addChild(Monster1);
     // 加个Monster2
-    Monster2 = new Monster("Monster2", 100000, 600, 20, 20, 20, 100, 2, 1000, 100, 0, b, PLAYER, 1000, 1, this);
+    Monster2 = new Monster("Monster2", 100000, 600, 20, 40, 20, 100, 2, 1000, 100, 0, b, PLAYER, 1000, 1, this);
     this->addChild(Monster2);
     // 背包
     BagManager* bagManager = BagManager::getInstance();

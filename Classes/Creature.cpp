@@ -212,7 +212,7 @@ Animate* Creature::Move(int dir) {
 
     /* 更改面朝方向 */
     face_to = dir;
-
+    log("face_to:%d", face_to);
     /* 图片名前缀:除编号部分 */
     std::string s = "Role/" + role + "/";
 
@@ -265,17 +265,17 @@ Animate* Creature::Move(int dir) {
 
     // 创建移动动作
     auto moveAction = MoveBy::create(0.9f, moveBy);
-
+    log("MoveBy:%f%f", moveBy.x, moveBy.y);
     // 同时执行动画和移动
-    auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);
+    auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
 
     // 执行动作
     mySprite->stopAllActions();
     
     mySprite->runAction(moveAndAnimate);
-
-    return animate;
     log("Move");
+    return animate;
+   
 }
 
 /* 死亡 */

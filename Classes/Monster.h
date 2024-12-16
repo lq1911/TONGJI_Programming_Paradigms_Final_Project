@@ -22,7 +22,7 @@ enum class MonsterState {
 };
 class Monster;
 //¹ÖÎïAIÀà
-class MonsterAI :Node {
+class MonsterAI:Node {
 private:
 	MonsterState currentState;//¹ÖÎï×´Ì¬
 	Player* target;
