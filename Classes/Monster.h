@@ -22,7 +22,7 @@ enum class MonsterState {
 };
 class Monster;
 //¹ÖÎïAIÀà
-class MonsterAI:Node {
+class MonsterAI :Node {
 private:
 	MonsterState currentState;//¹ÖÎï×´Ì¬
 	Player* target;
@@ -31,6 +31,8 @@ private:
 public:
 	friend class Monster;
 	MonsterAI(Player* target, Monster* monster) : currentState(MonsterState::PATROLLING), target(target), monster(monster) {}//Ä¬ÈÏÎªÑ²Âß
+	//ÅĞ¶ÏÊÇ·ñÑ²Âß
+	bool shouldPatrol();
 	//ÅĞ¶ÏÊÇ·ñ×·×Ù
 	bool shouldChasePlayer();
 	//ÅĞ¶ÏÊÇ·ñ¹¥»÷
