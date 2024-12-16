@@ -1,6 +1,7 @@
 #ifndef __SET_MAP_H__
 #define __SET_MAP_H__
 
+#include <iostream>
 #include <vector>
 #include "cocos2d.h"
 #include "MicroMap.h"
@@ -28,6 +29,7 @@ private:
 	EventListenerMouse* mainMapListener = nullptr;     // 主地图监听器
 	EventListenerMouse* microMapListener = nullptr;     // 小地图监听器
 
+	const float ScrollSpeed = 40.0f;    // 滚轮滚动速度
 public:
 	////////////////////////////////////////////////////////////////
 	/* 按键是否按下:W/S/A/D*/
@@ -55,6 +57,9 @@ public:
 	// 键盘事件处理,按下M键切换显示微地图
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
+	/*鼠标事件处理，滚动滚轮控制地图缩放*/
+	EventListenerMouse* createMouseListener(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
+
 	/*设置摄像机跟随玩家移动*/
 	void CameraFollowController();
 
@@ -63,6 +68,9 @@ public:
 
 	/*设置小地图摄像机随玩家移动*/
 	void MicroCameraFollowPlayer();
+
+	/*更新摄像机的位置*/
+	void UpdateCameraPosition(Camera* camera, Vec2& TargetPos, float Height);
 
 	/*初始化障碍物*/
 	void InitialObstacle(cocos2d::TMXTiledMap* tileMap);

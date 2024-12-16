@@ -1,6 +1,4 @@
 #include "SetMap.h"
-#include "Player.h"
-#include "SetPlayerScene.h"
 
 #define Derivation 243
 
@@ -26,8 +24,6 @@ bool SetMap::init() {
 	*/
 
     IsMicroMapVisible = false;    //初始化小地图状态变量
-
-	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 
     //添加键盘监听器，按下M打开小地图
     auto KeyListener = EventListenerKeyboard::create();
@@ -69,6 +65,8 @@ bool SetMap::init() {
 		this->addChild(bagManager);
 	///////////////////////
 
+	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
+
     return true;
 }
 
@@ -77,11 +75,34 @@ void SetMap::InitalCamera() {
 	camera = getDefaultCamera();
 
 	//创建小地图摄像机
-	camera_in_micro_map = Camera::createOrthographic(visibleSize.width, visibleSize.height, 1.0f, 5000.0f);
+	camera_in_micro_map = Camera::createPerspective(60.0f,visibleSize.width / visibleSize.height, 100.0f, 4000.0f);
 	
 	// 将小地图摄像机添加至场景
 	camera_in_micro_map->setVisible(false);    //初始隐藏小地图摄像机
 	this->addChild(camera_in_micro_map);
+}
+
+EventListenerMouse* SetMap::createMouseListener(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
+	auto listener = EventListenerMouse::create();
+	listener->onMouseMove = [=](EventMouse* event) {
+		float ScrollY = event->getScrollY();
+		Vec3 cameraPosition = camera->getPosition3D();
+
+		//通过滚轮输入，调整摄像机高度
+		cameraPosition.z += ScrollY * ScrollSpeed;
+
+		// 限制 Z 值范围
+		cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
+		cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
+
+		camera->setPosition3D(cameraPosition);
+		CCLOG("cameraPosition.z = %f", cameraPosition.z);
+		};
+	return listener;
+}
+
+void SetMap::UpdateCameraPosition(Camera* camera, Vec2& TargetPos, float Height) {
+	camera->setPosition3D(Vec3(TargetPos.x, TargetPos.y, Height));
 }
 
 void SetMap::CameraFollowController() {
@@ -105,63 +126,34 @@ void SetMap::CameraFollowController() {
 
 void SetMap::MainCameraFollowPlayer() {
 	// 设置摄像机的初始位置
-	float cameraZ = 600.0f;
+	float InitCameraZinMainMap = 600.0f;
 
 	//每次进入主地图时，将主摄像机的位置设置为玩家位置
 	Vec2 playPosition = PLAYER->mySprite->getPosition();
-	Vec3 camera_in_main_map_Position(playPosition.x, playPosition.y, cameraZ);
-	camera_in_micro_map->setPosition3D(camera_in_main_map_Position);
+	UpdateCameraPosition(camera, playPosition, InitCameraZinMainMap);
 
 	// 则创建并绑定主地图监听器
-	CCLOG("in main map listener");
-	mainMapListener = EventListenerMouse::create();
-	mainMapListener->onMouseScroll = [=](EventMouse* event) {
-		float scrollY = event->getScrollY();
-		Vec3 cameraPosition_in_main_map = camera->getPosition3D();
-		cameraPosition_in_main_map.z += scrollY * 20.0f;
-
-		// 限制摄像机的高度（Z轴范围）
-		cameraPosition_in_main_map.z = std::min(cameraPosition_in_main_map.z, 600.0f);  // 最大高度
-		cameraPosition_in_main_map.z = std::max(cameraPosition_in_main_map.z, 200.0f);  // 最小高度
-
-		camera->setPosition3D(cameraPosition_in_main_map);
-		};
-
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(mainMapListener, camera);    //
+	mainMapListener = createMouseListener(camera, 600.0f, 200.0f, ScrollSpeed);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(mainMapListener, camera);    // 获取事件调度器并添加监听器
 
 	// 设置主摄像机的实时跟随任务
 	schedule([=](float dt) {
-		Vec3 cameraPosition = camera->getPosition3D();
-		Vec2 playerPosition = PLAYER->mySprite->getPosition();
-		camera->setPosition3D(Vec3(playerPosition.x, playerPosition.y, cameraPosition.z));
+		float updatedCameraZ = camera->getPosition3D().z;    //获取摄像机的高度
+		Vec2 playerPosition = PLAYER->mySprite->getPosition();    //获取玩家位置
+		this->UpdateCameraPosition(camera, playerPosition, updatedCameraZ);    //更新摄像机位置
 		}, "camera_update_key");
 }
 
 void SetMap::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
-	float cameraZ = 4000.0f;
+	float InitCameraZinMicroMap = 2000.0f;
 
 	// 每次进入小地图时，将小摄像机的位置设置中心位置
-	Vec3 camera_in_micro_map_Position(0, 0, cameraZ);
-	camera_in_micro_map->setPosition3D(camera_in_micro_map_Position);
+	Vec2 centerPosition(1200, 1200);
+	UpdateCameraPosition(camera_in_micro_map, centerPosition, InitCameraZinMicroMap);
 
 	// 则创建并绑定小地图监听器
-	CCLOG("in micro map listener");
-	microMapListener = EventListenerMouse::create();
-	microMapListener->onMouseScroll = [=](EventMouse* event) {
-		float scrollY = event->getScrollY();
-
-		Vec3 cameraPosition_in_micro_map = camera_in_micro_map->getPosition3D();
-		cameraPosition_in_micro_map.z += scrollY * 20.0f;
-
-		// 限制摄像机的高度（Z轴范围）
-		cameraPosition_in_micro_map.z = std::min(cameraPosition_in_micro_map.z, 4000.0f);  // 最大高度
-		cameraPosition_in_micro_map.z = std::max(cameraPosition_in_micro_map.z, 200.0f);  // 最小高度
-
-		camera_in_micro_map->setPosition3D(cameraPosition_in_micro_map);
-		CCLOG("have changed %f %f %f", cameraPosition_in_micro_map.x, cameraPosition_in_micro_map.y, cameraPosition_in_micro_map.z);
-		};
-
+	microMapListener = createMouseListener(camera_in_micro_map, 3000.0f, 1200.0f, ScrollSpeed);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(microMapListener, camera_in_micro_map);    	// 获取事件调度器并添加监听器
 }
 
@@ -176,7 +168,6 @@ void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
         if (IsMicroMapVisible) {
             //进入小地图暂停游戏
 			Director::getInstance()->pause();     // 暂停游戏
-			_eventDispatcher->pauseEventListenersForTarget(camera);     // 暂停主地图响应和摄像机逻辑
 			camera_in_micro_map->setVisible(true);     //将小地图摄像机显示
 			camera->setVisible(false);    //将初始摄像机隐藏
 
@@ -189,7 +180,6 @@ void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			camera_in_micro_map->setVisible(false);    //将小地图摄像机隐藏
 			camera->setVisible(true);    //将初始摄像机显示
 			Director::getInstance()->resume();    //退出小地图恢复游戏
-			_eventDispatcher->resumeEventListenersForTarget(camera);     // 恢复主地图响应和摄像机逻辑
 		}
     }
 }
