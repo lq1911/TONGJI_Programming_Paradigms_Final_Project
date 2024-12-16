@@ -22,7 +22,7 @@ enum class MonsterState {
 };
 class Monster;
 //¹ÖÎïAIÀà
-class MonsterAI:Node {
+class MonsterAI :Node {
 private:
 	MonsterState currentState;//¹ÖÎï×´Ì¬
 	Player* target;
@@ -31,6 +31,8 @@ private:
 public:
 	friend class Monster;
 	MonsterAI(Player* target, Monster* monster) : currentState(MonsterState::PATROLLING), target(target), monster(monster) {}//Ä¬ÈÏÎªÑ²Âß
+	//ÅÐ¶ÏÊÇ·ñÑ²Âß
+	bool shouldPatrol();
 	//ÅÐ¶ÏÊÇ·ñ×·×Ù
 	bool shouldChasePlayer();
 	//ÅÐ¶ÏÊÇ·ñ¹¥»÷
@@ -59,17 +61,17 @@ public:
 	Monster(string name, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,
 		int exp, Bonus bonus, Player* player, int follow_range, float scale, Scene* scene) :
 		Creature(name, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene),
-		base_exp(exp), bonus(bonus), follow_range(follow_range), 
+		base_exp(exp), bonus(bonus), follow_range(follow_range),
 		ai(new MonsterAI(player, this)), state(MonsterState::PATROLLING) {
-		
+
 		ai->scheduleUpdate();
 		levelBonus();
 		bonus.exp = base_exp;
 		;//ÔÝ´ý
 		target = player;
 
-		
-		 this->scheduleUpdate();
+
+		this->scheduleUpdate();
 	}
 	void update(float dt)override;
 	void levelBonus()override;
@@ -90,4 +92,3 @@ public:
 };
 
 #endif __MONSTER_H__
-

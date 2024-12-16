@@ -44,8 +44,8 @@ bool SetMap::init() {
     this->LoadMap();
   
     ///////////////////////
-    // ¼üÅÌ¼àÌý
-    auto listener = EventListenerKeyboard::create();
+	// ¼üÅÌ¼àÌý
+	auto listener = EventListenerKeyboard::create();
 	listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this);
 	listener->onKeyReleased = CC_CALLBACK_2(SetMap::KeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
