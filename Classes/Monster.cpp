@@ -46,11 +46,13 @@ void Monster::Attack() {
 	}
 	else {
 		nums = 0;
+		/*
 		log("Monster:Attack*****************************************************************");
 		log("mon:%f %f", mon.x, mon.y);
 		log("positon:%f %f", pos.x, pos.y);
 		log("direction:%f %f", direction.x, direction.y);
 		log("speed:%d", speed);
+		*/
 	}
 	if (abs(direction.x) > abs(direction.y)) {
 		if (direction.x > 0) {
@@ -61,7 +63,7 @@ void Monster::Attack() {
 		}
 	}
 	else {
-		if (direction.y>0) {
+		if (direction.y > 0) {
 			Creature::Attack(2, target);
 		}
 		else {
@@ -80,11 +82,13 @@ void Monster::Chase() {
 	}
 	else {
 		nums = 0;
+		/*
 		log("Monster:Chase*****************************************************************");
 		log("mon:%f %f", mon.x, mon.y);
 		log("positon:%f %f", pos.x, pos.y);
 		log("direction:%f %f", direction.x, direction.y);
 		log("speed:%d", speed);
+		*/
 	}
 	if (abs(direction.x) > abs(direction.y)) {
 		if (direction.x > 0) {
@@ -95,7 +99,7 @@ void Monster::Chase() {
 		}
 	}
 	else {
-		if (direction.y>0) {
+		if (direction.y > 0) {
 			Move(2);
 		}
 		else {
@@ -116,11 +120,13 @@ void Monster::Flee() {
 	}
 	else {
 		nums = 0;
+		/*
 		log("Monster:Flee*****************************************************************");
 		log("mon:%f %f", mon.x, mon.y);
 		log("positon:%f %f", pos.x, pos.y);
 		log("direction:%f %f", direction.x, direction.y);
 		log("speed:%d", speed);
+		*/
 	}
 	if (abs(direction.x) > abs(direction.y)) {
 		log("a");
@@ -209,7 +215,7 @@ void MonsterAI::update(float dt) {
 //ÅÐ¶ÏÊÇ·ñÑ²Âß
 bool MonsterAI::shouldPatrol() {
 	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	log("distance:%f", distance);
+	//log("distance:%f", distance);
 	if (distance >= monster->GetFollowRange()) {
 		return true;
 	}
@@ -218,7 +224,7 @@ bool MonsterAI::shouldPatrol() {
 //ÅÐ¶ÏÊÇ·ñ¹¥»÷
 bool MonsterAI::shouldAttackPlayer() {
 	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	log("distance:%f", distance);
+	//log("distance:%f", distance);
 	if (distance <= monster->getAtkRange()) {
 		return true;
 	}
@@ -227,7 +233,7 @@ bool MonsterAI::shouldAttackPlayer() {
 //ÅÐ¶ÏÊÇ·ñ×·×Ù
 bool MonsterAI::shouldChasePlayer() {
 	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	log("distance:%f", distance);
+	//log("distance:%f", distance);
 	if (distance < monster->GetFollowRange() && distance>monster->getAtkRange()) {
 		return true;
 	}
@@ -236,13 +242,13 @@ bool MonsterAI::shouldChasePlayer() {
 //ÅÐ¶ÏÊÇ·ñÌÓÅÜ
 bool MonsterAI::shouldFlee() {
 	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	log("distance:%f", distance);
-	if (monster->getCurrentHp() < monster->getHp() / 10&&distance<monster->GetFollowRange()&&
+	//log("distance:%f", distance);
+	if (monster->getCurrentHp() < monster->getHp() / 10 && distance<monster->GetFollowRange() &&
 		distance>monster->getAtkRange()) {
 		return true;
 	}
-	else if (monster->getCurrentHp() < 3 * target->DamageCal(target, monster)&&
-		distance<monster->GetFollowRange()&&distance>monster->getAtkRange()) {
+	else if (monster->getCurrentHp() < 3 * target->DamageCal(target, monster) &&
+		distance<monster->GetFollowRange() && distance>monster->getAtkRange()) {
 		return true;
 	}
 	return false;
@@ -252,4 +258,3 @@ bool MonsterAI::shouldFlee() {
 MonsterState MonsterAI::GetState()const {
 	return currentState;
 }
-

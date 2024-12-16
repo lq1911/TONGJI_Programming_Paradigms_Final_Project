@@ -1,6 +1,7 @@
 #ifndef __SET_MAP_H__
 #define __SET_MAP_H__
 
+#include <iostream>
 #include <vector>
 #include "cocos2d.h"
 #include "MicroMap.h"
@@ -13,6 +14,8 @@ USING_NS_CC;
 
 class SetMap :public cocos2d::Scene {
 private:
+	Size visibleSize;
+
 	MicroMap* MicroMap;     // 微地图对象
 	bool IsMicroMapVisible;     // 微地图是否可见
 
@@ -20,9 +23,13 @@ private:
 
 	std::vector<cocos2d::Rect>ObstacleList;  // 障碍物列表
 
-	Camera* camera = getDefaultCamera();
-	Camera* camera_in_micro_map;
+	Camera* camera;    // 主地图摄像机
+	Camera* camera_in_micro_map;    // 小地图摄像机
 
+	EventListenerMouse* mainMapListener = nullptr;     // 主地图监听器
+	EventListenerMouse* microMapListener = nullptr;     // 小地图监听器
+
+	const float ScrollSpeed = 40.0f;    // 滚轮滚动速度
 public:
 	////////////////////////////////////////////////////////////////
 	/* 按键是否按下:W/S/A/D*/
@@ -50,8 +57,20 @@ public:
 	// 键盘事件处理,按下M键切换显示微地图
 	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
 
+	/*鼠标事件处理，滚动滚轮控制地图缩放*/
+	EventListenerMouse* createMouseListener(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
+
 	/*设置摄像机跟随玩家移动*/
-	void CameraFollowPlayer();
+	void CameraFollowController();
+
+	/*设置主地图摄像机随玩家移动*/
+	void MainCameraFollowPlayer();
+
+	/*设置小地图摄像机随玩家移动*/
+	void MicroCameraFollowPlayer();
+
+	/*更新摄像机的位置*/
+	void UpdateCameraPosition(Camera* camera, Vec2& TargetPos, float Height);
 
 	/*初始化障碍物*/
 	void InitialObstacle(cocos2d::TMXTiledMap* tileMap);
@@ -61,6 +80,9 @@ public:
 
 	/*加载地图*/
 	void LoadMap();
+
+	/*初始化摄像机*/
+	void InitalCamera();
 
 	CREATE_FUNC(SetMap);
 };
