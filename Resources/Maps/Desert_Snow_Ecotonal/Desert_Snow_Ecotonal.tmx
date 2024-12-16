@@ -35,7 +35,7 @@
    eJztllcOwjAMhnnO/S/COgDrAKwDsA7AeseVqBRMksbIFP8ln2QJBGpt/169XqFQ+Af67vX72IX/Z50J83sBGodPpc2AbEg2ctjaTMlmZHOHpc3Z83VJn1dka7IN2db7DUmrHfm2JzuQHZ+++oaiVaXNhezq3vOf0soyvFe4VieQOEL5j2mF1Ct+/pHmmt8rN7J75lxDgmuFVGc+XCukOkvR1TpDmckcXmeo/cJB7RfLN4ykNizfMJLaSN0wfIe2jaQ2LOWfI/EtdcP8Gsu+aVP2hB3GxvZELqEasjynYoRqCHEWINZQCMQaqgn1BFIN1cTmKtreiPWExb2Rym2sJ7R6XlPXVG5jc1Wr5yW6NsWck9vQMzT2hkTXpphzcquZN+m7c2PO2cmaeZO++5OYNZ7xrb2vcQO1nTcLIN6OhUKXeQDEtmYa
   </data>
  </layer>
- <layer id="8" name="BlackFog" width="50" height="50" visible="0">
+ <layer id="8" name="BlackFog" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztwzEJAAAMA7Be86+vaqpjkEB6SVVVVVVVVVVVVfX5AWhpi/k=
   </data>
