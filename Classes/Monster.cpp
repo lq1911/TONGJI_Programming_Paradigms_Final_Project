@@ -37,10 +37,10 @@ void Monster::Die() {
 	Creature::Die();
 }
 void Monster::Attack() {
-	log("Monster:Attack*****************************************************************");
+	//log("Monster:Attack*****************************************************************");
 	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//方向
 	direction.normalize();//单位化
-	log("direction:%f%f", direction.x, direction.y);
+	//log("direction:%f%f", direction.x, direction.y);
 	if (abs(direction.x) > abs(direction.y)) {
 		if (direction.x > 0) {
 			Creature::Attack(1, target);
@@ -59,10 +59,10 @@ void Monster::Attack() {
 	}
 }
 void Monster::Chase() {
-	log("Monster:Chase*****************************************************************");
+	//log("Monster:Chase*****************************************************************");
 	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//方向
 	direction.normalize();//单位化
-	log("direction:%f%f", direction.x, direction.y);
+	//log("direction:%f%f", direction.x, direction.y);
 	if (abs(direction.x) > abs(direction.y)) {
 		if (direction.x > 0) {
 			Move(1);
@@ -83,15 +83,15 @@ void Monster::Chase() {
 }
 void Monster::Flee() {
 	
-		log("Monster:Flee*****************************************************************");
+		//log("Monster:Flee*****************************************************************");
 		Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//方向
 		direction.normalize();//单位化
 	
-	log("direction:%f%f", direction.x, direction.y);
-	log("speed:%d", speed);
+	//log("direction:%f%f", direction.x, direction.y);
+	//log("speed:%d", speed);
 	
 	if (abs(direction.x) > abs(direction.y)) {
-		log("a");
+		//log("a");
 		if (direction.x ) {
 			Creature::Move(0);
 		}
@@ -100,7 +100,7 @@ void Monster::Flee() {
 		}
 	}
 	else {
-		log("b");
+		//log("b");
 		
 		if (direction.y) {
 			Creature::Move(3);
