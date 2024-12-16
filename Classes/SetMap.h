@@ -34,6 +34,8 @@ private:
 	vector<TMXLayer*> BlackFogList;    //储存黑雾的图层
 	vector<bool> IsBlackFogVisible;    //黑雾是否可见
 	vector<bool> IsRegionRevealed;    //是否已经显示过某个区域
+
+
 public:
 	////////////////////////////////////////////////////////////////
 	/* 按键是否按下:W/S/A/D*/

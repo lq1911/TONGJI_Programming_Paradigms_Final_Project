@@ -64,8 +64,6 @@ void SetMap::InitalCamera() {
 	//创建小地图摄像机
 	camera_in_micro_map = Camera::createPerspective(60.0f,visibleSize.width / visibleSize.height, 100.0f, 4000.0f);
 
-	this->SetBlackFogInMicroMap();    //设置小地图中的黑色雾
-
 	// 将小地图摄像机添加至场景
 	camera_in_micro_map->setVisible(false);    //初始隐藏小地图摄像机
 	this->addChild(camera_in_micro_map);
@@ -187,9 +185,16 @@ void SetMap::MicroCameraFollowPlayer() {
 
 void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
-        // 切换小地图显示状态
-        IsMicroMapVisible = !IsMicroMapVisible;
-		
+		// 切换小地图显示状态
+		IsMicroMapVisible = !IsMicroMapVisible;
+
+		//小地图中显示黑色雾效果的判断数组反转
+		for (int i = 0; i < IsBlackFogVisible.size(); i++) {
+			IsBlackFogVisible[i] = !IsBlackFogVisible[i];         
+		}
+		// 更新小地图中黑色雾的显示
+		SetBlackFogInMicroMap();
+
 		CameraFollowController();    //注册摄像机跟随玩家的函数
 		/*此处切换小地图显示，进入小地图时首先隐藏初始地图，退出小地图之后再显示初始地图
           让玩家在进入小地图之前就暂停游戏，退出小地图之后再恢复游戏，防止玩家在打开地图的时候发生意外*/
@@ -304,6 +309,7 @@ void SetMap::LoadMap() {
 
 	BlackFogList.push_back(RebirthTemple->getLayer("BlackFog"));    //将初始地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
 
     // 加载火山地图
     auto Volcano = TMXTiledMap::create("Maps/volcano/volcano.tmx");
@@ -311,6 +317,7 @@ void SetMap::LoadMap() {
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(Volcano);    //初始化障碍物
+	
 
     // 加载雪地地图
     auto SnowyWinter= TMXTiledMap::create("Maps/SnowyWinter/SnowyWinter.tmx");
@@ -417,6 +424,8 @@ void SetMap::LoadMap() {
 	Forest_Desert->setScale(1.0f);
 	Forest_Desert->setAnchorPoint(Vec2(0.5f, 0.5f));
 	this->addChild(Forest_Desert);
+
+	SetBlackFogInMicroMap();    //更新地图中的黑色雾
 }
 
 void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction) {
@@ -463,9 +472,12 @@ void SetMap::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 
 void SetMap::SetBlackFogInMicroMap() {
 	for (int i = 0; i < (int)BlackFogList.size(); i++) {
-		if (!BlackFogList[i]->getParent())
+		if (!BlackFogList[i]->getParent()){
 			this->addChild(BlackFogList[i]);
+		}
+		CCLOG("SetBlackFogInMicroMap: %d", i);
 		BlackFogList[i]->setLocalZOrder(100);
-		BlackFogList[i]->setVisible(true);
+		// 如果此区域已经被揭示，则隐藏黑色雾，否则在小地图上显示黑色雾
+		BlackFogList[i]->setVisible( IsRegionRevealed[i] == true ? false : IsBlackFogVisible[i]);
 	}
 }
