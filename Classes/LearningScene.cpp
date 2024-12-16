@@ -373,12 +373,12 @@ void LearningScene::learnBag_2() {
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
     /* bagTxt */
-    auto bagTxt = Label::createWithTTF("Press B to open the bag and press P to pick an item.", "fonts/Lacquer.ttf", 40);
+    auto bagTxt = Label::createWithTTF("Press B to open the bag.", "fonts/Lacquer.ttf", 40);
     bagTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
     bagTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(bagTxt, 1);
     /* ¼üÅÌÍ¼ */
-    auto keyboardPic = Sprite::create("Others/KeyButtonBP.png");
+    auto keyboardPic = Sprite::create("Others/KeyButtonB.png");
     keyboardPic->setPosition(Vec2(visibleSize.width / 2 - 400, visibleSize.height - 150));
     keyboardPic->setScale(0.8f);
     this->addChild(keyboardPic, 1);
@@ -657,38 +657,5 @@ void LearningScene::BagKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) 
         else
             // ´ò¿ª±³°ü
             BagManager::getInstance()->showBag(*LEARNER);
-    }
-    else if (keyCode == EventKeyboard::KeyCode::KEY_P) {
-        goods _goods;
-        if (BagManager::getInstance()->getItemsNum() % 5 == 0)
-        {
-            weapon* it1 = new weapon(_goods.icon_sword);
-            BagManager::getInstance()->addItem(it1);
-            return;
-        }
-        if (BagManager::getInstance()->getItemsNum() % 5 == 1)
-        {
-            consumable* it2 = new consumable(_goods.pumkin);
-            BagManager::getInstance()->addItem(it2);
-            return;
-        }
-        if (BagManager::getInstance()->getItemsNum() % 5 == 2)
-        {
-            accessories* it3 = new accessories(_goods.bomb);
-            BagManager::getInstance()->addItem(it3);
-            return;
-        }
-        if (BagManager::getInstance()->getItemsNum() % 5 == 3)
-        {
-            armor* it4 = new armor(_goods.icon_conselet);
-            BagManager::getInstance()->addItem(it4);
-            return;
-        }
-        if (BagManager::getInstance()->getItemsNum() % 5 == 4)
-        {
-            shoes* it5 = new shoes(_goods.boots);
-            BagManager::getInstance()->addItem(it5);
-            return;
-        }
     }
 }
