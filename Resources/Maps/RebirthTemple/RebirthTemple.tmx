@@ -22,7 +22,7 @@
    <property name="Walkable" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmE2OwyAMheGKVVdTdbqfaHqAVukNModoFrNPFnO9BglLxDLG+SE0I3+SNwRCXnhgC2OM+bbGnBPxOcRlxX5Txrjn1yE4nIavRB/HQfAtR8F75lIF8+C4eg03wfwSrVVGHXfm3XevQaJD0oebaykpHdL1eHcd/2U9pDrqoc/TRxv0fwbtjx3oaIY+nY8+6N8F7T870FGad9Vx8l4EPiz93Hn4N+HZ0jq6YF6cn06Bh/8ingWtj4I6cM7E3yDJqVWwL9342q8drKMLvM4psA+ocw3aKZ/gsZKzL9wzTkfj1w7WsZ+ho7JjH1DnGrRTPsFjJWcf1kEhqadi79wKiQ7KIy3TljMHAuBdKu/GdFAe6Zm2nDkQAO9SeRfqjan7oQScd6HemLofSiDZg0tzCPZujpDswaU6sHdzhGQP1lb2T6iavbXjWqkkjfCfUDV7b8e1kqLE7uBy30etDZf/ct5HrQ2X/0rUfnPh8saedEDewHlhqxp2LZpIXtiqhlUURVEURVEURVEUxZgXdd3CHg==
+   eJztmL9uwyAQxuEVq06J2u61mqFjI2fo7j5EPGS3h7xejMRJ59MB5z+YuLqfdAsG4898cCeMMebLGvOWiPchPlbsN2WMe34aIobT8Jno43gRfMur4D1zqdA8NE5ew49gfonWKqOOc+TdZ69BokPSJzbXUlI6pOvx7Dr+y3pIddRDn6uPFvW/ovbLDnQ0Q5/OR4/6d6j9bwc6SvOsOo7ei8DB8s+dh28Jz5bW0aF5aX46Ig/fA54FrZeCOmjOpN8gyakV2pdufO3XDtbRBV3nFNQH3LkG7ZxP6FjJ2Yf3jNPR+LWDdexn6Kjs2AfcuQbtnE/oWMnZR3VwSOqp0Du3QqLjm/FIG2nLmQMB8C6Xd0M6fhmP9JG2nDkQAO9yeRfqjan7oQQx70K9MXU/lECyB5fmEOrdHCHZg0t1UO/mCMkerK3sn3A1e2vHtVJJGuE/4Wr23o5rJUUJ3cHlvo9am1j+y3kftTax/Fei9ptLLG/sSQfkDZoXtqph16IJ5IWtalhFURRFURRFURRFUYx5AGLHwb4=
   </data>
  </layer>
  <layer id="6" name="StructStair" width="50" height="50">
