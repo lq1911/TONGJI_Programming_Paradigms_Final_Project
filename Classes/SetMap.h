@@ -44,8 +44,6 @@ public:
 
 	/* 绑定键盘:Released */
 	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
-	/* 绑定键盘:Pressed */
-	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	//////////////////////////////////////////////////////////////
 
 	/*生成场景函数*/

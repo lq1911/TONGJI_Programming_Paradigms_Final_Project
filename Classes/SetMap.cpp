@@ -41,9 +41,6 @@ bool SetMap::init() {
     this->LoadMap();
   
     ///////////////////////
-    // lq加的调试小人
-    PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 80, 1);
-
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
 
@@ -62,21 +59,6 @@ bool SetMap::init() {
 	if (bagManager->getParent() == nullptr)
 		this->addChild(bagManager);
 	///////////////////////
-    // 加个npc
-    npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
-  
-        Bonus b;
-    // 加个树妖
-   // Monster1 = new Monster("Monster1",100000, 600, 20,20,20, 100, 2, 50, 100, 0, b, PLAYER,1000,1,this);
-    //this->addChild(Monster1);
-    // 加个Monster2
-    Monster2 = new Monster("Monster2", 100000, 600, 20, 40, 20, 100, 2, 1000, 100, 0, b, PLAYER, 1000, 1, this);
-    this->addChild(Monster2);
-    // 背包
-    BagManager* bagManager = BagManager::getInstance();
-    if(bagManager->getParent()==nullptr)
-        this->addChild(bagManager);
-    ///////////////////////
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 
@@ -264,24 +246,13 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
 		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
 	}
-	/*
-	// 测试Monster1攻击效果用，记得删
-	else if (keyCode == EventKeyboard::KeyCode::KEY_T) {
-		int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
-		int dy = Monster1->mySprite->getPosition().y - PLAYER->mySprite->getPosition().y;
-		if (std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(Monster1->getAtkRange(), 2))
-			Monster1->Attack();
-		else
-			Monster1->Attack();
-	}
+
 	else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
 		npc1->Chat();
 		//Monster2->Attack(UP);
 		//PLAYER->Heal();
 		//PLAYER->Die();
 	}
-	*/
-	/* B/P:背包 */
 	else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
 
 		if (BagManager::getInstance()->isBagVisible())
@@ -443,64 +414,6 @@ void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::strin
 				PLAYER->Move(direction);
 				}, 0.8f, scheduleKey);
 		}
-	}
-}
-
-void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
-	Vec2 moveBy;
-	int speed = 30;
-	/* 攻击:I/K/J/L */
-	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
-		PLAYER->Attack(UP);
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
-		PLAYER->Attack(DOWN);
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
-		PLAYER->Attack(LEFT);
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
-		PLAYER->Attack(RIGHT);
-	}
-	/* 移动:W/S/A/D */
-	else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
-		HandlePlayerMove(Vec2(0, speed), 0, "MoveUP", UP);	
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
-		HandlePlayerMove(Vec2(0, -speed), 1, "MoveDOWN", DOWN);
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
-		HandlePlayerMove(Vec2(-speed, 0), 2, "MoveLEFT", LEFT);
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
-		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
-	}
-	/*
-	// 测试Monster1攻击效果用，记得删
-	else if (keyCode == EventKeyboard::KeyCode::KEY_T) {
-		int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
-		int dy = Monster1->mySprite->getPosition().y - PLAYER->mySprite->getPosition().y;
-		if (std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(Monster1->getAtkRange(), 2))
-			Monster1->Attack();
-		else
-			Monster1->Attack();
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
-		npc1->Chat();
-		//Monster2->Attack(UP);
-		//PLAYER->Heal();
-		//PLAYER->Die();
-	}
-	*/
-	/* B/P:背包 */
-	else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
-
-		if (BagManager::getInstance()->isBagVisible())
-			// 隐藏背包
-			BagManager::getInstance()->hideBag(*PLAYER);
-		else
-			// 打开背包
-			BagManager::getInstance()->showBag(*PLAYER);
 	}
 }
 
