@@ -62,6 +62,21 @@ bool SetMap::init() {
 	if (bagManager->getParent() == nullptr)
 		this->addChild(bagManager);
 	///////////////////////
+    // 加个npc
+    npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
+  
+        Bonus b;
+    // 加个树妖
+   // Monster1 = new Monster("Monster1",100000, 600, 20,20,20, 100, 2, 50, 100, 0, b, PLAYER,1000,1,this);
+    //this->addChild(Monster1);
+    // 加个Monster2
+    Monster2 = new Monster("Monster2", 100000, 600, 20, 40, 20, 100, 2, 1000, 100, 0, b, PLAYER, 1000, 1, this);
+    this->addChild(Monster2);
+    // 背包
+    BagManager* bagManager = BagManager::getInstance();
+    if(bagManager->getParent()==nullptr)
+        this->addChild(bagManager);
+    ///////////////////////
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 

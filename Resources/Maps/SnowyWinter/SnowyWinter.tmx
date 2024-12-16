@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="93">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="95">
  <tileset firstgid="1" source="SnowyWinterWholeAsset.tsx"/>
  <tileset firstgid="257" source="MagicTelepoter.tsx"/>
  <layer id="1" name="Ground" width="50" height="50">
@@ -32,7 +32,7 @@
    eJztzkcRwgAUANFYp0QAEAQQggBKBFAigBIBlPhgNXyY+Zd9M3vfopB+M6IxTWhKZe5O2IzmtKCKlrk7YSuqaU0NbXJ3wra0oz0dqM3dCTvSic50oS53J+xKN7rTg/rcnbAnvehNHxpydyRJkiRJkiRJkiRJ0p99AeXxGHo=
   </data>
  </layer>
- <layer id="4" name="MagicAndTelepoter" width="50" height="50" visible="0">
+ <layer id="4" name="MagicAndTelepoter" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt1zEOQDAYhuH2ArgBJ8BqMpu6uISz9JKO4m9UIh00BqryPsmXRrp8+hOhFAAAwLtmnboBAAAAAAC4Msq/eyEpJZXer3NkpLeV1H41md6HO/9W0kn6H8zDyXkeAAAchsi3LLb/FVOkZ2z/q2ymvc8WrVa/Nmmb3Bc+/+E8eD/wpA2Njgqi
   </data>
@@ -43,7 +43,6 @@
   <object id="3" x="13" y="998.5" width="192.5" height="16"/>
   <object id="4" x="13.5" y="1011.5" width="6.5" height="107.5"/>
   <object id="5" x="2" y="1129.5" width="94.5" height="85"/>
-  <object id="6" x="95.5" y="1065" width="32" height="17.5"/>
   <object id="7" x="41" y="1035.5" width="14.5" height="13"/>
   <object id="8" x="42.5" y="1100" width="11.5" height="10.5"/>
   <object id="9" x="167" y="1036" width="18" height="15"/>
@@ -126,5 +125,11 @@
   <object id="90" x="1219.5" y="681.75" width="25" height="17.5"/>
   <object id="91" x="1091.25" y="810.75" width="25.5" height="13.5"/>
   <object id="92" x="1419.33" y="323.333" width="6.66667" height="27.3333"/>
+  <object id="93" x="94.5" y="1063" width="35" height="23">
+   <ellipse/>
+  </object>
+  <object id="94" x="1552" y="28">
+   <point/>
+  </object>
  </objectgroup>
 </map>

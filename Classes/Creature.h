@@ -1,7 +1,7 @@
 #ifndef __CREATURE_H__
 #define __CREATURE_H__
 #include "cocos2d.h"
-
+#include "ElementType.h"
 USING_NS_CC;
 
 /* 方向 */
@@ -28,7 +28,7 @@ protected:
 	int speed;        // 速度
 	int level;        // 等级
 	int x, y;         // 位置
-
+	ElementType elementType; // 属性
 	float scale;      // 缩放比例
 	Scene* scene;     // 场景指针
 public:
@@ -47,6 +47,9 @@ public:
 		mySprite->setPosition(Vec2(x, y));
 		mySprite->setScale(scale);
 		scene->addChild(mySprite);
+
+		// 初始元素为无
+		this->setElementType(NONE);
 
 		levelBonus();
 	}
@@ -69,12 +72,11 @@ public:
 		level = 1;
 	}
 
-
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
-	virtual Animate* Attack(int dir = DOWN, Creature* opp = nullptr);
+	virtual void Attack(int dir = DOWN, Creature* opp = nullptr);
 
 	/* 受伤 */
 	virtual void Hurt();
@@ -91,7 +93,7 @@ public:
 
 	/* 移动 */
 	// Monster1:树妖,无法移动
-	virtual Animate* Move(int dir);
+	virtual void Move(int dir);
 
 	/* 转变场景 */
 	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
@@ -120,6 +122,8 @@ public:
 	int getDef()const { return def; }
 	// 返回攻击范围atk_range
 	int getAtkRange()const { return atk_range; }
+	// 设置属性
+	void setElementType(ElementType _elementType);
 
 	// 返回坐标
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
