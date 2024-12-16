@@ -15,14 +15,6 @@ bool SetMap::init() {
 
     PlayerInWhichMap = 0;     //初始化玩家位置在初始神庙
 
-	/*
-    //创建并添加小地图至地图场景
-    MicroMap = MicroMap::create();
-    MicroMap->setVisible(false);    //初始隐藏小地图
-    MicroMap->setScale(1.0f);    //设置小地图缩放比例
-    this->addChild(MicroMap, 100);     //添加小地图至场景,小地图的图层优先级最高
-	*/
-
     IsMicroMapVisible = false;    //初始化小地图状态变量
 
     //添加键盘监听器，按下M打开小地图
@@ -49,10 +41,10 @@ bool SetMap::init() {
 
 	Bonus b;
 	// 加个树妖
-	Monster1 = new Monster("Monster1", 100000, 600, 20, 20, 20, 100, 2, 50, 100, 0, b, PLAYER, 1000, 1, this);
+	Monster1 = new Monster("Monster1", 100000, 600, 20, 20, 20, 100, 2, 50, 100, 0, b, PLAYER, 600, 1, this);
 	this->addChild(Monster1);
 	// 加个Monster2
-	Monster2 = new Monster("Monster2", 100000, 600, 20, 20, 20, 100, 2, 1000, 100, 0, b, PLAYER, 1000, 1, this);
+	Monster2 = new Monster("Monster2", 100000, 600, 20, 20, 20, 100, 2, 1000, 100, 0, b, PLAYER, 600, 1, this);
 	this->addChild(Monster2);
 	// 背包
 	BagManager* bagManager = BagManager::getInstance();
@@ -71,7 +63,9 @@ void SetMap::InitalCamera() {
 
 	//创建小地图摄像机
 	camera_in_micro_map = Camera::createPerspective(60.0f,visibleSize.width / visibleSize.height, 100.0f, 4000.0f);
-	
+
+	this->SetBlackFogInMicroMap();    //设置小地图中的黑色雾
+
 	// 将小地图摄像机添加至场景
 	camera_in_micro_map->setVisible(false);    //初始隐藏小地图摄像机
 	this->addChild(camera_in_micro_map);
@@ -128,7 +122,6 @@ EventListenerMouse* SetMap::createMouseListenerForCameraScroll(Camera* camera, f
 		// 限制 Z 值范围
 		cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
 		cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
-
 		camera->setPosition3D(cameraPosition);
 		};
 	return listener;
@@ -164,10 +157,9 @@ void SetMap::MainCameraFollowPlayer() {
 	//每次进入主地图时，将主摄像机的位置设置为玩家位置
 	Vec2 playPosition = PLAYER->mySprite->getPosition();
 	UpdateCameraPosition(camera, playPosition, InitCameraZinMainMap);
-
 	// 则创建并绑定主地图监听器
 	mainMapListener = createMouseListenerForCameraScroll(camera, 600.0f, 200.0f, ScrollSpeed);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(mainMapListener, camera);    // 获取事件调度器并添加监听器
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(mainMapListener, this);    // 获取事件调度器并添加监听器
 
 	// 设置主摄像机的实时跟随任务
 	schedule([=](float dt) {
@@ -246,7 +238,6 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
 		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
 	}
-
 	else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
 		npc1->Chat();
 		//Monster2->Attack(UP);
@@ -308,40 +299,66 @@ void SetMap::LoadMap() {
     auto RebirthTemple = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
     float RebirthTempleWidth = RebirthTemple->getTileSize().width * RebirthTemple->getMapSize().width;
     float RebirthTempleHeight = RebirthTemple->getTileSize().height * RebirthTemple->getMapSize().height;
-    CCLOG("RebirthTempleWidth:  %f RebirthTempleHeight: %f",RebirthTempleWidth, RebirthTempleHeight);
     RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));    ////设置地图锚点为中心
     //InitialObstacle(RebirthTemple);    //初始化障碍物
 
+	BlackFogList.push_back(RebirthTemple->getLayer("BlackFog"));    //将初始地图加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+
     // 加载火山地图
     auto Volcano = TMXTiledMap::create("Maps/volcano/volcano.tmx");
+	BlackFogList.push_back(Volcano->getLayer("BlackFog"));    //将火山地图加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(Volcano);    //初始化障碍物
 
     // 加载雪地地图
     auto SnowyWinter= TMXTiledMap::create("Maps/SnowyWinter/SnowyWinter.tmx");
+	BlackFogList.push_back(SnowyWinter->getLayer("BlackFog"));    //将雪地地图加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(SnowyWinter);    //初始化障碍物
 
     // 加载沙漠地图
     auto DeathDesert = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
+	BlackFogList.push_back(DeathDesert->getLayer("BlackFog"));    //将沙漠地图加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(DeathDesert);    //初始化障碍物
 
     // 加载森林地图
     auto BrightForest = TMXTiledMap::create("Maps/BrightForest/BrightForest.tmx");
+	BlackFogList.push_back(BrightForest->getLayer("BlackFog"));    //将森林地图加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(BrightForest);    //初始化障碍物
 
     //加载火山雪地边界
     auto Vol_Snow= TMXTiledMap::create("Maps/Vol_Snow_Ecotonal/Vol_Snow_Ecotonal.tmx");
+	BlackFogList.push_back(Vol_Snow->getLayer("BlackFog"));    //将火山雪地边界加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(Vol_Snow);    //初始化障碍物
 
     //加载火山森林边界
     auto Vol_Forest= TMXTiledMap::create("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx");
+	BlackFogList.push_back(Vol_Forest->getLayer("BlackFog"));    //将火山森林边界加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(Vol_Forest);    //初始化障碍物
 
     //加载森林雪地边界
     auto Desert_Snow= TMXTiledMap::create("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx");
+	BlackFogList.push_back(Desert_Snow->getLayer("BlackFog"));    //将森林雪地边界加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(Forest_Snow);    //初始化障碍物
 
     //加载森林沙漠边界
     auto Forest_Desert= TMXTiledMap::create("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx");
+	BlackFogList.push_back(Forest_Desert->getLayer("BlackFog"));    //将森林沙漠边界加入黑色雾列表
+	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
+	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
     //InitialObstacle(Forest_Desert);    //初始化障碍物
 
     /************************************开始对各个地图进行显示处理******************************************/
@@ -441,5 +458,14 @@ void SetMap::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 			isKeyPressed[3] = false;
 			this->unschedule("MoveRIGHT");
 		}
+	}
+}
+
+void SetMap::SetBlackFogInMicroMap() {
+	for (int i = 0; i < (int)BlackFogList.size(); i++) {
+		if (!BlackFogList[i]->getParent())
+			this->addChild(BlackFogList[i]);
+		BlackFogList[i]->setLocalZOrder(100);
+		BlackFogList[i]->setVisible(true);
 	}
 }

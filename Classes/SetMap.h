@@ -30,6 +30,10 @@ private:
 	EventListenerMouse* microMapListener = nullptr;     // 小地图监听器
 
 	const float ScrollSpeed = 40.0f;    // 滚轮滚动速度
+
+	vector<TMXLayer*> BlackFogList;    //储存黑雾的图层
+	vector<bool> IsBlackFogVisible;    //黑雾是否可见
+	vector<bool> IsRegionRevealed;    //是否已经显示过某个区域
 public:
 	////////////////////////////////////////////////////////////////
 	/* 按键是否按下:W/S/A/D*/
@@ -87,6 +91,9 @@ public:
 
 	/*初始化摄像机*/
 	void InitalCamera();
+
+	/*设置黑色雾层仅对小地图摄像机可见*/
+	void SetBlackFogInMicroMap();
 
 	CREATE_FUNC(SetMap);
 };
