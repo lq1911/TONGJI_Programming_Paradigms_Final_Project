@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="102">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="111">
  <tileset firstgid="1" source="tf_A1_ashlands_3.tsx"/>
  <tileset firstgid="433" source="tf_A5_ashlands_3.tsx"/>
  <tileset firstgid="721" source="tf_B_ashlands_3.tsx"/>
@@ -29,7 +29,7 @@
    eJzt1LEJgDAQBVAbh7CytnIDtXUER3F7E1AEC1NYmOh7cARyzT+4pKoAAAAAgLc19bN+LuZEzlQ/F0siZ6qfk3XPGneorc9dWgua4RAzd6H6/SxxhsMQso+hpoJn+IrrHpW2V/PNW4j3/l0AAOBvNibsCJk=
   </data>
  </layer>
- <objectgroup id="6" name="Obstacles" locked="1">
+ <objectgroup id="6" name="Obstacles">
   <object id="3" x="-2" y="224">
    <polygon points="0,0 104,0 104,258.667 4,258.667"/>
   </object>
@@ -92,25 +92,7 @@
   <object id="72" x="1135" y="736" width="16" height="14"/>
   <object id="73" x="1116" y="891" width="33" height="67"/>
   <object id="74" x="1088" y="958" width="65" height="27"/>
-  <object id="75" x="578" y="1406" width="105" height="18">
-   <ellipse/>
-  </object>
-  <object id="77" x="807.5" y="1340" width="105" height="18">
-   <ellipse/>
-  </object>
-  <object id="78" x="251" y="1339" width="72" height="24">
-   <ellipse/>
-  </object>
-  <object id="79" x="36" y="1370" width="63" height="27">
-   <ellipse/>
-  </object>
-  <object id="80" x="34" y="1258" width="61" height="14">
-   <ellipse/>
-  </object>
   <object id="81" x="-2" y="-3" width="106" height="74"/>
-  <object id="82" x="1132" y="515" width="22" height="14">
-   <ellipse/>
-  </object>
   <object id="83" x="412" y="604" width="224" height="164"/>
   <object id="85" x="302.667" y="608" width="28" height="156"/>
   <object id="87" x="-2.66667" y="482.667" width="74.6667" height="420"/>
@@ -118,7 +100,6 @@
   <object id="91" x="166.667" y="610" width="93.3333" height="155.333"/>
   <object id="92" x="262.667" y="864.333" width="19.3333" height="18"/>
   <object id="93" x="262" y="1088.33" width="20.3333" height="17.3333"/>
-  <object id="94" x="381.667" y="965" width="36.3333" height="19.6667"/>
   <object id="95" x="519" y="1088" width="18.3333" height="16.6667"/>
   <object id="96" x="517.333" y="864.333" width="21" height="17.6667"/>
   <object id="97" x="933.333" y="1038.67" width="80" height="28"/>
@@ -126,5 +107,17 @@
   <object id="99" x="37.3333" y="1478.67" width="38.6667" height="8"/>
   <object id="100" x="1471" y="0" width="33.5" height="69"/>
   <object id="101" x="1536" y="94" width="63" height="34.5"/>
+  <object id="103" x="260" y="1341.33" width="58.6667" height="22.6667"/>
+  <object id="104" x="29.3333" y="1370.67" width="69.3333" height="24"/>
+  <object id="105" x="37.3333" y="1248" width="54.6667" height="20"/>
+  <object id="106" x="581.333" y="1394.67" width="105.333" height="26.6667"/>
+  <object id="107" x="801.333" y="1332" width="109.333" height="30.6667"/>
+  <object id="108" x="382.5" y="965" width="34.5" height="17.5">
+   <ellipse/>
+  </object>
+  <object id="109" x="1132.5" y="514" width="19.5" height="14"/>
+  <object id="110" x="1391.33" y="213.333">
+   <point/>
+  </object>
  </objectgroup>
 </map>
