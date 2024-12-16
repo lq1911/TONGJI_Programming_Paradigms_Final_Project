@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="24">
  <tileset firstgid="1" source="../RebirthTemple/RebirthGrass.tsx"/>
  <tileset firstgid="65" source="../DeathDesert/DesertItem.tsx"/>
  <tileset firstgid="2049" source="../BrightForest/Grassland Tileset.tsx"/>
@@ -28,4 +28,26 @@
    eJztl0kKwkAQRbNM9i70ArrQMygeweEIDkdwOIKzIHGlxmHlGfQMeiS/xCZNQ0JUpKukHnw0u/9IVYm+6zj+K2vkHziLBynEgxbiYR9fu7srxh43Nwrn9yEetCh7TpDxwk/xsE8eDgWkwtyj6oXh/j6UxzPKo4bvdaSBND27/T5BebTQvY10kC5jjx6695EBMmTsMUL3MTJBpow9Nui+RXZIwNiDO3KvaCH3ihZJ94rTziTdK+o7c3GjXDWPLLrmtL7Ud0b/P3jXPIroWtL6Ut+ZOA8T6r/xaT0E4RvMO2U+c8G8U+azYAeO87TAvV0aNzdunij7HeFwSvnbIftiF8pz9A4yR3ZJO0fU5y3tHMm8Cb+A+n4oZug4T+jJZT/26Hhg0FPxANj0W/E=
   </data>
  </layer>
+ <objectgroup id="7" name="Obstacles">
+  <object id="1" x="206.667" y="594.667" width="32" height="33.3333"/>
+  <object id="2" x="206.667" y="783.333" width="32" height="33.3333"/>
+  <object id="3" x="365.333" y="912.667" width="32" height="33.3333"/>
+  <object id="4" x="205.333" y="1560.67" width="32" height="33.3333"/>
+  <object id="5" x="50.6667" y="1208.67" width="32" height="33.3333"/>
+  <object id="6" x="270.667" y="1307.33" width="32" height="33.3333"/>
+  <object id="7" x="397.333" y="1204.67" width="32" height="33.3333"/>
+  <object id="8" x="272" y="1080.67" width="32" height="33.3333"/>
+  <object id="9" x="144" y="1074" width="32" height="33.3333"/>
+  <object id="10" x="206.667" y="1172.67" width="32" height="33.3333"/>
+  <object id="11" x="142.667" y="1398" width="32" height="33.3333"/>
+  <object id="12" x="464" y="1399.33" width="32" height="33.3333"/>
+  <object id="13" x="462.667" y="1527.33" width="32" height="33.3333"/>
+  <object id="14" x="1293.33" y="1354" width="33.3333" height="42.6666"/>
+  <object id="15" x="1442.67" y="1122" width="28" height="26.6666"/>
+  <object id="16" x="1472.67" y="925.333" width="28" height="26.6666"/>
+  <object id="17" x="1448.67" y="1272" width="37.3333" height="27.9999"/>
+  <object id="18" x="1531" y="11.3333" width="48" height="431.667"/>
+  <object id="19" x="1529" y="443" width="73" height="155"/>
+  <object id="22" x="2" y="1588" width="1596" height="8"/>
+ </objectgroup>
 </map>
