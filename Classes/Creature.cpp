@@ -1,10 +1,10 @@
 #include "Creature.h"
 
 /* 攻击动画 */
-Animate* Creature::Attack(int dir, Creature* opp) {
+void Creature::Attack(int dir, Creature* opp) {
     // 死了,直接返回
     if (isDead)
-        return nullptr;
+        return;
 
     /* Monster1:树妖 */
     if (role == "Monster1") {
@@ -24,7 +24,7 @@ Animate* Creature::Attack(int dir, Creature* opp) {
         // 播放
         Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
         Animate* animate = Animate::create(animation);
-        mySprite->stopAllActions();    
+        mySprite->stopAllActions();
         mySprite->runAction(animate);
         CCLOG("%s attack", role);
         // 对手受伤动画
@@ -32,7 +32,7 @@ Animate* Creature::Attack(int dir, Creature* opp) {
             opp->Hurt();
         }
         // 退出
-        return animate;
+        return;
     }
 
     /* 玩家角色+Monster2+Monster3 */
@@ -85,7 +85,6 @@ Animate* Creature::Attack(int dir, Creature* opp) {
     if (opp != nullptr) {
         opp->Hurt();
     }
-    return animate;
 }
 
 /* 受伤动画 */
@@ -157,7 +156,7 @@ void Creature::Hurt() {
 /* 恢复动画 */
 void Creature::Heal() {
     // 死了,直接返回
-    if (isDead) 
+    if (isDead)
         return;
     // 不是玩家,直接返回
     if ((role != "Player1" && role != "Player2" && role != "Player3" && role != "Player4" && role != "Player5"))
@@ -204,15 +203,15 @@ void Creature::Heal() {
 }
 
 /* 走路动画 */
-Animate* Creature::Move(int dir) {
+void Creature::Move(int dir) {
     // 死了,直接返回
     if (isDead) {
-        return nullptr;
+        return;
     }
 
     /* 更改面朝方向 */
     face_to = dir;
-    log("face_to:%d", face_to);
+
     /* 图片名前缀:除编号部分 */
     std::string s = "Role/" + role + "/";
 
@@ -238,8 +237,8 @@ Animate* Creature::Move(int dir) {
 
     // 创建帧动画
     Vector<SpriteFrame*> animFrames;
-    animFrames.reserve(4);
-    for (int i = start+1; i < start + 4; i++) {
+    animFrames.reserve(5);
+    for (int i = start; i < start + 4; i++) {
         auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
         float width = texture->getPixelsWide();
         float height = texture->getPixelsHigh();
@@ -264,18 +263,14 @@ Animate* Creature::Move(int dir) {
     Animate* animate = Animate::create(animation);
 
     // 创建移动动作
-    auto moveAction = MoveBy::create(0.9f, moveBy);
-    log("MoveBy:%f%f", moveBy.x, moveBy.y);
+    auto moveAction = MoveBy::create(0.3f, moveBy);
+
     // 同时执行动画和移动
-    auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
+    auto moveAndAnimate = Spawn::create(animate, moveAction, nullptr);
 
     // 执行动作
     mySprite->stopAllActions();
-    
     mySprite->runAction(moveAndAnimate);
-    log("Move");
-    return animate;
-   
 }
 
 /* 死亡 */
@@ -324,4 +319,10 @@ void Creature::levelBonus() {
 /* 返回a对b的伤害 */
 int Creature::DamageCal(Creature* a, Creature* b) {
     return a->getAtk() - b->getDef();
+}
+
+/*设置属性*/
+void Creature::setElementType(ElementType _elementType)
+{
+    elementType = _elementType;
 }

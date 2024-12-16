@@ -1,6 +1,6 @@
 #pragma once
 #ifndef __PLAYER_H__
-#define __PLAYER_H_
+#define __PLAYER_H__
 #include <iostream>
 #include <string>
 #include "cocos2d.h"
@@ -46,6 +46,7 @@ public:
 		_armor = nullptr;
 		_shoes = nullptr;
 		_accessories = nullptr;
+		coins = 1000;
 	}
 	// 调试用构造函数
 	Player() {
@@ -79,6 +80,9 @@ public:
 	//获得奖励，参数Bonus结构体,结构体内需含有经验值，物品部分交给背包
 	void GetBonus(Bonus bonus);
 
+	// 角色的金币数
+	int coins;
+
 	// 赋值运算符重载
 	Player& operator=(const Player& other)
 	{
@@ -86,7 +90,8 @@ public:
 			return *this;
 		level = other.level;
 		hp = other.hp;
-		mp = other.hp;
+		current_hp = other.current_hp;
+		current_mp = other.current_mp;
 		atk = other.atk;
 		def = other.def;
 		speed = other.speed;
@@ -94,6 +99,8 @@ public:
 		_armor = other._armor;
 		_shoes = other._shoes;
 		_accessories = other._accessories;
+		coins = other.coins;
+		this->setElementType(other.elementType);
 		if (other.mySprite != nullptr)
 		{
 			x = other.getXY().x;
@@ -110,4 +117,4 @@ public:
 	friend class BagManager;
 };
 
-#endif //__PLAYER_H__
+#endif __PLAYER_H__
