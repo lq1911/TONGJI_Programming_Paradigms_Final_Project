@@ -1,9 +1,9 @@
 #ifndef __CREATURE_H__
 #define __CREATURE_H__
 #include "cocos2d.h"
-#include "ElementType.h"
+#include <vector>
 USING_NS_CC;
-
+#include "ElementType.h"
 /* 方向 */
 enum dir {
 	LEFT,    // 0
@@ -47,7 +47,6 @@ public:
 		mySprite->setPosition(Vec2(x, y));
 		mySprite->setScale(scale);
 		scene->addChild(mySprite);
-
 		// 初始元素为无
 		this->setElementType(NONE);
 
@@ -72,11 +71,12 @@ public:
 		level = 1;
 	}
 
+
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
-	virtual void Attack(int dir = DOWN, Creature* opp = nullptr);
+	virtual Animate* Attack(int dir = DOWN, Creature* opp = nullptr);
 
 	/* 受伤 */
 	virtual void Hurt();
@@ -93,7 +93,7 @@ public:
 
 	/* 移动 */
 	// Monster1:树妖,无法移动
-	virtual void Move(int dir);
+	virtual Animate* Move(int dir);
 
 	/* 转变场景 */
 	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
@@ -106,6 +106,12 @@ public:
 	int DamageCal(Creature*, Creature*);
 
 	/* 返回变量值 */
+	bool ChangeIsDead(bool change) {
+		isDead = change;
+	}
+	bool getIsDead() {
+		return isDead;
+	}
 	// 返回速度speed
 	int getSpeed()const { return speed; }
 	// 返回总hp

@@ -23,13 +23,10 @@ BagManager::BagManager() : _isBagOpen(false), _bagPanel(nullptr)
     for (int i = 0; i < 40; i++)
         items[i] = nullptr;
     items_num = 0;
-    // 测试添加任务
     task task1("Novice Task", "Pass the beginner's guide", 1, 0);
     myMainlineTask.push_back(task1);
     task task2("Acquire a Weapon", "Defeat the guard with the sword and gain the iron sword", 0, 1);
     myLineQuest.push_back(task2);
-    // 将显示金币数量的标签置空
-    coinsLabel = nullptr;
 }
 
 BagManager::~BagManager()
@@ -86,7 +83,6 @@ void BagManager::hideBag(Player& _player)
         _bagPanel->removeAllChildren(); // 清除子节点
         _bagBackground = nullptr;  // 清除背景指针
         _characterBackground = nullptr;
-        coinsLabel = nullptr;
         _isBagOpen = false;  // 更新状态
         _player = player;
     }
@@ -149,6 +145,7 @@ void BagManager::createTaskPanel()
     updateTaskUI();
     
 }
+
 
 void BagManager::updateTaskUI()
 {
@@ -396,7 +393,6 @@ void BagManager::updateTaskUI()
     mainlineTaskLabel->setPosition(Vec2(_taskBackground->getContentSize().width / 2, scrollHeight2 + scrollHeight1 + 110));
     _taskBackground->addChild(mainlineTaskLabel);
 }
-
 void BagManager::updateBagUI()
 {
     // 设置物品栏格子尺寸和间隔
@@ -455,31 +451,6 @@ void BagManager::createBagBackground()
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     titleLabel->setTextColor(Color4B(255, 215, 0, 255));
     _bagBackground->addChild(titleLabel);
-
-    showcoins();
-}
-
-// 显示金币数量
-void BagManager::showcoins()
-{
-   // 显示当前人物的金币数
-   // 如果金币标签已经存在，更新其内容；否则，创建新的金币标签
-    if (coinsLabel) 
-        // 更新现有标签的内容
-        coinsLabel->setString(to_string(player.coins));
-    else
-    {
-        // 设置金币图标
-        auto coinsIcon = Sprite::create("Bag/coins.png");
-        coinsIcon->setPosition(Vec2(_bagBackground->getContentSize().width - 120, 20));
-        _bagBackground->addChild(coinsIcon);
-        // 创建金币数量标签
-        coinsLabel = Label::createWithTTF(to_string(player.coins), "fonts/arial.ttf", 16);
-        // 将标签设置在图像右侧
-        coinsLabel->setAnchorPoint(Vec2(0, 0.5));
-        coinsLabel->setPosition(Vec2(_bagBackground->getContentSize().width - 90, 20));
-        _bagBackground->addChild(coinsLabel);
-    }
 }
 
 // 创建角色面板
@@ -555,7 +526,7 @@ void BagManager::createCharacterPanel()
     closeButton1->addClickEventListener([=](Ref* sender) {
         if (player._weapon != nullptr)
         {
-            player.atk -= player._weapon->increase_attribute;
+            player.atk -= player._weapon->increase_attack;
             auto _item = dynamic_cast<item*>(player._weapon); // 将武器类指针转换为物品类指针
             player._weapon = nullptr; // 将角色武器指针置为空指针
             addItem(_item); // 将卸下的装备放回物品栏
@@ -593,7 +564,7 @@ void BagManager::createCharacterPanel()
     closeButton2->addClickEventListener([=](Ref* sender) {
         if (player._armor != nullptr)
         {
-            player.def -= player._armor->increase_attribute;
+            player.def -= player._armor->increase_defense;
             auto _item = dynamic_cast<item*>(player._armor);
             player._armor = nullptr;
             addItem(_item);
@@ -631,7 +602,7 @@ void BagManager::createCharacterPanel()
     closeButton3->addClickEventListener([=](Ref* sender) {
         if (player._shoes != nullptr)
         {
-            player.speed -= player._shoes->increase_attribute;
+            player.speed -= player._shoes->increase_speed;
             auto _item = dynamic_cast<item*>(player._shoes);
             player._shoes = nullptr;
             addItem(_item);
@@ -669,8 +640,9 @@ void BagManager::createCharacterPanel()
     closeButton4->addClickEventListener([=](Ref* sender) {
         if (player._accessories != nullptr)
         {
-            // 角色属性为空
-            player.setElementType(NONE);
+            player.atk -= player._accessories->increase_attack;
+            player.def -= player._accessories->increase_defense;
+            player.speed -= player._accessories->increase_speed;
             auto _item = dynamic_cast<item*>(player._accessories);
             player._accessories = nullptr;
             addItem(_item);
@@ -678,39 +650,23 @@ void BagManager::createCharacterPanel()
         });
     button4->addChild(closeButton4);
 
-    //显示角色的属性、HP、MP
-    // 属性
-    string PlayerElementType;
-    switch (player.elementType)
-    {
-    case 0:
-        PlayerElementType = "None";
-        break;
-    case 1:
-        PlayerElementType = "Fire";
-        break;
-    case 2:
-        PlayerElementType = "Grass";
-        break;
-    case 3:
-        PlayerElementType = "Water";
-        break;
-    }
-    string player_elementType = "ElementType: " + PlayerElementType;
-    auto elementTypeLabel = Label::createWithTTF(player_elementType, "fonts/arial.ttf", 16);
+    //显示角色的等级、HP、MP
+    // 等级
+    string player_level = "Level: " + to_string(player.level);
+    auto characterLevel = Label::createWithTTF(player_level, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
-    elementTypeLabel->setAnchorPoint(Vec2(0, 0.5));
-    elementTypeLabel->setPosition(Vec2(200, 320));
-    _characterBackground->addChild(elementTypeLabel);
+    characterLevel->setAnchorPoint(Vec2(0, 0.5));
+    characterLevel->setPosition(Vec2(200, 320));
+    _characterBackground->addChild(characterLevel);
     // HP
-    string player_HP = "HP: " + to_string(player.current_hp);
+    string player_HP = "HP: " + to_string(player.hp);
     auto characterHP = Label::createWithTTF(player_HP, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterHP->setAnchorPoint(Vec2(0, 0.5));
     characterHP->setPosition(Vec2(1, 320));
     _characterBackground->addChild(characterHP);
     // MP
-    string player_MP = "MP: " + to_string(player.current_mp);
+    string player_MP = "MP: " + to_string(player.mp);
     auto characterMP = Label::createWithTTF(player_MP, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
     characterMP->setAnchorPoint(Vec2(0, 0.5));
@@ -780,7 +736,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
         // 创建并显示物品描述的 Label
         auto itemDescriptionLabel = Label::createWithSystemFont(itemDescription, "Arial", 16);
         // 设置锚点
-        itemDescriptionLabel->setAnchorPoint(Vec2(0, 1));
+        itemDescriptionLabel->setAnchorPoint(Vec2(0, 0.5));
         // 设置文本最大宽度为物品信息背景的宽度（可以适当留个边距）
         float maxWidth = itemInfoBackground->getContentSize().width - 10;  // 留点左右边距
         // 设置最大宽度和高度
@@ -790,7 +746,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
 
         // 创建使用物品按钮
         auto useButton = Button::create("Bag/use_button.png");
-        useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 120));
+        useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 100));
         useButton->addClickEventListener([=](Ref* sender) {
             if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col]))
             {
@@ -801,10 +757,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
             else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col]))
             {
                 auto consumption=dynamic_cast<consumable*>(items[row * 5 + col]);
-                if (player.current_hp + consumption->add_HP <= player.hp)
-                    player.current_hp += consumption->add_HP;
-                else
-                    player.current_hp = player.hp;
+                player.hp += consumption->add_HP;
                 dynamic_cast<item*>(items[row * 5 + col]);
                 // 丢弃该物品
                 discardItems(row * 5 + col);
@@ -829,7 +782,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
 
         // 创建丢弃物品按钮
         auto dicardButton = Button::create("Bag/use_button.png");
-        dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 150));
+        dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 130));
         dicardButton->addClickEventListener([=](Ref* sender) {
             // 丢弃该物品
             discardItems(row * 5 + col);
@@ -840,41 +793,6 @@ void BagManager::slot_click(Button* slot, int row, int col)
         auto itemDiscardLabel = Label::createWithSystemFont("discard", "Arial", 16); // 按钮上显示的是丢弃
         itemDiscardLabel->setPosition(Vec2(dicardButton->getContentSize().width / 2, dicardButton->getContentSize().height / 2)); // 设置位置
         dicardButton->addChild(itemDiscardLabel);
-
-        // 升级装备系统
-        // 创建升级装备按钮
-        equipment* equipmentNeedsUpgraded = nullptr;
-        // 只有装备是武器类、护甲类、鞋子类才可以升级
-        if ((equipmentNeedsUpgraded = dynamic_cast<weapon*>(items[row * 5 + col])) != nullptr ||
-            (equipmentNeedsUpgraded = dynamic_cast<armor*>(items[row * 5 + col])) != nullptr ||
-            (equipmentNeedsUpgraded = dynamic_cast<shoes*>(items[row * 5 + col])) != nullptr)
-        {
-            // 设置按钮的位置
-            auto upgradeButton = Button::create("Bag/use_button.png");
-            upgradeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 180));
-            upgradeButton->addClickEventListener([=](Ref* sender) {
-                if (player.coins >= equipmentNeedsUpgraded->equipment_cost)
-                {
-                    // 角色金币数减少
-                        player.coins -= equipmentNeedsUpgraded->equipment_cost;
-                    // 更新显示金币数量
-                    showcoins();
-                    // 武器升级，增加数值和升级消耗
-                    equipmentNeedsUpgraded->increase_attribute *= 2;
-                    equipmentNeedsUpgraded->equipment_level++;
-                    equipmentNeedsUpgraded->equipment_cost *= 2;
-                    equipmentNeedsUpgraded->updateDescription();
-                    itemInfoBackground->removeFromParent();
-                    slot_click(slot, row, col);
-
-                }
-                });
-            itemInfoBackground->addChild(upgradeButton);
-            // 为按钮添加文字
-            auto equipmentUpgraddeLabel = Label::createWithSystemFont("upgrade", "Arial", 16); 
-            equipmentUpgraddeLabel->setPosition(Vec2(upgradeButton->getContentSize().width / 2, upgradeButton->getContentSize().height / 2)); // 设置位置
-            upgradeButton->addChild(equipmentUpgraddeLabel);
-        }
     }
 }
 
@@ -932,7 +850,7 @@ void BagManager::equipItem(int index)
                 // 更新角色武器指针
                 player._weapon = weaponItem;
                 // 增加角色攻击力
-                player.atk += player._weapon->increase_attribute;
+                player.atk += player._weapon->increase_attack;
                 // 不可以清除物品信息
                 items[index] = nullptr; // 清空该位置
                 // 更新物品数量
@@ -949,7 +867,7 @@ void BagManager::equipItem(int index)
                 // 更新角色护甲指针
                 player._armor = armorItem;
                 // 增加角色的防御值
-                player.def += player._armor->increase_attribute;
+                player.def += player._armor->increase_defense;
                 // 不可以清除物品信息
                 items[index] = nullptr; // 清空该位置
                 // 更新物品数量
@@ -966,7 +884,7 @@ void BagManager::equipItem(int index)
                 // 更新角色鞋子指针
                 player._shoes = shoesItem;
                 // 增加角色的速度
-                player.speed += player._shoes->increase_attribute;
+                player.speed += player._shoes->increase_speed;
                 // 不可以清除物品信息
                 items[index] = nullptr; // 清空该位置
                 // 更新物品数量
@@ -982,8 +900,12 @@ void BagManager::equipItem(int index)
             {
                 // 更新角色饰品指针
                 player._accessories = accessoriesItem;
-                // 改变角色的属性
-                player.setElementType(player._accessories->setPlayerElementType);
+                // 增加角色攻击力
+                player.atk += player._accessories->increase_attack;
+                // 增加角色的防御值
+                player.def += player._accessories->increase_defense;
+                // 增加角色的速度
+                player.speed += player._accessories->increase_speed;
                 // 不可以清除物品信息
                 items[index] = nullptr; // 清空该位置
                 // 更新物品数量

@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 #include <iostream>
@@ -10,23 +10,18 @@
 USING_NS_CC;
 using namespace std;
 
-struct Object {
-	;
-};
-
 struct Bonus {
 	//Object object;
 	//报错，暂时注释掉
 	//Equipment equipment;
 	int exp = 0;
 };
-
-
-
+class Monster;
 class Player :public Creature {
 private:
 	int current_exp;       // 角色现有经验值
 	int next_level_exp;    // 达到下一级所需经验值
+	vector<Monster*> monster;
 protected:
 	// 玩家名字在Creature类里已定义了:(	
 
@@ -41,12 +36,15 @@ public:
 		Creature(who, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene) {
 		// 角色现有经验值、达到下一级所需经验值初始化条件记得改
 		current_exp = 0;
-		next_level_exp = 0;
+		next_level_exp = 100;
 		_weapon = nullptr;
 		_armor = nullptr;
 		_shoes = nullptr;
 		_accessories = nullptr;
 		coins = 1000;
+		scene->addChild(this);
+		this->scheduleUpdate();
+		log("success");
 	}
 	// 调试用构造函数
 	Player() {
@@ -54,13 +52,15 @@ public:
 		_armor = nullptr;
 		_shoes = nullptr;
 		_accessories = nullptr;
+	
 	}
-
+	// 加入怪物
+	void InitMonster(vector<Monster*>monster);
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
-	//virtual void Attack(int dir = DOWN, Player* opp = nullptr);
+	virtual Animate* Attack(int dir, vector<Monster*>monster);
 
 	// 角色的武器
 	weapon* _weapon;
@@ -79,10 +79,10 @@ public:
 
 	//获得奖励，参数Bonus结构体,结构体内需含有经验值，物品部分交给背包
 	void GetBonus(Bonus bonus);
-
+	// update override
+	void update(float dt)override;
 	// 角色的金币数
 	int coins;
-
 	// 赋值运算符重载
 	Player& operator=(const Player& other)
 	{

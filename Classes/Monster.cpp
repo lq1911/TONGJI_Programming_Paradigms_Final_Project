@@ -1,17 +1,26 @@
 #include "Monster.h"
 USING_NS_CC;
-
-
-// 基本动作
+  // 基本动作
 auto attackAction = MoveBy::create(1.0f, Vec2(100, 0));
-
-//update的重写
+ //update的重写
 //距离小于怪物攻击距离时，怪物攻击
 //距离小于怪物跟随距离时，怪物跟随
 //距离超过怪物跟随距离，怪物的状态回原态
 void Monster::update(float dt) {
+	 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//怪物指向角色方向
 	//怪物AI
-
+	Vec2 mon = this->mySprite->getPosition();
+	static int nums = 50;
+	if (nums < 60) {
+		nums++;
+	}
+	else {
+		nums = 0;
+		log("mon***************************");
+		log("position:%f %f", mon.x, mon.y);
+		log("speed:%d", speed);
+		log("direction:%f %f", direction.x, direction.y);
+	}
 	ai->update(dt);
 	state = ai->GetState();
 	//根据状态实现对应行为
@@ -30,30 +39,21 @@ void Monster::update(float dt) {
 }
 //怪物死亡机制
 void Monster::Die() {
-
-	target->GetBonus(bonus);
-
-	Creature::Die();
+ 	target->GetBonus(bonus);
+ 	Creature::Die();
 }
 void Monster::Attack() {
-	static int nums = 0;
-	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//怪物指向角色方向
-	Vec2 pos = target->mySprite->getPosition();
-	Vec2 mon = this->mySprite->getPosition();
-	if (nums < 50) {
+	static int nums =40 ;
+	 
+  	if (nums < 75) {
 		nums++;
 		return;
 	}
 	else {
 		nums = 0;
-		/*
 		log("Monster:Attack*****************************************************************");
-		log("mon:%f %f", mon.x, mon.y);
-		log("positon:%f %f", pos.x, pos.y);
-		log("direction:%f %f", direction.x, direction.y);
-		log("speed:%d", speed);
-		*/
-	}
+ 		  
+ 	}
 	if (abs(direction.x) > abs(direction.y)) {
 		if (direction.x > 0) {
 			Creature::Attack(1, target);
@@ -63,7 +63,7 @@ void Monster::Attack() {
 		}
 	}
 	else {
-		if (direction.y > 0) {
+		if (direction.y>0) {
 			Creature::Attack(2, target);
 		}
 		else {
@@ -72,24 +72,17 @@ void Monster::Attack() {
 	}
 }
 void Monster::Chase() {
-	static int nums = 40;
-	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//怪物指向角色方向
-	Vec2 pos = target->mySprite->getPosition();
-	Vec2 mon = this->mySprite->getPosition();
-	if (nums < 50) {
+	static int nums = 30;
+	 
+  	if (nums < 50) {
 		nums++;
 		return;
 	}
 	else {
 		nums = 0;
-		/*
 		log("Monster:Chase*****************************************************************");
-		log("mon:%f %f", mon.x, mon.y);
-		log("positon:%f %f", pos.x, pos.y);
-		log("direction:%f %f", direction.x, direction.y);
-		log("speed:%d", speed);
-		*/
-	}
+		  
+ 	}
 	if (abs(direction.x) > abs(direction.y)) {
 		if (direction.x > 0) {
 			Move(1);
@@ -99,35 +92,26 @@ void Monster::Chase() {
 		}
 	}
 	else {
-		if (direction.y > 0) {
+		if (direction.y>0) {
 			Move(2);
 		}
 		else {
 			Move(3);
 		}
 	}
-
-}
-
-void Monster::Flee() {
+ }
+ void Monster::Flee() {
 	static int nums = 0;
-	Vec2 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//怪物指向角色方向
-	Vec2 pos = target->mySprite->getPosition();
-	Vec2 mon = this->mySprite->getPosition();
-	if (nums < 15) {
+	 
+  	if (nums < 50) {
 		nums++;
 		return;
 	}
 	else {
 		nums = 0;
-		/*
-		log("Monster:Flee*****************************************************************");
-		log("mon:%f %f", mon.x, mon.y);
-		log("positon:%f %f", pos.x, pos.y);
-		log("direction:%f %f", direction.x, direction.y);
-		log("speed:%d", speed);
-		*/
-	}
+		log("Monster:Flee*****************************************************************");	 
+		  
+ 	}
 	if (abs(direction.x) > abs(direction.y)) {
 		log("a");
 		if (direction.x > 0) {
@@ -139,8 +123,7 @@ void Monster::Flee() {
 	}
 	else {
 		log("b");
-
-		if (direction.y > 0) {
+ 		if (direction.y > 0) {
 			Creature::Move(3);
 		}
 		else {
@@ -157,14 +140,20 @@ void Monster::levelBonus() {
 int Monster::GetFollowRange()const {
 	return follow_range;
 }
-
-
-//ai的update
+  //ai的update
 void MonsterAI::update(float dt) {
+  distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
+  static int nums = 50;
+  if (nums < 60) {
+	  nums++;
+  }
+  else {
+	  nums = 0;
+	  log("distance:%f", distance);
+  }
 	switch (currentState) {
 	case MonsterState::PATROLLING:// 执行巡逻逻辑
-
-		if (shouldChasePlayer()) {
+ 		if (shouldChasePlayer()) {
 			currentState = MonsterState::CHASE;
 		}
 		else if (shouldFlee()) {
@@ -175,8 +164,7 @@ void MonsterAI::update(float dt) {
 		}
 		break;
 	case MonsterState::CHASE:// 执行追踪玩家逻辑
-
-		if (shouldAttackPlayer()) {
+ 		if (shouldAttackPlayer()) {
 			currentState = MonsterState::ATTACK;
 		}
 		else if (shouldFlee()) {
@@ -187,8 +175,7 @@ void MonsterAI::update(float dt) {
 		}
 		break;
 	case MonsterState::ATTACK:	// 执行攻击逻辑
-
-		if (shouldChasePlayer()) {
+ 		if (shouldChasePlayer()) {
 			currentState = MonsterState::CHASE;
 		}
 		else if (shouldFlee()) {
@@ -210,12 +197,11 @@ void MonsterAI::update(float dt) {
 		}
 		break;
 	}
-
-}
+ }
 //判断是否巡逻
 bool MonsterAI::shouldPatrol() {
-	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	//log("distance:%f", distance);
+	 
+	 
 	if (distance >= monster->GetFollowRange()) {
 		return true;
 	}
@@ -223,8 +209,8 @@ bool MonsterAI::shouldPatrol() {
 }
 //判断是否攻击
 bool MonsterAI::shouldAttackPlayer() {
-	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	//log("distance:%f", distance);
+	 
+	 
 	if (distance <= monster->getAtkRange()) {
 		return true;
 	}
@@ -232,8 +218,8 @@ bool MonsterAI::shouldAttackPlayer() {
 }
 //判断是否追踪
 bool MonsterAI::shouldChasePlayer() {
-	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	//log("distance:%f", distance);
+	 
+	 
 	if (distance < monster->GetFollowRange() && distance>monster->getAtkRange()) {
 		return true;
 	}
@@ -241,20 +227,22 @@ bool MonsterAI::shouldChasePlayer() {
 }
 //判断是否逃跑
 bool MonsterAI::shouldFlee() {
-	float distance = monster->mySprite->getPosition().distance(target->mySprite->getPosition());
-	//log("distance:%f", distance);
-	if (monster->getCurrentHp() < monster->getHp() / 10 && distance<monster->GetFollowRange() &&
-		distance>monster->getAtkRange()) {
+	 
+	 
+	if (monster->getCurrentHp() < monster->getHp() / 10.0&&shouldChasePlayer()) {
 		return true;
 	}
-	else if (monster->getCurrentHp() < 3 * target->DamageCal(target, monster) &&
-		distance<monster->GetFollowRange() && distance>monster->getAtkRange()) {
+	else if (monster->getCurrentHp() < 3 * target->DamageCal(target, monster)&&
+		shouldChasePlayer()) {
 		return true;
 	}
 	return false;
-
-}
+ }
 //返回现状态
 MonsterState MonsterAI::GetState()const {
 	return currentState;
 }
+void MonsterRespawn::update(float dt) {
+	;
+}
+ 
