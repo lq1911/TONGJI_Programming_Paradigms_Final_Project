@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="79">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="79">
  <tileset firstgid="1" source="../Vol_Snow_Ecotonal/TX Tileset Grass.tsx"/>
  <tileset firstgid="65" source="../volcano/tf_A5_ashlands_3.tsx"/>
  <tileset firstgid="353" source="../BrightForest/Grassland Tileset.tsx"/>
@@ -33,6 +33,11 @@
  <layer id="6" name="VolDecorate" width="50" height="50" locked="1" opacity="0.9">
   <data encoding="base64" compression="zlib">
    eJztlV1OwkAUhScRugjYBSwDdBP8yB740RUob7AC9FGJPLEBIPjEBsRXN+FpdJLJZG5nmjrWmvMlJw3Nzdxzy+mtUnFp1JVq1iM3seglSvWhQfL1+w7976G54EPyqO/rqzTHNfqMkp/xbjLGmRNo+n32Cv0foEfBSwv32hn39dVVk3KDPrcBczyh5hlaG7Xbmrv2QjjP56UIC/RcZsyhve5Qs4cORu1JmKOZZGdZZ86X9zzvg/RMba9v6HuG3gMzKOUkRWcuq8Z3huSzCC84Y+M4pwMPXegSusqZpTJ20xEzvDrm6MFHHxpAQ8PTNsCfnsO352KT/hdjaAJNoZnh4xTgSWfK3HO/jZ0nO1MfJT3bvNh5Gnp8+75xZWHnaebxF/O7EpMydlFRXLspz3fhrxCym6pAVXaTiyrm38V/maOK7zEhhBBCCCGEEEIIIYQQQoiLTwlcOAY=
+  </data>
+ </layer>
+ <layer id="8" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6A9+aovx0HBXlJVVVVVVVVVVVV9foiv4j0=
   </data>
  </layer>
  <objectgroup id="7" name="Obstacles">

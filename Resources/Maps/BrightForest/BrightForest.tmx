@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="59">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="59">
  <tileset firstgid="1" source="Grassland Tileset.tsx"/>
  <tileset firstgid="419" source="Pack 1 expansion.tsx"/>
  <tileset firstgid="559" source="Reg tree wall.tsx"/>
@@ -43,6 +43,11 @@
  <layer id="8" name="Magic" width="50" height="50" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt2DEOgCAMAECCq///gou7i48zxkWMTqIWc7eUsRDaFFICqG/IX2dQx/STfUBkYy5jq+ZcRmDTd2WMxLzS7hns79O6NrNxx1l/itiz4E1qAAAAiKDFt4l/Brh2rAW1wZMWjDMHsw==
+  </data>
+ </layer>
+ <layer id="15" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKHr3+RbLsdAwVVTVVVVVVVVVVXV5w+e2nK/
   </data>
  </layer>
  <objectgroup id="14" name="Obstacles">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="68">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="68">
  <tileset firstgid="1" source="TX Tileset Grass.tsx"/>
  <tileset firstgid="65" source="../volcano/tf_A5_ashlands_3.tsx"/>
  <tileset firstgid="353" source="spritesheet.tsx"/>
@@ -22,6 +22,11 @@
  <layer id="4" name="Water" width="50" height="50" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt1EEKgCAQRmGpdfc/RXdsFYmg1mjM7/A+cNdiHpOmZHfsz8mdW/uU33qrddzetihotfT2otSTd1j+L4WesuHuKGdU34t1D0oNNV8bonSosexBrWWkQaFjdH469BoUWmb2qKCDjtlWvh+z3yuPlj8aInVEavFAR/wO7ojv/F5WmbNnhRkBAAAAAABGXMD0PTI=
+  </data>
+ </layer>
+ <layer id="7" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKGr8v1LLsdAwVVTVVVVVVVVVVXV5w9cvkJU
   </data>
  </layer>
  <objectgroup id="6" name="Obstacles">

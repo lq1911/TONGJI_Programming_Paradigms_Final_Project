@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="82">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="82">
  <tileset firstgid="1" source="../RebirthTemple/RebirthGrass.tsx"/>
  <tileset firstgid="65" source="../SnowyWinter/SnowyWinterWholeAsset.tsx"/>
  <tileset firstgid="321" source="../DeathDesert/DesertItem.tsx"/>
@@ -33,6 +33,11 @@
  <layer id="6" name="GrassDecorate" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztllcOwjAMhnnO/S/COgDrAKwDsA7AeseVqBRMksbIFP8ln2QJBGpt/169XqFQ+Af67vX72IX/Z50J83sBGodPpc2AbEg2ctjaTMlmZHOHpc3Z83VJn1dka7IN2db7DUmrHfm2JzuQHZ+++oaiVaXNhezq3vOf0soyvFe4VieQOEL5j2mF1Ct+/pHmmt8rN7J75lxDgmuFVGc+XCukOkvR1TpDmckcXmeo/cJB7RfLN4ykNizfMJLaSN0wfIe2jaQ2LOWfI/EtdcP8Gsu+aVP2hB3GxvZELqEasjynYoRqCHEWINZQCMQaqgn1BFIN1cTmKtreiPWExb2Rym2sJ7R6XlPXVG5jc1Wr5yW6NsWck9vQMzT2hkTXpphzcquZN+m7c2PO2cmaeZO++5OYNZ7xrb2vcQO1nTcLIN6OhUKXeQDEtmYa
+  </data>
+ </layer>
+ <layer id="8" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7Be86+vaqpjkEB6SVVVVVVVVVVVVfX5AWhpi/k=
   </data>
  </layer>
  <objectgroup id="7" name="Obstacles">

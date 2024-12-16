@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="159">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="159">
  <tileset firstgid="1" source="RebirthGrass.tsx"/>
  <tileset firstgid="65" source="RebirthStruct.tsx"/>
  <tileset firstgid="321" source="RebirthWall.tsx"/>
@@ -49,6 +49,11 @@
  <layer id="5" name="Magic" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt2NENgzAMRVGU7TpCR2EERmEWlqr4iEBRCIHYxC73fCEhRaHvReAOw/uM4d49a6bCXkv3oINeAQAAAADQX24GtzaXLyF/vZebwS3N5bl9Hz1LK4n8jtaofQ6JXknkV1rjH3r1tJZuafXyzrotGWr18s29iq5kKfmekn4PXslSMnd6VTaf/BZa72Qtn2S/1r7dan2TfXvu7NqhNYezrnngOYco5uDtbO+l59rrOU/75KVfY2WH5mA7m17fJVJ6zx9Ses8f2Gj+X/Ikrbn0B+vqKZc=
+  </data>
+ </layer>
+ <layer id="14" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7Ae81r/DqpjkEB6SVVVVVVVVVVVVfX5AXfDFSk=
   </data>
  </layer>
  <objectgroup id="12" name="Obstacles">

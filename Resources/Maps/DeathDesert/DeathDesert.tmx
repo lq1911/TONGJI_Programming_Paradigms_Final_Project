@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="19" nextobjectid="112">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="112">
  <tileset firstgid="1" source="DesertItem.tsx"/>
  <tileset firstgid="1985" source="DesertRoad.tsx"/>
  <tileset firstgid="2245" source="DesertRock.tsx"/>
  <tileset firstgid="2645" source="Telepoter.tsx"/>
- <tileset firstgid="2901" source="../../../../Zelda/Resources/Maps/DeathDesert/DesertItem.tsx"/>
  <layer id="1" name="Ground" width="50" height="50" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt0sENgDAQxMBQd6AwSGHAj+vCe8gPSy5g5jbGXh3VbPxndVWr+d/VU73Nn/agK10lP+1BV7pKftqDrnSV/LQHXekq+WkPutJV8tMedKWr5Kc96EpXyU970JWukp/2oCtdJT/tQVe6Sn7ag650lfy0B13909UHCMsWSA==
@@ -43,6 +42,11 @@
  <layer id="4" name="Magic" width="50" height="50" locked="1">
   <data encoding="base64" compression="zlib">
    eJzt2L0JgDAQhmHrTGitFtbqBOoGjuACjuAIbuAqXiAWAX9BMKfvA0cw1feBh2AUAf8Qm7cTPCP/SA8AAAAAAKAL/1YAAMCWIbBvayJ5UpnsZq4xkB6dy1HIWcpUxr8/MwXSo3c5ajkbmdb495rM5vhZkzW75g6W9h52n7feq6t7Hoq9fda45wC+ZwEOWBTc
+  </data>
+ </layer>
+ <layer id="19" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7A+M1n/QqpjkEB6SVVVVVVVVVVVVfX5ASvxn+o=
   </data>
  </layer>
  <objectgroup id="10" name="Obstacles">

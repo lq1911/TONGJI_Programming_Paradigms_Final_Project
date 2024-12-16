@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="24">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="24">
  <tileset firstgid="1" source="../RebirthTemple/RebirthGrass.tsx"/>
  <tileset firstgid="65" source="../DeathDesert/DesertItem.tsx"/>
  <tileset firstgid="2049" source="../BrightForest/Grassland Tileset.tsx"/>
@@ -26,6 +26,11 @@
  <layer id="5" name="FrsDecorate" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztl0kKwkAQRbNM9i70ArrQMygeweEIDkdwOIKzIHGlxmHlGfQMeiS/xCZNQ0JUpKukHnw0u/9IVYm+6zj+K2vkHziLBynEgxbiYR9fu7srxh43Nwrn9yEetCh7TpDxwk/xsE8eDgWkwtyj6oXh/j6UxzPKo4bvdaSBND27/T5BebTQvY10kC5jjx6695EBMmTsMUL3MTJBpow9Nui+RXZIwNiDO3KvaCH3ihZJ94rTziTdK+o7c3GjXDWPLLrmtL7Ud0b/P3jXPIroWtL6Ut+ZOA8T6r/xaT0E4RvMO2U+c8G8U+azYAeO87TAvV0aNzdunij7HeFwSvnbIftiF8pz9A4yR3ZJO0fU5y3tHMm8Cb+A+n4oZug4T+jJZT/26Hhg0FPxANj0W/E=
+  </data>
+ </layer>
+ <layer id="8" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwzEJAAAMA7Ce8//Xa3UMEkgvqaqqqqqqqqqqqj4/5VZLrw==
   </data>
  </layer>
  <objectgroup id="7" name="Obstacles">

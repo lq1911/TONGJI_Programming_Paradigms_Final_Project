@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="95">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="95">
  <tileset firstgid="1" source="SnowyWinterWholeAsset.tsx"/>
  <tileset firstgid="257" source="MagicTelepoter.tsx"/>
  <layer id="1" name="Ground" width="50" height="50">
@@ -35,6 +35,11 @@
  <layer id="4" name="MagicAndTelepoter" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt1zEOQDAYhuH2ArgBJ8BqMpu6uISz9JKO4m9UIh00BqryPsmXRrp8+hOhFAAAwLtmnboBAAAAAAC4Msq/eyEpJZXer3NkpLeV1H41md6HO/9W0kn6H8zDyXkeAAAchsi3LLb/FVOkZ2z/q2ymvc8WrVa/Nmmb3Bc+/+E8eD/wpA2Njgqi
+  </data>
+ </layer>
+ <layer id="9" name="BlackFog" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMA6C9wvqHXY6Dgr2kqqqqqqqqqqqq+vwAWzq5jQ==
   </data>
  </layer>
  <objectgroup id="8" name="Obstacles">
