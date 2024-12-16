@@ -31,9 +31,8 @@ private:
 
 	const float ScrollSpeed = 40.0f;    // 滚轮滚动速度
 public:
-	////////////////////////////////////////////////////////////////
-	/* 按键是否按下:W/S/A/D*/
-	std::vector<bool> isKeyPressed = { false,false,false,false };
+	 
+	/* 人物 */
 	// 玩家
 	Player* PLAYER;
 	// 树妖Monster1
@@ -42,11 +41,10 @@ public:
 	// NPC
 	NPC* npc1;
 
-	/* 绑定键盘:Released */
+	/* 绑定键盘 */
+	std::vector<bool> isKeyPressed = { false,false,false,false }; // 按键是否按下:W/S/A/D
 	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
-	/* 绑定键盘:Pressed */
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
-	//////////////////////////////////////////////////////////////
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();

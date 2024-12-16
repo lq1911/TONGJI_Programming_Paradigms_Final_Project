@@ -23,8 +23,13 @@ public:
 	/* 互动 */
 	void Chat();
 
+	/* npc0:教学用 */
+	void npc0(std::function<void()> callback);
+
 	/* npc1 */
 	void npc1(std::function<void()> callback);
+
+	
 };
 
 
