@@ -27,7 +27,8 @@ bool SetMap::init() {
 
     //添加键盘监听器，按下M打开小地图
     auto KeyListener = EventListenerKeyboard::create();
-    KeyListener->onKeyPressed = CC_CALLBACK_2(SetMap::onKeyPressed, this);
+    KeyListener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressedForMicroMap, this);
+	KeyListener->onKeyReleased = CC_CALLBACK_2(SetMap::KeyReleased, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(KeyListener, this);
 
 	//获取屏幕尺寸
@@ -40,17 +41,11 @@ bool SetMap::init() {
     this->LoadMap();
   
     ///////////////////////
-    // 键盘监听
-    auto listener = EventListenerKeyboard::create();
-    listener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this);
-    listener->onKeyReleased = CC_CALLBACK_2(SetMap::KeyReleased, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
-    
     // lq加的调试小人
     PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 80, 1);
 
 	// lq加的调试小人
-	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 500, 1);
+	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
 
 	// 加个npc
 	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
@@ -85,9 +80,48 @@ void SetMap::InitalCamera() {
 	this->addChild(camera_in_micro_map);
 }
 
-EventListenerMouse* SetMap::createMouseListener(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
+void SetMap::createKeyboardListenerForCamera(Camera* camera, float MaxWidth, float MinWidth, float MaxHeigth, float MinHeigth, float moveSpeed) {
+	auto keyboardListener = EventListenerKeyboard::create();
+
+	keyboardListener->onKeyPressed = [=](EventKeyboard::KeyCode keyCode, Event* event) {
+		Vec3 currentPosition = camera->getPosition3D();
+
+		// 根据WASD控制摄像机的平移
+		switch (keyCode) {
+		case EventKeyboard::KeyCode::KEY_UP_ARROW:
+			currentPosition.y += moveSpeed;
+			break;
+		case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
+			currentPosition.y -= moveSpeed;
+			break;
+		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+			currentPosition.x -= moveSpeed;
+			break;
+		case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+			currentPosition.x += moveSpeed;
+			break;
+		default:
+			break;
+		}
+
+		// 限制摄像机的移动边界（防止越界）
+		currentPosition.x = std::min(currentPosition.x, MaxWidth);    // 限制最大宽度
+		currentPosition.x = std::max(currentPosition.x, MinWidth);    // 限制最小宽度
+
+		currentPosition.y = std::min(currentPosition.y, MaxHeigth);    // 限制最大长度
+		currentPosition.y = std::max(currentPosition.y, MinHeigth);     // 限制最小长度
+
+		// 更新摄像机位置
+		camera->setPosition3D(currentPosition);
+		};
+
+	// 将监听器添加到事件调度器
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
+}
+
+EventListenerMouse* SetMap::createMouseListenerForCameraScroll(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
 	auto listener = EventListenerMouse::create();
-	listener->onMouseMove = [=](EventMouse* event) {
+	listener->onMouseScroll = [=](EventMouse* event) {
 		float ScrollY = event->getScrollY();
 		Vec3 cameraPosition = camera->getPosition3D();
 
@@ -99,7 +133,6 @@ EventListenerMouse* SetMap::createMouseListener(Camera* camera, float MaxHeight,
 		cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
 
 		camera->setPosition3D(cameraPosition);
-		CCLOG("cameraPosition.z = %f", cameraPosition.z);
 		};
 	return listener;
 }
@@ -136,7 +169,7 @@ void SetMap::MainCameraFollowPlayer() {
 	UpdateCameraPosition(camera, playPosition, InitCameraZinMainMap);
 
 	// 则创建并绑定主地图监听器
-	mainMapListener = createMouseListener(camera, 600.0f, 200.0f, ScrollSpeed);
+	mainMapListener = createMouseListenerForCameraScroll(camera, 600.0f, 200.0f, ScrollSpeed);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(mainMapListener, camera);    // 获取事件调度器并添加监听器
 
 	// 设置主摄像机的实时跟随任务
@@ -156,17 +189,20 @@ void SetMap::MicroCameraFollowPlayer() {
 	UpdateCameraPosition(camera_in_micro_map, centerPosition, InitCameraZinMicroMap);
 
 	// 则创建并绑定小地图监听器
-	microMapListener = createMouseListener(camera_in_micro_map, 3000.0f, 1200.0f, ScrollSpeed);
+	microMapListener = createMouseListenerForCameraScroll(camera_in_micro_map, 3600.0f, 1200.0f, ScrollSpeed );
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(microMapListener, camera_in_micro_map);    	// 获取事件调度器并添加监听器
+
+	// 设置键盘监听，控制摄像机移动
+	createKeyboardListenerForCamera(camera_in_micro_map, 2400.0f, -2400.0f, 2400.0f, -2400.0f, ScrollSpeed * 10);
 }
 
-void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
         // 切换小地图显示状态
         IsMicroMapVisible = !IsMicroMapVisible;
+		
 		CameraFollowController();    //注册摄像机跟随玩家的函数
-
-        /*此处切换小地图显示，进入小地图时首先隐藏初始地图，退出小地图之后再显示初始地图
+		/*此处切换小地图显示，进入小地图时首先隐藏初始地图，退出小地图之后再显示初始地图
           让玩家在进入小地图之前就暂停游戏，退出小地图之后再恢复游戏，防止玩家在打开地图的时候发生意外*/
         if (IsMicroMapVisible) {
             //进入小地图暂停游戏
@@ -185,6 +221,61 @@ void SetMap::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			Director::getInstance()->resume();    //退出小地图恢复游戏
 		}
     }
+	Vec2 moveBy;
+	int speed = 30;
+	/* 攻击:I/K/J/L */
+	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
+		PLAYER->Attack(UP);
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
+		PLAYER->Attack(DOWN);
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		PLAYER->Attack(LEFT);
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
+		PLAYER->Attack(RIGHT);
+	}
+	/* 移动:W/S/A/D */
+	else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
+		HandlePlayerMove(Vec2(0, speed), 0, "MoveUP", UP);
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
+		HandlePlayerMove(Vec2(0, -speed), 1, "MoveDOWN", DOWN);
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
+		HandlePlayerMove(Vec2(-speed, 0), 2, "MoveLEFT", LEFT);
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
+		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
+	}
+	/*
+	// 测试Monster1攻击效果用，记得删
+	else if (keyCode == EventKeyboard::KeyCode::KEY_T) {
+		int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
+		int dy = Monster1->mySprite->getPosition().y - PLAYER->mySprite->getPosition().y;
+		if (std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(Monster1->getAtkRange(), 2))
+			Monster1->Attack();
+		else
+			Monster1->Attack();
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
+		npc1->Chat();
+		//Monster2->Attack(UP);
+		//PLAYER->Heal();
+		//PLAYER->Die();
+	}
+	*/
+	/* B/P:背包 */
+	else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
+
+		if (BagManager::getInstance()->isBagVisible())
+			// 隐藏背包
+			BagManager::getInstance()->hideBag(*PLAYER);
+		else
+			// 打开背包
+			BagManager::getInstance()->showBag(*PLAYER);
+	}
 }
 
 void SetMap::InitialObstacle(cocos2d::TMXTiledMap* tileMap) {
@@ -325,72 +416,51 @@ void SetMap::LoadMap() {
 	this->addChild(Forest_Desert);
 }
 
+void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction) {
+	Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
+
+	// 检查目标位置是否可移动
+	if (IsMoveable(targetPosition)) {
+		if (!isKeyPressed[keyIndex]) {
+			isKeyPressed[keyIndex] = true;
+			PLAYER->Move(direction);
+			this->schedule([=](float dt) {
+				PLAYER->Move(direction);
+				}, 0.8f, scheduleKey);
+		}
+	}
+}
+
 void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	Vec2 moveBy;
 	int speed = 30;
 	/* 攻击:I/K/J/L */
-	if (keyCode == EventKeyboard::KeyCode::KEY_I)
+	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
 		PLAYER->Attack(UP);
-	else if (keyCode == EventKeyboard::KeyCode::KEY_K)
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
 		PLAYER->Attack(DOWN);
-	else if (keyCode == EventKeyboard::KeyCode::KEY_J)
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
 		PLAYER->Attack(LEFT);
-	else if (keyCode == EventKeyboard::KeyCode::KEY_L)
+	}
+	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
 		PLAYER->Attack(RIGHT);
+	}
 	/* 移动:W/S/A/D */
 	else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
-		moveBy = Vec2(0, speed);
-		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-		if (IsMoveable(targetPosition)) {
-			if (!isKeyPressed[0]) {
-				isKeyPressed[0] = true;
-				PLAYER->Move(UP);
-				this->schedule([&](float dt) {
-					PLAYER->Move(UP);
-					}, 0.8f, "MoveUP");
-			}
-		}
+		HandlePlayerMove(Vec2(0, speed), 0, "MoveUP", UP);	
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
-		moveBy = Vec2(0, -speed);
-		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-		if (IsMoveable(targetPosition)) {
-			if (!isKeyPressed[1]) {
-				isKeyPressed[1] = true;
-				PLAYER->Move(DOWN);
-				this->schedule([&](float dt) {
-					PLAYER->Move(DOWN);
-					}, 0.8f, "MoveDOWN");
-			}
-		}
+		HandlePlayerMove(Vec2(0, -speed), 1, "MoveDOWN", DOWN);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
-		moveBy = Vec2(-speed, 0);
-		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-		if (IsMoveable(targetPosition)) {
-			if (!isKeyPressed[2]) {
-				isKeyPressed[2] = true;
-				PLAYER->Move(LEFT);
-				this->schedule([&](float dt) {
-					PLAYER->Move(LEFT);
-					}, 0.8f, "MoveLEFT");
-			}
-		}
+		HandlePlayerMove(Vec2(-speed, 0), 2, "MoveLEFT", LEFT);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
-		moveBy = Vec2(speed, 0);
-		Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-		if (IsMoveable(targetPosition)) {
-			if (!isKeyPressed[3]) {
-				isKeyPressed[3] = true;
-				PLAYER->Move(RIGHT);
-				this->schedule([&](float dt) {
-					PLAYER->Move(RIGHT);
-					}, 0.8f, "MoveRIGHT");
-			}
-		}
+		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
 	}
-
+	/*
 	// 测试Monster1攻击效果用，记得删
 	else if (keyCode == EventKeyboard::KeyCode::KEY_T) {
 		int dx = Monster1->mySprite->getPosition().x - PLAYER->mySprite->getPosition().x;
@@ -406,6 +476,7 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		//PLAYER->Heal();
 		//PLAYER->Die();
 	}
+	*/
 	/* B/P:背包 */
 	else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
 
@@ -415,39 +486,6 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		else
 			// 打开背包
 			BagManager::getInstance()->showBag(*PLAYER);
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_P) {
-		goods _goods;
-		if (BagManager::getInstance()->getItemsNum() % 5 == 0)
-		{
-			weapon* it1 = new weapon(_goods.icon_sword);
-			BagManager::getInstance()->addItem(it1);
-			return;
-		}
-		if (BagManager::getInstance()->getItemsNum() % 5 == 1)
-		{
-			consumable* it2 = new consumable(_goods.pumkin);
-			BagManager::getInstance()->addItem(it2);
-			return;
-		}
-		if (BagManager::getInstance()->getItemsNum() % 5 == 2)
-		{
-			accessories* it3 = new accessories(_goods.bomb);
-			BagManager::getInstance()->addItem(it3);
-			return;
-		}
-		if (BagManager::getInstance()->getItemsNum() % 5 == 3)
-		{
-			armor* it4 = new armor(_goods.icon_conselet);
-			BagManager::getInstance()->addItem(it4);
-			return;
-		}
-		if (BagManager::getInstance()->getItemsNum() % 5 == 4)
-		{
-			shoes* it5 = new shoes(_goods.boots);
-			BagManager::getInstance()->addItem(it5);
-			return;
-		}
 	}
 }
 

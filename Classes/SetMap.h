@@ -54,11 +54,14 @@ public:
 	/*初始化地图函数*/
 	virtual bool init();
 
-	// 键盘事件处理,按下M键切换显示微地图
-	void onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	/*键盘事件处理, 按下M键切换显示微地图*/
+	void KeyPressedForMicroMap(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+
+	/*键盘事件处理，按下相应按键移动地图*/
+	void createKeyboardListenerForCamera(Camera* camera, float moveSpeed, float MaxWidth, float MinWidth, float MaxHeigth, float MinHeigth);
 
 	/*鼠标事件处理，滚动滚轮控制地图缩放*/
-	EventListenerMouse* createMouseListener(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
+	EventListenerMouse* createMouseListenerForCameraScroll(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
 
 	/*设置摄像机跟随玩家移动*/
 	void CameraFollowController();
@@ -77,6 +80,9 @@ public:
 
 	/*判断某个位置是否可以移动*/
 	bool IsMoveable(cocos2d::Vec2& pos);
+
+	/*处理玩家移动*/
+	void HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction);
 
 	/*加载地图*/
 	void LoadMap();
