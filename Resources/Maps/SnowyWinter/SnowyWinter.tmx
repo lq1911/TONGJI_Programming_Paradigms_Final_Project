@@ -2,6 +2,7 @@
 <map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="95">
  <tileset firstgid="1" source="SnowyWinterWholeAsset.tsx"/>
  <tileset firstgid="257" source="MagicTelepoter.tsx"/>
+ <tileset firstgid="513" source="../Vol_Snow_Ecotonal/spritesheet.tsx"/>
  <layer id="1" name="Ground" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztmc0NgzAMhT0BI3SEbAD3im5ADj23bMDylaVYddMgmoCwnebwlL8e/N6HqRQ6AOiMqQ+jY3sXg3LBSx/W5MuSsOYpEvmxpDmxNynIN1fzCiPpfHOVqjnlTbtq4VFLf8TvWGeYB9bt4f0Ottgf3Urt0vmWMon7RDrbEqEH33io0VQRD18BD9RSAY+UpHM9StI5Nh6Nh2ZJ59h41M3jqiDTI3kMCrLd2x8Dk3S+R/AgSWdcysMymy2fVrigl/juAdd0t2WFCflxYaQ7rRHgbqlfOAt+V8f3LTCZ4fP+gea3yK92JjmeNXPJ8ayZSYl3jVxK/WtjszcHLVzw/+4J399yRzaPz8eVfVz7cH42D/om8gijD/X0iTn9hp95dkZeLPXH2XIb59LP9S9yFfHYYiSd9b/1R6pHGg+9egGNjvbn
@@ -19,7 +20,7 @@
  </layer>
  <layer id="2" name="Decoration" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmL9OAzEMxgOo7ICON4CVmQlVnTtUzJ3owMIEK0/ES4Kls3AtO3+wr0lQPslSdTpdv18c+3x5DSHcdxSPQdZHR3GnMPTI8fIT1yzeG/BWynEQcnFowNvgGBy1Y3C0FcBxRfxj3z1vwFsph6ba3nJimuOyY45YDnri4DlYd8gh5WL3Tzg01fYqRU5dt8rxF+8tcEzB7r02h4fv2hy5tQv99S1xz6YDDuivn4l7njvg0HShXO+N46aAY2LhxTBFOGCdtwY+/l9SL1k58mgcsM57J45UzlcLcliVygXXbcRjCxy5z/figN5vqQeu0tmghIP3C/o/0Pst9WBVLscSs0dM0rkvnv1KyuFYqga46L6UzoNi13M4TpELYNiHXxZvjlQuPOqbMmCNnZrDWt8SAwjO57AmQjg+o5OE73ZtbvGsDTqrbJn3JXodfc97cuCsgv7xt7Qvtb2qXf+agwv3G+dYR56VI5oDysOl5SeVN86icewynqVJYvAQXVueF6wbr55L69mTASStrbTHPETrueb8YtVDbQOzrN93T15GjLJ+33nO9DXVc01QjXy0pZGPtnRWeP830koHxg==
+   eJztmL9Ow0AMxo9W7Q5VeANmHgFVzB0q5k50ZSIrT8RLUkuxaiz7/mCnd4fySZaqKEq/3/nsODeuQhg7iu0lJI0dxZOM0CXH+yUeWHw24K2U4yzk4tyAt4Vj4agdC0dbARz3xD/23VUD3ko5NNX2lhPDFNuOOWI56ImD52DfIYeUi+M/4dBU26sUOXXdKsdfvLfAMQS799ocHr5rc+TWLvTXj8Q9rx1wQH/9Stzz1gGHprVyvTeOXQHHwMKLYYhwwDofDHz8v6ResnHk0ThgnU9OHKmcb2bksCqVC67HiMcWOHKf78UBvd9SD1yls0EJB+8X9H+g91vqwapcjjlmj5ikc188+5WUwzFXDXDRfSmdB8Wu53DcIhfAcApXFm+OVC486psyYI3dmsNa3xIDCM7nsCZC+H1GJwnf7drc4lkbdFY5MO9z9Dr6nvfkwFkF/eNvaV9qe1W7/j0FF+43zrGPPCtHNAeUh0vLTypvnEXjOGY8S5PE4CG6tjwvWDdePZfWsycDSFpbaY95iNZzzfnFqufaBiZZv+9evIwYZf2+85zpa6rnmqBa8tGWlny0pbvC+38AAywVEw==
   </data>
  </layer>
  <layer id="6" name="DetailsUpDeco" width="50" height="50">

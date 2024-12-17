@@ -484,6 +484,7 @@ void SetMap::SetBlackFogInMicroMap() {
 		CCLOG("SetBlackFogInMicroMap: %d", i);
 		BlackFogList[i]->setLocalZOrder(100);
 		// 如果此区域已经被揭示，则隐藏黑色雾，否则在小地图上显示黑色雾
-		BlackFogList[i]->setVisible( IsRegionRevealed[i] == true ? false : IsBlackFogVisible[i]);
+		BlackFogList[i]->setVisible(false);
+		//BlackFogList[i]->setVisible( IsRegionRevealed[i] == true ? false : IsBlackFogVisible[i]);
 	}
 }
