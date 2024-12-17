@@ -35,17 +35,14 @@ bool SetMap::init() {
     ///////////////////////
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
-
+	// 加怪
+	monster_respawn = new MonsterRespawn(PLAYER, this);
+	// 将怪导入角色
+	PLAYER->InitMonster(monster_respawn->GetMonster());
 	// 加个npc
 	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
 
-	Bonus b;
-	// 加个树妖
-	Monster1 = new Monster("Monster1", 100000, 600, 20, 20, 20, 100, 2, 50, 100, 0, b, PLAYER, 600, 1, this);
-	this->addChild(Monster1);
-	// 加个Monster2
-	Monster2 = new Monster("Monster2", 100000, 600, 20, 20, 20, 100, 2, 1000, 100, 0, b, PLAYER, 600, 1, this);
-	this->addChild(Monster2);
+	
 	// 背包
 	BagManager* bagManager = BagManager::getInstance();
 	if (bagManager->getParent() == nullptr)

@@ -42,9 +42,8 @@ public:
 	std::vector<bool> isKeyPressed = { false,false,false,false };
 	// Íæ¼Ò
 	Player* PLAYER;
-	// Ê÷ÑıMonster1
-	Monster* Monster1;
-	Monster* Monster2;
+	// ¹ÖÎï
+	MonsterRespawn* monster_respawn;
 	// NPC
 	NPC* npc1;
 
