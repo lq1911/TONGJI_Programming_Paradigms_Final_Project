@@ -35,17 +35,14 @@ bool SetMap::init() {
     ///////////////////////
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
-
+	// 加怪
+	monster_respawn = new MonsterRespawn(PLAYER, this);
+	// 将怪导入角色
+	PLAYER->InitMonster(monster_respawn->GetMonster());
 	// 加个npc
 	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
 
-	Bonus b;
-	// 加个树妖
-	Monster1 = new Monster("Monster1", 100000, 600, 20, 20, 20, 100, 2, 50, 100, 0, b, PLAYER, 600, 1, this);
-	this->addChild(Monster1);
-	// 加个Monster2
-	Monster2 = new Monster("Monster2", 100000, 600, 20, 20, 20, 100, 2, 1000, 100, 0, b, PLAYER, 600, 1, this);
-	this->addChild(Monster2);
+	
 	// 背包
 	BagManager* bagManager = BagManager::getInstance();
 	if (bagManager->getParent() == nullptr)
@@ -111,12 +108,12 @@ void SetMap::createKeyboardListenerForCamera(Camera* camera, float MaxWidth, flo
 EventListenerMouse* SetMap::createMouseListenerForCameraScroll(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
 	auto listener = EventListenerMouse::create();
 	listener->onMouseScroll = [=](EventMouse* event) {
-		float ScrollY = event->getScrollY();
 		Vec3 cameraPosition = camera->getPosition3D();
+		float ScrollY = event->getScrollY();
 
 		//通过滚轮输入，调整摄像机高度
 		cameraPosition.z += ScrollY * ScrollSpeed;
-
+        
 		// 限制 Z 值范围
 		cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
 		cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
@@ -167,6 +164,7 @@ void SetMap::MainCameraFollowPlayer() {
 		}, "camera_update_key");
 }
 
+
 void SetMap::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
 	float InitCameraZinMicroMap = 2000.0f;
@@ -197,16 +195,16 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 
 		CameraFollowController();    //注册摄像机跟随玩家的函数
 		/*此处切换小地图显示，进入小地图时首先隐藏初始地图，退出小地图之后再显示初始地图
-          让玩家在进入小地图之前就暂停游戏，退出小地图之后再恢复游戏，防止玩家在打开地图的时候发生意外*/
-        if (IsMicroMapVisible) {
-            //进入小地图暂停游戏
+		  让玩家在进入小地图之前就暂停游戏，退出小地图之后再恢复游戏，防止玩家在打开地图的时候发生意外*/
+		if (IsMicroMapVisible) {
+			//进入小地图暂停游戏
 			Director::getInstance()->pause();     // 暂停游戏
 			camera_in_micro_map->setVisible(true);     //将小地图摄像机显示
 			camera->setVisible(false);    //将初始摄像机隐藏
 
-           // MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
-        }   
-        else {
+			// MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
+		}
+		else {
 			//MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
 
 			// 恢复主地图响应和摄像机逻辑
@@ -214,21 +212,21 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 			camera->setVisible(true);    //将初始摄像机显示
 			Director::getInstance()->resume();    //退出小地图恢复游戏
 		}
-    }
+	}
 	Vec2 moveBy;
 	int speed = 30;
 	/* 攻击:I/K/J/L */
 	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
-		PLAYER->Attack(UP);
+		PLAYER->Attack(UP, monster_respawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
-		PLAYER->Attack(DOWN);
+		PLAYER->Attack(DOWN, monster_respawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
-		PLAYER->Attack(LEFT);
+		PLAYER->Attack(LEFT, monster_respawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
-		PLAYER->Attack(RIGHT);
+		PLAYER->Attack(RIGHT, monster_respawn->GetMonster());
 	}
 	/* 移动:W/S/A/D */
 	else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
@@ -287,89 +285,89 @@ void SetMap::InitialObstacle(cocos2d::TMXTiledMap* tileMap) {
 }
 
 bool SetMap::IsMoveable(cocos2d::Vec2& pos) {
-    for (const auto& obstacle : ObstacleList) {
-        if (obstacle.containsPoint(pos))     //判断是否与障碍物发生碰撞
-        {
-            CCLOG("Can't move to this position");
-            return false;
-        }
-    }
-    CCLOG("Can move to this position");
-    return true;
+	for (const auto& obstacle : ObstacleList) {
+		if (obstacle.containsPoint(pos))     //判断是否与障碍物发生碰撞
+		{
+			CCLOG("Can't move to this position");
+			return false;
+		}
+	}
+	CCLOG("Can move to this position");
+	return true;
 }
 
 void SetMap::LoadMap() {
-    /*****************************************在这里对各个地图进行加载处理********************************************/
-    // 加载初始地图
-    auto RebirthTemple = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
-    float RebirthTempleWidth = RebirthTemple->getTileSize().width * RebirthTemple->getMapSize().width;
-    float RebirthTempleHeight = RebirthTemple->getTileSize().height * RebirthTemple->getMapSize().height;
-    RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));    ////设置地图锚点为中心
-    //InitialObstacle(RebirthTemple);    //初始化障碍物
+	/*****************************************在这里对各个地图进行加载处理********************************************/
+	// 加载初始地图
+	auto RebirthTemple = TMXTiledMap::create("Maps/RebirthTemple/RebirthTemple.tmx");
+	float RebirthTempleWidth = RebirthTemple->getTileSize().width * RebirthTemple->getMapSize().width;
+	float RebirthTempleHeight = RebirthTemple->getTileSize().height * RebirthTemple->getMapSize().height;
+	RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));    ////设置地图锚点为中心
+	//InitialObstacle(RebirthTemple);    //初始化障碍物
 
 	BlackFogList.push_back(RebirthTemple->getLayer("BlackFog"));    //将初始地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
 
-    // 加载火山地图
-    auto Volcano = TMXTiledMap::create("Maps/volcano/volcano.tmx");
+	// 加载火山地图
+	auto Volcano = TMXTiledMap::create("Maps/volcano/volcano.tmx");
 	BlackFogList.push_back(Volcano->getLayer("BlackFog"));    //将火山地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(Volcano);    //初始化障碍物
-	
+	//InitialObstacle(Volcano);    //初始化障碍物
 
-    // 加载雪地地图
-    auto SnowyWinter= TMXTiledMap::create("Maps/SnowyWinter/SnowyWinter.tmx");
+
+	// 加载雪地地图
+	auto SnowyWinter = TMXTiledMap::create("Maps/SnowyWinter/SnowyWinter.tmx");
 	BlackFogList.push_back(SnowyWinter->getLayer("BlackFog"));    //将雪地地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(SnowyWinter);    //初始化障碍物
+	//InitialObstacle(SnowyWinter);    //初始化障碍物
 
-    // 加载沙漠地图
-    auto DeathDesert = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
+	// 加载沙漠地图
+	auto DeathDesert = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
 	BlackFogList.push_back(DeathDesert->getLayer("BlackFog"));    //将沙漠地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(DeathDesert);    //初始化障碍物
+	//InitialObstacle(DeathDesert);    //初始化障碍物
 
-    // 加载森林地图
-    auto BrightForest = TMXTiledMap::create("Maps/BrightForest/BrightForest.tmx");
+	// 加载森林地图
+	auto BrightForest = TMXTiledMap::create("Maps/BrightForest/BrightForest.tmx");
 	BlackFogList.push_back(BrightForest->getLayer("BlackFog"));    //将森林地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(BrightForest);    //初始化障碍物
+	//InitialObstacle(BrightForest);    //初始化障碍物
 
-    //加载火山雪地边界
-    auto Vol_Snow= TMXTiledMap::create("Maps/Vol_Snow_Ecotonal/Vol_Snow_Ecotonal.tmx");
+	//加载火山雪地边界
+	auto Vol_Snow = TMXTiledMap::create("Maps/Vol_Snow_Ecotonal/Vol_Snow_Ecotonal.tmx");
 	BlackFogList.push_back(Vol_Snow->getLayer("BlackFog"));    //将火山雪地边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(Vol_Snow);    //初始化障碍物
+	//InitialObstacle(Vol_Snow);    //初始化障碍物
 
-    //加载火山森林边界
-    auto Vol_Forest= TMXTiledMap::create("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx");
+	//加载火山森林边界
+	auto Vol_Forest = TMXTiledMap::create("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx");
 	BlackFogList.push_back(Vol_Forest->getLayer("BlackFog"));    //将火山森林边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(Vol_Forest);    //初始化障碍物
+	//InitialObstacle(Vol_Forest);    //初始化障碍物
 
-    //加载森林雪地边界
-    auto Desert_Snow= TMXTiledMap::create("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx");
+	//加载森林雪地边界
+	auto Desert_Snow = TMXTiledMap::create("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx");
 	BlackFogList.push_back(Desert_Snow->getLayer("BlackFog"));    //将森林雪地边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(Forest_Snow);    //初始化障碍物
+	//InitialObstacle(Forest_Snow);    //初始化障碍物
 
-    //加载森林沙漠边界
-    auto Forest_Desert= TMXTiledMap::create("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx");
+	//加载森林沙漠边界
+	auto Forest_Desert = TMXTiledMap::create("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx");
 	BlackFogList.push_back(Forest_Desert->getLayer("BlackFog"));    //将森林沙漠边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-    //InitialObstacle(Forest_Desert);    //初始化障碍物
+	//InitialObstacle(Forest_Desert);    //初始化障碍物
 
-    /************************************开始对各个地图进行显示处理******************************************/
-    //初始化初始地图位置
+	/************************************开始对各个地图进行显示处理******************************************/
+	//初始化初始地图位置
 	RebirthTemple->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	RebirthTemple->setScale(1.0f);
 	RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));
@@ -408,7 +406,7 @@ void SetMap::LoadMap() {
 	this->addChild(Vol_Snow);
 
 	//设置火山森林边界
-    Vol_Forest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2));
+	Vol_Forest->setPosition(Vec2(visibleSize.width / 2 - RebirthTempleWidth - Derivation, visibleSize.height / 2));
 	Vol_Forest->setScale(1.0f);
 	Vol_Forest->setAnchorPoint(Vec2(0.5f, 0.5f));
 	this->addChild(Vol_Forest);
@@ -428,18 +426,27 @@ void SetMap::LoadMap() {
 	SetBlackFogInMicroMap();    //更新地图中的黑色雾
 }
 
+
 void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction) {
 	Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
-
+	
 	// 检查目标位置是否可移动
 	if (IsMoveable(targetPosition)) {
 		if (!isKeyPressed[keyIndex]) {
+			log("success&&&&&&&&&&&&&&&&");
 			isKeyPressed[keyIndex] = true;
 			PLAYER->Move(direction);
 			this->schedule([=](float dt) {
 				PLAYER->Move(direction);
 				}, 0.8f, scheduleKey);
 		}
+		//@cbx 
+		/*if (BagManager::getInstance()->getItemsNum() % 5 == 4)
+		{
+			shoes* it5 = new shoes(_goods.boots);
+			BagManager::getInstance()->addItem(it5);
+			return;
+		}*/
 	}
 }
 
