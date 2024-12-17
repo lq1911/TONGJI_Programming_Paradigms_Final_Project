@@ -650,7 +650,6 @@ void LearningScene::ChatKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 /* ¼üÅÌ¼àÌý:bag */
 void LearningScene::BagKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
     if (keyCode == EventKeyboard::KeyCode::KEY_B) {
-
         if (BagManager::getInstance()->isBagVisible())
             // Òþ²Ø±³°ü
             BagManager::getInstance()->hideBag(*LEARNER);
