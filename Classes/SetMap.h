@@ -1,29 +1,29 @@
 #ifndef __SET_MAP_H__
 #define __SET_MAP_H__
 
-#include <iostream>
 #include <vector>
 #include "cocos2d.h"
-#include "MicroMap.h"
 #include "Player.h"
 #include "SetPlayerScene.h"
 #include "BagManager.h"
 #include "NPC.h"
 #include "Monster.h"
+#include "MapManager.h"
+#include "CameraManager.h"
 USING_NS_CC;
 
 class SetMap :public cocos2d::Scene {
 private:
 	Size visibleSize;
 
-	MicroMap* MicroMap;     // 微地图对象
 	bool IsMicroMapVisible;     // 微地图是否可见
 
-	Camera* camera;    // 主地图摄像机
-	Camera* camera_in_micro_map;    // 小地图摄像机
+	CameraManager* _cameraManager;    // 摄像机管理器
 
 	EventListenerMouse* mainMapListener = nullptr;     // 主地图监听器
 	EventListenerMouse* microMapListener = nullptr;     // 小地图监听器
+
+	MapManager* _mapManager;    // 地图管理器
 
 	const float ScrollSpeed = 40.0f;    // 滚轮滚动速度
 public:

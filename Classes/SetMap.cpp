@@ -13,8 +13,6 @@ bool SetMap::init() {
         return false;
     }
 
-    PlayerInWhichMap = 0;     //初始化玩家位置在初始神庙
-
     IsMicroMapVisible = false;    //初始化小地图状态变量
 
     //添加键盘监听器，按下M打开小地图
@@ -29,9 +27,6 @@ bool SetMap::init() {
     /*初始化主地图摄像机和小地图摄像机*/
 	this->InitialCamera();
 
-    /*加载初始地图*/
-    this->LoadMap();
-  
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
 	// 加怪
@@ -51,18 +46,6 @@ bool SetMap::init() {
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 
     return true;
-}
-
-void SetMap::InitialCamera() {
-	//创建主地图摄像机
-	camera = getDefaultCamera();
-
-	//创建小地图摄像机
-	camera_in_micro_map = Camera::createPerspective(60.0f,visibleSize.width / visibleSize.height, 100.0f, 4000.0f);
-
-	// 将小地图摄像机添加至场景
-	camera_in_micro_map->setVisible(false);    //初始隐藏小地图摄像机
-	this->addChild(camera_in_micro_map);
 }
 
 void SetMap::createKeyboardListenerForCamera(Camera* camera, float MaxWidth, float MinWidth, float MaxHeigth, float MinHeigth, float moveSpeed) {
@@ -119,10 +102,6 @@ EventListenerMouse* SetMap::createMouseListenerForCameraScroll(Camera* camera, f
 		camera->setPosition3D(cameraPosition);
 		};
 	return listener;
-}
-
-void SetMap::UpdateCameraPosition(Camera* camera, Vec2& TargetPos, float Height) {
-	camera->setPosition3D(Vec3(TargetPos.x, TargetPos.y, Height));
 }
 
 void SetMap::CameraFollowController() {
