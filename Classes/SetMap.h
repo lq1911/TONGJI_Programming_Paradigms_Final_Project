@@ -19,10 +19,6 @@ private:
 	MicroMap* MicroMap;     // 微地图对象
 	bool IsMicroMapVisible;     // 微地图是否可见
 
-	int PlayerInWhichMap;  // 当前玩家所在的地图编号
-
-	std::vector<cocos2d::Rect>ObstacleList;  // 障碍物列表
-
 	Camera* camera;    // 主地图摄像机
 	Camera* camera_in_micro_map;    // 小地图摄像机
 
@@ -30,12 +26,7 @@ private:
 	EventListenerMouse* microMapListener = nullptr;     // 小地图监听器
 
 	const float ScrollSpeed = 40.0f;    // 滚轮滚动速度
-
-	vector<TMXLayer*> BlackFogList;    //储存黑雾的图层
-	vector<bool> IsBlackFogVisible;    //黑雾是否可见
-	vector<bool> IsRegionRevealed;    //是否已经显示过某个区域
 public:
-	 
 	/* 人物 */
 	// 玩家
 	Player* PLAYER;
@@ -75,23 +66,11 @@ public:
 	/*更新摄像机的位置*/
 	void UpdateCameraPosition(Camera* camera, Vec2& TargetPos, float Height);
 
-	/*初始化障碍物*/
-	void InitialObstacle(cocos2d::TMXTiledMap* tileMap);
-
-	/*判断某个位置是否可以移动*/
-	bool IsMoveable(cocos2d::Vec2& pos);
-
 	/*处理玩家移动*/
 	void HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction);
 
-	/*加载地图*/
-	virtual void LoadMap();
-
 	/*初始化摄像机*/
 	virtual void InitialCamera();
-
-	/*设置黑色雾层仅对小地图摄像机可见*/
-	void SetBlackFogInMicroMap();
 
 	CREATE_FUNC(SetMap);
 };
