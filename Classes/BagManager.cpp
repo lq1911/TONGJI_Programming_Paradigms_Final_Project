@@ -123,6 +123,8 @@ void BagManager::createTaskButton()
 void BagManager::createTaskPanel()
 {
     _bagPanel->setVisible(true);
+    // 游戏暂停
+    Director::getInstance()->pause();
     // 设置任务面板背景图片
     _taskBackground = Sprite::create("Bag/task_background.png");
     _taskBackground->setPosition(Vec2(player.x, player.y));
@@ -154,9 +156,8 @@ void BagManager::createTaskPanel()
         showBag(player);
         });
     updateTaskUI();
-    
-}
 
+}
 void BagManager::updateTaskUI()
 {
     // 显示支线任务
@@ -227,7 +228,7 @@ void BagManager::updateTaskUI()
                 // 创建并显示物品描述的 Label
                 auto taskDescriptionLabel = Label::createWithSystemFont(myLineQuest[i]->description, "Arial", 16);
                 // 设置锚点
-                taskDescriptionLabel->setAnchorPoint(Vec2(0, 0.5));
+                taskDescriptionLabel->setAnchorPoint(Vec2(0, 1));
                 // 设置文本最大宽度为物品信息背景的宽度（可以适当留个边距）
                 float maxWidth = taskInfoBackground->getContentSize().width - 10;  // 留点左右边距
                 // 设置最大宽度和高度
@@ -347,7 +348,7 @@ void BagManager::updateTaskUI()
                 // 创建并显示物品描述的 Label
                 auto taskDescriptionLabel = Label::createWithSystemFont(myMainlineTask[i]->description, "Arial", 16);
                 // 设置锚点
-                taskDescriptionLabel->setAnchorPoint(Vec2(0, 0.5));
+                taskDescriptionLabel->setAnchorPoint(Vec2(0, 1));
                 // 设置文本最大宽度为物品信息背景的宽度（可以适当留个边距）
                 float maxWidth = taskInfoBackground->getContentSize().width - 10;  // 留点左右边距
                 // 设置最大宽度和高度
@@ -453,7 +454,7 @@ void BagManager::createBagBackground()
 {
     // 设置背包背景图片
     _bagBackground = Sprite::create("Bag/bag_background.png");
-    _bagBackground->setPosition(Vec2(player.x, player.y));
+    _bagBackground->setPosition(Vec2(player.x - 200, player.y));
     _bagPanel->addChild(_bagBackground);
 
     // 创建背包标题

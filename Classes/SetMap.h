@@ -34,8 +34,6 @@ private:
 	vector<TMXLayer*> BlackFogList;    //储存黑雾的图层
 	vector<bool> IsBlackFogVisible;    //黑雾是否可见
 	vector<bool> IsRegionRevealed;    //是否已经显示过某个区域
-
-
 public:
 	 
 	/* 人物 */
@@ -87,10 +85,10 @@ public:
 	void HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction);
 
 	/*加载地图*/
-	void LoadMap();
+	virtual void LoadMap();
 
 	/*初始化摄像机*/
-	void InitalCamera();
+	virtual void InitialCamera();
 
 	/*设置黑色雾层仅对小地图摄像机可见*/
 	void SetBlackFogInMicroMap();
