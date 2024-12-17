@@ -123,6 +123,8 @@ void BagManager::createTaskButton()
 void BagManager::createTaskPanel()
 {
     _bagPanel->setVisible(true);
+    // 游戏暂停
+    Director::getInstance()->pause();
     // 设置任务面板背景图片
     _taskBackground = Sprite::create("Bag/task_background.png");
     _taskBackground->setPosition(Vec2(player.x, player.y));
@@ -154,9 +156,8 @@ void BagManager::createTaskPanel()
         showBag(player);
         });
     updateTaskUI();
-    
-}
 
+}
 void BagManager::updateTaskUI()
 {
     // 显示支线任务
