@@ -209,6 +209,9 @@ Animate* Creature::Move(int dir) {
         return nullptr;
     }
 
+    if (role == "Monster1")
+        return nullptr;
+
     /* 更改面朝方向 */
     face_to = dir;
     log("face_to:%d", face_to);
