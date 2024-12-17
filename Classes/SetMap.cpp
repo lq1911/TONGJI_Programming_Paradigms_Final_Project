@@ -27,7 +27,7 @@ bool SetMap::init() {
 	visibleSize = Director::getInstance()->getVisibleSize();
 
     /*初始化主地图摄像机和小地图摄像机*/
-	this->InitalCamera();
+	this->InitialCamera();
 
     /*加载初始地图*/
     this->LoadMap();
@@ -53,7 +53,7 @@ bool SetMap::init() {
     return true;
 }
 
-void SetMap::InitalCamera() {
+void SetMap::InitialCamera() {
 	//创建主地图摄像机
 	camera = getDefaultCamera();
 
@@ -162,7 +162,6 @@ void SetMap::MainCameraFollowPlayer() {
 		this->UpdateCameraPosition(camera, playerPosition, updatedCameraZ);    //更新摄像机位置
 		}, "camera_update_key");
 }
-
 
 void SetMap::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
@@ -423,7 +422,6 @@ void SetMap::LoadMap() {
 
 	SetBlackFogInMicroMap();    //更新地图中的黑色雾
 }
-
 
 void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction) {
 	Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
