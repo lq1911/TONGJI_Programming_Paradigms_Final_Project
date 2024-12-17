@@ -29,7 +29,7 @@
    eJzt1LEJgDAQBVAbh7CytnIDtXUER3F7E1AEC1NYmOh7cARyzT+4pKoAAAAAgLc19bN+LuZEzlQ/F0siZ6qfk3XPGneorc9dWgua4RAzd6H6/SxxhsMQso+hpoJn+IrrHpW2V/PNW4j3/l0AAOBvNibsCJk=
   </data>
  </layer>
- <layer id="7" name="BlackFog" width="50" height="50" visible="0">
+ <layer id="7" name="BlackFog" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMBKHL9/0DLcdAwVVTVVVVVVVVVVXV5w9pJdLH
   </data>
