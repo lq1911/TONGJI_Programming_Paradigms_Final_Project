@@ -231,8 +231,8 @@ Scene* SetPlayerScene::selectRoleScene() {
         CCLOG("Choose Player5");
         who = Player5;
 
-        auto scene = SetMap::createScene();
-        //auto scene = LearningScene::createScene();
+        //auto scene = SetMap::createScene();
+        auto scene = LearningScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
 

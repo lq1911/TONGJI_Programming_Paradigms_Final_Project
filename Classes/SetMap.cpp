@@ -32,16 +32,15 @@ bool SetMap::init() {
     /*加载初始地图*/
     this->LoadMap();
   
-    ///////////////////////
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
 	// 加怪
 	monster_respawn = new MonsterRespawn(PLAYER, this);
 	// 将怪导入角色
 	PLAYER->InitMonster(monster_respawn->GetMonster());
+
 	// 加个npc
 	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
-
 	
 	// 背包
 	BagManager* bagManager = BagManager::getInstance();
