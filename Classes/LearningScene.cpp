@@ -573,13 +573,13 @@ void LearningScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
     }
     /* ¹¥»÷:I/K/J/L */
     else if (keyCode == EventKeyboard::KeyCode::KEY_I)
-        LEARNER->Attack(UP);
+        LEARNER->Creature::Attack(UP);
     else if (keyCode == EventKeyboard::KeyCode::KEY_K)
-        LEARNER->Attack(DOWN);
+        LEARNER->Creature::Attack(DOWN);
     else if (keyCode == EventKeyboard::KeyCode::KEY_J)
-        LEARNER->Attack(LEFT);
+        LEARNER->Creature::Attack(LEFT);
     else if (keyCode == EventKeyboard::KeyCode::KEY_L)
-        LEARNER->Attack(RIGHT);
+        LEARNER->Creature::Attack(RIGHT);
 }
 
 /* ¼üÅÌ¼àÌý:Move+Atk+Chat */
@@ -634,13 +634,13 @@ void LearningScene::ChatKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
     }
     /* ¹¥»÷:I/K/J/L */
     else if (keyCode == EventKeyboard::KeyCode::KEY_I)
-        LEARNER->Attack(UP);
+        LEARNER->Creature::Attack(UP);
     else if (keyCode == EventKeyboard::KeyCode::KEY_K)
-        LEARNER->Attack(DOWN);
+        LEARNER->Creature::Attack(DOWN);
     else if (keyCode == EventKeyboard::KeyCode::KEY_J)
-        LEARNER->Attack(LEFT);
+        LEARNER->Creature::Attack(LEFT);
     else if (keyCode == EventKeyboard::KeyCode::KEY_L)
-        LEARNER->Attack(RIGHT);
+        LEARNER->Creature::Attack(RIGHT);
     /* ¶Ô»° */
     else if (keyCode == EventKeyboard::KeyCode::KEY_C) {
         CHATNPC->Chat();
