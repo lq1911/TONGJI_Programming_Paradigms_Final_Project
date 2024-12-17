@@ -212,8 +212,9 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 			Director::getInstance()->resume();    //退出小地图恢复游戏
 		}
 	}
-	Vec2 moveBy;
-	int speed = 30;
+
+	//int speed = 10;
+	int speed = PLAYER->getSpeed();
 	/* 攻击:I/K/J/L */
 	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
 		PLAYER->Attack(UP, monster_respawn->GetMonster());
@@ -240,14 +241,12 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
 		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
 	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_Y) {
+	/* npc交互 */
+	else if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		npc1->Chat();
-		//Monster2->Attack(UP);
-		//PLAYER->Heal();
-		//PLAYER->Die();
 	}
+	/* 背包系统 */
 	else if (keyCode == EventKeyboard::KeyCode::KEY_B) {
-
 		if (BagManager::getInstance()->isBagVisible())
 			// 隐藏背包
 			BagManager::getInstance()->hideBag(*PLAYER);
@@ -453,6 +452,9 @@ void SetMap::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
 		if (isKeyPressed[0]) {
 			isKeyPressed[0] = false;
+
+			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			
 			this->unschedule("MoveUP");
 		}
 	}
