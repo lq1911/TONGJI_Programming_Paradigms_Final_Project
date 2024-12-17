@@ -1,4 +1,4 @@
-
+#pragma once
 #ifndef __BAG_MANAGER_H__
 #define __BAG_MANAGER_H__
 
@@ -99,17 +99,23 @@ private:
     void createTaskPanel();
 
     // 接受的主线任务
-    vector<task> myMainlineTask;
+    vector<task*> myMainlineTask;
     
     // 接受的支线任务
-    vector<task> myLineQuest;
+    vector<task*> myLineQuest;
 
     // 更新任务界面UI
     void updateTaskUI();
+
+    // 显示金币数量
+    void showcoins();
+
+    // 显示金币数量的标签
+    cocos2d::Label* coinsLabel;
 
     // 禁止拷贝构造函数和赋值操作符
     BagManager(const BagManager&) = delete;
     BagManager& operator=(const BagManager&) = delete;
 };
 
-#endif __BAG_MANAGER_H__
+#endif  __BAG_MANAGER_H__
