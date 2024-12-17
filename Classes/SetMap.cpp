@@ -452,27 +452,28 @@ void SetMap::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
 		if (isKeyPressed[0]) {
 			isKeyPressed[0] = false;
-
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
-			
 			this->unschedule("MoveUP");
 		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
 		if (isKeyPressed[1]) {
 			isKeyPressed[1] = false;
+			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
 			this->unschedule("MoveDOWN");
 		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
 		if (isKeyPressed[2]) {
 			isKeyPressed[2] = false;
+			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
 			this->unschedule("MoveLEFT");
 		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
 		if (isKeyPressed[3]) {
 			isKeyPressed[3] = false;
+			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
 			this->unschedule("MoveRIGHT");
 		}
 	}
