@@ -36,6 +36,8 @@ public:
 
 	/*判断玩家所在的地图编号*/
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
+
+	CREATE_FUNC(MapManager);
 };
 
 #endif // __MAP_MANAGER_H__
