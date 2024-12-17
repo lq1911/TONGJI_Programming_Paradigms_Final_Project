@@ -163,6 +163,33 @@ void SetMap::MainCameraFollowPlayer() {
 		}, "camera_update_key");
 }
 
+//点击屏幕所得坐标转换测试======================================================================================================
+void SetMap::onMouseUp(cocos2d::EventMouse* event) {
+
+	// 鼠标点击事件
+	auto mouseEvent = static_cast<cocos2d::EventMouse*>(event);
+	// 获取测试鼠标点击位置
+	cocos2d::Vec2 TestclickPos = Vec2(mouseEvent->getCursorX(), mouseEvent->getCursorY());
+	// 获取鼠标点击位置（窗口坐标系）
+	cocos2d::Vec2 clickPos = mouseEvent->getLocation();
+	// 获取玩家位置（场景坐标系）
+	Vec2 playerPosition = PLAYER->mySprite->getPosition();
+	// 获得玩家位置（世界坐标系）
+	Vec2 playerPositionInWorld = convertToWorldSpace(playerPosition);
+	// 获得玩家位置（窗口坐标系）
+	Vec2 playerPositionInWindow = convertToWindowSpace(playerPositionInWorld);
+	// 将鼠标点击位置转换为场景坐标系
+	//Vec2 clickPosInScene = this->camera->convertToNodeSpace(TestclickPos);
+	CCLOG("TestMouse click position (window coordinates): (%f, %f)", TestclickPos.x, TestclickPos.y);
+	CCLOG("Mouse click position (window coordinates): (%f, %f)", clickPos.x, clickPos.y);
+	CCLOG("Player position (scene coordinates): (%f, %f)", playerPosition.x, playerPosition.y);
+	CCLOG("Player position (window coordinates): (%f, %f)", playerPositionInWindow.x, playerPositionInWindow.y);
+	//CCLOG("Mouse click position (scene coordinates): (%f, %f)", clickPosInScene.x, clickPosInScene.y);
+	CCLOG("Player position (world coordinates): (%f, %f)", playerPositionInWorld.x, playerPositionInWorld.y);
+
+}
+//=======================================================================================================
+
 void SetMap::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
 	float InitCameraZinMicroMap = 2000.0f;
@@ -174,6 +201,15 @@ void SetMap::MicroCameraFollowPlayer() {
 	// 则创建并绑定小地图监听器
 	microMapListener = createMouseListenerForCameraScroll(camera_in_micro_map, 3600.0f, 1200.0f, ScrollSpeed );
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(microMapListener, camera_in_micro_map);    	// 获取事件调度器并添加监听器
+
+	//==========================================================================
+
+	// 注册鼠标点击事件
+	auto listener = cocos2d::EventListenerMouse::create();
+	listener->onMouseUp = CC_CALLBACK_1(SetMap::onMouseUp, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
+
+	//================================================================================
 
 	// 设置键盘监听，控制摄像机移动
 	createKeyboardListenerForCamera(camera_in_micro_map, 2400.0f, -2400.0f, 2400.0f, -2400.0f, ScrollSpeed * 10);
@@ -264,22 +300,41 @@ void SetMap::InitialObstacle(cocos2d::TMXTiledMap* tileMap) {
         for (const auto& obj : obstacles) {
             ValueMap obstacle = obj.asValueMap();
 
-            // 根据对象类型读取其属性
-            // 障碍物全为矩形
-            float x = obstacle["x"].asFloat();
-            float y = obstacle["y"].asFloat();
-            float width = obstacle["width"].asFloat();
-            float height = obstacle["height"].asFloat();
+			auto objectType = obstacle["type"].asString();
+			CCLOG("Obstacle type: %s", objectType.c_str());
+			if (objectType == "rectangle") {
+				// 根据对象类型读取其属性
+				// 障碍物全为矩形
+				float x = obstacle["x"].asFloat();
+				float y = obstacle["y"].asFloat();
+				float width = obstacle["width"].asFloat();
+				float height = obstacle["height"].asFloat();
 
-            // 创建矩形区域
-            Rect obstacleRect(x, y, width, height);
+				// 创建矩形区域
+				Rect obstacleRect(x, y, width, height);
 
-            // 这里可以存储或使用这个区域来进行碰撞检测
-            // 比如添加到一个障碍物列表中
-            ObstacleList.push_back(obstacleRect);
+				// 这里可以存储或使用这个区域来进行碰撞检测
+				// 比如添加到一个障碍物列表中
+				ObstacleList.push_back(obstacleRect);
+			}
+			else if (objectType == "ellipse") {
+			    // 根据对象类型读取其属性
+				// 对象为椭圆，读取为传送点 
+				float x = obstacle["x"].asFloat();
+				float y = obstacle["y"].asFloat();
+				TeleportPointsList.push_back(Vec2(x,y));
+			}
+			else if (objectType == "point") {
+			    // 根据对象类型读取其属性
+				// 对象为点，读取为交互点 
+				float x = obstacle["x"].asFloat();
+				float y = obstacle["y"].asFloat();
+				InteractivePointsList.push_back(Vec2(x,y));
+			}
         }
     }
 }
+
 
 bool SetMap::IsMoveable(cocos2d::Vec2& pos) {
 	for (const auto& obstacle : ObstacleList) {
@@ -300,7 +355,7 @@ void SetMap::LoadMap() {
 	float RebirthTempleWidth = RebirthTemple->getTileSize().width * RebirthTemple->getMapSize().width;
 	float RebirthTempleHeight = RebirthTemple->getTileSize().height * RebirthTemple->getMapSize().height;
 	RebirthTemple->setAnchorPoint(Vec2(0.5f, 0.5f));    ////设置地图锚点为中心
-	//InitialObstacle(RebirthTemple);    //初始化障碍物
+	InitialObstacle(RebirthTemple);    //初始化障碍物
 
 	BlackFogList.push_back(RebirthTemple->getLayer("BlackFog"));    //将初始地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
@@ -311,7 +366,7 @@ void SetMap::LoadMap() {
 	BlackFogList.push_back(Volcano->getLayer("BlackFog"));    //将火山地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(Volcano);    //初始化障碍物
+	InitialObstacle(Volcano);    //初始化障碍物
 
 
 	// 加载雪地地图
@@ -319,49 +374,49 @@ void SetMap::LoadMap() {
 	BlackFogList.push_back(SnowyWinter->getLayer("BlackFog"));    //将雪地地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(SnowyWinter);    //初始化障碍物
+	InitialObstacle(SnowyWinter);    //初始化障碍物
 
 	// 加载沙漠地图
 	auto DeathDesert = TMXTiledMap::create("Maps/DeathDesert/DeathDesert.tmx");
 	BlackFogList.push_back(DeathDesert->getLayer("BlackFog"));    //将沙漠地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(DeathDesert);    //初始化障碍物
+	InitialObstacle(DeathDesert);    //初始化障碍物
 
 	// 加载森林地图
 	auto BrightForest = TMXTiledMap::create("Maps/BrightForest/BrightForest.tmx");
 	BlackFogList.push_back(BrightForest->getLayer("BlackFog"));    //将森林地图加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(BrightForest);    //初始化障碍物
+	InitialObstacle(BrightForest);    //初始化障碍物
 
 	//加载火山雪地边界
 	auto Vol_Snow = TMXTiledMap::create("Maps/Vol_Snow_Ecotonal/Vol_Snow_Ecotonal.tmx");
 	BlackFogList.push_back(Vol_Snow->getLayer("BlackFog"));    //将火山雪地边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(Vol_Snow);    //初始化障碍物
+	InitialObstacle(Vol_Snow);    //初始化障碍物
 
 	//加载火山森林边界
 	auto Vol_Forest = TMXTiledMap::create("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx");
 	BlackFogList.push_back(Vol_Forest->getLayer("BlackFog"));    //将火山森林边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(Vol_Forest);    //初始化障碍物
+	InitialObstacle(Vol_Forest);    //初始化障碍物
 
 	//加载森林雪地边界
 	auto Desert_Snow = TMXTiledMap::create("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx");
 	BlackFogList.push_back(Desert_Snow->getLayer("BlackFog"));    //将森林雪地边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(Forest_Snow);    //初始化障碍物
+	InitialObstacle(Desert_Snow);    //初始化障碍物
 
 	//加载森林沙漠边界
 	auto Forest_Desert = TMXTiledMap::create("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx");
 	BlackFogList.push_back(Forest_Desert->getLayer("BlackFog"));    //将森林沙漠边界加入黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始地图黑色雾不显示
 	IsRegionRevealed.push_back(false);    //初始地图区域不被揭示
-	//InitialObstacle(Forest_Desert);    //初始化障碍物
+	InitialObstacle(Forest_Desert);    //初始化障碍物
 
 	/************************************开始对各个地图进行显示处理******************************************/
 	//初始化初始地图位置
@@ -484,7 +539,7 @@ void SetMap::SetBlackFogInMicroMap() {
 		CCLOG("SetBlackFogInMicroMap: %d", i);
 		BlackFogList[i]->setLocalZOrder(100);
 		// 如果此区域已经被揭示，则隐藏黑色雾，否则在小地图上显示黑色雾
-		BlackFogList[i]->setVisible(false);
-		//BlackFogList[i]->setVisible( IsRegionRevealed[i] == true ? false : IsBlackFogVisible[i]);
+		BlackFogList[i]->setVisible( IsRegionRevealed[i] == true ? false : IsBlackFogVisible[i]);
 	}
 }
+
