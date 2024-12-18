@@ -97,18 +97,20 @@ bool MapManager::IsMoveable(const Vec2& Position) {
 	return true;
 }
 
-Vec2 MapManager::GetTeleportPosition() {
+Vec2 MapManager::GetTeleportPosition(int MapIndex) {
 	// 获取指定地图的传送点坐标
-	if (IsRegionRevealed[PlayerInWhichMap] == false) {
+	if (IsRegionRevealed[MapIndex] == false) {
 		// 如果传送点列表为空或玩家不在传送点列表中，则返回Vec2::ZERO
 		return Vec2::ZERO;
 	}
-	return TeleportList[PlayerInWhichMap];
+	return TeleportList[MapIndex];
 }
 
-void MapManager::UnlockTeleport() {
-	// 解锁传送点
-
+void MapManager::SetIsRegionRevealedTrue() {
+	// 解锁小地图以及其相应传送点
+	if (IsRegionRevealed[PlayerInWhichMap] == false) {
+		IsRegionRevealed[PlayerInWhichMap] = true;
+	}
 }
 
 void MapManager::ReverseIsBlackFogVisible() {

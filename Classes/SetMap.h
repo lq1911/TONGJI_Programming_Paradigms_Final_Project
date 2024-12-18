@@ -74,6 +74,12 @@ public:
 
 	void onMouseUp(cocos2d::EventMouse* event);
 
+	/*解锁地图传送点*/
+	void UnlockMapTeleport();
+
+	/*将玩家传送到选择的传送点*/
+	void TeleportPlayer(int MapID);
+
 	CREATE_FUNC(SetMap);
 };
 

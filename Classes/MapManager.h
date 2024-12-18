@@ -27,7 +27,7 @@ public:
 	
 	/*初始化瓦片地图*/
 	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
-	
+
 	/*设置整张瓦片地图的黑雾*/
 	void SetBlackFogInMicroMap();
 
@@ -41,10 +41,10 @@ public:
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
 
 	/*获取传送门的位置*/
-	Vec2 GetTeleportPosition();  
+	Vec2 GetTeleportPosition(int MapIndex);
 
-	/*解锁对应地图的传送门*/
-	void UnlockTeleport();
+	/*解锁小地图以及其相应传送点*/
+	void SetIsRegionRevealedTrue();
 
 	/*设置黑雾是否可见*/
 	void ReverseIsBlackFogVisible();
