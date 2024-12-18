@@ -31,7 +31,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 			
 			auto objectType=obstacle["type"].asString();    //获取障碍物的类型
 			
-			if (objectType == "rectangle") {
+			if (objectType == "") {
 				// 根据对象类型读取其属性
 				// 障碍物全为矩形
 				float x = obstacle["x"].asFloat();
@@ -46,11 +46,30 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 				// 比如添加到一个障碍物列表中
 				ObstacleList.push_back(obstacleRect);
 			}
+			else if (objectType == "Teleport") {
+				// 根据对象类型读取其属性
+				// 传送点
+				float x = obstacle["x"].asFloat();
+				float y = obstacle["y"].asFloat();
+
+				// 保存传送点坐标
+				TeleportList.push_back(Vec2(x, y));
+			}
+			else if (objectType == "Interactional") {
+				// 根据对象类型读取其属性
+				// 可交互区域
+				float x = obstacle["x"].asFloat();
+				float y = obstacle["y"].asFloat();
+
+				// 保存可交互区域坐标
+				InteractionList.push_back(Vec2(x, y));
+			}
+			
 		}
 	}
 }
 
-void MapManager::SetBlackFogInMicroMap(TMXTiledMap* TiledMap) {
+void MapManager::SetBlackFogInMicroMap() {
 	for (int i = 0; i < (int)BlackFogList.size(); i++) {
 		if (!BlackFogList[i]->getParent()) {
 			this->addChild(BlackFogList[i]);
@@ -59,6 +78,10 @@ void MapManager::SetBlackFogInMicroMap(TMXTiledMap* TiledMap) {
 		// 如果此区域已经被揭示，则隐藏黑色雾，否则在小地图上显示黑色雾
 		BlackFogList[i]->setVisible(IsRegionRevealed[i] == true ? false : IsBlackFogVisible[i]);
 	}
+}
+
+size_t MapManager::GetBlackFogListSize() {
+	return BlackFogList.size();
 }
 
 bool MapManager::IsMoveable(const Vec2& Position) {
@@ -73,3 +96,27 @@ bool MapManager::IsMoveable(const Vec2& Position) {
 	// 如果位置不在障碍物范围内，则可移动
 	return true;
 }
+
+Vec2 MapManager::GetTeleportPosition() {
+	// 获取指定地图的传送点坐标
+	if (IsRegionRevealed[PlayerInWhichMap] == false) {
+		// 如果传送点列表为空或玩家不在传送点列表中，则返回Vec2::ZERO
+		return Vec2::ZERO;
+	}
+	return TeleportList[PlayerInWhichMap];
+}
+
+void MapManager::UnlockTeleport() {
+	// 解锁传送点
+
+}
+
+void MapManager::ReverseIsBlackFogVisible() {
+	// 反转黑色雾的可见性
+	for (int i = 0; i < (int)IsBlackFogVisible.size(); i++) {
+		IsBlackFogVisible[i] = !IsBlackFogVisible[i];
+	}
+}
+
+
+

@@ -28,14 +28,26 @@ public:
 	/*初始化瓦片地图*/
 	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
 	
-	/*设置某张瓦爿地图的黑雾*/
-	void SetBlackFogInMicroMap(TMXTiledMap* TiledMap);
+	/*设置整张瓦片地图的黑雾*/
+	void SetBlackFogInMicroMap();
+
+	/*获取黑雾列表的大小*/
+	size_t GetBlackFogListSize();
 	
 	/*判断某个位置是否可以被移动到*/
 	bool IsMoveable(const Vec2& pos);
 
 	/*判断玩家所在的地图编号*/
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
+
+	/*获取传送门的位置*/
+	Vec2 GetTeleportPosition();  
+
+	/*解锁对应地图的传送门*/
+	void UnlockTeleport();
+
+	/*设置黑雾是否可见*/
+	void ReverseIsBlackFogVisible();
 
 	CREATE_FUNC(MapManager);
 };

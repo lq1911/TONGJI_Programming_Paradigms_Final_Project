@@ -72,6 +72,8 @@ public:
 	/*³õÊ¼»¯ÉãÏñ»ú*/
 	virtual void InitialCamera();
 
+	void onMouseUp(cocos2d::EventMouse* event);
+
 	CREATE_FUNC(SetMap);
 };
 

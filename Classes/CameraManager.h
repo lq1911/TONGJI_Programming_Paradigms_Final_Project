@@ -14,6 +14,12 @@ public:
 	/*构造函数*/
 	CameraManager();
 
+	/*获取主地图摄像机*/
+	Camera* GetMainCamera() const { return MainCamera; }
+
+   /*获取小地图摄像机*/
+	Camera* GetMicroCamera() const { return MicroCamera; }
+
 	/*初始化主地图摄像机*/
 	void InitialMainCamera(Scene* TargetScene);
 

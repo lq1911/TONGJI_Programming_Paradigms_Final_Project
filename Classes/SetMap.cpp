@@ -129,16 +129,16 @@ void SetMap::MainCameraFollowPlayer() {
 
 	//每次进入主地图时，将主摄像机的位置设置为玩家位置
 	Vec2 playPosition = PLAYER->mySprite->getPosition();
-	UpdateCameraPosition(camera, playPosition, InitCameraZinMainMap);
+	UpdateCameraPosition(_cameraManager->GetMainCamera(), playPosition, InitCameraZinMainMap);
 	// 则创建并绑定主地图监听器
-	mainMapListener = createMouseListenerForCameraScroll(camera, 600.0f, 200.0f, ScrollSpeed);
+	mainMapListener = createMouseListenerForCameraScroll(_cameraManager->GetMainCamera(), 600.0f, 200.0f, ScrollSpeed);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(mainMapListener, this);    // 获取事件调度器并添加监听器
 
 	// 设置主摄像机的实时跟随任务
 	schedule([=](float dt) {
-		float updatedCameraZ = camera->getPosition3D().z;    //获取摄像机的高度
+		float updatedCameraZ = _cameraManager->GetMainCamera()->getPosition3D().z;    //获取摄像机的高度
 		Vec2 playerPosition = PLAYER->mySprite->getPosition();    //获取玩家位置
-		this->UpdateCameraPosition(camera, playerPosition, updatedCameraZ);    //更新摄像机位置
+		this->UpdateCameraPosition(_cameraManager->GetMainCamera(), playerPosition, updatedCameraZ);    //更新摄像机位置
 		}, "camera_update_key");
 }
 
@@ -175,11 +175,11 @@ void SetMap::MicroCameraFollowPlayer() {
 
 	// 每次进入小地图时，将小摄像机的位置设置中心位置
 	Vec2 centerPosition(1200, 1200);
-	UpdateCameraPosition(camera_in_micro_map, centerPosition, InitCameraZinMicroMap);
+	UpdateCameraPosition(_cameraManager->GetMicroCamera(), centerPosition, InitCameraZinMicroMap);
 
 	// 则创建并绑定小地图监听器
-	microMapListener = createMouseListenerForCameraScroll(camera_in_micro_map, 3600.0f, 1200.0f, ScrollSpeed );
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(microMapListener, camera_in_micro_map);    	// 获取事件调度器并添加监听器
+	microMapListener = createMouseListenerForCameraScroll(_cameraManager->GetMicroCamera(), 3600.0f, 1200.0f, ScrollSpeed );
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(microMapListener, _cameraManager->GetMicroCamera());    	// 获取事件调度器并添加监听器
 
 	//==========================================================================
 
@@ -191,7 +191,7 @@ void SetMap::MicroCameraFollowPlayer() {
 	//================================================================================
 
 	// 设置键盘监听，控制摄像机移动
-	createKeyboardListenerForCamera(camera_in_micro_map, 2400.0f, -2400.0f, 2400.0f, -2400.0f, ScrollSpeed * 10);
+	createKeyboardListenerForCamera(_cameraManager->GetMicroCamera(), 2400.0f, -2400.0f, 2400.0f, -2400.0f, ScrollSpeed * 10);
 }
 
 void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event) {
@@ -200,11 +200,10 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 		IsMicroMapVisible = !IsMicroMapVisible;
 
 		//小地图中显示黑色雾效果的判断数组反转
-		for (int i = 0; i < IsBlackFogVisible.size(); i++) {
-			IsBlackFogVisible[i] = !IsBlackFogVisible[i];         
-		}
+		_mapManager->ReverseIsBlackFogVisible();
+
 		// 更新小地图中黑色雾的显示
-		SetBlackFogInMicroMap();
+		_mapManager->SetBlackFogInMicroMap();
 
 		CameraFollowController();    //注册摄像机跟随玩家的函数
 		/*此处切换小地图显示，进入小地图时首先隐藏初始地图，退出小地图之后再显示初始地图
@@ -212,8 +211,8 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 		if (IsMicroMapVisible) {
 			//进入小地图暂停游戏
 			Director::getInstance()->pause();     // 暂停游戏
-			camera_in_micro_map->setVisible(true);     //将小地图摄像机显示
-			camera->setVisible(false);    //将初始摄像机隐藏
+			_cameraManager->GetMicroCamera()->setVisible(true);     //将小地图摄像机显示
+			_cameraManager->GetMainCamera()->setVisible(false);    //将初始摄像机隐藏
 
 			// MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
 		}
@@ -221,8 +220,8 @@ void SetMap::KeyPressedForMicroMap(EventKeyboard::KeyCode keyCode, Event* event)
 			//MicroMap->setVisible(IsMicroMapVisible);    //切换显示小地图
 
 			// 恢复主地图响应和摄像机逻辑
-			camera_in_micro_map->setVisible(false);    //将小地图摄像机隐藏
-			camera->setVisible(true);    //将初始摄像机显示
+			_cameraManager->GetMicroCamera()->setVisible(false);    //将小地图摄像机隐藏
+			_cameraManager->GetMainCamera()->setVisible(true);    //将初始摄像机显示
 			Director::getInstance()->resume();    //退出小地图恢复游戏
 		}
 	}
@@ -274,7 +273,7 @@ void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::strin
 	Vec2 targetPosition = PLAYER->mySprite->getPosition() + moveBy;
 	
 	// 检查目标位置是否可移动
-	if (IsMoveable(targetPosition)) {
+	/*if (IsMoveable(targetPosition))*/ {
 		if (!isKeyPressed[keyIndex]) {
 			log("success&&&&&&&&&&&&&&&&");
 			isKeyPressed[keyIndex] = true;
