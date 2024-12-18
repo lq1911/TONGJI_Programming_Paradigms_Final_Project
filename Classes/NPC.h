@@ -8,8 +8,8 @@
 
 USING_NS_CC;
 
-/* ¥•∑¢æ‡¿Î */
-const int DIST = 150;
+///* ¥•∑¢æ‡¿Î */
+//const int DIST = 150;
 
 class NPC :public Creature {
 private:

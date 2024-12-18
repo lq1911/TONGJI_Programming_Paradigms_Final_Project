@@ -142,7 +142,6 @@ void SetMap::MainCameraFollowPlayer() {
 		}, "camera_update_key");
 }
 
-<<<<<<< HEAD
 //点击屏幕所得坐标转换测试======================================================================================================
 void SetMap::onMouseUp(cocos2d::EventMouse* event) {
 
@@ -170,8 +169,6 @@ void SetMap::onMouseUp(cocos2d::EventMouse* event) {
 }
 //=======================================================================================================
 
-=======
->>>>>>> lq_branch
 void SetMap::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
 	float InitCameraZinMicroMap = 2000.0f;
