@@ -117,6 +117,3 @@ void MapManager::ReverseIsBlackFogVisible() {
 		IsBlackFogVisible[i] = !IsBlackFogVisible[i];
 	}
 }
-
-
-

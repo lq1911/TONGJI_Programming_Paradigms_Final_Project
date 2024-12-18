@@ -24,8 +24,6 @@ public:
 	Indoor(Player* origin_player);
 	virtual bool init();
 	static cocos2d::Scene* createScene();
-	void LoadMap() override;
-	void InitialCamera() override;
 
 };
 
