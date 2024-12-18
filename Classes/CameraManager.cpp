@@ -41,3 +41,8 @@ void CameraManager::UpdateCameraPosition(Camera* Camera, Vec2& Position, float H
 	//更新摄像机的位置
 	Camera->setPosition3D(Vec3(Position.x, Position.y, Height));
 }
+
+bool CameraManager::IsInMicroMap() {
+	//判断当前是否在小地图摄像机中
+	return MicroCamera->isVisible();
+}

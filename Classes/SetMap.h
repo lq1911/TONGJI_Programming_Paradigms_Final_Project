@@ -10,34 +10,29 @@
 #include "Monster.h"
 #include "MapManager.h"
 #include "CameraManager.h"
+#include "EventManager.h"
 USING_NS_CC;
+using namespace std;
 
 class SetMap :public cocos2d::Scene {
 private:
-	Size visibleSize;
-
-	bool IsMicroMapVisible;     // 微地图是否可见
-
+	Size VisibleSize;    // 可见屏幕大小
+	
 	CameraManager* _cameraManager;    // 摄像机管理器
-
-	EventListenerMouse* mainMapListener = nullptr;     // 主地图监听器
-	EventListenerMouse* microMapListener = nullptr;     // 小地图监听器
-
+	EventManager* _eventManager;    // 事件管理器
 	MapManager* _mapManager;    // 地图管理器
+	BagManager* _bagManager;    // 背包管理器
 
-	const float ScrollSpeed = 40.0f;    // 滚轮滚动速度
+	Player* PLAYER;     // 操作用户
+	MonsterRespawn* _monsterRespawn;    // 怪物管理器
+	NPC* npc1;    // NPC1
+
+	vector<bool> isKeyPressed = { false,false,false,false };    // 按键是否按下:W/S/A/D
 public:
-	/* 人物 */
-	// 玩家
-	Player* PLAYER;
-	// 怪物
-	MonsterRespawn* monster_respawn;
-	// NPC
-	NPC* npc1;
-
-	/* 绑定键盘 */
-	std::vector<bool> isKeyPressed = { false,false,false,false }; // 按键是否按下:W/S/A/D
-	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+	/****************************************************************/
+	////////////////以下为本场景所有用到的初始化函数/////////////////
+	/* 构造函数，获取屏幕的大小*/
+	SetMap(); 
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
@@ -45,15 +40,26 @@ public:
 	/*初始化地图函数*/
 	virtual bool init();
 
-	/*键盘事件处理, 按下M键切换显示微地图*/
-	void KeyPressedForMicroMap(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* event);
+	/*初始化摄像机*/
+	void LoadCameraToScene();
 
-	/*键盘事件处理，按下相应按键移动地图*/
-	void createKeyboardListenerForCamera(Camera* camera, float moveSpeed, float MaxWidth, float MinWidth, float MaxHeigth, float MinHeigth);
+	/*初始化地图*/
+	void LoadMapToScene();
 
-	/*鼠标事件处理，滚动滚轮控制地图缩放*/
-	EventListenerMouse* createMouseListenerForCameraScroll(Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
+	/*初始化背包界面*/
+	void LoadBagToScene();
 
+	/*初始化操控角色*/
+	void LoadPlayerToScene();
+
+	/*初始化怪物管理器*/
+	void LoadMonsterRespawnToScene();
+
+	/*初始化NPC*/
+	void LoadNPCToScene();
+
+	/****************************************************************/
+	////////////////以下为本场景声明的本场景特有功能函数/////////////////
 	/*设置摄像机跟随玩家移动*/
 	void CameraFollowController();
 
@@ -63,22 +69,36 @@ public:
 	/*设置小地图摄像机随玩家移动*/
 	void MicroCameraFollowPlayer();
 
-	/*更新摄像机的位置*/
-	void UpdateCameraPosition(Camera* camera, Vec2& TargetPos, float Height);
-
-	/*处理玩家移动*/
-	void HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction);
-
-	/*初始化摄像机*/
-	virtual void InitialCamera();
-
-	void onMouseUp(cocos2d::EventMouse* event);
-
 	/*解锁地图传送点*/
 	void UnlockMapTeleport();
 
 	/*将玩家传送到选择的传送点*/
 	void TeleportPlayer(int MapID);
+
+	/**********************************************************************/
+	////////////////以下为本场景所有与监视器相关的回调函数/////////////////
+	/*键盘事件处理, 按下M键切换显示微地图*/
+	void KeyPressedForRevealMicroMap(EventKeyboard::KeyCode keyCode, Event* event);
+
+	/*键盘事件处理，按下B键打开背包*/
+	void KeyPressedForBag(EventKeyboard::KeyCode keyCode, Event* event);
+
+	/*键盘事件处理，按下W/A/S/D控制人物移动*/
+	void KeyPressedForPlayerMove(EventKeyboard::KeyCode keyCode, Event* event);
+	void KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Event* event);    //玩家移动的辅助函数，释放按键玩家停止移动
+	void HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::string& scheduleKey, dir direction);    //玩家移动的辅助函数
+
+	/*键盘事件处理，按下I/J/K/L控制人物攻击*/
+	void KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Event* event);
+
+	/*键盘事件处理，按下C键打开NPC交互界面*/
+	void KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event);
+
+	/*鼠标事件处理，滚动滚轮控制地图缩放*/
+	void MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
+
+	/*键盘事件处理，按下方向键控制小地图方向*/
+	void KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed);
 
 	CREATE_FUNC(SetMap);
 };

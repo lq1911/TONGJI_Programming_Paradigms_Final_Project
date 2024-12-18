@@ -64,10 +64,10 @@ void Player::GetBonus(Bonus bonus) {
 }
 
 // 判断交互范围
-bool Player::isTrigger(Vec2 pos) {
+bool Player::isTrigger(int x, int y) {
    
-    int dx = mySprite->getPosition().x - pos.x;
-    int dy = mySprite->getPosition().y - pos.y;
+    int dx = mySprite->getPosition().x - x;
+    int dy = mySprite->getPosition().y - y;
 
     return std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(DIST, 2);
 
