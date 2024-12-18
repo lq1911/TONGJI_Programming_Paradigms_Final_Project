@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="112">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="118">
  <tileset firstgid="1" source="DesertItem.tsx"/>
  <tileset firstgid="1985" source="DesertRoad.tsx"/>
  <tileset firstgid="2245" source="DesertRock.tsx"/>
@@ -44,7 +44,7 @@
    eJzt2L0JgDAQhmHrTGitFtbqBOoGjuACjuAIbuAqXiAWAX9BMKfvA0cw1feBh2AUAf8Qm7cTPCP/SA8AAAAAAKAL/1YAAMCWIbBvayJ5UpnsZq4xkB6dy1HIWcpUxr8/MwXSo3c5ajkbmdb495rM5vhZkzW75g6W9h52n7feq6t7Hoq9fda45wC+ZwEOWBTc
   </data>
  </layer>
- <layer id="19" name="BlackFog" width="50" height="50">
+ <layer id="19" name="BlackFog" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwzEJAAAMA7A+M1n/QqpjkEB6SVVVVVVVVVVVVfX5ASvxn+o=
   </data>
@@ -94,13 +94,12 @@
   <object id="55" x="614" y="1217.33" width="21.3333" height="16"/>
   <object id="56" x="345" y="1229.33" width="13" height="140.667"/>
   <object id="57" x="350" y="1419.5" width="16" height="138.5"/>
-  <object id="58" x="0" y="1463" width="349" height="96"/>
-  <object id="59" x="2.66667" y="1222.67" width="342.667" height="5.33333"/>
-  <object id="61" x="264" y="1260.67" width="14" height="10"/>
-  <object id="62" x="6.66667" y="1259.33" width="18" height="10.6667"/>
-  <object id="63" x="9.33333" y="1421.33" width="14" height="9.33333"/>
-  <object id="65" x="262.667" y="1420.67" width="18" height="12"/>
-  <object id="66" x="127.333" y="1256" width="33.3333" height="18.6667"/>
+  <object id="58" x="72" y="1462.33" width="277" height="94.6667"/>
+  <object id="59" x="73.3333" y="1222.67" width="272" height="5.33333"/>
+  <object id="61" x="298" y="1262.67" width="14" height="10"/>
+  <object id="62" x="102" y="1261.33" width="18" height="10.6667"/>
+  <object id="63" x="103.333" y="1422" width="14" height="9.33333"/>
+  <object id="65" x="295.334" y="1421.34" width="18" height="12"/>
   <object id="67" x="-2.66667" y="446.667" width="164" height="30.6667"/>
   <object id="68" x="225.333" y="449.333" width="230.667" height="33.3333"/>
   <object id="69" x="442.667" y="480" width="16" height="125.333"/>
@@ -136,8 +135,15 @@
   <object id="106" x="6" y="63.3333" width="32.6667" height="94.6667"/>
   <object id="107" x="534" y="1211.5" width="8" height="13.5"/>
   <object id="109" x="1033.33" y="264.667" width="142" height="53.3333"/>
-  <object id="111" x="1552" y="868">
+  <object id="111" type="Interaction" x="1552" y="868">
    <point/>
   </object>
+  <object id="112" type="Teleport" x="190.5" y="1249.5" width="36" height="24">
+   <ellipse/>
+  </object>
+  <object id="113" x="60.6667" y="1240.67" width="9.33333" height="314.667"/>
+  <object id="115" x="-1" y="1596" width="1596.5" height="2.5"/>
+  <object id="116" x="1588" y="4" width="12" height="1592"/>
+  <object id="117" x="1896" y="832"/>
  </objectgroup>
 </map>

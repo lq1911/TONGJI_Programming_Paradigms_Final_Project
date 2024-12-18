@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="95">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="10" nextobjectid="97">
  <tileset firstgid="1" source="SnowyWinterWholeAsset.tsx"/>
  <tileset firstgid="257" source="MagicTelepoter.tsx"/>
  <tileset firstgid="513" source="../Vol_Snow_Ecotonal/spritesheet.tsx"/>
@@ -131,11 +131,13 @@
   <object id="90" x="1219.5" y="681.75" width="25" height="17.5"/>
   <object id="91" x="1091.25" y="810.75" width="25.5" height="13.5"/>
   <object id="92" x="1419.33" y="323.333" width="6.66667" height="27.3333"/>
-  <object id="93" x="94.5" y="1063" width="35" height="23">
+  <object id="93" type="Teleport" x="94.5" y="1063" width="35" height="23">
    <ellipse/>
   </object>
-  <object id="94" x="1552" y="28">
+  <object id="94" type="Interaction" x="1552" y="28">
    <point/>
   </object>
+  <object id="95" x="3.0303" y="-3.0303" width="1596.97" height="9.09091"/>
+  <object id="96" x="1595" y="4" width="7" height="1591"/>
  </objectgroup>
 </map>
