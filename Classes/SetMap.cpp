@@ -125,13 +125,16 @@ void SetMap::LoadBagToScene() {
 	_bagManager = BagManager::getInstance();
 	if (_bagManager->getParent() == nullptr)
 	{
-		this->addChild(_bagManager);
+		PLAYER->addChild(_bagManager);
 	}
 }
 
 void SetMap::LoadPlayerToScene() {
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
+
+	// 将玩家导入地图，此处为0，表示添加至初始神庙地图
+	_mapManager->GetTiledMap(0)->addChild(PLAYER);
 }
 
 void SetMap::LoadMonsterRespawnToScene() {
@@ -203,9 +206,9 @@ void SetMap::MicroCameraFollowPlayer() {
 		});
 }
 
-void SetMap::UnlockMapTeleport() {
+void SetMap::UnlockMapTeleport(int MapID) {
 	// 解锁传送门
-	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition().x, _mapManager->GetTeleportPosition().y)) {
+	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition(MapID).x, _mapManager->GetTeleportPosition(MapID).y)) {
 		_mapManager->SetIsRegionRevealedTrue();
 	}
 }
@@ -323,16 +326,16 @@ void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::strin
 void SetMap::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Event* event) {
 	/* 攻击:I/K/J/L */
 	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
-		PLAYER->Attack(UP, monster_respawn->GetMonster());
+		PLAYER->Attack(UP, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
-		PLAYER->Attack(DOWN, monster_respawn->GetMonster());
+		PLAYER->Attack(DOWN, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
-		PLAYER->Attack(LEFT, monster_respawn->GetMonster());
+		PLAYER->Attack(LEFT, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
-		PLAYER->Attack(RIGHT, monster_respawn->GetMonster());
+		PLAYER->Attack(RIGHT, _monsterRespawn->GetMonster());
 	}
 }
 

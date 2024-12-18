@@ -28,6 +28,9 @@ public:
 	/*初始化瓦片地图*/
 	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
 	
+	/*返回某个瓦片地图*/
+	TMXTiledMap* GetTiledMap(int MapID);
+
 	/*设置整张瓦片地图的黑雾*/
 	void SetBlackFogInMicroMap();
 
@@ -41,7 +44,7 @@ public:
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
 
 	/*获取传送门的位置*/
-	Vec2 GetTeleportPosition();  
+	Vec2 GetTeleportPosition(int MapID);  
 
 	/*解锁小地图以及其相应传送点*/
 	void SetIsRegionRevealedTrue();

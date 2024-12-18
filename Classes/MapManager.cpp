@@ -21,6 +21,10 @@ void MapManager::PlayerPositionInWhichMap(Vec2& PlayerPosition) {
 	}	
 }
 
+TMXTiledMap* MapManager::GetTiledMap(int MapID) {
+	return MapList[MapID];
+}
+
 void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 	TMXObjectGroup* ObjectLayer = TiledMap->getObjectGroup("Obstacles");    //获取障碍物层
 	if (ObjectLayer) {
@@ -97,7 +101,7 @@ bool MapManager::IsMoveable(const Vec2& Position) {
 	return true;
 }
 
-Vec2 MapManager::GetTeleportPosition() {
+Vec2 MapManager::GetTeleportPosition(int MapID) {
 	// 获取指定地图的传送点坐标
 	if (IsRegionRevealed[PlayerInWhichMap] == false) {
 		// 如果传送点列表为空或玩家不在传送点列表中，则返回Vec2::ZERO
