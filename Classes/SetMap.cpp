@@ -41,7 +41,6 @@ bool SetMap::init() {
 
 	// ¼Ó¸önpc
 	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
-	npc1->scheduleUpdate();
 	// ±³°ü
 	BagManager* bagManager = BagManager::getInstance();
 	if (bagManager->getParent() == nullptr)
