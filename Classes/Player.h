@@ -45,7 +45,6 @@ public:
 		coins = 1000;
 		scene->addChild(this);
 		this->scheduleUpdate();
-		log("success");
 	}
 	// 调试用构造函数
 	Player() {
