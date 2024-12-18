@@ -17,7 +17,7 @@ bool SetMap::init() {
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
 	this->LoadBagToScene();    //加载背包到场景
-	//this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
+	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
 	this->LoadNPCToScene();    //加载npc到场景
 
 	//添加键盘监听器，检测键盘活动
@@ -90,6 +90,9 @@ void SetMap::LoadMapToScene() {
 
 	//将森林沙漠边界加载至场景中
 	_mapManager->InitialMap("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2 - MapSize - Derivation), this);
+
+	//初始化小地图中黑色雾的显示
+	_mapManager->SetBlackFogInMicroMap();    
 }
 
 void SetMap::LoadBagToScene() {
@@ -153,7 +156,7 @@ void SetMap::MicroCameraFollowPlayer() {
 
 	// 每次进入小地图时，将小摄像机的位置设置中心位置
 	Vec2 centerPosition(1200, 1200);
-	_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), centerPosition, InitCameraZinMicroMap);
+	_cameraManager->UpdateCameraPosition(_cameraManager->GetMicroCamera(), centerPosition, InitCameraZinMicroMap);
 }
 
 void SetMap::UnlockMapTeleport() {
@@ -178,25 +181,23 @@ void SetMap::KeyPressedForRevealMicroMap(EventKeyboard::KeyCode keyCode, Event* 
 	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
 		//小地图中显示黑色雾效果的判断数组反转
 		_mapManager->ReverseIsBlackFogVisible();
-
 		// 更新小地图中黑色雾的显示
 		_mapManager->SetBlackFogInMicroMap();
 
-		this->CameraFollowController();    //注册摄像机跟随玩家的函数
 		/*此处切换小地图显示，进入小地图时首先隐藏初始地图，退出小地图之后再显示初始地图
 		  让玩家在进入小地图之前就暂停游戏，退出小地图之后再恢复游戏，防止玩家在打开地图的时候发生意外*/
 		if (_cameraManager->IsInMicroMap()) {
-			//进入小地图暂停游戏
-			Director::getInstance()->pause();     // 暂停游戏
-			_cameraManager->GetMicroCamera()->setVisible(true);     //将小地图摄像机显示
-			_cameraManager->GetMainCamera()->setVisible(false);    //将初始摄像机隐藏
+			// 恢复主地图响应和摄像机逻辑
+			Director::getInstance()->resume();    //退出小地图恢复游戏
+			_cameraManager->SwitchToMainCamera();    //切换到主摄像机
 		}
 		else {
-			// 恢复主地图响应和摄像机逻辑
-			_cameraManager->GetMicroCamera()->setVisible(false);    //将小地图摄像机隐藏
-			_cameraManager->GetMainCamera()->setVisible(true);    //将初始摄像机显示
-			Director::getInstance()->resume();    //退出小地图恢复游戏
+			//进入小地图暂停游戏
+			_cameraManager->SwitchToMicroCamera();    //切换到小摄像机
+			Director::getInstance()->pause();     // 暂停游戏	
 		}
+
+		this->CameraFollowController();    //注册摄像机跟随玩家的函数
 	}
 }
 
@@ -266,12 +267,14 @@ void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::strin
 
 	// 检查目标位置是否可移动
 	/*if (IsMoveable(targetPosition))*/ {
+		CCLOG("Move  first %d", direction);
 		if (!isKeyPressed[keyIndex]) {
 			isKeyPressed[keyIndex] = true;
 			PLAYER->Move(direction);
 			this->schedule([=](float dt) {
 				PLAYER->Move(direction);
 				}, 0.8f, scheduleKey);
+			CCLOG("Move %d", direction);
 		}
 	}
 }
@@ -285,7 +288,9 @@ void SetMap::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Event* ev
 		PLAYER->Attack(DOWN, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		CCLOG("into attack");
 		PLAYER->Attack(LEFT, _monsterRespawn->GetMonster());
+		CCLOG("out attack");
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
 		PLAYER->Attack(RIGHT, _monsterRespawn->GetMonster());
@@ -344,20 +349,18 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	// 处理不同的按键
 	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
 		KeyPressedForRevealMicroMap(keyCode, event);
-		return;     // 处理完小地图显示，退出函数
 	}
 	if (!_cameraManager->IsInMicroMap()) {
-
 		if (keyCode == EventKeyboard::KeyCode::KEY_B) {
 			KeyPressedForBag(keyCode, event);
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_W ||
+		if (keyCode == EventKeyboard::KeyCode::KEY_W ||
 			keyCode == EventKeyboard::KeyCode::KEY_A ||
 			keyCode == EventKeyboard::KeyCode::KEY_S ||
 			keyCode == EventKeyboard::KeyCode::KEY_D) {
 			KeyPressedForPlayerMove(keyCode, event);
 		}
-		else if (keyCode == EventKeyboard::KeyCode::KEY_I ||
+		if (keyCode == EventKeyboard::KeyCode::KEY_I ||
 			keyCode == EventKeyboard::KeyCode::KEY_J ||
 			keyCode == EventKeyboard::KeyCode::KEY_K ||
 			keyCode == EventKeyboard::KeyCode::KEY_L) {

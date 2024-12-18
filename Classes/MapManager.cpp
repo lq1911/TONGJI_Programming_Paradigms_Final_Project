@@ -8,6 +8,7 @@ void MapManager::InitialMap(const char* mapName, const Vec2& MapPosition, Scene*
 	TargetScene->addChild(TiledMap);    //将地图添加到场景中
 
 	MapList.push_back(TiledMap);    //将地图添加到已经创建的地图列表中
+	BlackFogList.push_back(TiledMap->getLayer("BlackFog"));    //初始化黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始化黑色雾的可见性为false
 	IsRegionRevealed.push_back(false);    //初始化地图区域是否被揭示为false
 }
