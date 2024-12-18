@@ -69,7 +69,7 @@ public:
 	void MicroCameraFollowPlayer();
 
 	/*解锁地图传送点*/
-	void UnlockMapTeleport(int MapID);
+	void UnlockMapTeleport();
 
 	/*将玩家传送到选择的传送点*/
 	void TeleportPlayer(int MapID);
