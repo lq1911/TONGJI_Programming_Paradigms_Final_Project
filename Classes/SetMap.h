@@ -10,15 +10,16 @@
 #include "Monster.h"
 #include "MapManager.h"
 #include "CameraManager.h"
-#include "EventManager.h"
 USING_NS_CC;
 
 class SetMap :public cocos2d::Scene {
 private:
 	Size VisibleSize;    // 可见屏幕大小
 	
+	EventListenerKeyboard* _keyboardListener;    // 键盘监听器
+	EventListenerMouse* _mouseListener;    // 鼠标监听器
+
 	CameraManager* _cameraManager;    // 摄像机管理器
-	EventManager* _eventManager;    // 事件管理器
 	MapManager* _mapManager;    // 地图管理器
 	BagManager* _bagManager;    // 背包管理器
 
@@ -98,6 +99,15 @@ public:
 
 	/*键盘事件处理，按下方向键控制小地图方向*/
 	void KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed);
+
+	/*键盘事件处理，最终处理键盘按下事件函数*/
+	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+
+	/*键盘事件处理，最终处理键盘释放事件函数*/
+	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
+
+	/*鼠标事件处理，最终处理鼠标滚轮事件函数*/
+	void MouseScroll(EventMouse* event);
 
 	CREATE_FUNC(SetMap);
 };

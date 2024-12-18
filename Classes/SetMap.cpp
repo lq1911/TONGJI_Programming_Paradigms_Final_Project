@@ -13,23 +13,21 @@ bool SetMap::init() {
         return false;
     }
 
-	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadMapToScene();    //加载地图到场景
-	this->LoadBagToScene();    //加载背包到场景
+	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
+	this->LoadBagToScene();    //加载背包到场景
 	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
 	this->LoadNPCToScene();    //加载npc到场景
 
-	//添加键盘监听器，按下M打开小地图
-	_eventManager->AddKeyBoardListener(this, CC_CALLBACK_2(SetMap::KeyPressedForRevealMicroMap, this));
-	//添加键盘监听器，按下B打开背包
-	_eventManager->AddKeyBoardListener(this, CC_CALLBACK_2(SetMap::KeyPressedForBag, this));
-	//添加键盘监听器，按下W/A/S/D控制玩家移动
-	_eventManager->AddKeyBoardListener(this,
-		CC_CALLBACK_2(SetMap::KeyPressedForPlayerMove, this),
-		CC_CALLBACK_2(SetMap::KeyReleasedForPlayerMove, this));
-	//添加键盘监听器，按下I/J/K/L控制玩家攻击
-	_eventManager->AddKeyBoardListener(this, CC_CALLBACK_2(SetMap::KeyPressedForPlayerAttack, this));
+	//添加键盘监听器，检测键盘活动
+	_keyboardListener = EventListenerKeyboard::create();
+	_keyboardListener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this);
+	_keyboardListener->onKeyReleased = CC_CALLBACK_2(SetMap::KeyReleased, this);
+
+	//添加鼠标监听器，检测鼠标活动
+	_mouseListener = EventListenerMouse::create();
+	_mouseListener->onMouseScroll = CC_CALLBACK_1(SetMap::MouseScroll, this);
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 
@@ -37,12 +35,11 @@ bool SetMap::init() {
 }
 
 /****************************************************************/
-	////////////////以下为本场景所有用到的初始化函数/////////////////
+////////////////以下为本场景所有用到的初始化函数/////////////////
 SetMap::SetMap() {
 	//获取屏幕尺寸
 	VisibleSize = Director::getInstance()->getVisibleSize();
 
-	_eventManager = EventManager::create();  // 初始化事件管理器
 	_cameraManager = CameraManager::create();  // 初始化摄像机管理器
 	_mapManager = MapManager::create();  // 初始化地图管理器
 }
@@ -98,9 +95,6 @@ void SetMap::LoadBagToScene() {
 void SetMap::LoadPlayerToScene() {
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
-
-	// 将玩家导入地图，此处为0，表示添加至初始神庙地图
-	_mapManager->GetTiledMap(0)->addChild(PLAYER);
 }
 
 void SetMap::LoadMonsterRespawnToScene() {
@@ -137,14 +131,8 @@ void SetMap::MainCameraFollowPlayer() {
 	Vec2 playPosition = PLAYER->mySprite->getPosition();
 	_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), playPosition, InitCameraZinMainMap);
 
-	//添加鼠标滚轮事件，用于控制摄像机高度
-	_eventManager->AddMouseListener(this, [=](EventMouse* event) {
-		float ScrollSpeed = 40.0f;
-		MouseScrollForCameraZoom(event, _cameraManager->GetMainCamera(), 600.0f, 200.0f, ScrollSpeed);
-		});
-
 	// 设置主摄像机的实时跟随任务
-	schedule([=](float dt) {
+	this->schedule([=](float dt) {
 		float updatedCameraZ = _cameraManager->GetMainCamera()->getPosition3D().z;    //获取摄像机的高度
 		Vec2 playerPosition = PLAYER->mySprite->getPosition();    //获取玩家位置
 		_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), playerPosition, updatedCameraZ);    //更新摄像机位置
@@ -158,18 +146,6 @@ void SetMap::MicroCameraFollowPlayer() {
 	// 每次进入小地图时，将小摄像机的位置设置中心位置
 	Vec2 centerPosition(1200, 1200);
 	_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), centerPosition, InitCameraZinMicroMap);
-
-	//添加鼠标滚轮事件，用于控制摄像机高度
-	_eventManager->AddMouseListener(this, [=](EventMouse* event) {
-		float ScrollSpeed = 40.0f;
-		MouseScrollForCameraZoom(event, _cameraManager->GetMainCamera(), 3600.0f, 1200.0f, ScrollSpeed);
-		});
-
-	// 设置键盘监听，控制摄像机移动
-	_eventManager->AddKeyBoardListener(this, [=](EventKeyboard::KeyCode keyCode, Event* event) {
-		float ScrollSpeed = 40.0f;
-		KeyPressedForMicroMapMove(keyCode, event, _cameraManager->GetMicroCamera(), 2400.0f, -2400.0f, 2400.0f, -2400.0f, ScrollSpeed * 10);
-		});
 }
 
 void SetMap::UnlockMapTeleport() {
@@ -351,4 +327,56 @@ void SetMap::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* ev
 
 	// 更新摄像机位置
 	camera->setPosition3D(currentPosition);
+}
+
+void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
+	// 处理不同的按键
+	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
+		KeyPressedForRevealMicroMap(keyCode, event);
+	}
+	if (!_cameraManager->IsInMicroMap()) {
+
+		if (keyCode == EventKeyboard::KeyCode::KEY_B) {
+			KeyPressedForBag(keyCode, event);
+		}
+		else if (keyCode == EventKeyboard::KeyCode::KEY_W ||
+			keyCode == EventKeyboard::KeyCode::KEY_A ||
+			keyCode == EventKeyboard::KeyCode::KEY_S ||
+			keyCode == EventKeyboard::KeyCode::KEY_D) {
+			KeyPressedForPlayerMove(keyCode, event);
+		}
+		else if (keyCode == EventKeyboard::KeyCode::KEY_I ||
+			keyCode == EventKeyboard::KeyCode::KEY_J ||
+			keyCode == EventKeyboard::KeyCode::KEY_K ||
+			keyCode == EventKeyboard::KeyCode::KEY_L) {
+			KeyPressedForPlayerAttack(keyCode, event);
+		}
+	}
+	else {
+		if (keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW ||
+			keyCode == EventKeyboard::KeyCode::KEY_DOWN_ARROW ||
+			keyCode == EventKeyboard::KeyCode::KEY_LEFT_ARROW ||
+			keyCode == EventKeyboard::KeyCode::KEY_RIGHT_ARROW) {
+			KeyPressedForMicroMapMove(keyCode, event, _cameraManager->GetMicroCamera(), 2400.0f, -2400.0f, 2400.0f, -2400.0f, 400.0f);
+		}
+	}
+}
+
+void SetMap::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
+	// 控制玩家移动
+	if (keyCode == EventKeyboard::KeyCode::KEY_W ||
+		keyCode == EventKeyboard::KeyCode::KEY_A ||
+		keyCode == EventKeyboard::KeyCode::KEY_S ||
+		keyCode == EventKeyboard::KeyCode::KEY_D) {
+		KeyReleasedForPlayerMove(keyCode, event);
+	}
+}
+
+void SetMap::MouseScroll(EventMouse* event) {
+	if (_cameraManager->IsInMicroMap()) {
+		MouseScrollForCameraZoom(event, _cameraManager->GetMicroCamera(), 3600.0f, 1200.0f, 400.0f);
+	}
+	else {
+		MouseScrollForCameraZoom(event, _cameraManager->GetMainCamera(), 600.0f, 200.0f, 400.0f);
+	}
 }
