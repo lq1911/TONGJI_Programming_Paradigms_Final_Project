@@ -171,7 +171,7 @@ void SetMap::MicroCameraFollowPlayer() {
 
 void SetMap::UnlockMapTeleport() {
 	// ½âËø´«ËÍÃÅ
-	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition().x, _mapManager->GetTeleportPosition().y)) {
+	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition(_mapManager->GetPlayerInWhichMap()))))) {
 		_mapManager->SetIsRegionRevealedTrue();
 	}
 }

@@ -21,7 +21,9 @@ void MapManager::PlayerPositionInWhichMap(Vec2& PlayerPosition) {
 	}	
 }
 
-void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
+int MapManager::GetPlayerInWhichMap() const { return PlayerInWhichMap; }
+
+void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 	TMXObjectGroup* ObjectLayer = TiledMap->getObjectGroup("Obstacles");    //获取障碍物层
 	if (ObjectLayer) {
 		//遍历障碍物组，获取障碍物的位置信息
@@ -40,7 +42,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 				float height = obstacle["height"].asFloat();
 
 				// 创建矩形区域
-				Rect obstacleRect(x, y, width, height);
+				Rect obstacleRect(tiledMapPosToScenePos(Vec2(x, y), mapID).x, tiledMapPosToScenePos(Vec2(x, y), mapID).y, width, height);
 
 				// 这里可以存储或使用这个区域来进行碰撞检测
 				// 比如添加到一个障碍物列表中
@@ -53,7 +55,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 				float y = obstacle["y"].asFloat();
 
 				// 保存传送点坐标
-				TeleportList.push_back(Vec2(x, y));
+				TeleportList.push_back(tiledMapPosToScenePos(Vec2(x, y), mapID));
 			}
 			else if (objectType == "Interactional") {
 				// 根据对象类型读取其属性
@@ -62,7 +64,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 				float y = obstacle["y"].asFloat();
 
 				// 保存可交互区域坐标
-				InteractionList.push_back(Vec2(x, y));
+				InteractionList.push_back(tiledMapPosToScenePos(Vec2(x, y), mapID));
 			}
 			
 		}
@@ -97,7 +99,7 @@ bool MapManager::IsMoveable(const Vec2& Position) {
 	return true;
 }
 
-Vec2 MapManager::GetTeleportPosition() {
+Vec2 MapManager::GetTeleportPosition(int mapID) {
 	// 获取指定地图的传送点坐标
 	if (IsRegionRevealed[PlayerInWhichMap] == false) {
 		// 如果传送点列表为空或玩家不在传送点列表中，则返回Vec2::ZERO
@@ -118,4 +120,54 @@ void MapManager::SetIsRegionRevealedTrue() {
 	if (IsRegionRevealed[PlayerInWhichMap] == false) {
 		IsRegionRevealed[PlayerInWhichMap] = true;
 	}
+}
+
+Vec2 MapManager::tiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex) {
+	// 将瓦片地图坐标系中的位置转换为场景坐标系中的位置
+	// 瓦片地图坐标系的原点在左上角，而场景坐标系的原点在左下角
+	if (mapIndex < 0 || mapIndex >= (int)MapList.size()) {
+		return Vec2::ZERO;
+	}
+	float derivation = 243.0f; // 地图拼接误差
+	Vec2 scenePos;
+	if (mapIndex == 0) { //RebirthTemple
+		scenePos.x = tiledMapPos.x;
+		scenePos.y = MapField - tiledMapPos.y;
+	}
+	else if (mapIndex == 1) { //volcano
+		scenePos.x = tiledMapPos.x - MapField - derivation;
+		scenePos.y = MapField - tiledMapPos.y + MapField + derivation;
+	}
+	else if (mapIndex == 2) { //SnowyWinter
+		scenePos.x = tiledMapPos.x + MapField + derivation;
+		scenePos.y = MapField - tiledMapPos.y + MapField + derivation;
+	}
+	else if (mapIndex == 3) { //DeathDesert
+		scenePos.x = tiledMapPos.x + MapField + derivation;
+		scenePos.y = -tiledMapPos.y - derivation;
+	}
+	else if (mapIndex == 4) { //BrightForest
+		scenePos.x = tiledMapPos.x - MapField - derivation;
+		scenePos.y = -tiledMapPos.y - derivation;
+	}
+	else if (mapIndex == 5) { //Vol_Snow
+		scenePos.x = tiledMapPos.x;
+		scenePos.y = MapField - tiledMapPos.y + MapField + derivation;
+	}
+	else if (mapIndex == 6) { //Derset_Snow
+		scenePos.x = tiledMapPos.x - MapField - derivation;
+		scenePos.y = tiledMapPos.y;
+	}
+	else if (mapIndex == 7) { //SnowyForest
+		scenePos.x = tiledMapPos.x + MapField + derivation;
+		scenePos.y = tiledMapPos.y;
+	}
+	else if (mapIndex == 8) { //Volcano
+		scenePos.x = tiledMapPos.x;
+		scenePos.y = -tiledMapPos.y - derivation;
+	}
+	else
+		scenePos = Vec2::ZERO;
+
+	return scenePos;
 }

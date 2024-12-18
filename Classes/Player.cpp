@@ -64,7 +64,7 @@ void Player::GetBonus(Bonus bonus) {
 }
 
 // 判断交互范围
-bool Player::isTrigger(int x, int y) {
+bool Player::isTrigger(Vec2 pos) {
    
     int dx = mySprite->getPosition().x - x;
     int dy = mySprite->getPosition().y - y;
