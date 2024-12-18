@@ -1,6 +1,17 @@
 #include <iostream>
 #include "NPC.h"
 
+/* 交互提示 */
+void NPC::update(float dt) {
+	CCLOG("update is being called");
+	if (isTrigger()) {
+		triggerTip();  // 玩家进入触发范围
+	}
+	else {
+		trggerTipRemove();   // 玩家离开触发范围
+	}
+}
+
 /* 判断是否在触发范围内 */
 bool NPC::isTrigger() {
 	if (who == nullptr)
@@ -9,16 +20,13 @@ bool NPC::isTrigger() {
 	int dx = who->mySprite->getPosition().x - x;
 	int dy = who->mySprite->getPosition().y - y;
 
-	if (std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(DIST, 2)) {
-		return true;
-	}
-	return false;
+	return std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(DIST, 2);
 }
 
 /* 与NPC交互 */
 void NPC::Chat() {
 	/* 判断是否在触发范围内 */
-	if (!isTrigger())
+	if (!this->isTrigger())
 		return;
 
     /* 加入对话框chatPanel */
@@ -61,7 +69,11 @@ void NPC::Chat() {
 			});
 		break;
 	case 2:
-		
+		npc2([=]() {
+			npcSprite->removeFromParent();
+			chatPanel->removeFromParent();
+			log("npc1-chat over.");
+			});
 		break;
 	case 3:
 		
@@ -264,3 +276,14 @@ void NPC::npc1(std::function<void()> callback) {
 		});
 }
 
+void NPC::npc2(std::function<void()> callback) {
+	auto winSize = Director::getInstance()->getWinSize();
+
+	/* npc说话-1 */
+	auto npcTxt1 = Label::createWithTTF("This is npc1 speaking 1", "fonts/Lacquer.ttf", 35);
+	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1000));
+	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(npcTxt1, 4);
+
+
+}

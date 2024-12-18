@@ -1,6 +1,7 @@
 #include <string>
 #include "Player.h"
 #include "Monster.h"
+
 // update
 void Player::update(float dt) {
     Vec2 pos = mySprite->getPosition();
@@ -18,9 +19,11 @@ void Player::update(float dt) {
         log("def:%d", def);
     }
 }
+
 void Player::InitMonster(vector<Monster*>monster) {
     this->monster = monster;
 }
+
 // 人物攻击
 // 攻击范围是扇形
 Animate* Player::Attack(int dir, vector<Monster*> monster) {
@@ -43,7 +46,8 @@ Animate* Player::Attack(int dir, vector<Monster*> monster) {
     }
     return nullptr;
 }
-//Player获得奖励
+
+// Player获得奖励
 void Player::GetBonus(Bonus bonus) {
     //经验奖励
     current_exp += bonus.exp;
@@ -57,4 +61,14 @@ void Player::GetBonus(Bonus bonus) {
     //物品奖励
     //暂待，需物品和装备
     
+}
+
+// 判断交互范围
+bool Player::isTrigger(int x, int y) {
+   
+    int dx = mySprite->getPosition().x - x;
+    int dy = mySprite->getPosition().y - y;
+
+    return std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(DIST, 2);
+
 }

@@ -36,7 +36,7 @@ bool SetMap::init() {
 
 	// 加个npc
 	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
-	
+	npc1->scheduleUpdate();
 	// 背包
 	BagManager* bagManager = BagManager::getInstance();
 	if (bagManager->getParent() == nullptr)
@@ -142,6 +142,7 @@ void SetMap::MainCameraFollowPlayer() {
 		}, "camera_update_key");
 }
 
+<<<<<<< HEAD
 //点击屏幕所得坐标转换测试======================================================================================================
 void SetMap::onMouseUp(cocos2d::EventMouse* event) {
 
@@ -169,6 +170,8 @@ void SetMap::onMouseUp(cocos2d::EventMouse* event) {
 }
 //=======================================================================================================
 
+=======
+>>>>>>> lq_branch
 void SetMap::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
 	float InitCameraZinMicroMap = 2000.0f;
