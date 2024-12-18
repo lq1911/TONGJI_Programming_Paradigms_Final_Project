@@ -25,14 +25,9 @@ private:
 	int next_level_exp;    // 达到下一级所需经验值
 	vector<Monster*> monster;
 protected:
-	// 玩家名字在Creature类里已定义了:(	
 
-    //int x, y;       // 坐标
 public:
-	// 精灵//Creature中有了:( 
-
 	/* 构造函数 */
-	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
 		Creature(who, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene) {
 		// 角色现有经验值、达到下一级所需经验值初始化条件记得改
@@ -45,7 +40,7 @@ public:
 		coins = 1000;
 		scene->addChild(this);
 		this->scheduleUpdate();
-		log("success");
+		log("player init success");
 	}
 	// 调试用构造函数
 	Player() {
@@ -66,7 +61,7 @@ public:
 	virtual Animate* Attack(int dir, vector<Monster*>monster);
 
 	/* 判断交互范围 */
-	virtual bool isTrigger(int x, int y);
+	virtual bool isTrigger(const Vec2& pos);
 
 	// 技能，以组合技形式出现
 	//void Combo();

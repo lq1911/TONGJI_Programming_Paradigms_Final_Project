@@ -244,7 +244,7 @@ void LearningScene::learnAttack_2() {
 void LearningScene::learnChat_1() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* ¼ÓÈëNPC */
-    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 2.0f, this, LEARNER);
+    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 2.0f, this, LEARNER, nullptr);
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("3.Chat", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));

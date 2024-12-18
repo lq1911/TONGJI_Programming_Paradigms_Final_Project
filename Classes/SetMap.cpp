@@ -39,12 +39,13 @@ bool SetMap::init() {
 	// 将怪导入角色
 	PLAYER->InitMonster(monster_respawn->GetMonster());
 
-	// 加个npc
-	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
 	// 背包
 	BagManager* bagManager = BagManager::getInstance();
 	if (bagManager->getParent() == nullptr)
 		this->addChild(bagManager);
+
+	// 加个npc
+	npc1 = new NPC("npc2", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER, bagManager);
 	///////////////////////
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数

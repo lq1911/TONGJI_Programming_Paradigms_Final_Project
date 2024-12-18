@@ -10,11 +10,13 @@ USING_NS_CC;
 
 class NPC :public Creature {
 private:
-	Player* who;   // 玩家
+	Player* who;      // 玩家
+    BagManager* bag;  // 玩家背包
 public:
 	/* 构造函数 */
-	NPC(std::string role, int x, int y, float scale, Scene* scene, Player* player) :Creature(role, 0, 0, 0, 0, 0, 0, 0, x, y, scale, scene) { 
+	NPC(std::string role, int x, int y, float scale, Scene* scene, Player* player, BagManager* bagManager) :Creature(role, 0, 0, 0, 0, 0, 0, 0, x, y, scale, scene) {
 		who = player;
+        bag = bagManager;
         this->scheduleUpdate();
 	}
 
@@ -45,20 +47,22 @@ class NPCManager {
 private:
     std::vector<NPC*> npcList;  // 存储所有npc
     Player* player;             // 玩家对象的引用
+    BagManager* bag;            // 玩家背包
 
 public:
     /* 构造函数 */
-    NPCManager(Player* playerRef) : player(playerRef) {  }
+    NPCManager(Player* playerRef, BagManager* bagManager) : player(playerRef), bag(bagManager) {  }
 
     /* 添加 NPC */
     void addNPC(std::string role, int x, int y, float scale, Scene* scene) {
-        NPC* newNpc = new NPC(role, x, y, scale, scene, player);
+        NPC* newNpc = new NPC(role, x, y, scale, scene, player, bag);
         npcList.push_back(newNpc);
     }
 
     /* 移除npc */
     void removeNPC(NPC* npc) {
         npcList.erase(std::remove(npcList.begin(), npcList.end(), npc), npcList.end());
+        npc->removeFromParent(); //?
         delete npc; 
     }
 
@@ -71,14 +75,7 @@ public:
         }
     }
 
-    /* 执行全局更新逻辑（如动画或行为） */
-    void updateNPCs(float delta) {
-        for (auto npc : npcList) {
-            // 例如，可以在这里更新每个NPC的状态
-        }
-    }
-
-    /* 清理所有 NPC */
+    /* 清理所有NPC */
     void clearAllNPCs() {
         for (auto npc : npcList) {
             delete npc;
