@@ -25,7 +25,6 @@ TMXTiledMap* MapManager::GetTiledMap(int MapID) {
 	return MapList[MapID];
 }
 
-void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 int MapManager::GetPlayerInWhichMap() const { return PlayerInWhichMap; }
 
 void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
@@ -135,6 +134,7 @@ Vec2 MapManager::tiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex) {
 	}
 	float derivation = 243.0f; // µÿÕº∆¥Ω”ŒÛ≤Ó
 	Vec2 scenePos;
+
 	if (mapIndex == 0) { //RebirthTemple
 		scenePos.x = tiledMapPos.x;
 		scenePos.y = MapField - tiledMapPos.y;
