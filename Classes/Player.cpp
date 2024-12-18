@@ -34,18 +34,19 @@ Animate* Player::Attack(int dir, vector<Monster*> monster) {
         Vec2 pos_monster = monster[i]->mySprite->getPosition();
         float distance = pos_monster.distance(pos_player);
         if (distance < atk_range) {
-            Vec2 direction = pos_monster - pos_player;// 人物指向怪物
-            float k = (direction.x+1.0-1.0) / direction.y;// 斜率
-          if(dir==0&&k<1&&k>-1&&direction.x<0)// 向左
-            Creature::Attack(dir, monster[i]);
-          else if(dir == 1 && k<1 && k>-1 && direction.x > 0)// 右
-              Creature::Attack(dir, monster[i]);
-          else if(dir == 2 && (k<-1 || k>1) && direction.y > 0)// 上
-              Creature::Attack(dir, monster[i]);
-          else if(dir == 3 && (k < -1 || k>1) && direction.y < 0)// 下
-              Creature::Attack(dir, monster[i]);
-        }
-    }
+			Vec2 direction = pos_monster - pos_player;// 人物指向怪物
+			float k = (direction.x + 1.0 - 1.0) / direction.y;// 斜率
+			if (dir == 0 && k<1 && k>-1 && direction.x < 0)// 向左
+				Creature::Attack(dir, monster[i]);
+			else if (dir == 1 && k<1 && k>-1 && direction.x > 0)// 右
+				Creature::Attack(dir, monster[i]);
+			else if (dir == 2 && (k < -1 || k>1) && direction.y > 0)// 上
+				Creature::Attack(dir, monster[i]);
+			else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// 下
+				Creature::Attack(dir, monster[i]);
+		}
+        Creature::Attack(dir, monster[i]);
+	}
     return nullptr;
 }
 
