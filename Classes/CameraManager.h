@@ -35,6 +35,9 @@ public:
 	/*更新摄像机位置*/
 	void UpdateCameraPosition(Camera* Camera, Vec2& Position, float Height);
 
+	/*当前视角是否在小地图*/
+	bool IsInMicroMap();
+
 	CREATE_FUNC(CameraManager);
 };
 
