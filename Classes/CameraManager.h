@@ -41,4 +41,4 @@ public:
 	CREATE_FUNC(CameraManager);
 };
 
-#endif // __CAMERA_MANAGER_H__
+#endif  __CAMERA_MANAGER_H__

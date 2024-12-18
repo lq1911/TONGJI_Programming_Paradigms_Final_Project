@@ -17,17 +17,19 @@ bool SetMap::init() {
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
 	this->LoadBagToScene();    //加载背包到场景
-	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
+	//this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
 	this->LoadNPCToScene();    //加载npc到场景
 
 	//添加键盘监听器，检测键盘活动
 	_keyboardListener = EventListenerKeyboard::create();
 	_keyboardListener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressed, this);
 	_keyboardListener->onKeyReleased = CC_CALLBACK_2(SetMap::KeyReleased, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_keyboardListener, this);
 
 	//添加鼠标监听器，检测鼠标活动
 	_mouseListener = EventListenerMouse::create();
 	_mouseListener->onMouseScroll = CC_CALLBACK_1(SetMap::MouseScroll, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(_mouseListener, this);
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 
@@ -45,6 +47,9 @@ SetMap::SetMap() {
 }
 
 void SetMap::LoadCameraToScene() {
+	// 将摄像机管理器添加到场景中
+	this->addChild(_cameraManager); 
+
 	// 初始化主地图摄像机，并添加摄像机至场景中
 	_cameraManager->InitialMainCamera(this);
 
@@ -55,6 +60,9 @@ void SetMap::LoadCameraToScene() {
 void SetMap::LoadMapToScene() {
 	//地图的长度与宽度均为50，每个图块像素大小为32，所以地图大小为1600
 	const int MapSize = 1600;
+
+	// 将地图管理器添加到场景中
+	this->addChild(_mapManager);
 
 	// 将复苏神庙地图加载至场景中
 	_mapManager->InitialMap("Maps/RebirthTemple/RebirthTemple.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
@@ -219,6 +227,9 @@ void SetMap::KeyPressedForPlayerMove(EventKeyboard::KeyCode keyCode, Event* even
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
 		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
 	}
+
+	Vec2 playerPosition = PLAYER->mySprite->getPosition();
+	_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), playerPosition, _cameraManager->GetMainCamera()->getPosition3D().z);
 }
 void SetMap::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
@@ -333,6 +344,7 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	// 处理不同的按键
 	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
 		KeyPressedForRevealMicroMap(keyCode, event);
+		return;     // 处理完小地图显示，退出函数
 	}
 	if (!_cameraManager->IsInMicroMap()) {
 
@@ -377,6 +389,6 @@ void SetMap::MouseScroll(EventMouse* event) {
 		MouseScrollForCameraZoom(event, _cameraManager->GetMicroCamera(), 3600.0f, 1200.0f, 400.0f);
 	}
 	else {
-		MouseScrollForCameraZoom(event, _cameraManager->GetMainCamera(), 600.0f, 200.0f, 400.0f);
+		MouseScrollForCameraZoom(event, _cameraManager->GetMainCamera(), 600.0f, 200.0f, 40.0f);
 	}
 }
