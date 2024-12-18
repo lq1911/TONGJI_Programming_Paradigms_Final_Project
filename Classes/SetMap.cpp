@@ -20,6 +20,7 @@ bool SetMap::init() {
 	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
 	this->LoadNPCToScene();    //加载npc到场景
 
+<<<<<<< HEAD
 	//添加键盘监听器，按下M打开小地图
 	_eventManager->AddKeyBoardListener(this, CC_CALLBACK_2(SetMap::KeyPressedForRevealMicroMap, this));
 	//添加键盘监听器，按下B打开背包
@@ -30,6 +31,39 @@ bool SetMap::init() {
 		CC_CALLBACK_2(SetMap::KeyReleasedForPlayerMove, this));
 	//添加键盘监听器，按下I/J/K/L控制玩家攻击
 	_eventManager->AddKeyBoardListener(this, CC_CALLBACK_2(SetMap::KeyPressedForPlayerAttack, this));
+=======
+    IsMicroMapVisible = false;    //初始化小地图状态变量
+
+    //添加键盘监听器，按下M打开小地图
+    auto KeyListener = EventListenerKeyboard::create();
+    KeyListener->onKeyPressed = CC_CALLBACK_2(SetMap::KeyPressedForMicroMap, this);
+	KeyListener->onKeyReleased = CC_CALLBACK_2(SetMap::KeyReleased, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(KeyListener, this);
+
+	//获取屏幕尺寸
+	visibleSize = Director::getInstance()->getVisibleSize();
+
+    /*初始化主地图摄像机和小地图摄像机*/
+	this->InitalCamera();
+
+    /*加载初始地图*/
+    this->LoadMap();
+  
+	// lq加的调试小人
+	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
+	// 加怪
+	monster_respawn = new MonsterRespawn(PLAYER, this);
+	// 将怪导入角色
+	PLAYER->InitMonster(monster_respawn->GetMonster());
+
+	// 加个npc
+	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
+	// 背包
+	BagManager* bagManager = BagManager::getInstance();
+	if (bagManager->getParent() == nullptr)
+		this->addChild(bagManager);
+	///////////////////////
+>>>>>>> lq_branch
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 

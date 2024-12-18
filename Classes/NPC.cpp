@@ -87,7 +87,6 @@ void NPC::Chat() {
 
 void  NPC::npc0(std::function<void()> callback) {
 	auto winSize = Director::getInstance()->getWinSize();
-
 	/* npc说话-1 */
 	auto npcTxt1 = Label::createWithTTF("Hello! Welcome to this new world!", "fonts/Lacquer.ttf", 35);
 	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1000));
@@ -280,10 +279,28 @@ void NPC::npc2(std::function<void()> callback) {
 	auto winSize = Director::getInstance()->getWinSize();
 
 	/* npc说话-1 */
-	auto npcTxt1 = Label::createWithTTF("This is npc1 speaking 1", "fonts/Lacquer.ttf", 35);
+	auto npcTxt1 = Label::createWithTTF("This is npc2 speaking 1", "fonts/Lacquer.ttf", 35);
 	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1000));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 4);
 
+	/* 结束对话 */
+	auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+	CloseButton->ignoreContentAdaptWithSize(false);
+	CloseButton->setContentSize(Size(40, 40));
+	CloseButton->setTitleFontSize(24);
+	CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1150));
+	scene->addChild(CloseButton, 4);
+	CloseButton->addClickEventListener([=](Ref* sender) mutable {
+		npcTxt1->removeFromParent();
+		CloseButton->removeFromParent();
+		if (callback) {
+			callback();
+		}
+		return;
+		});
+
+	//bagManager->taskUnlock(1, 1);
+	//setmap中bagManager声明放public中
 
 }
