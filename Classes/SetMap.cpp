@@ -169,6 +169,22 @@ void SetMap::MicroCameraFollowPlayer() {
 		});
 }
 
+void SetMap::UnlockMapTeleport() {
+	// 解锁传送门
+	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition().x, _mapManager->GetTeleportPosition().y)) {
+		_mapManager->SetIsRegionRevealedTrue();
+	}
+}
+
+void SetMap::TeleportPlayer(int MapID) {
+	// 传送玩家
+	if (_mapManager->GetTeleportPosition(MapID) != Vec2(0, 0)) {
+		PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+		this->unscheduleAllCallbacks();  // 停止所有定时器
+		PLAYER->mySprite->setPosition(_mapManager->GetTeleportPosition(MapID));
+	}
+}
+
 /**********************************************************************/
 ////////////////以下为本场景所有与监视器相关的回调函数/////////////////
 void SetMap::KeyPressedForRevealMicroMap(EventKeyboard::KeyCode keyCode, Event* event) {
