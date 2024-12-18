@@ -43,8 +43,8 @@ public:
 	/*获取传送门的位置*/
 	Vec2 GetTeleportPosition();  
 
-	/*解锁对应地图的传送门*/
-	void UnlockTeleport();
+	/*解锁小地图以及其相应传送点*/
+	void SetIsRegionRevealedTrue();
 
 	/*设置黑雾是否可见*/
 	void ReverseIsBlackFogVisible();

@@ -106,14 +106,16 @@ Vec2 MapManager::GetTeleportPosition() {
 	return TeleportList[PlayerInWhichMap];
 }
 
-void MapManager::UnlockTeleport() {
-	// 解锁传送点
-
-}
-
 void MapManager::ReverseIsBlackFogVisible() {
 	// 反转黑色雾的可见性
 	for (int i = 0; i < (int)IsBlackFogVisible.size(); i++) {
 		IsBlackFogVisible[i] = !IsBlackFogVisible[i];
+	}
+}
+
+void MapManager::SetIsRegionRevealedTrue() {
+	// 解锁小地图以及其相应传送点
+	if (IsRegionRevealed[PlayerInWhichMap] == false) {
+		IsRegionRevealed[PlayerInWhichMap] = true;
 	}
 }
