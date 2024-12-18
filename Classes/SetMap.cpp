@@ -41,7 +41,7 @@ bool SetMap::init() {
 
 	// 加个npc
 	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER);
-	
+	npc1->scheduleUpdate();
 	// 背包
 	BagManager* bagManager = BagManager::getInstance();
 	if (bagManager->getParent() == nullptr)
@@ -162,7 +162,6 @@ void SetMap::MainCameraFollowPlayer() {
 		this->UpdateCameraPosition(camera, playerPosition, updatedCameraZ);    //更新摄像机位置
 		}, "camera_update_key");
 }
-
 
 void SetMap::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
