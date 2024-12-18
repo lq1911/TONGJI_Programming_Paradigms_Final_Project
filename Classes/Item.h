@@ -78,9 +78,7 @@ public:
 class consumable : public item
 {
 public:
-    consumable(const string& itemName, const string& imagePath, const string& itemDescription)
-        : item(itemName, imagePath, itemDescription) {
-    }
+    consumable(const string& itemName, const string& imagePath, const string& itemDescription): item(itemName, imagePath, itemDescription) {}
 
     // 增加角色的HP
     int add_HP;
@@ -90,9 +88,8 @@ public:
 class weapon : public equipment
 {
 public:
-    weapon(const string& itemName, const string& imagePath, const string& itemDescription)
-        : equipment(itemName, imagePath, itemDescription) {
-    }
+    weapon(const string& itemName, const string& imagePath, const string& itemDescription) 
+        : equipment(itemName, imagePath, itemDescription) {}
 
     // 更新物品的描述
     void updateDescription()
@@ -105,9 +102,8 @@ public:
 class armor :public equipment
 {
 public:
-    armor(const string& itemName, const string& imagePath, const string& itemDescription)
-        : equipment(itemName, imagePath, itemDescription) {
-    }
+    armor(const string& itemName, const string& imagePath, const string& itemDescription) 
+        : equipment(itemName, imagePath, itemDescription) {}
 
     // 更新物品的描述
     void updateDescription() override
@@ -121,8 +117,7 @@ class shoes :public equipment
 {
 public:
     shoes(const string& itemName, const string& imagePath, const string& itemDescription)
-        : equipment(itemName, imagePath, itemDescription) {
-    }
+        : equipment(itemName, imagePath, itemDescription) {}
 
     // 更新物品的描述
     void updateDescription() override
@@ -136,8 +131,7 @@ class accessories :public equipment
 {
 public:
     accessories(const string& itemName, const string& imagePath, const string& itemDescription)
-        : equipment(itemName, imagePath, itemDescription) {
-    }
+        : equipment(itemName, imagePath, itemDescription) {}
 
     // 设置角色属性
     ElementType setPlayerElementType;

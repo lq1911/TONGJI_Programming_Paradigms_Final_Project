@@ -4,11 +4,12 @@
 #include <functional>
 #include "cocos2d.h"
 #include "Player.h"
+#include "BagManager.h"
 
 USING_NS_CC;
 
-/* 触发距离 */
-const int DIST = 100;
+///* 触发距离 */
+//const int DIST = 150;
 
 class NPC :public Creature {
 private:
@@ -17,22 +18,31 @@ public:
 	/* 构造函数 */
 	NPC(std::string role, int x, int y, float scale, Scene* scene, Player* player) :Creature(role, 0, 0, 0, 0, 0, 0, 0, x, y, scale, scene) { 
 		who = player;
+        this->scheduleUpdate();
 	}
 
+    /* 玩家靠近:npc提示(换图) */
+    inline void triggerTip() { mySprite->setTexture("Role/" + role + "/2.png"); }
+    inline void trggerTipRemove(){ mySprite->setTexture("Role/" + role + "/1.png"); }
+    void update(float dt = 0.3f);
+
+    
 	/* 判断是否在触发范围内 */
 	bool isTrigger();
 
 	/* 互动 */
 	void Chat();
 
-	/* npc0:教学用 */
-	void npc0(std::function<void()> callback);
-
-	/* npc1 */
+	/* npc */
+	void npc0(std::function<void()> callback);  // 教学用
 	void npc1(std::function<void()> callback);
+    void npc2(std::function<void()> callback);
 
 	
 };
+
+
+
 
 /* npc管理类 */
 class NPCManager {
@@ -42,7 +52,7 @@ private:
 
 public:
     /* 构造函数 */
-    NPCManager(Player* playerRef) : player(playerRef) {}
+    NPCManager(Player* playerRef) : player(playerRef) {  }
 
     /* 添加 NPC */
     void addNPC(std::string role, int x, int y, float scale, Scene* scene) {
