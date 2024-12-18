@@ -99,7 +99,7 @@ bool MapManager::IsMoveable(const Vec2& Position) {
 	return true;
 }
 
-Vec2 MapManager::GetTeleportPosition(int mapID) {
+Vec2 MapManager::GetTeleportPosition(int mapID)const {
 	// 获取指定地图的传送点坐标
 	if (IsRegionRevealed[PlayerInWhichMap] == false) {
 		// 如果传送点列表为空或玩家不在传送点列表中，则返回Vec2::ZERO

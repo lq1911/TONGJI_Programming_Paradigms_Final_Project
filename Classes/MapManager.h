@@ -23,7 +23,7 @@ private:
 	const int MapField = 1600;    //单张瓦片地图的大小
 public:
 	/*初始化地图障碍物*/
-	void InitialObjects(TMXTiledMap* TiledMap);
+	void InitialObjects(TMXTiledMap* TiledMap, int mapIndex);
 	
 	/*初始化瓦片地图*/
 	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
@@ -40,14 +40,20 @@ public:
 	/*判断玩家所在的地图编号*/
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
 
+	/*获取玩家所在的地图编号*/
+	int GetPlayerInWhichMap()const;
+
 	/*获取传送门的位置*/
-	Vec2 GetTeleportPosition();  
+	Vec2 GetTeleportPosition(int MapID)const;  
 
 	/*解锁小地图以及其相应传送点*/
 	void SetIsRegionRevealedTrue();
 
 	/*设置黑雾是否可见*/
 	void ReverseIsBlackFogVisible();
+
+	/*瓦片地图坐标转场景坐标*/
+	Vec2 tiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex);
 
 	CREATE_FUNC(MapManager);
 };

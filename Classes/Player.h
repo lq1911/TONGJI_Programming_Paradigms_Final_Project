@@ -66,7 +66,7 @@ public:
 	virtual Animate* Attack(int dir, vector<Monster*>monster);
 
 	/* 判断交互范围 */
-	virtual bool isTrigger(int x, int y);
+	virtual bool isTrigger(Vec2 pos);
 
 	// 技能，以组合技形式出现
 	//void Combo();

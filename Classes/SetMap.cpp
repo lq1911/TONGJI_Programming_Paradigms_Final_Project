@@ -171,7 +171,7 @@ void SetMap::MicroCameraFollowPlayer() {
 
 void SetMap::UnlockMapTeleport() {
 	// ½âËø´«ËÍÃÅ
-	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition(_mapManager->GetPlayerInWhichMap()))))) {
+	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition(_mapManager->GetPlayerInWhichMap()))) {
 		_mapManager->SetIsRegionRevealedTrue();
 	}
 }
@@ -289,16 +289,16 @@ void SetMap::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std::strin
 void SetMap::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Event* event) {
 	/* ¹¥»÷:I/K/J/L */
 	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
-		PLAYER->Attack(UP, monster_respawn->GetMonster());
+		PLAYER->Attack(UP, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
-		PLAYER->Attack(DOWN, monster_respawn->GetMonster());
+		PLAYER->Attack(DOWN, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
-		PLAYER->Attack(LEFT, monster_respawn->GetMonster());
+		PLAYER->Attack(LEFT, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
-		PLAYER->Attack(RIGHT, monster_respawn->GetMonster());
+		PLAYER->Attack(RIGHT, _monsterRespawn->GetMonster());
 	}
 }
 
