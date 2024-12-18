@@ -335,7 +335,7 @@ void LearningScene::learnBag_1() {
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
     /* bagTxt */
-    auto bagTxt = Label::createWithTTF("Press B to open the bag and press P to pick an item.", "fonts/Lacquer.ttf", 40);
+    auto bagTxt = Label::createWithTTF("Press B to open the bag and checkout the tasks.", "fonts/Lacquer.ttf", 40);
     bagTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
     bagTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(bagTxt, 1);

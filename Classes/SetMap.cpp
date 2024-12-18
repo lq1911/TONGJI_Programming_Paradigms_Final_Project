@@ -45,7 +45,7 @@ bool SetMap::init() {
 		this->addChild(bagManager);
 
 	// 加个npc
-	npc1 = new NPC("npc2", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER, bagManager);
+	npc1 = new NPC("npc1", visibleSize.width / 2, visibleSize.height / 2 - 200, 1.0f, this, PLAYER, bagManager);
 	///////////////////////
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
