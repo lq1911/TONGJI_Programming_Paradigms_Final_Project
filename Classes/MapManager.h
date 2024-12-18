@@ -28,6 +28,9 @@ public:
 	/*初始化瓦片地图*/
 	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
 	
+	/*返回某个瓦片地图*/
+	TMXTiledMap* GetTiledMap(int MapID);
+
 	/*设置整张瓦片地图的黑雾*/
 	void SetBlackFogInMicroMap();
 

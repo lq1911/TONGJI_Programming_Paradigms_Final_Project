@@ -21,6 +21,11 @@ void MapManager::PlayerPositionInWhichMap(Vec2& PlayerPosition) {
 	}	
 }
 
+TMXTiledMap* MapManager::GetTiledMap(int MapID) {
+	return MapList[MapID];
+}
+
+void MapManager::InitialObjects(TMXTiledMap* TiledMap) {
 int MapManager::GetPlayerInWhichMap() const { return PlayerInWhichMap; }
 
 void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {

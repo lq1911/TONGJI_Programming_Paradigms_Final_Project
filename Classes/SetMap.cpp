@@ -91,13 +91,16 @@ void SetMap::LoadBagToScene() {
 	_bagManager = BagManager::getInstance();
 	if (_bagManager->getParent() == nullptr)
 	{
-		this->addChild(_bagManager);
+		PLAYER->addChild(_bagManager);
 	}
 }
 
 void SetMap::LoadPlayerToScene() {
 	// lq加的调试小人
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
+
+	// 将玩家导入地图，此处为0，表示添加至初始神庙地图
+	_mapManager->GetTiledMap(0)->addChild(PLAYER);
 }
 
 void SetMap::LoadMonsterRespawnToScene() {

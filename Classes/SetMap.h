@@ -12,7 +12,6 @@
 #include "CameraManager.h"
 #include "EventManager.h"
 USING_NS_CC;
-using namespace std;
 
 class SetMap :public cocos2d::Scene {
 private:
@@ -70,7 +69,7 @@ public:
 	void MicroCameraFollowPlayer();
 
 	/*解锁地图传送点*/
-	void UnlockMapTeleport();
+	void UnlockMapTeleport(int MapID);
 
 	/*将玩家传送到选择的传送点*/
 	void TeleportPlayer(int MapID);

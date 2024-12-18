@@ -116,6 +116,16 @@ private:
     // 禁止拷贝构造函数和赋值操作符
     BagManager(const BagManager&) = delete;
     BagManager& operator=(const BagManager&) = delete;
+
+
+    /**********************lq-edit**********************/
+    // 解锁任务(type:1主线/0支线)
+    void taskUnlock(const bool type, const int idx);
+
+    // 设置任务状态为已完成(type:1主线/0支线)
+    void taskFinish(const bool type, const int idx);
+
+    /************************end************************/
 };
 
 #endif  __BAG_MANAGER_H__

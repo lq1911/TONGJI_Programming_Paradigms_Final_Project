@@ -24,9 +24,8 @@ public:
     /* 玩家靠近:npc提示(换图) */
     inline void triggerTip() { mySprite->setTexture("Role/" + role + "/2.png"); }
     inline void trggerTipRemove(){ mySprite->setTexture("Role/" + role + "/1.png"); }
-    void update(float dt = 0.3f);
+    void update(float dt);
 
-    
 	/* 判断是否在触发范围内 */
 	bool isTrigger();
 
