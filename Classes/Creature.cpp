@@ -85,7 +85,7 @@ void Creature::initSprite() {
     // 添加精灵至场景中   
     mySprite->setPosition(Vec2(x, y));
     mySprite->setScale(scale);
-    scene->addChild(mySprite);
+    scene->addChild(mySprite,0);
 }
 
 /* 攻击动画 */
