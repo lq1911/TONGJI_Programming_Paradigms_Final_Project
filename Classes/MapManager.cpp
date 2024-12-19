@@ -4,10 +4,11 @@ void MapManager::InitialMap(const char* mapName, const Vec2& MapPosition, Scene*
 	auto TiledMap = TMXTiledMap::create(mapName);    //创建地图对象
 	TiledMap->setAnchorPoint(Vec2(0.5f, 0.5f));    //设置地图的锚点为中心点
 	TiledMap->setPosition(MapPosition);    //设置地图的位置
-	//this->InitialObstacles(TiledMap);    //初始化障碍物
 	TargetScene->addChild(TiledMap);    //将地图添加到场景中
 
 	MapList.push_back(TiledMap);    //将地图添加到已经创建的地图列表中
+	this->InitialObjects(TiledMap, (int)MapList.size() - 1);    //初始化障碍物
+
 	BlackFogList.push_back(TiledMap->getLayer("BlackFog"));    //初始化黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始化黑色雾的可见性为false
 	IsRegionRevealed.push_back(false);    //初始化地图区域是否被揭示为false
@@ -72,7 +73,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				// 保存传送点坐标
 				TeleportList.push_back(tiledMapPosToScenePos(Vec2(x, y), mapID));
 			}
-			else if (objectType == "Interactional") {
+			else if (objectType == "Interaction") {
 				// 根据对象类型读取其属性
 				// 可交互区域
 				float x = obstacle["x"].asFloat();
@@ -143,44 +144,44 @@ Vec2 MapManager::tiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex) {
 	if (mapIndex < 0 || mapIndex >= (int)MapList.size()) {
 		return Vec2::ZERO;
 	}
-	float derivation = 243.0f; // 地图拼接误差
 	Vec2 scenePos;
-
+	Vec2 tiledMapPosRect = tiledMapPos * MapToSceneRatio; // 瓦片地图坐标系中的位置乘以缩放比例
+	tiledMapPosRect.y = -tiledMapPosRect.y;               // y轴方向需要反向转换
 	if (mapIndex == 0) { //RebirthTemple
-		scenePos.x = tiledMapPos.x;
-		scenePos.y = MapField - tiledMapPos.y;
+		scenePos.x = tiledMapPosRect.x + RTPos.x;
+		scenePos.y = tiledMapPosRect.y + RTPos.y;
 	}
 	else if (mapIndex == 1) { //volcano
-		scenePos.x = tiledMapPos.x - MapField - derivation;
-		scenePos.y = MapField - tiledMapPos.y + MapField + derivation;
+		scenePos.x = tiledMapPosRect.x + RTPos.x - MapField ;
+		scenePos.y = tiledMapPosRect.y + RTPos.y + MapField;
 	}
 	else if (mapIndex == 2) { //SnowyWinter
-		scenePos.x = tiledMapPos.x + MapField + derivation;
-		scenePos.y = MapField - tiledMapPos.y + MapField + derivation;
+		scenePos.x = tiledMapPosRect.x + RTPos.x + MapField;
+		scenePos.y = tiledMapPosRect.y + RTPos.y + MapField;
 	}
 	else if (mapIndex == 3) { //DeathDesert
-		scenePos.x = tiledMapPos.x + MapField + derivation;
-		scenePos.y = -tiledMapPos.y - derivation;
+		scenePos.x = tiledMapPosRect.x + RTPos.y + MapField;
+		scenePos.y = tiledMapPosRect.y + RTPos.y - MapField;
 	}
 	else if (mapIndex == 4) { //BrightForest
-		scenePos.x = tiledMapPos.x - MapField - derivation;
-		scenePos.y = -tiledMapPos.y - derivation;
+		scenePos.x = tiledMapPosRect.x + RTPos.x - MapField;
+		scenePos.y = tiledMapPosRect.y + RTPos.y - MapField;
 	}
 	else if (mapIndex == 5) { //Vol_Snow
-		scenePos.x = tiledMapPos.x;
-		scenePos.y = MapField - tiledMapPos.y + MapField + derivation;
+		scenePos.x = tiledMapPosRect.x + RTPos.x;
+		scenePos.y = tiledMapPosRect.y + RTPos.y + MapField;
 	}
-	else if (mapIndex == 6) { //Derset_Snow
-		scenePos.x = tiledMapPos.x - MapField - derivation;
-		scenePos.y = tiledMapPos.y;
+	else if (mapIndex == 6) { //Vol_Forest
+		scenePos.x = tiledMapPosRect.x + RTPos.x - MapField;
+		scenePos.y = tiledMapPosRect.y + RTPos.y;
 	}
-	else if (mapIndex == 7) { //SnowyForest
-		scenePos.x = tiledMapPos.x + MapField + derivation;
-		scenePos.y = tiledMapPos.y;
+	else if (mapIndex == 7) { //Snow_Desert
+		scenePos.x = tiledMapPosRect.x + RTPos.x + MapField;
+		scenePos.y = tiledMapPosRect.y + RTPos.y;
 	}
-	else if (mapIndex == 8) { //Volcano
-		scenePos.x = tiledMapPos.x;
-		scenePos.y = -tiledMapPos.y - derivation;
+	else if (mapIndex == 8) { //Forest_Desert
+		scenePos.x = tiledMapPosRect.x + RTPos.x;
+		scenePos.y = tiledMapPosRect.y + RTPos.y - MapField;
 	}
 	else
 		scenePos = Vec2::ZERO;

@@ -6,6 +6,10 @@
 USING_NS_CC;
 using namespace std;
 
+const int MapField = 1843;    //单张瓦片地图的大小
+const Vec2 RTPos = Vec2(258.5f, 1568.5f);    //RebirthTemple左上角的场景坐标
+const float MapToSceneRatio = 1.151875f;    //瓦片地图坐标转场景坐标的比例
+
 class MapManager :public Node {
 private:
 	int PlayerInWhichMap = 0;    //玩家所在的地图编号
@@ -20,7 +24,6 @@ private:
 	vector<bool> IsBlackFogVisible;    //黑雾是否可见
 	vector<bool> IsRegionRevealed;    //是否已经显示过某个区域
 
-	const int MapField = 1600;    //单张瓦片地图的大小
 public:
 	/*初始化地图障碍物*/
 	void InitialObjects(TMXTiledMap* TiledMap, int mapIndex);

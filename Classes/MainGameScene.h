@@ -92,7 +92,7 @@ public:
 
 	/*键盘事件处理，按下C键打开NPC交互界面*/
 	void KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event);
-	
+
 	/*键盘事件处理，按下方向键控制小地图方向*/
 	void KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed);
 

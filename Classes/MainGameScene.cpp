@@ -156,7 +156,9 @@ void MainGameScene::MainCameraFollowPlayer() {
 	this->schedule([=](float dt) {
 		float updatedCameraZ = _cameraManager->GetMainCamera()->getPosition3D().z;    //获取摄像机的高度
 		Vec2 playerPosition = PLAYER->mySprite->getPosition();    //获取玩家位置
+		_mapManager->PlayerPositionInWhichMap(playerPosition);    //获取玩家所在地图
 		_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), playerPosition, updatedCameraZ);    //更新摄像机位置
+		CCLOG("Player Position: %f, %f", playerPosition.x, playerPosition.y);
 		}, "camera_update_key");
 }
 
@@ -314,6 +316,19 @@ void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Eve
 	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		_npcManager->checkTriggers();
 	}
+}
+
+void MainGameScene::MouseScrollForCameraZoom(EventMouse* event,Camera* camera,float MaxHeight,float MinHeight,float ScrollSpeed) {
+	Vec3 cameraPosition = camera->getPosition3D();
+	float ScrollY = event->getScrollY();
+
+	//通过滚轮输入，调整摄像机高度
+	cameraPosition.z += ScrollY * ScrollSpeed;
+
+	// 限制 Z 值范围
+	cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
+	cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
+	camera->setPosition3D(cameraPosition);
 }
 
 void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed) {
