@@ -5,18 +5,19 @@
 USING_NS_CC;
 
 Scene* MainGameScene::createScene() {
+
 	// 创建带物理世界的场景
 	auto scene = Scene::createWithPhysics();
+
+	//将重力设置为0，在一个平面上
+	Vect gravity = Vect(0, 0);
 
 	// 碰撞框:调试用
 	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
-	// 设置重力
-	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
 
-	// 创建SetMap层并添加到场景中
-	auto layer = MainGameScene::create();
-	scene->addChild(layer);
+	auto PhyWorld = MainGameScene::create();
+	scene->addChild(PhyWorld);
 
 	return scene;
 }
