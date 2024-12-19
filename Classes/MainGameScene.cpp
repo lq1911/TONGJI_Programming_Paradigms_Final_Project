@@ -28,6 +28,7 @@ bool MainGameScene::init() {
 
 	//添加鼠标监听器，检测鼠标活动
 	_mouseListener = EventListenerMouse::create();
+	_mouseListener->onMouseUp = CC_CALLBACK_1(MainGameScene::MouseClicked, this);
 	_mouseListener->onMouseScroll = CC_CALLBACK_1(MainGameScene::MouseScroll, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_mouseListener, this);
 
@@ -315,19 +316,6 @@ void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Eve
 	}
 }
 
-void MainGameScene::MouseScrollForCameraZoom(EventMouse* event,Camera* camera,float MaxHeight,float MinHeight,float ScrollSpeed) {
-	Vec3 cameraPosition = camera->getPosition3D();
-	float ScrollY = event->getScrollY();
-
-	//通过滚轮输入，调整摄像机高度
-	cameraPosition.z += ScrollY * ScrollSpeed;
-
-	// 限制 Z 值范围
-	cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
-	cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
-	camera->setPosition3D(cameraPosition);
-}
-
 void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed) {
 	Vec3 currentPosition = camera->getPosition3D();
 
@@ -401,11 +389,39 @@ void MainGameScene::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	}
 }
 
+void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
+	Vec3 cameraPosition = camera->getPosition3D();
+	float ScrollY = event->getScrollY();
+
+	//通过滚轮输入，调整摄像机高度
+	cameraPosition.z += ScrollY * ScrollSpeed;
+
+	// 限制 Z 值范围
+	cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
+	cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
+	camera->setPosition3D(cameraPosition);
+}
+
+void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
+	// 处理小地图中的传送门
+
+	int MapID = _mapManager->GetPlayerInWhichMap();
+			// 传送玩家
+			TeleportPlayer(MapID);
+
+}
+
 void MainGameScene::MouseScroll(EventMouse* event) {
 	if (_cameraManager->IsInMicroMap()) {
 		MouseScrollForCameraZoom(event, _cameraManager->GetMicroCamera(), 3600.0f, 1200.0f, 400.0f);
 	}
 	else {
 		MouseScrollForCameraZoom(event, _cameraManager->GetMainCamera(), 600.0f, 200.0f, 40.0f);
+	}
+}
+
+void MainGameScene::MouseClicked(EventMouse* event) {
+	if (_cameraManager->IsInMicroMap()) {
+		MouseClickedForTeleport(event);
 	}
 }
