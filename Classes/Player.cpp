@@ -11,21 +11,60 @@ void Player::update(float dt) {
     }
     else {
         nums = 0;
-        /*/
+
         log("player**********************************");
         log("position:%f %f", pos.x, pos.y);
         log("hp:%d", hp);
         log("mp:%d", mp);
         log("atk:%d", atk);
         log("def:%d", def);
-        */
+
+    }
+    Vec2 move_by;
+
+
+
+    if (is_moving) {
+        if (face_to == 0) {
+            move_by.set(-speed / 60.0, 0);
+        }
+        else if (face_to == 1) {
+            move_by.set(speed / 60.0, 0);
+        }
+        else if (face_to == 2) {
+            move_by.set(0, speed / 60.0);
+        }
+        else if (face_to == 3) {
+            move_by.set(0, -speed / 60.0);
+        }
+        Vec2 targetPosition = mySprite->getPosition() + move_by;
+
+        if (map_manager->IsMoveable(targetPosition)) {
+            if (face_to == 0) {
+                mySprite->setPosition(x + move_by.x, y + move_by.y);
+
+            }
+            else if (face_to == 1) {
+                mySprite->setPosition(x + move_by.x, y + move_by.y);
+
+            }
+            else if (face_to == 2) {
+                mySprite->setPosition(x + move_by.x, y + move_by.y);
+
+            }
+            else if (face_to == 3) {
+                mySprite->setPosition(x + move_by.x, y + move_by.y);
+
+            }
+            ChangeXY(move_by);
+        }
     }
 }
 
-void Player::InitMonster(vector<Monster*>monster) {
+void Player::Init(vector<Monster*>monster, MapManager* map_manager) {
     this->monster = monster;
+    this->map_manager = map_manager;
 }
-
 // 人物攻击
 // 攻击范围是扇形
 Animate* Player::Attack(int dir, vector<Monster*> monster) {
@@ -34,19 +73,19 @@ Animate* Player::Attack(int dir, vector<Monster*> monster) {
         Vec2 pos_monster = monster[i]->mySprite->getPosition();
         float distance = pos_monster.distance(pos_player);
         if (distance < atk_range) {
-			Vec2 direction = pos_monster - pos_player;// 人物指向怪物
-			float k = (direction.x + 1.0 - 1.0) / direction.y;// 斜率
-			if (dir == 0 && k<1 && k>-1 && direction.x < 0)// 向左
-				Creature::Attack(dir, monster[i]);
-			else if (dir == 1 && k<1 && k>-1 && direction.x > 0)// 右
-				Creature::Attack(dir, monster[i]);
-			else if (dir == 2 && (k < -1 || k>1) && direction.y > 0)// 上
-				Creature::Attack(dir, monster[i]);
-			else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// 下
-				Creature::Attack(dir, monster[i]);
-		}
+            Vec2 direction = pos_monster - pos_player;// 人物指向怪物
+            float k = (direction.x + 1.0 - 1.0) / direction.y;// 斜率
+            if (dir == 0 && k<1 && k>-1 && direction.x < 0)// 向左
+                monster[i]->Hurt();
+            else if (dir == 1 && k<1 && k>-1 && direction.x > 0)// 右
+                monster[i]->Hurt();
+            else if (dir == 2 && (k < -1 || k>1) && direction.y > 0)// 上
+                monster[i]->Hurt();
+            else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// 下
+                monster[i]->Hurt();
+        }
         Creature::Attack(dir, monster[i]);
-	}
+    }
     return nullptr;
 }
 
@@ -74,4 +113,13 @@ bool Player::isTrigger(const Vec2& pos) {
 
     return std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(DIST, 2);
 
+}
+// 改变is_moving
+void Player::ChangeIsMoving() {
+    if (is_moving == 1) {
+        is_moving = 0;
+    }
+    else {
+        is_moving = 1;
+    }
 }

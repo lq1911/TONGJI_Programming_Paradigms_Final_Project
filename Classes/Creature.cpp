@@ -312,25 +312,31 @@ Animate* Creature::Move(int dir) {
     int start = 1;
     if (face_to == DOWN) {
         start = 1;
-        moveBy = Vec2(0, -speed);
+
+
+
     }
     else if (face_to == LEFT) {
         start = 5;
-        moveBy = Vec2(-speed, 0);
+
     }
+
     else if (face_to == RIGHT) {
         start = 9;
-        moveBy = Vec2(speed, 0);
+
     }
+
     else if (face_to == UP) {
         start = 13;
-        moveBy = Vec2(0, speed);
+
+
     }
+
 
     // 创建帧动画
     Vector<SpriteFrame*> animFrames;
     animFrames.reserve(4);
-    for (int i = start+1; i < start + 4; i++) {
+    for (int i = start + 1; i < start + 4; i++) {
         auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
         float width = texture->getPixelsWide();
         float height = texture->getPixelsHigh();
@@ -355,18 +361,18 @@ Animate* Creature::Move(int dir) {
     Animate* animate = Animate::create(animation);
 
     // 创建移动动作
-    auto moveAction = MoveBy::create(0.8f, moveBy);
-    log("MoveBy:%f%f", moveBy.x, moveBy.y);
+   // auto moveAction = MoveBy::create(0.8f, moveBy);
+   //log("MoveBy:%f%f", moveBy.x, moveBy.y);
     // 同时执行动画和移动
-    auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
+    //auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
 
     // 执行动作
-    mySprite->stopAllActions();
-    
-    mySprite->runAction(moveAndAnimate);
+
+
+    mySprite->runAction(animate);
     log("Move");
     return animate;
-   
+
 }
 
 /* 死亡 */
@@ -420,4 +426,8 @@ int Creature::DamageCal(Creature* a, Creature* b) {
 void Creature::setElementType(ElementType _elementType)
 {
     elementType = _elementType;
+}
+void Creature::ChangeXY(Vec2 change) {
+    x += change.x;
+    y += change.y;
 }
