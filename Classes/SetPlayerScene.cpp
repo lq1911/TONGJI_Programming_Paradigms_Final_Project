@@ -2,7 +2,7 @@
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
 #include "Player.h"
-#include "SetMap.h"
+#include "MainGameScene.h"
 
 USING_NS_CC;
 // 定义静态成员变量
@@ -206,28 +206,26 @@ Scene* SetPlayerScene::selectRoleScene() {
     P1Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player1");
         who = Player1;
-        auto scene = SetMap::createScene();
-        //auto scene = LearningScene::createScene();
+        auto scene = MainGameScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
     P2Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player2");
         who = Player2;
-        //auto scene = SetMap::createScene();
-        auto scene = LearningScene::createScene();
+        auto scene = MainGameScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
     P3Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player3");
         who = Player3;
-        //auto scene = SetMap::createScene();
+        //auto scene = MainGameScene::createScene();
         auto scene = LearningScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
     P4Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player4");
         who = Player4;
-        //auto scene = SetMap::createScene();
+        //auto scene = MainGameScene::createScene();
         auto scene = LearningScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
@@ -235,7 +233,7 @@ Scene* SetPlayerScene::selectRoleScene() {
         CCLOG("Choose Player5");
         who = Player5;
 
-        //auto scene = SetMap::createScene();
+        //auto scene = MainGameScene::createScene();
         auto scene = LearningScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });

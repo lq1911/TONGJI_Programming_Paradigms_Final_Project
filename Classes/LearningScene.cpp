@@ -455,7 +455,7 @@ void LearningScene::finish() {
     /* NextButton¼àÌý */
     NextButton->addClickEventListener([=](Ref* sender)mutable {
         // ÇÐ»»³¡¾°
-        auto scene = SetMap::createScene();
+        auto scene = MainGameScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
 }

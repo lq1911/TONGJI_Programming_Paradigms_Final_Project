@@ -7,7 +7,7 @@
 #include "SetPlayerScene.h"
 #include "NPC.h"
 #include "BagManager.h"
-#include "SetMap.h"
+#include "MainGameScene.h"
 
 class LearningScene :public cocos2d::Scene {
 private:
