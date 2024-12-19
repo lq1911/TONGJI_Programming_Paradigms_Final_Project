@@ -49,13 +49,16 @@ void NPC::Chat() {
 		{"npc0", 0},
 		{"npc1", 1},
 		{"npc2", 2},
-		{"npc3", 3}
+		{"npc3", 3},
+		{"npc4", 4},
+		{"npc5", 5},
+		{"npc6", 6}
 	};
 
 	switch (stringMap[role]) {
 	case 0:
 		npc0([=]() {
-			//当 npc0的对话逻辑完成后，移除UI
+			//当npc0的对话逻辑完成后，移除UI
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
 			log("npc0-chat over.");
@@ -72,11 +75,20 @@ void NPC::Chat() {
 		npc2([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc1-chat over.");
+			log("npc2-chat over.");
 			});
 		break;
 	case 3:
 		
+		break;
+	case 4:
+
+		break;
+	case 5:
+
+		break;
+	case 6:
+
 		break;
 	default:
 		
@@ -183,10 +195,53 @@ void NPC::npc1(std::function<void()> callback) {
 	auto winSize = Director::getInstance()->getWinSize();
 
 	/* npc说话-1 */
+	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 1", "fonts/Lacquer.ttf", 30);
+	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1050));
+	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(npcTxt1, 2);
+
+	/* NextButton */
+	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
+	NextButton->ignoreContentAdaptWithSize(false);
+	NextButton->setContentSize(Size(60, 60));
+	NextButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1150));
+	NextButton->setOpacity(180);
+	scene->addChild(NextButton, 2);
+	/* NextButton监听 */
+	NextButton->addClickEventListener([=](Ref* sender)mutable {
+		// 解锁任务
+		if (bag)
+			bag->taskUnlock(1, 1);
+		// 对话
+		NextButton->removeFromParent();
+		NextButton = nullptr;
+		npcTxt1->setString("The first main-line task is unlocked.\nClose the chat window and checkout your bag!");
+		// 下一步:结束对话
+		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+		CloseButton->ignoreContentAdaptWithSize(false);
+		CloseButton->setContentSize(Size(40, 40));
+		CloseButton->setTitleFontSize(24);
+		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1150));
+		scene->addChild(CloseButton, 4);
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			npcTxt1->removeFromParent();
+			CloseButton->removeFromParent();
+			if (callback) {
+				callback();
+			}
+			return;
+			});
+		});
+}
+
+void NPC::npc2(std::function<void()> callback) {
+	auto winSize = Director::getInstance()->getWinSize();
+
+	/* npc说话-1 */
 	auto npcTxt1 = Label::createWithTTF("This is npc1 speaking 1", "fonts/Lacquer.ttf", 35);
 	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1000));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
-	scene->addChild(npcTxt1,4);
+	scene->addChild(npcTxt1, 4);
 
 	/* player回答选择1 */
 	auto playerAns1 = Label::createWithTTF("This is player's answer 1", "fonts/KuaiLe_Chinese.ttf", 25);
@@ -205,7 +260,7 @@ void NPC::npc1(std::function<void()> callback) {
 	Ans1Button->setContentSize(Size(40, 40));
 	Ans1Button->setTitleFontSize(24);
 	Ans1Button->setPosition(Vec2(winSize.width / 2 - 200, winSize.height - 1080));
-	scene->addChild(Ans1Button,4);
+	scene->addChild(Ans1Button, 4);
 	/* player回答选择2提交按钮 */
 	auto Ans2Button = ui::Button::create("Button/Choice2Button.png", "Button/Choice2ButtonClicked.png");
 	Ans2Button->ignoreContentAdaptWithSize(false);
@@ -234,7 +289,7 @@ void NPC::npc1(std::function<void()> callback) {
 		CloseButton->setTitleFontSize(24);
 		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1150));
 		scene->addChild(CloseButton, 4);
-		CloseButton->addClickEventListener([=](Ref* sender) mutable{
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
 			npcTxt2_1->removeFromParent();
 			CloseButton->removeFromParent();
 			if (callback) {
@@ -273,34 +328,4 @@ void NPC::npc1(std::function<void()> callback) {
 			});
 
 		});
-}
-
-void NPC::npc2(std::function<void()> callback) {
-	auto winSize = Director::getInstance()->getWinSize();
-
-	/* npc说话-1 */
-	auto npcTxt1 = Label::createWithTTF("This is npc2 speaking 1", "fonts/Lacquer.ttf", 35);
-	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1000));
-	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
-	scene->addChild(npcTxt1, 4);
-
-	/* 结束对话 */
-	auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
-	CloseButton->ignoreContentAdaptWithSize(false);
-	CloseButton->setContentSize(Size(40, 40));
-	CloseButton->setTitleFontSize(24);
-	CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1150));
-	scene->addChild(CloseButton, 4);
-	CloseButton->addClickEventListener([=](Ref* sender) mutable {
-		npcTxt1->removeFromParent();
-		CloseButton->removeFromParent();
-		if (callback) {
-			callback();
-		}
-		return;
-		});
-
-	//bagManager->taskUnlock(1, 1);
-	//setmap中bagManager声明放public中
-
 }

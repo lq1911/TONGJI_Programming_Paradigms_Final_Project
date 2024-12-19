@@ -9,33 +9,33 @@
 USING_NS_CC;
 using namespace std;
 
-// è§¦å‘è·ç¦»
-const int DIST = 150;
+// ´¥·¢¾àÀë
+const int DIST = 130;
 
 struct Bonus {
 	//Object object;
-	//æŠ¥é”™ï¼Œæš‚æ—¶æ³¨é‡Šæ‰
+	//±¨´í£¬ÔİÊ±×¢ÊÍµô
 	//Equipment equipment;
 	int exp = 0;
 };
 class Monster;
 class Player :public Creature {
 private:
-	int current_exp;       // è§’è‰²ç°æœ‰ç»éªŒå€¼
-	int next_level_exp;    // è¾¾åˆ°ä¸‹ä¸€çº§æ‰€éœ€ç»éªŒå€¼
+	int current_exp;       // ½ÇÉ«ÏÖÓĞ¾­ÑéÖµ
+	int next_level_exp;    // ´ïµ½ÏÂÒ»¼¶ËùĞè¾­ÑéÖµ
 	vector<Monster*> monster;
 protected:
-	// ç©å®¶åå­—åœ¨Creatureç±»é‡Œå·²å®šä¹‰äº†:(	
+	// Íæ¼ÒÃû×ÖÔÚCreatureÀàÀïÒÑ¶¨ÒåÁË:(	
 
-    //int x, y;       // åæ ‡
+	//int x, y;       // ×ø±ê
 public:
-	// ç²¾çµ//Creatureä¸­æœ‰äº†:( 
+	// ¾«Áé//CreatureÖĞÓĞÁË:( 
 
-	/* æ„é€ å‡½æ•° */
-	// who:ç©å®¶ä¸ºPlayer1~Player5,NPCä¸ºnpc1~npc5
+	/* ¹¹Ôìº¯Êı */
+	// who:Íæ¼ÒÎªPlayer1~Player5,NPCÎªnpc1~npc5
 	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
 		Creature(who, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene) {
-		// è§’è‰²ç°æœ‰ç»éªŒå€¼ã€è¾¾åˆ°ä¸‹ä¸€çº§æ‰€éœ€ç»éªŒå€¼åˆå§‹åŒ–æ¡ä»¶è®°å¾—æ”¹
+		// ½ÇÉ«ÏÖÓĞ¾­ÑéÖµ¡¢´ïµ½ÏÂÒ»¼¶ËùĞè¾­ÑéÖµ³õÊ¼»¯Ìõ¼ş¼ÇµÃ¸Ä
 		current_exp = 0;
 		next_level_exp = 100;
 		_weapon = nullptr;
@@ -46,49 +46,49 @@ public:
 		scene->addChild(this);
 		this->scheduleUpdate();
 	}
-	// è°ƒè¯•ç”¨æ„é€ å‡½æ•°
+	// µ÷ÊÔÓÃ¹¹Ôìº¯Êı
 	Player() {
 		_weapon = nullptr;
 		_armor = nullptr;
 		_shoes = nullptr;
 		_accessories = nullptr;
-	
+
 	}
-	
-	/* åŠ å…¥æ€ªç‰© */
+
+	/* ¼ÓÈë¹ÖÎï */
 	void InitMonster(vector<Monster*>monster);
-	
-	/* é‡Šæ”¾æ”»å‡»æŠ€èƒ½ */
-	// dirä¸ºæ–¹å‘:LEFT RIGHT UP DOWN,é»˜è®¤ä¸ºDOWN
-	// å¯¹äºéƒ¨åˆ†æ€ªç‰©,æ— æ–¹å‘ä¸€è¯´:Monster1æ ‘å¦–
-	// oppä¸ºæ”»å‡»å¯¹è±¡
+
+	/* ÊÍ·Å¹¥»÷¼¼ÄÜ */
+	// dirÎª·½Ïò:LEFT RIGHT UP DOWN,Ä¬ÈÏÎªDOWN
+	// ¶ÔÓÚ²¿·Ö¹ÖÎï,ÎŞ·½ÏòÒ»Ëµ:Monster1Ê÷Ñı
+	// oppÎª¹¥»÷¶ÔÏó
 	virtual Animate* Attack(int dir, vector<Monster*>monster);
 
-	/* åˆ¤æ–­äº¤äº’èŒƒå›´ */
+	/* ÅĞ¶Ï½»»¥·¶Î§ */
 	virtual bool isTrigger(const Vec2& pos);
 
-	// æŠ€èƒ½ï¼Œä»¥ç»„åˆæŠ€å½¢å¼å‡ºç°
+	// ¼¼ÄÜ£¬ÒÔ×éºÏ¼¼ĞÎÊ½³öÏÖ
 	//void Combo();
 
-	/* èƒŒåŒ…ç›¸å…³ */
-	// è§’è‰²çš„æ­¦å™¨
+	/* ±³°üÏà¹Ø */
+	// ½ÇÉ«µÄÎäÆ÷
 	weapon* _weapon;
-	// è§’è‰²çš„æŠ¤ç”²
+	// ½ÇÉ«µÄ»¤¼×
 	armor* _armor;
-	// è§’è‰²çš„é‹å­
+	// ½ÇÉ«µÄĞ¬×Ó
 	shoes* _shoes;
-	// è§’è‰²çš„é¥°å“
+	// ½ÇÉ«µÄÊÎÆ·
 	accessories* _accessories;
-	//è·å¾—å¥–åŠ±ï¼Œå‚æ•°Bonusç»“æ„ä½“,ç»“æ„ä½“å†…éœ€å«æœ‰ç»éªŒå€¼ï¼Œç‰©å“éƒ¨åˆ†äº¤ç»™èƒŒåŒ…
+	//»ñµÃ½±Àø£¬²ÎÊıBonus½á¹¹Ìå,½á¹¹ÌåÄÚĞèº¬ÓĞ¾­ÑéÖµ£¬ÎïÆ·²¿·Ö½»¸ø±³°ü
 	void GetBonus(Bonus bonus);
 	// update override
 	void update(float dt)override;
-	// è§’è‰²çš„é‡‘å¸æ•°
+	// ½ÇÉ«µÄ½ğ±ÒÊı
 	int coins;
-	// èµ‹å€¼è¿ç®—ç¬¦é‡è½½
+	// ¸³ÖµÔËËã·ûÖØÔØ
 	Player& operator=(const Player& other)
 	{
-		if (this == &other)  // è‡ªèµ‹å€¼æ£€æŸ¥
+		if (this == &other)  // ×Ô¸³Öµ¼ì²é
 			return *this;
 		level = other.level;
 		hp = other.hp;

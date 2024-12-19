@@ -118,7 +118,7 @@ void SetMap::LoadMonsterRespawnToScene() {
 
 void SetMap::LoadNPCToScene() {
 	// ¼Ó¸önpc
-	npc1 = new NPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2 - 200, 1.0f, this, PLAYER);
+	npc1 = new NPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2 - 200, 1.0f, this, PLAYER, _bagManager);
 	npc1->scheduleUpdate();
 }
 
