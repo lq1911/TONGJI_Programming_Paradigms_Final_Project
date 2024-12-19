@@ -29,7 +29,6 @@ BagManager::BagManager() : _isBagOpen(false), _bagPanel(nullptr)
     //task* task2 = new task("Acquire a Weapon", "Defeat the guard with the sword and gain the iron sword", 0, 1);
     //myLineQuest.push_back(task2);
     //task1->isFinished = 1;
-
     // 将显示金币数量的标签置空
     coinsLabel = nullptr;
 }

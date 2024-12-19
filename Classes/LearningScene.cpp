@@ -3,17 +3,7 @@
 USING_NS_CC;
 
 Scene* LearningScene::createScene() {
-    // 创建带物理世界的场景
-    auto scene = Scene::createWithPhysics();
-    
-    // 碰撞框:调试用
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
-    scene->getPhysicsWorld()->setGravity(Vec2(0, -0.1));
-    auto layer = LearningScene::create();
-    scene->addChild(layer);
-
-    return scene;
+    return LearningScene::create();
 }
 
 bool LearningScene::init() {
@@ -288,12 +278,6 @@ void LearningScene::learnChat_1() {
 
 void LearningScene::learnChat_2() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
-
-    // 监测npc是否在有效触发范围内
-    this->schedule([=](float dt) {
-        CHATNPC->update();
-        }, 0.2f, "npc_check_scheduler");
-
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("Now have a try!", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
@@ -337,8 +321,6 @@ void LearningScene::learnChat_2() {
         // 取消键盘监听
         _eventDispatcher->removeEventListener(listener_chat);
         listener_chat = nullptr; 
-        // 取消npc监听
-        this->unschedule("npc_check_scheduler");
         // 下一步
         this->learnBag_1();
         });

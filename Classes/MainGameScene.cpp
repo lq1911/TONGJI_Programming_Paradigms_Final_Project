@@ -4,22 +4,8 @@
 
 USING_NS_CC;
 
-
 Scene* MainGameScene::createScene() {
-	// 创建带物理世界的场景
-	auto scene = Scene::createWithPhysics();
-
-	// 碰撞框:调试用
-	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
-	// 设置重力
-	scene->getPhysicsWorld()->setGravity(Vec2(0, -0.1));
-
-	// 创建SetMap层并添加到场景中
-	auto layer = MainGameScene::create();
-	scene->addChild(layer);
-
-	return scene;
+    return MainGameScene::create();
 }
 
 bool MainGameScene::init() {
@@ -42,7 +28,6 @@ bool MainGameScene::init() {
 
 	//添加鼠标监听器，检测鼠标活动
 	_mouseListener = EventListenerMouse::create();
-	_mouseListener->onMouseUp = CC_CALLBACK_1(MainGameScene::MouseClicked, this);
 	_mouseListener->onMouseScroll = CC_CALLBACK_1(MainGameScene::MouseScroll, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_mouseListener, this);
 
@@ -136,13 +121,7 @@ void MainGameScene::LoadNPCToScene() {
 	_npcManager = new NPCManager(PLAYER, _bagManager);
 
 	// 在地图中加入npc
-	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f, this);
-	_npcManager->addNPC("npc2", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f, this);
-	_npcManager->addNPC("npc3", VisibleSize.width / 2 + 500, VisibleSize.height / 2 + 500, 0.6f, this);
-	_npcManager->addNPC("npc4", VisibleSize.width / 2 - 500, VisibleSize.height / 2, 0.6f, this);
-	_npcManager->addNPC("npc5", VisibleSize.width / 2 - 500, VisibleSize.height / 2 - 500, 0.6f, this);
-	_npcManager->addNPC("npc6", VisibleSize.width / 2 - 500, VisibleSize.height / 2 + 500, 0.6f, this);
-	_npcManager->addNPC("npc7", VisibleSize.width / 2 + 500, VisibleSize.height / 2 - 500, 0.6f, this);
+	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 1.0f, this);
 
 	// 监测npc是否在有效触发范围内
 	this->schedule([=](float dt) {
@@ -424,26 +403,11 @@ void MainGameScene::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	}
 }
 
-void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
-	// 处理小地图中的传送门
-
-	int MapID = _mapManager->GetPlayerInWhichMap();
-			// 传送玩家
-			TeleportPlayer(MapID);
-
-}
-
 void MainGameScene::MouseScroll(EventMouse* event) {
 	if (_cameraManager->IsInMicroMap()) {
 		MouseScrollForCameraZoom(event, _cameraManager->GetMicroCamera(), 3600.0f, 1200.0f, 400.0f);
 	}
 	else {
 		MouseScrollForCameraZoom(event, _cameraManager->GetMainCamera(), 600.0f, 200.0f, 40.0f);
-	}
-}
-
-void MainGameScene::MouseClicked(EventMouse* event) {
-	if (_cameraManager->IsInMicroMap()) {
-		MouseClickedForTeleport(event);
 	}
 }

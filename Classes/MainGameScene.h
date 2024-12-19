@@ -58,7 +58,7 @@ public:
 	virtual void LoadNPCToScene();
 
 	/****************************************************************/
-	////////////////以下为本场景声明的本场景特有功能函数/////////////
+	////////////////以下为本场景声明的本场景特有功能函数/////////////////
 	/*设置摄像机跟随玩家移动*/
 	void CameraFollowController();
 
@@ -93,6 +93,9 @@ public:
 	/*键盘事件处理，按下C键打开NPC交互界面*/
 	void KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event);
 
+	/*鼠标事件处理，滚动滚轮控制地图缩放*/
+	void MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
+
 	/*键盘事件处理，按下方向键控制小地图方向*/
 	void KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed);
 
@@ -102,18 +105,8 @@ public:
 	/*键盘事件处理，最终处理键盘释放事件函数*/
 	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
 
-	////////////////////以上为键盘的回调函数，以下为鼠标的回调函数
-	/*鼠标事件处理，滚动滚轮控制地图缩放*/
-	void MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
-
-	/*鼠标事件处理，点击地图传送点传送*/
-	void MouseClickedForTeleport(EventMouse* event);
-
 	/*鼠标事件处理，最终处理鼠标滚轮事件函数*/
 	void MouseScroll(EventMouse* event);
-
-	/*鼠标事件处理，最终处理鼠标按下事件函数*/
-	void MouseClicked(EventMouse* event);
 
 	CREATE_FUNC(MainGameScene);
 };

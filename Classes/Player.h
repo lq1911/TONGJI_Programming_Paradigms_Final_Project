@@ -10,7 +10,7 @@ USING_NS_CC;
 using namespace std;
 
 // 触发距离
-const int DIST = 100;
+const int DIST = 50;
 
 struct Bonus {
 	//Object object;
@@ -25,7 +25,12 @@ private:
 	int next_level_exp;    // 达到下一级所需经验值
 	vector<Monster*> monster;
 protected:
+	// 玩家名字在Creature类里已定义了:(	
+
+	//int x, y;       // 坐标
 public:
+	// 精灵//Creature中有了:( 
+
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
