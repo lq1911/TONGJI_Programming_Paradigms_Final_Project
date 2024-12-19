@@ -12,7 +12,7 @@
 #include "CameraManager.h"
 USING_NS_CC;
 
-class SetMap :public cocos2d::Scene {
+class MainGameScene :public cocos2d::Scene {
 private:
 	Size VisibleSize;    // 可见屏幕大小
 	
@@ -32,7 +32,7 @@ public:
 	/****************************************************************/
 	////////////////以下为本场景所有用到的初始化函数/////////////////
 	/* 构造函数，获取屏幕的大小*/
-	SetMap(); 
+	MainGameScene(); 
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
@@ -109,7 +109,7 @@ public:
 	/*鼠标事件处理，最终处理鼠标滚轮事件函数*/
 	void MouseScroll(EventMouse* event);
 
-	CREATE_FUNC(SetMap);
+	CREATE_FUNC(MainGameScene);
 };
 
 #endif // __SET_MAP_H__
