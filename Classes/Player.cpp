@@ -67,7 +67,8 @@ void Player::Init(vector<Monster*>monster, MapManager* map_manager) {
 }
 // 人物攻击
 // 攻击范围是扇形
-Animate* Player::Attack(int dir, vector<Monster*> monster) {
+Animate* Player::Attack(vector<Monster*> monster) {
+    int dir = getDir();
     Vec2 pos_player = mySprite->getPosition();
     for (int i = 0; i < monster.size(); i++) {
         Vec2 pos_monster = monster[i]->mySprite->getPosition();
@@ -84,7 +85,7 @@ Animate* Player::Attack(int dir, vector<Monster*> monster) {
             else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// 下
                 monster[i]->Hurt();
         }
-        Creature::Attack(dir, monster[i]);
+        Creature::Attack(monster[i]);
     }
     return nullptr;
 }
