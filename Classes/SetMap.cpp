@@ -5,7 +5,20 @@
 USING_NS_CC;
 
 Scene* SetMap::createScene() {
-    return SetMap::create();
+	// 创建带物理世界的场景
+	auto scene = Scene::createWithPhysics();
+
+	// 碰撞框:调试用
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
+	// 设置重力
+	scene->getPhysicsWorld()->setGravity(Vec2(0, -0.1));
+
+	// 创建SetMap层并添加到场景中
+	auto layer = SetMap::create();
+	scene->addChild(layer);
+
+	return scene;
 }
 
 bool SetMap::init() {
@@ -121,7 +134,13 @@ void SetMap::LoadNPCToScene() {
 	_npcManager = new NPCManager(PLAYER, _bagManager);
 
 	// 在地图中加入npc
-	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 1.0f, this);
+	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f, this);
+	_npcManager->addNPC("npc2", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f, this);
+	_npcManager->addNPC("npc3", VisibleSize.width / 2 + 500, VisibleSize.height / 2 + 500, 0.6f, this);
+	_npcManager->addNPC("npc4", VisibleSize.width / 2 - 500, VisibleSize.height / 2, 0.6f, this);
+	_npcManager->addNPC("npc5", VisibleSize.width / 2 - 500, VisibleSize.height / 2 - 500, 0.6f, this);
+	_npcManager->addNPC("npc6", VisibleSize.width / 2 - 500, VisibleSize.height / 2 + 500, 0.6f, this);
+	_npcManager->addNPC("npc7", VisibleSize.width / 2 + 500, VisibleSize.height / 2 - 500, 0.6f, this);
 
 	// 监测npc是否在有效触发范围内
 	this->schedule([=](float dt) {
