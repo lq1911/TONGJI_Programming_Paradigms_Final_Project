@@ -10,7 +10,7 @@ USING_NS_CC;
 using namespace std;
 
 // ¥•∑¢æ‡¿Î
-const int DIST = 130;
+const int DIST = 50;
 
 struct Bonus {
 	//Object object;

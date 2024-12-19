@@ -2,7 +2,7 @@
 #include "NPC.h"
 
 /* 交互提示 */
-void NPC::update(float dt) {
+void NPC::update() {
 	CCLOG("update is being called");
 	if (isTrigger()) {
 		triggerTip();  // 玩家进入触发范围
@@ -31,16 +31,20 @@ void NPC::Chat() {
 
     /* 加入对话框chatPanel */
     auto winSize = Director::getInstance()->getWinSize();
-    Vec2 where = Vec2(winSize.width / 2, winSize.height - 1100);
+	Vec2 where = Vec2(winSize.width / 2, winSize.height - 850);
+	if (role == "npc0")
+		where = Vec2(winSize.width / 2, winSize.height - 1100);
     auto chatPanel = Sprite::create("UI/Panel5.png");
     chatPanel->setContentSize(Size(1800, 350));
     chatPanel->setPosition(where); 
-	chatPanel->setOpacity(200);
+	chatPanel->setOpacity(220);
     scene->addChild(chatPanel, 2);
 
 	/* 加入npc */
 	auto npcSprite = Sprite::create("Role/" + role + "/1.png");
-	npcSprite->setPosition(Vec2(winSize.width / 2 - 430, winSize.height - 1000));
+	npcSprite->setPosition(Vec2(winSize.width / 2 - 430, winSize.height - 750));
+	if (role == "npc0")
+		npcSprite->setPosition(Vec2(winSize.width / 2 - 430, winSize.height - 1000));
 	npcSprite->setScale(2.0);
 	scene->addChild(npcSprite, 3);
 
@@ -56,30 +60,36 @@ void NPC::Chat() {
 	};
 
 	switch (stringMap[role]) {
+	/* 教学npc */
 	case 0:
 		npc0([=]() {
-			//当npc0的对话逻辑完成后，移除UI
+			// 当npc0的对话逻辑完成后，移除UI
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc0-chat over.");
+			CCLOG("npc0-chat over.");
 			});
 		break;
+	/* 解锁主线任务的npc */
 	case 1:
 		npc1([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc1-chat over.");
+			CCLOG("npc1-chat over.");
 			});
 		break;
 	case 2:
 		npc2([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc2-chat over.");
+			CCLOG("npc2-chat over.");
 			});
 		break;
 	case 3:
-		
+		npc3([=]() {
+			npcSprite->removeFromParent();
+			chatPanel->removeFromParent();
+			log("npc3-chat over.");
+			});
 		break;
 	case 4:
 
@@ -87,6 +97,7 @@ void NPC::Chat() {
 	case 5:
 
 		break;
+	/* 其它npc */
 	case 6:
 
 		break;
@@ -97,6 +108,8 @@ void NPC::Chat() {
 
 }
 
+/* npc对话逻辑 */
+/************ 教学npc ************/
 void  NPC::npc0(std::function<void()> callback) {
 	auto winSize = Director::getInstance()->getWinSize();
 	/* npc说话-1 */
@@ -191,12 +204,14 @@ void  NPC::npc0(std::function<void()> callback) {
 		});
 }
 
+/******** 解锁主线任务npc ********/
 void NPC::npc1(std::function<void()> callback) {
+	isChatting = true;
 	auto winSize = Director::getInstance()->getWinSize();
 
 	/* npc说话-1 */
 	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 1", "fonts/Lacquer.ttf", 30);
-	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1050));
+	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 800));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 2);
 
@@ -204,28 +219,35 @@ void NPC::npc1(std::function<void()> callback) {
 	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
 	NextButton->ignoreContentAdaptWithSize(false);
 	NextButton->setContentSize(Size(60, 60));
-	NextButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1150));
-	NextButton->setOpacity(180);
+	NextButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+	NextButton->setOpacity(220);
 	scene->addChild(NextButton, 2);
 	/* NextButton监听 */
 	NextButton->addClickEventListener([=](Ref* sender)mutable {
 		// 解锁任务
-		if (bag)
-			bag->taskUnlock(1, 1);
-		// 对话
 		NextButton->removeFromParent();
 		NextButton = nullptr;
-		npcTxt1->setString("The first main-line task is unlocked.\nClose the chat window and checkout your bag!");
+		if (!Mtasks[0]) {
+			Mtasks[0] = true;
+			if (bag)
+				bag->taskUnlock(1, 1);
+			// 对话
+			npcTxt1->setString("The 1st main-line task is unlocked.\nClose the chat window and checkout your bag!");
+		}
+		else {
+			npcTxt1->setString("The 1st main-line task has been unlocked.\nClose the chat window and checkout your bag!");
+		}
 		// 下一步:结束对话
 		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
 		CloseButton->ignoreContentAdaptWithSize(false);
 		CloseButton->setContentSize(Size(40, 40));
 		CloseButton->setTitleFontSize(24);
-		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1150));
+		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
 		scene->addChild(CloseButton, 4);
 		CloseButton->addClickEventListener([=](Ref* sender) mutable {
 			npcTxt1->removeFromParent();
 			CloseButton->removeFromParent();
+			isChatting = false;
 			if (callback) {
 				callback();
 			}
@@ -235,10 +257,207 @@ void NPC::npc1(std::function<void()> callback) {
 }
 
 void NPC::npc2(std::function<void()> callback) {
+	isChatting = true;
 	auto winSize = Director::getInstance()->getWinSize();
 
 	/* npc说话-1 */
-	auto npcTxt1 = Label::createWithTTF("This is npc1 speaking 1", "fonts/Lacquer.ttf", 35);
+	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 2", "fonts/Lacquer.ttf", 30);
+	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 800));
+	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(npcTxt1, 2);
+
+	/* NextButton */
+	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
+	NextButton->ignoreContentAdaptWithSize(false);
+	NextButton->setContentSize(Size(60, 60));
+	NextButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+	NextButton->setOpacity(220);
+	scene->addChild(NextButton, 2);
+	/* NextButton监听 */
+	NextButton->addClickEventListener([=](Ref* sender)mutable {
+		// 判断是否需要解锁任务
+		if (!Mtasks[1]) {
+			Mtasks[1] = true;
+			if (bag)
+				bag->taskUnlock(2, 1);
+			// 对话
+			npcTxt1->setString("The 2nd main-line task is unlocked.\nClose the chat window and checkout your bag!");
+		}
+		else {
+			npcTxt1->setString("The 2nd main-line task has been unlocked.\nClose the chat window and checkout your bag!");
+		}
+		// 下一步:结束对话
+		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+		CloseButton->ignoreContentAdaptWithSize(false);
+		CloseButton->setContentSize(Size(40, 40));
+		CloseButton->setTitleFontSize(24);
+		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+		scene->addChild(CloseButton, 4);
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			npcTxt1->removeFromParent();
+			CloseButton->removeFromParent();
+			isChatting = false;
+			if (callback) {
+				callback();
+			}
+			return;
+			});
+		});
+}
+
+void NPC::npc3(std::function<void()> callback) {
+	isChatting = true;
+	auto winSize = Director::getInstance()->getWinSize();
+
+	/* npc说话-1 */
+	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 3", "fonts/Lacquer.ttf", 30);
+	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 800));
+	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(npcTxt1, 2);
+
+	/* NextButton */
+	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
+	NextButton->ignoreContentAdaptWithSize(false);
+	NextButton->setContentSize(Size(60, 60));
+	NextButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+	NextButton->setOpacity(220);
+	scene->addChild(NextButton, 2);
+	/* NextButton监听 */
+	NextButton->addClickEventListener([=](Ref* sender)mutable {
+		// 判断是否需要解锁任务
+		if (!Mtasks[2]) {
+			Mtasks[2] = true;
+			if (bag)
+				bag->taskUnlock(3, 1);
+			// 对话
+			npcTxt1->setString("The 3rd main-line task is unlocked.\nClose the chat window and checkout your bag!");
+		}
+		else {
+			npcTxt1->setString("The 3rd main-line task has been unlocked.\nClose the chat window and checkout your bag!");
+		}
+		// 下一步:结束对话
+		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+		CloseButton->ignoreContentAdaptWithSize(false);
+		CloseButton->setContentSize(Size(40, 40));
+		CloseButton->setTitleFontSize(24);
+		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+		scene->addChild(CloseButton, 4);
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			npcTxt1->removeFromParent();
+			CloseButton->removeFromParent();
+			isChatting = false;
+			if (callback) {
+				callback();
+			}
+			return;
+			});
+		});
+}
+
+void NPC::npc4(std::function<void()> callback) {
+	isChatting = true;
+	auto winSize = Director::getInstance()->getWinSize();
+
+	/* npc说话-1 */
+	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 4", "fonts/Lacquer.ttf", 30);
+	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 800));
+	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(npcTxt1, 2);
+
+	/* NextButton */
+	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
+	NextButton->ignoreContentAdaptWithSize(false);
+	NextButton->setContentSize(Size(60, 60));
+	NextButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+	NextButton->setOpacity(220);
+	scene->addChild(NextButton, 2);
+	/* NextButton监听 */
+	NextButton->addClickEventListener([=](Ref* sender)mutable {
+		// 判断是否需要解锁任务
+		if (!Mtasks[3]) {
+			Mtasks[3] = true;
+			if (bag)
+				bag->taskUnlock(4, 1);
+			// 对话
+			npcTxt1->setString("The 4th main-line task is unlocked.\nClose the chat window and checkout your bag!");
+		}
+		else {
+			npcTxt1->setString("The 4th main-line task has been unlocked.\nClose the chat window and checkout your bag!");
+		}
+		// 下一步:结束对话
+		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+		CloseButton->ignoreContentAdaptWithSize(false);
+		CloseButton->setContentSize(Size(40, 40));
+		CloseButton->setTitleFontSize(24);
+		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+		scene->addChild(CloseButton, 4);
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			npcTxt1->removeFromParent();
+			CloseButton->removeFromParent();
+			isChatting = false;
+			if (callback) {
+				callback();
+			}
+			return;
+			});
+		});
+}
+
+void NPC::npc5(std::function<void()> callback) {
+	isChatting = true;
+	auto winSize = Director::getInstance()->getWinSize();
+
+	/* npc说话-1 */
+	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 5", "fonts/Lacquer.ttf", 30);
+	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 800));
+	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(npcTxt1, 2);
+
+	/* NextButton */
+	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
+	NextButton->ignoreContentAdaptWithSize(false);
+	NextButton->setContentSize(Size(60, 60));
+	NextButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+	NextButton->setOpacity(220);
+	scene->addChild(NextButton, 2);
+	/* NextButton监听 */
+	NextButton->addClickEventListener([=](Ref* sender)mutable {
+		// 判断是否需要解锁任务
+		if (!Mtasks[4]) {
+			Mtasks[4] = true;
+			if (bag)
+				bag->taskUnlock(5, 1);
+			// 对话
+			npcTxt1->setString("The 5th main-line task is unlocked.\nClose the chat window and checkout your bag!");
+		}
+		else {
+			npcTxt1->setString("The 5th main-line task has been unlocked.\nClose the chat window and checkout your bag!");
+		}
+		// 下一步:结束对话
+		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+		CloseButton->ignoreContentAdaptWithSize(false);
+		CloseButton->setContentSize(Size(40, 40));
+		CloseButton->setTitleFontSize(24);
+		CloseButton->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 900));
+		scene->addChild(CloseButton, 4);
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			npcTxt1->removeFromParent();
+			CloseButton->removeFromParent();
+			isChatting = false;
+			if (callback) {
+				callback();
+			}
+			return;
+			});
+		});
+}
+
+/************ 其它npc ************/
+void NPC::npc6(std::function<void()> callback) {
+	auto winSize = Director::getInstance()->getWinSize();
+
+	/* npc说话-1 */
+	auto npcTxt1 = Label::createWithTTF("This is npc6 speaking 1", "fonts/Lacquer.ttf", 35);
 	npcTxt1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1000));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 4);
@@ -278,7 +497,7 @@ void NPC::npc2(std::function<void()> callback) {
 		Ans1Button->removeFromParent();
 		Ans2Button->removeFromParent();
 		/* npc说话-2-choice1 */
-		auto npcTxt2_1 = Label::createWithTTF("This is npc1 speaking 2-1", "fonts/Lacquer.ttf", 35);
+		auto npcTxt2_1 = Label::createWithTTF("This is npc6 speaking 2-1", "fonts/Lacquer.ttf", 35);
 		npcTxt2_1->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1080));
 		npcTxt2_1->setTextColor(Color4B(0, 0, 0, 255));
 		scene->addChild(npcTxt2_1, 4);
@@ -307,7 +526,7 @@ void NPC::npc2(std::function<void()> callback) {
 		Ans1Button->removeFromParent();
 		Ans2Button->removeFromParent();
 		/* npc说话-2-choice2 */
-		auto npcTxt2_2 = Label::createWithTTF("This is npc1 speaking 2-2", "fonts/Lacquer.ttf", 35);
+		auto npcTxt2_2 = Label::createWithTTF("This is npc6 speaking 2-2", "fonts/Lacquer.ttf", 35);
 		npcTxt2_2->setPosition(Vec2(winSize.width / 2 + 50, winSize.height - 1080));
 		npcTxt2_2->setTextColor(Color4B(0, 0, 0, 255));
 		scene->addChild(npcTxt2_2, 4);

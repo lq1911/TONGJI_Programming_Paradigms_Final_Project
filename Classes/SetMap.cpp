@@ -104,7 +104,7 @@ void SetMap::LoadBagToScene() {
 }
 
 void SetMap::LoadPlayerToScene() {
-	// lq加的调试小人
+	// 玩家
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
 }
 
@@ -117,9 +117,18 @@ void SetMap::LoadMonsterRespawnToScene() {
 }
 
 void SetMap::LoadNPCToScene() {
-	// 加个npc
-	npc1 = new NPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2 - 200, 1.0f, this, PLAYER, _bagManager);
-	npc1->scheduleUpdate();
+	// NPC管理器
+	_npcManager = new NPCManager(PLAYER, _bagManager);
+
+	// 在地图中加入npc
+	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 1.0f, this);
+
+	// 监测npc是否在有效触发范围内
+	this->schedule([=](float dt) {
+		for (auto npc : _npcManager->visitNPC()) {
+			npc->update();
+		}
+		}, 0.2f, "npc_check_scheduler");
 }
 
 /****************************************************************/
@@ -298,9 +307,11 @@ void SetMap::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Event* ev
 }
 
 void SetMap::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (_npcManager->getChattingStates())
+		return;
 	/* npc交互 */
 	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
-		npc1->Chat();
+		_npcManager->checkTriggers();
 	}
 }
 
@@ -365,6 +376,9 @@ void SetMap::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			keyCode == EventKeyboard::KeyCode::KEY_K ||
 			keyCode == EventKeyboard::KeyCode::KEY_L) {
 			KeyPressedForPlayerAttack(keyCode, event);
+		}
+		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
+			KeyPressedForNPCInteract(keyCode, event);
 		}
 	}
 	else {
