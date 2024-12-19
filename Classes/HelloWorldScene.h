@@ -4,7 +4,7 @@
 #include "cocos2d.h"
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
-#include "SetMap.h"
+#include "MainGameScene.h"
 
 class HelloWorld : public cocos2d::Scene
 {

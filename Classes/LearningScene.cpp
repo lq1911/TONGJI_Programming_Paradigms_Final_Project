@@ -244,7 +244,7 @@ void LearningScene::learnAttack_2() {
 void LearningScene::learnChat_1() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* 加入NPC */
-    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 2.0f, this, LEARNER);
+    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 2.0f, this, LEARNER, nullptr);
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("3.Chat", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
@@ -335,7 +335,7 @@ void LearningScene::learnBag_1() {
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
     /* bagTxt */
-    auto bagTxt = Label::createWithTTF("Press B to open the bag and press P to pick an item.", "fonts/Lacquer.ttf", 40);
+    auto bagTxt = Label::createWithTTF("Press B to open the bag and checkout the tasks.", "fonts/Lacquer.ttf", 40);
     bagTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
     bagTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(bagTxt, 1);
@@ -437,7 +437,7 @@ void LearningScene::finish() {
     /* NextButton监听 */
     NextButton->addClickEventListener([=](Ref* sender)mutable {
         // 切换场景
-        auto scene = SetMap::createScene();
+        auto scene = MainGameScene::createScene();
         Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
         });
 }
@@ -498,24 +498,28 @@ void LearningScene::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
 		if (isKeyPressed[0]) {
 			isKeyPressed[0] = false;
+            LEARNER->mySprite->stopAllActions();  // 停止当前的所有动作
 			this->unschedule("MoveUP");
 		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
 		if (isKeyPressed[1]) {
 			isKeyPressed[1] = false;
+            LEARNER->mySprite->stopAllActions();  // 停止当前的所有动作
 			this->unschedule("MoveDOWN");
 		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
 		if (isKeyPressed[2]) {
 			isKeyPressed[2] = false;
+            LEARNER->mySprite->stopAllActions();  // 停止当前的所有动作
 			this->unschedule("MoveLEFT");
 		}
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
 		if (isKeyPressed[3]) {
 			isKeyPressed[3] = false;
+            LEARNER->mySprite->stopAllActions();  // 停止当前的所有动作
 			this->unschedule("MoveRIGHT");
 		}
 	}

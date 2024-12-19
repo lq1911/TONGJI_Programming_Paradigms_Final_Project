@@ -10,7 +10,7 @@ BagManager* BagManager::_instance = nullptr;
 BagManager* BagManager::getInstance()
 {
     // 如果实例不存在，创建一个新的实例
-    if (_instance == nullptr) 
+    if (_instance == nullptr)
     {
         _instance = new BagManager();  // 创建实例
         _instance->init();  // 初始化实例
@@ -23,21 +23,21 @@ BagManager::BagManager() : _isBagOpen(false), _bagPanel(nullptr)
     for (int i = 0; i < 40; i++)
         items[i] = nullptr;
     items_num = 0;
-    // 测试添加任务
-    task* task1 = new task("Novice Task", "Pass the beginner's guide", 1, 0);
-    myMainlineTask.push_back(task1);
-    task* task2 = new task("Acquire a Weapon", "Defeat the guard with the sword and gain the iron sword", 0, 1);
-    myLineQuest.push_back(task2);
-    task1->isFinished = 1;
+    //// 测试添加任务
+    //task* task1 = new task("Novice Task", "Pass the beginner's guide", 1, 0);
+    //myMainlineTask.push_back(task1);
+    //task* task2 = new task("Acquire a Weapon", "Defeat the guard with the sword and gain the iron sword", 0, 1);
+    //myLineQuest.push_back(task2);
+    //task1->isFinished = 1;
     // 将显示金币数量的标签置空
     coinsLabel = nullptr;
 }
 
 BagManager::~BagManager()
 {
-    if (_bagPanel) 
+    if (_bagPanel)
         _bagPanel->removeFromParent();
-    if (_bagBackground) 
+    if (_bagBackground)
         _bagBackground->release();
     if (_characterBackground)
         _characterBackground->release();
@@ -45,14 +45,14 @@ BagManager::~BagManager()
 
 bool BagManager::init()
 {
-    if (!Node::init()) 
+    if (!Node::init())
         return false;  // 初始化失败
 
     // 创建背包面板，作为背包UI的容器
     _bagPanel = Node::create();
     this->addChild(_bagPanel);  // 将背包面板添加到当前节点
     _bagPanel->setVisible(false);  // 默认情况下背包是隐藏的
-    
+
     return true;  // 初始化成功
 }
 
@@ -341,7 +341,7 @@ void BagManager::updateTaskUI()
                 // 创建并显示任务名字
                 auto taskNameLabel = Label::createWithSystemFont(myMainlineTask[i]->taskName, "Arial", 24);
                 // 设置字体颜色为金色 (RGB: 255, 215, 0)
-                taskNameLabel->setTextColor(Color4B(255, 215, 0, 255)); 
+                taskNameLabel->setTextColor(Color4B(255, 215, 0, 255));
                 taskNameLabel->setPosition(Vec2(taskInfoBackground->getContentSize().width / 2, taskInfoBackground->getContentSize().height - 15));  // 放置在背景上方
                 taskInfoBackground->addChild(taskNameLabel);
 
@@ -470,9 +470,9 @@ void BagManager::createBagBackground()
 // 显示金币数量
 void BagManager::showcoins()
 {
-   // 显示当前人物的金币数
-   // 如果金币标签已经存在，更新其内容；否则，创建新的金币标签
-    if (coinsLabel) 
+    // 显示当前人物的金币数
+    // 如果金币标签已经存在，更新其内容；否则，创建新的金币标签
+    if (coinsLabel)
         // 更新现有标签的内容
         coinsLabel->setString(to_string(player.coins));
     else
@@ -494,7 +494,7 @@ void BagManager::showcoins()
 void BagManager::createCharacterPanel()
 {
     // 设置角色面板背景
-     _characterBackground = Sprite::create("Bag/character_background.png");
+    _characterBackground = Sprite::create("Bag/character_background.png");
     float characterBackground_x = _bagBackground->getPositionX() + _bagBackground->getContentSize().width / 2 + _characterBackground->getContentSize().width / 2;
     float characterBackground_y = _bagBackground->getPositionY() + _bagBackground->getContentSize().height / 2 - _characterBackground->getContentSize().height / 2;
     _characterBackground->setPosition(Vec2(characterBackground_x, characterBackground_y));
@@ -533,7 +533,7 @@ void BagManager::createCharacterPanel()
     _characterBackground->addChild(player.mySprite);
 
     // 在角色面板两边添加装备栏
-    
+
     // 武器
     auto button1 = Button::create("Bag/item_slot.png");// 添加按钮
     button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y + borderHeight / 2 - 30));
@@ -544,13 +544,13 @@ void BagManager::createCharacterPanel()
     button1->addChild(label1);
 
     // 获取玩家的武器图像并设置到武器栏
-    if (player._weapon != nullptr) 
+    if (player._weapon != nullptr)
     {
         // 获取武器图像并设置
         auto weaponImage = player._weapon->image;
         weaponImage->retain(); // 保证图像对象不被销毁
         weaponImage->removeFromParent(); // 移除当前的父节点
-        if (weaponImage != nullptr) 
+        if (weaponImage != nullptr)
         {
             weaponImage->setPosition(Vec2(button1->getContentSize().width / 2, button1->getContentSize().height / 2));
             button1->addChild(weaponImage);  // 将图像添加到武器栏按钮中
@@ -808,7 +808,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
             }
             else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col]))
             {
-                auto consumption=dynamic_cast<consumable*>(items[row * 5 + col]);
+                auto consumption = dynamic_cast<consumable*>(items[row * 5 + col]);
                 if (player.current_hp + consumption->add_HP <= player.hp)
                     player.current_hp += consumption->add_HP;
                 else
@@ -864,7 +864,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
                 if (player.coins >= equipmentNeedsUpgraded->equipment_cost)
                 {
                     // 角色金币数减少
-                        player.coins -= equipmentNeedsUpgraded->equipment_cost;
+                    player.coins -= equipmentNeedsUpgraded->equipment_cost;
                     // 更新显示金币数量
                     showcoins();
                     // 武器升级，增加数值和升级消耗
@@ -879,7 +879,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
                 });
             itemInfoBackground->addChild(upgradeButton);
             // 为按钮添加文字
-            auto equipmentUpgraddeLabel = Label::createWithSystemFont("upgrade", "Arial", 16); 
+            auto equipmentUpgraddeLabel = Label::createWithSystemFont("upgrade", "Arial", 16);
             equipmentUpgraddeLabel->setPosition(Vec2(upgradeButton->getContentSize().width / 2, upgradeButton->getContentSize().height / 2)); // 设置位置
             upgradeButton->addChild(equipmentUpgraddeLabel);
         }
@@ -1004,3 +1004,72 @@ void BagManager::equipItem(int index)
     }
 
 }
+
+/**********************lq-edit**********************/
+// 解锁任务(type:1主线/0支线)
+void BagManager::taskUnlock(const bool type, const int idx) {
+    task* Mtask1 = new task("Task 1", "This is the 1st task.", 1, 0);
+    task* Mtask2 = new task("Task 2", "This is the 2nd task.", 1, 0);
+    task* Mtask3 = new task("Task 3", "This is the 3rd task.", 1, 0);
+    task* Mtask4 = new task("Task 4", "This is the 4th task.", 1, 0);
+    task* Mtask5 = new task("Final Task", "This is the 5th task.", 1, 0);
+
+    task* Ltask1 = new task("Task 1", "This is the 1st task.", 0, 0);
+    task* Ltask2 = new task("Task 2", "This is the 2nd task.", 0, 0);
+    task* Ltask3 = new task("Task 3", "This is the 3rd task.", 0, 0);
+    task* Ltask4 = new task("Task 4", "This is the 4th task.", 0, 0);
+    task* Ltask5 = new task("Task 5", "This is the 5th task.", 0, 0);
+
+    if (type) {
+        switch (idx) {
+        case 1:
+            myMainlineTask.push_back(Mtask1);
+            break;
+        case 2:
+            myMainlineTask.push_back(Mtask2);
+            break;
+        case 3:
+            myMainlineTask.push_back(Mtask3);
+            break;
+        case 4:
+            myMainlineTask.push_back(Mtask4);
+            break;
+        case 5:
+            myMainlineTask.push_back(Mtask5);
+            break;
+        default:
+            break;
+        }
+    }
+    else {
+        switch (idx) {
+        case 1:
+            myLineQuest.push_back(Ltask1);
+            break;
+        case 2:
+            myLineQuest.push_back(Ltask2);
+            break;
+        case 3:
+            myLineQuest.push_back(Ltask3);
+            break;
+        case 4:
+            myLineQuest.push_back(Ltask4);
+            break;
+        case 5:
+            myLineQuest.push_back(Ltask5);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+// 设置任务状态为已完成(type:1主线/0支线)
+void BagManager::taskFinish(const bool type, const int idx) {
+    if (type)
+        myMainlineTask[idx]->isFinished = true;
+    else
+        myLineQuest[idx]->isFinished = true;
+}
+
+/************************end************************/
