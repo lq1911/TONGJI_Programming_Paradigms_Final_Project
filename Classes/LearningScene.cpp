@@ -3,7 +3,17 @@
 USING_NS_CC;
 
 Scene* LearningScene::createScene() {
-    return LearningScene::create();
+    // 创建带物理世界的场景
+    auto scene = Scene::createWithPhysics();
+    
+    // 碰撞框:调试用
+    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
+    scene->getPhysicsWorld()->setGravity(Vec2(0, -0.1));
+    auto layer = LearningScene::create();
+    scene->addChild(layer);
+
+    return scene;
 }
 
 bool LearningScene::init() {
@@ -13,7 +23,7 @@ bool LearningScene::init() {
 
     /* 加载人 */
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    LEARNER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 2.0f, 100, 50, 20, 50, 10, 80, 1);
+    LEARNER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 80, 1);
 
     /* 加载背景图 */
     // 待确认:是否加载地图
@@ -244,7 +254,7 @@ void LearningScene::learnAttack_2() {
 void LearningScene::learnChat_1() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* 加入NPC */
-    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 2.0f, this, LEARNER, nullptr);
+    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 1.0f, this, LEARNER, nullptr);
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("3.Chat", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
@@ -278,6 +288,12 @@ void LearningScene::learnChat_1() {
 
 void LearningScene::learnChat_2() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
+
+    // 监测npc是否在有效触发范围内
+    this->schedule([=](float dt) {
+        CHATNPC->update();
+        }, 0.2f, "npc_check_scheduler");
+
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("Now have a try!", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
@@ -321,6 +337,8 @@ void LearningScene::learnChat_2() {
         // 取消键盘监听
         _eventDispatcher->removeEventListener(listener_chat);
         listener_chat = nullptr; 
+        // 取消npc监听
+        this->unschedule("npc_check_scheduler");
         // 下一步
         this->learnBag_1();
         });

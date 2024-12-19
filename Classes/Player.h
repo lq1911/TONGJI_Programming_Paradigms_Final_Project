@@ -5,12 +5,12 @@
 #include "cocos2d.h"
 #include "Creature.h"
 #include "Item.h"
-
+#include "MapManager.h"
 USING_NS_CC;
 using namespace std;
 
 // 触发距离
-const int DIST = 50;
+const int DIST = 100;
 
 struct Bonus {
 	//Object object;
@@ -24,13 +24,10 @@ private:
 	int current_exp;       // 角色现有经验值
 	int next_level_exp;    // 达到下一级所需经验值
 	vector<Monster*> monster;
+	bool is_moving;
+	MapManager* map_manager;
 protected:
-	// 玩家名字在Creature类里已定义了:(	
-
-	//int x, y;       // 坐标
 public:
-	// 精灵//Creature中有了:( 
-
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
@@ -43,6 +40,7 @@ public:
 		_shoes = nullptr;
 		_accessories = nullptr;
 		coins = 1000;
+		is_moving = 0;
 		scene->addChild(this);
 		this->scheduleUpdate();
 	}
@@ -56,7 +54,7 @@ public:
 	}
 
 	/* 加入怪物 */
-	void InitMonster(vector<Monster*>monster);
+	void Init(vector<Monster*>monster, MapManager* map_manager);
 
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
@@ -66,7 +64,8 @@ public:
 
 	/* 判断交互范围 */
 	virtual bool isTrigger(const Vec2& pos);
-
+	// 改变is_moving
+	void ChangeIsMoving();
 	// 技能，以组合技形式出现
 	//void Combo();
 

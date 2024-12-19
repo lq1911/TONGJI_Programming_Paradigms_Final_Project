@@ -1,4 +1,93 @@
 #include "Creature.h"
+
+/* 初始化精灵 */
+void Creature::initSprite() {
+    // 精灵初始化
+    /*mySprite = Sprite::create("Role/" + role + "/1.png");
+    mySprite->setPosition(Vec2(x, y));
+    mySprite->setScale(scale);
+    scene->addChild(mySprite);*/
+
+    // 创建精灵
+    mySprite = Sprite::create("Role/" + role + "/1.png");
+    if (!mySprite) {
+        CCLOG("Fail to create sprite.");
+        return;
+    }
+    // 创建碰撞框
+    PhysicsMaterial material;
+    material.restitution = 0.0f;
+    PhysicsBody* body = PhysicsBody::createBox(Size(0, 0), material); // 默认
+    // 各人物碰撞框数值
+    std::unordered_map<std::string, int> bodyMap = {
+    {"Player1", 1},
+    {"Player2", 2},
+    {"Player3", 3},
+    {"Player4", 4},
+    {"Player5", 5},
+    {"npc0", 14},
+    {"npc1", 11},
+    {"npc2", 12},
+    {"npc3", 13},
+    {"npc4", 14},
+    {"npc5", 15},
+    {"npc6", 16},
+    {"npc7", 17}
+    };
+
+    switch (bodyMap[role]) {
+    /***************** Player *****************/
+    case(1):
+    case(2):
+    case(4):
+        body = PhysicsBody::createBox(Size(80, 130), material);
+        body->setPositionOffset(Vec2(0, -10));
+        break;
+    case(3):
+    case(5):
+        body = PhysicsBody::createBox(Size(80, 100), material);
+        body->setPositionOffset(Vec2(0, -20));
+        break;
+    /****************** npc ******************/
+    case(11):
+        body = PhysicsBody::createBox(Size(60, 60), material);
+        body->setPositionOffset(Vec2(0, -40));
+        break;
+    case(12):
+    case(13):
+    case(14):
+    case(17):
+        body = PhysicsBody::createBox(Size(80, 115), material);
+        body->setPositionOffset(Vec2(0, -15));
+        break;
+    case(15):
+    case(16):
+        body = PhysicsBody::createBox(Size(80, 110), material);
+        body->setPositionOffset(Vec2(0, -30));
+        break;
+        /************** Monster **************/
+
+    default:
+        break;
+    }
+
+    // 禁用旋转
+    body->setRotationEnable(false);  
+    // npc设为静止
+    body->setDynamic(true);
+    if (role == "npc0" || role == "npc1" || role == "npc2" || role == "npc3" || role == "npc4" || role == "npc5" || role == "npc6") {
+        body->setDynamic(false);
+    }
+    // 将碰撞框添加到精灵身上
+    if (body) {
+        mySprite->setPhysicsBody(body);
+    }
+    // 添加精灵至场景中   
+    mySprite->setPosition(Vec2(x, y));
+    mySprite->setScale(scale);
+    scene->addChild(mySprite,0);
+}
+
 /* 攻击动画 */
 Animate* Creature::Attack(int dir, Creature* opp) {
     // 死了,直接返回
@@ -223,25 +312,31 @@ Animate* Creature::Move(int dir) {
     int start = 1;
     if (face_to == DOWN) {
         start = 1;
-        moveBy = Vec2(0, -speed);
+
+
+
     }
     else if (face_to == LEFT) {
         start = 5;
-        moveBy = Vec2(-speed, 0);
+
     }
+
     else if (face_to == RIGHT) {
         start = 9;
-        moveBy = Vec2(speed, 0);
+
     }
+
     else if (face_to == UP) {
         start = 13;
-        moveBy = Vec2(0, speed);
+
+
     }
+
 
     // 创建帧动画
     Vector<SpriteFrame*> animFrames;
     animFrames.reserve(4);
-    for (int i = start+1; i < start + 4; i++) {
+    for (int i = start + 1; i < start + 4; i++) {
         auto texture = Director::getInstance()->getTextureCache()->addImage(s + std::to_string(i) + ".png");
         float width = texture->getPixelsWide();
         float height = texture->getPixelsHigh();
@@ -266,18 +361,18 @@ Animate* Creature::Move(int dir) {
     Animate* animate = Animate::create(animation);
 
     // 创建移动动作
-    auto moveAction = MoveBy::create(0.8f, moveBy);
-    log("MoveBy:%f%f", moveBy.x, moveBy.y);
+   // auto moveAction = MoveBy::create(0.8f, moveBy);
+   //log("MoveBy:%f%f", moveBy.x, moveBy.y);
     // 同时执行动画和移动
-    auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
+    //auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
 
     // 执行动作
-    mySprite->stopAllActions();
-    
-    mySprite->runAction(moveAndAnimate);
+
+
+    mySprite->runAction(animate);
     log("Move");
     return animate;
-   
+
 }
 
 /* 死亡 */
@@ -331,4 +426,8 @@ int Creature::DamageCal(Creature* a, Creature* b) {
 void Creature::setElementType(ElementType _elementType)
 {
     elementType = _elementType;
+}
+void Creature::ChangeXY(Vec2 change) {
+    x += change.x;
+    y += change.y;
 }

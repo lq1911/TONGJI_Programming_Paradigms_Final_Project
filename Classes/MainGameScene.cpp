@@ -5,13 +5,26 @@
 USING_NS_CC;
 
 Scene* MainGameScene::createScene() {
-    return MainGameScene::create();
+	// 创建带物理世界的场景
+	auto scene = Scene::createWithPhysics();
+
+	// 碰撞框:调试用
+	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
+	// 设置重力
+	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
+
+	// 创建SetMap层并添加到场景中
+	auto layer = MainGameScene::create();
+	scene->addChild(layer);
+
+	return scene;
 }
 
 bool MainGameScene::init() {
-    if (!Scene::init()) {
-        return false;
-    }
+	if (!Scene::init()) {
+		return false;
+	}
 
 	this->LoadMapToScene();    //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
@@ -34,7 +47,7 @@ bool MainGameScene::init() {
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 
-    return true;
+	return true;
 }
 
 /****************************************************************/
@@ -49,7 +62,7 @@ MainGameScene::MainGameScene() {
 
 void MainGameScene::LoadCameraToScene() {
 	// 将摄像机管理器添加到场景中
-	this->addChild(_cameraManager); 
+	this->addChild(_cameraManager);
 
 	// 初始化主地图摄像机，并添加摄像机至场景中
 	_cameraManager->InitialMainCamera(this);
@@ -93,7 +106,7 @@ void MainGameScene::LoadMapToScene() {
 	_mapManager->InitialMap("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2 - MapSize - Derivation), this);
 
 	//初始化小地图中黑色雾的显示
-	_mapManager->SetBlackFogInMicroMap();    
+	_mapManager->SetBlackFogInMicroMap();
 }
 
 void MainGameScene::LoadBagToScene() {
@@ -114,7 +127,7 @@ void MainGameScene::LoadMonsterRespawnToScene() {
 	_monsterRespawn = new MonsterRespawn(PLAYER, this);
 
 	// 将怪导入角色
-	PLAYER->InitMonster(_monsterRespawn->GetMonster());
+	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);
 }
 
 void MainGameScene::LoadNPCToScene() {
@@ -122,7 +135,14 @@ void MainGameScene::LoadNPCToScene() {
 	_npcManager = new NPCManager(PLAYER, _bagManager);
 
 	// 在地图中加入npc
-	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 1.0f, this);
+	// 初始化地点待修改
+	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f, this);
+	_npcManager->addNPC("npc2", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f, this);
+	_npcManager->addNPC("npc3", VisibleSize.width / 2 + 500, VisibleSize.height / 2 + 500, 0.6f, this);
+	_npcManager->addNPC("npc4", VisibleSize.width / 2 - 500, VisibleSize.height / 2, 0.6f, this);
+	_npcManager->addNPC("npc5", VisibleSize.width / 2 - 500, VisibleSize.height / 2 - 500, 0.6f, this);
+	_npcManager->addNPC("npc6", VisibleSize.width / 2 - 500, VisibleSize.height / 2 + 500, 0.6f, this);
+	_npcManager->addNPC("npc7", VisibleSize.width / 2 + 500, VisibleSize.height / 2 - 500, 0.6f, this);
 
 	// 监测npc是否在有效触发范围内
 	this->schedule([=](float dt) {
@@ -229,15 +249,20 @@ void MainGameScene::KeyPressedForPlayerMove(EventKeyboard::KeyCode keyCode, Even
 	int speed = PLAYER->getSpeed();
 	/* 移动:W/S/A/D */
 	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
+		PLAYER->ChangeIsMoving();
 		HandlePlayerMove(Vec2(0, speed), 0, "MoveUP", UP);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
+		PLAYER->ChangeIsMoving();
+		log("1");
 		HandlePlayerMove(Vec2(0, -speed), 1, "MoveDOWN", DOWN);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
+		PLAYER->ChangeIsMoving();
 		HandlePlayerMove(Vec2(-speed, 0), 2, "MoveLEFT", LEFT);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
+		PLAYER->ChangeIsMoving();
 		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
 	}
 
@@ -249,6 +274,7 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[0]) {
 			isKeyPressed[0] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
 			this->unschedule("MoveUP");
 		}
 	}
@@ -256,6 +282,8 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[1]) {
 			isKeyPressed[1] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
+			log("0");
 			this->unschedule("MoveDOWN");
 		}
 	}
@@ -263,6 +291,7 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[2]) {
 			isKeyPressed[2] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
 			this->unschedule("MoveLEFT");
 		}
 	}
@@ -270,6 +299,7 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[3]) {
 			isKeyPressed[3] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
 			this->unschedule("MoveRIGHT");
 		}
 	}
@@ -404,12 +434,13 @@ void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, 
 	camera->setPosition3D(cameraPosition);
 }
 
+
 void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
 	// 处理小地图中的传送门
 
 	int MapID = _mapManager->GetPlayerInWhichMap();
-			// 传送玩家
-			TeleportPlayer(MapID);
+	// 传送玩家
+	TeleportPlayer(MapID);
 
 }
 
