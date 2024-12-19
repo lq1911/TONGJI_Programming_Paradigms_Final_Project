@@ -22,11 +22,21 @@ void MapManager::PlayerPositionInWhichMap(Vec2& PlayerPosition) {
 	}	
 }
 
+int MapManager::PositionInWhichMap(Vec2& Position) {
+	for (int i = 0; i < (int)MapList.size(); i++) {
+		if (MapList[i]->getBoundingBox().containsPoint(Position)) {    //判断鼠标是否在某个地图的范围内
+			return i;
+		}
+	}
+}
+
 TMXTiledMap* MapManager::GetTiledMap(int MapID) {
 	return MapList[MapID];
 }
 
-int MapManager::GetPlayerInWhichMap() const { return PlayerInWhichMap; }
+int MapManager::GetPlayerInWhichMap() const {
+	return PlayerInWhichMap;
+}
 
 void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 	TMXObjectGroup* ObjectLayer = TiledMap->getObjectGroup("Obstacles");    //获取障碍物层

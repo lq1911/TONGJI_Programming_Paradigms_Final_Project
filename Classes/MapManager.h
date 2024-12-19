@@ -43,6 +43,9 @@ public:
 	/*判断玩家所在的地图编号*/
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
 
+	/*\判断鼠标移动至的地图编号*/
+	int PositionInWhichMap(Vec2& Position);
+
 	/*获取玩家所在的地图编号*/
 	int GetPlayerInWhichMap()const;
 
