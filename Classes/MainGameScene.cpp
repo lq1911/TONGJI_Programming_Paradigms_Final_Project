@@ -13,7 +13,7 @@ Scene* MainGameScene::createScene() {
 	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
 	// 设置重力
-	scene->getPhysicsWorld()->setGravity(Vec2(0, -0.1));
+	scene->getPhysicsWorld()->setGravity(Vec2(0, 0));
 
 	// 创建SetMap层并添加到场景中
 	auto layer = MainGameScene::create();
