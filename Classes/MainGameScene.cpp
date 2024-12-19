@@ -128,7 +128,7 @@ void MainGameScene::LoadMonsterRespawnToScene() {
 	_monsterRespawn = new MonsterRespawn(PLAYER, this);
 
 	// 将怪导入角色
-	PLAYER->InitMonster(_monsterRespawn->GetMonster());
+	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);
 }
 
 void MainGameScene::LoadNPCToScene() {
@@ -249,15 +249,20 @@ void MainGameScene::KeyPressedForPlayerMove(EventKeyboard::KeyCode keyCode, Even
 	int speed = PLAYER->getSpeed();
 	/* 移动:W/S/A/D */
 	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
+		PLAYER->ChangeIsMoving();
 		HandlePlayerMove(Vec2(0, speed), 0, "MoveUP", UP);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
+		PLAYER->ChangeIsMoving();
+		log("1");
 		HandlePlayerMove(Vec2(0, -speed), 1, "MoveDOWN", DOWN);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
+		PLAYER->ChangeIsMoving();
 		HandlePlayerMove(Vec2(-speed, 0), 2, "MoveLEFT", LEFT);
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
+		PLAYER->ChangeIsMoving();
 		HandlePlayerMove(Vec2(speed, 0), 3, "MoveRIGHT", RIGHT);
 	}
 
@@ -269,6 +274,7 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[0]) {
 			isKeyPressed[0] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
 			this->unschedule("MoveUP");
 		}
 	}
@@ -276,6 +282,8 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[1]) {
 			isKeyPressed[1] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
+			log("0");
 			this->unschedule("MoveDOWN");
 		}
 	}
@@ -283,6 +291,7 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[2]) {
 			isKeyPressed[2] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
 			this->unschedule("MoveLEFT");
 		}
 	}
@@ -290,6 +299,7 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 		if (isKeyPressed[3]) {
 			isKeyPressed[3] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
+			PLAYER->ChangeIsMoving();
 			this->unschedule("MoveRIGHT");
 		}
 	}
