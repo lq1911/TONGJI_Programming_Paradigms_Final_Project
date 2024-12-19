@@ -25,7 +25,7 @@ private:
 
 	Player* PLAYER;     // 操作用户
 	MonsterRespawn* _monsterRespawn;    // 怪物管理器
-	NPC* npc1;    // NPC1
+	NPCManager* _npcManager;   // NPC管理器
 
 	vector<bool> isKeyPressed = { false,false,false,false };    // 按键是否按下:W/S/A/D
 public:

@@ -8,60 +8,73 @@
 
 USING_NS_CC;
 
-///* 触发距离 */
-//const int DIST = 150;
-
+/************************ NPC类 ************************/
 class NPC :public Creature {
 private:
-	Player* who;   // 玩家
+	Player* who;      // 玩家
+    BagManager* bag;  // 玩家背包
+    bool isChatting = false;  // 是否正在对话
+    std::vector<bool> Mtasks = { false,false,false,false,false };  // 主线任务是否已解锁
 public:
 	/* 构造函数 */
-	NPC(std::string role, int x, int y, float scale, Scene* scene, Player* player) :Creature(role, 0, 0, 0, 0, 0, 0, 0, x, y, scale, scene) { 
+	NPC(std::string role, int x, int y, float scale, Scene* scene, Player* player, BagManager* bagManager) :Creature(role, 0, 0, 0, 0, 0, 0, 0, x, y, scale, scene) {
 		who = player;
-        this->scheduleUpdate();
+        bag = bagManager;
 	}
 
     /* 玩家靠近:npc提示(换图) */
     inline void triggerTip() { mySprite->setTexture("Role/" + role + "/2.png"); }
     inline void trggerTipRemove(){ mySprite->setTexture("Role/" + role + "/1.png"); }
-    void update(float dt);
+    void update();
 
 	/* 判断是否在触发范围内 */
 	bool isTrigger();
 
-	/* 互动 */
+    /* 返回对话状态 */
+    bool getChattingState() { return isChatting; }
+	
+    /* 互动 */
 	void Chat();
 
 	/* npc */
-	void npc0(std::function<void()> callback);  // 教学用
+    // 教学npc
+	void npc0(std::function<void()> callback); 
+    // 解锁主线任务npc
 	void npc1(std::function<void()> callback);
     void npc2(std::function<void()> callback);
-
-	
+    void npc3(std::function<void()> callback);
+    void npc4(std::function<void()> callback);
+    void npc5(std::function<void()> callback);
+	// 其它npc
+    void npc6(std::function<void()> callback);
 };
+/********************** END/NPC类 **********************/
 
 
-
-
-/* npc管理类 */
+/********************** NPC管理类 **********************/
 class NPCManager {
 private:
     std::vector<NPC*> npcList;  // 存储所有npc
     Player* player;             // 玩家对象的引用
-
+    BagManager* bag;            // 玩家背包
 public:
     /* 构造函数 */
-    NPCManager(Player* playerRef) : player(playerRef) {  }
+    NPCManager(Player* playerRef, BagManager* bagManager) : player(playerRef), bag(bagManager) {  }
 
-    /* 添加 NPC */
+    /* 访问npc */
+    NPC* visitNPC(const int& idx) { return npcList[idx]; }
+    vector<NPC*> visitNPC() { return npcList; }
+
+    /* 添加npc */
     void addNPC(std::string role, int x, int y, float scale, Scene* scene) {
-        NPC* newNpc = new NPC(role, x, y, scale, scene, player);
+        NPC* newNpc = new NPC(role, x, y, scale, scene, player, bag);
         npcList.push_back(newNpc);
     }
 
     /* 移除npc */
     void removeNPC(NPC* npc) {
         npcList.erase(std::remove(npcList.begin(), npcList.end(), npc), npcList.end());
+        npc->removeFromParent(); //?
         delete npc; 
     }
 
@@ -74,14 +87,15 @@ public:
         }
     }
 
-    /* 执行全局更新逻辑（如动画或行为） */
-    void updateNPCs(float delta) {
+    /* 检测对话状态 */
+    bool getChattingStates() {
         for (auto npc : npcList) {
-            // 例如，可以在这里更新每个NPC的状态
+            if (npc->getChattingState())
+                return true;
         }
+        return false;
     }
-
-    /* 清理所有 NPC */
+    /* 清理所有NPC */
     void clearAllNPCs() {
         for (auto npc : npcList) {
             delete npc;
@@ -89,6 +103,6 @@ public:
         npcList.clear();
     }
 };
-
+/******************** END/NPC管理类 ********************/
 
 #endif __NPC_H__
