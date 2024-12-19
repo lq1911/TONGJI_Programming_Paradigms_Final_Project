@@ -129,5 +129,7 @@ public:
 
 	// ·µ»Ø×ø±ê
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
+
+	void ChangeXY(Vec2 change);
 };
 #endif __CREATURE_H__
