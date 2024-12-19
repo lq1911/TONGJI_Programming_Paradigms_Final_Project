@@ -6,7 +6,7 @@ USING_NS_CC;
 
 Scene* MainGameScene::createScene() {
 	// 创建带物理世界的场景
-	auto scene = Scene::createWithPhysics();
+	auto scene= MainGameScene::createWithPhysics();
 
 	// 碰撞框:调试用
 	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
@@ -322,8 +322,14 @@ void MainGameScene::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std
 }
 
 void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Event* event) {
+	/* 攻击:J */
+	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		CCLOG("into attack");
+		PLAYER->Attack(_monsterRespawn->GetMonster());
+		CCLOG("out attack");
+	}
 	/* 攻击:I/K/J/L */
-	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
+	/*if (keyCode == EventKeyboard::KeyCode::KEY_I) {
 		PLAYER->Attack(UP, _monsterRespawn->GetMonster());
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
@@ -336,7 +342,7 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
 		PLAYER->Attack(RIGHT, _monsterRespawn->GetMonster());
-	}
+	}*/
 }
 
 void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event) {
@@ -362,6 +368,7 @@ void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, 
 }
 
 void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed) {
+	
 	Vec3 currentPosition = camera->getPosition3D();
 
 	// 根据方向键控制摄像机的平移
