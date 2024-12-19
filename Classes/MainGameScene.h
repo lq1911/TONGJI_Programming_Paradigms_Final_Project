@@ -1,7 +1,6 @@
 #ifndef __SET_MAP_H__
 #define __SET_MAP_H__
 
-#include <vector>
 #include "cocos2d.h"
 #include "Player.h"
 #include "SetPlayerScene.h"
@@ -44,19 +43,19 @@ public:
 	void LoadCameraToScene();
 
 	/*初始化地图*/
-	void LoadMapToScene();
+	virtual void LoadMapToScene();
 
 	/*初始化背包界面*/
 	void LoadBagToScene();
 
 	/*初始化操控角色*/
-	void LoadPlayerToScene();
+	virtual void LoadPlayerToScene();
 
 	/*初始化怪物管理器*/
-	void LoadMonsterRespawnToScene();
+	virtual void LoadMonsterRespawnToScene();
 
 	/*初始化NPC*/
-	void LoadNPCToScene();
+	virtual void LoadNPCToScene();
 
 	/****************************************************************/
 	////////////////以下为本场景声明的本场景特有功能函数/////////////////
