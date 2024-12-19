@@ -4,7 +4,6 @@
 
 USING_NS_CC;
 
-
 Scene* MainGameScene::createScene() {
 	// 创建带物理世界的场景
 	auto scene = Scene::createWithPhysics();
@@ -23,9 +22,9 @@ Scene* MainGameScene::createScene() {
 }
 
 bool MainGameScene::init() {
-    if (!Scene::init()) {
-        return false;
-    }
+	if (!Scene::init()) {
+		return false;
+	}
 
 	this->LoadMapToScene();    //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
@@ -48,7 +47,7 @@ bool MainGameScene::init() {
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
 
-    return true;
+	return true;
 }
 
 /****************************************************************/
@@ -63,7 +62,7 @@ MainGameScene::MainGameScene() {
 
 void MainGameScene::LoadCameraToScene() {
 	// 将摄像机管理器添加到场景中
-	this->addChild(_cameraManager); 
+	this->addChild(_cameraManager);
 
 	// 初始化主地图摄像机，并添加摄像机至场景中
 	_cameraManager->InitialMainCamera(this);
@@ -107,7 +106,7 @@ void MainGameScene::LoadMapToScene() {
 	_mapManager->InitialMap("Maps/Forest_Desert_Ecotonal/Forest_Desert_Ecotonal.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2 - MapSize - Derivation), this);
 
 	//初始化小地图中黑色雾的显示
-	_mapManager->SetBlackFogInMicroMap();    
+	_mapManager->SetBlackFogInMicroMap();
 }
 
 void MainGameScene::LoadBagToScene() {
@@ -338,7 +337,7 @@ void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Eve
 	}
 }
 
-void MainGameScene::MouseScrollForCameraZoom(EventMouse* event,Camera* camera,float MaxHeight,float MinHeight,float ScrollSpeed) {
+void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
 	Vec3 cameraPosition = camera->getPosition3D();
 	float ScrollY = event->getScrollY();
 
@@ -428,8 +427,8 @@ void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
 	// 处理小地图中的传送门
 
 	int MapID = _mapManager->GetPlayerInWhichMap();
-			// 传送玩家
-			TeleportPlayer(MapID);
+	// 传送玩家
+	TeleportPlayer(MapID);
 
 }
 
