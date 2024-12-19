@@ -13,7 +13,7 @@ bool LearningScene::init() {
 
     /* 加载人 */
     auto visibleSize = Director::getInstance()->getVisibleSize();
-    LEARNER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 2.0f, 100, 50, 20, 50, 10, 80, 1);
+    LEARNER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 80, 1);
 
     /* 加载背景图 */
     // 待确认:是否加载地图
@@ -244,7 +244,7 @@ void LearningScene::learnAttack_2() {
 void LearningScene::learnChat_1() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* 加入NPC */
-    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 2.0f, this, LEARNER, nullptr);
+    CHATNPC = new NPC("npc0", visibleSize.width / 2, visibleSize.height / 2, 1.0f, this, LEARNER, nullptr);
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("3.Chat", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
