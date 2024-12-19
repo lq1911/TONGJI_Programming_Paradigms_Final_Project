@@ -102,11 +102,6 @@ public:
 		_accessories = other._accessories;
 		coins = other.coins;
 		this->setElementType(other.elementType);
-		if (other.mySprite != nullptr)
-		{
-			x = other.getXY().x;
-			y = other.getXY().y;
-		}
 		if (mySprite == nullptr)
 		{
 			mySprite = Sprite::create("Role/" + other.role + "/1.png");
