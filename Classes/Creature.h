@@ -126,7 +126,8 @@ public:
 	int getAtkRange()const { return atk_range; }
 	// 设置属性
 	void setElementType(ElementType _elementType);
-
+	// 改变XY
+	void ChangeXY(Vec2 change);
 	// 返回坐标
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
 };
