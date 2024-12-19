@@ -23,21 +23,11 @@ void MapManager::PlayerPositionInWhichMap(Vec2& PlayerPosition) {
 	}	
 }
 
-int MapManager::PositionInWhichMap(Vec2& Position) {
-	for (int i = 0; i < (int)MapList.size(); i++) {
-		if (MapList[i]->getBoundingBox().containsPoint(Position)) {    //判断鼠标是否在某个地图的范围内
-			return i;
-		}
-	}
-}
-
 TMXTiledMap* MapManager::GetTiledMap(int MapID) {
 	return MapList[MapID];
 }
 
-int MapManager::GetPlayerInWhichMap() const {
-	return PlayerInWhichMap;
-}
+int MapManager::GetPlayerInWhichMap() const { return PlayerInWhichMap; }
 
 void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 	TMXObjectGroup* ObjectLayer = TiledMap->getObjectGroup("Obstacles");    //获取障碍物层
@@ -54,9 +44,10 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				// 障碍物全为矩形
 				float x = obstacle["x"].asFloat();
 				float y = obstacle["y"].asFloat();
-				float width = obstacle["width"].asFloat();
-				float height = obstacle["height"].asFloat();
+				float width = obstacle["width"].asFloat() * MapToSceneRatio;
+				float height = obstacle["height"].asFloat() * MapToSceneRatio;
 
+				CCLOG("Obstacle: x=%f, y=%f, width=%f, height=%f", tiledMapPosToScenePos(Vec2(x, y), mapID).x, tiledMapPosToScenePos(Vec2(x, y), mapID).y, width, height);
 				// 创建矩形区域
 				Rect obstacleRect(tiledMapPosToScenePos(Vec2(x, y), mapID).x, tiledMapPosToScenePos(Vec2(x, y), mapID).y, width, height);
 
@@ -70,6 +61,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float x = obstacle["x"].asFloat();
 				float y = obstacle["y"].asFloat();
 
+				CCLOG("Teleport: x=%f, y=%f", tiledMapPosToScenePos(Vec2(x, y), mapID).x, tiledMapPosToScenePos(Vec2(x, y), mapID).y);
 				// 保存传送点坐标
 				TeleportList.push_back(tiledMapPosToScenePos(Vec2(x, y), mapID));
 			}
@@ -79,6 +71,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float x = obstacle["x"].asFloat();
 				float y = obstacle["y"].asFloat();
 
+				CCLOG("Interaction: x=%f, y=%f", tiledMapPosToScenePos(Vec2(x, y), mapID).x, tiledMapPosToScenePos(Vec2(x, y), mapID).y);
 				// 保存可交互区域坐标
 				InteractionList.push_back(tiledMapPosToScenePos(Vec2(x, y), mapID));
 			}
