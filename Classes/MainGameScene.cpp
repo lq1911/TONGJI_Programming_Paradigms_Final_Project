@@ -424,19 +424,6 @@ void MainGameScene::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 	}
 }
 
-void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
-	Vec3 cameraPosition = camera->getPosition3D();
-	float ScrollY = event->getScrollY();
-
-	//通过滚轮输入，调整摄像机高度
-	cameraPosition.z += ScrollY * ScrollSpeed;
-
-	// 限制 Z 值范围
-	cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
-	cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
-	camera->setPosition3D(cameraPosition);
-}
-
 void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
 	// 处理小地图中的传送门
 
