@@ -6,7 +6,7 @@ USING_NS_CC;
 
 Scene* MainGameScene::createScene() {
 	// 创建带物理世界的场景
-	auto scene= MainGameScene::createWithPhysics();
+	auto scene = MainGameScene::createWithPhysics();
 
 	// 碰撞框:调试用
 	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
@@ -29,16 +29,17 @@ bool MainGameScene::init() {
 	this->LoadMapToScene();    //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
-	this->LoadBagToScene();    //加载背包到场景
 	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
 	this->LoadNPCToScene();    //加载npc到场景
+	this->LoadBagToScene();    //加载背包到场景
+	this->LoadBackgroundMusicToScene();    //加载背景音乐到场景
 
 	//添加键盘监听器，检测键盘活动
 	_keyboardListener = EventListenerKeyboard::create();
 	_keyboardListener->onKeyPressed = CC_CALLBACK_2(MainGameScene::KeyPressed, this);
 	_keyboardListener->onKeyReleased = CC_CALLBACK_2(MainGameScene::KeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_keyboardListener, this);
-
+	
 	//添加鼠标监听器，检测鼠标活动
 	_mouseListener = EventListenerMouse::create();
 	_mouseListener->onMouseUp = CC_CALLBACK_1(MainGameScene::MouseClicked, this);
@@ -113,7 +114,7 @@ void MainGameScene::LoadBagToScene() {
 	_bagManager = BagManager::getInstance();
 	if (_bagManager->getParent() == nullptr)
 	{
-		PLAYER->addChild(_bagManager);
+		this->addChild(_bagManager);
 	}
 }
 
@@ -152,6 +153,13 @@ void MainGameScene::LoadNPCToScene() {
 		}, 0.2f, "npc_check_scheduler");
 }
 
+void MainGameScene::LoadBackgroundMusicToScene() {
+	_musicManager = music::getInstance();
+	if (_musicManager->getInstance() == nullptr) {
+		this->addChild(_musicManager);
+	}
+	_musicManager->playBackgroundMusic("music/peace.mp3");
+}
 /****************************************************************/
 	////////////////以下为本场景声明的本场景特有功能函数/////////////////
 void MainGameScene::CameraFollowController() {
@@ -328,21 +336,6 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 		PLAYER->Attack(_monsterRespawn->GetMonster());
 		CCLOG("out attack");
 	}
-	/* 攻击:I/K/J/L */
-	/*if (keyCode == EventKeyboard::KeyCode::KEY_I) {
-		PLAYER->Attack(UP, _monsterRespawn->GetMonster());
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
-		PLAYER->Attack(DOWN, _monsterRespawn->GetMonster());
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
-		CCLOG("into attack");
-		PLAYER->Attack(LEFT, _monsterRespawn->GetMonster());
-		CCLOG("out attack");
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
-		PLAYER->Attack(RIGHT, _monsterRespawn->GetMonster());
-	}*/
 }
 
 void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event) {
@@ -354,8 +347,20 @@ void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Eve
 	}
 }
 
+void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
+	Vec3 cameraPosition = camera->getPosition3D();
+	float ScrollY = event->getScrollY();
+
+	//通过滚轮输入，调整摄像机高度
+	cameraPosition.z += ScrollY * ScrollSpeed;
+
+	// 限制 Z 值范围
+	cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
+	cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
+	camera->setPosition3D(cameraPosition);
+}
+
 void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed) {
-	
 	Vec3 currentPosition = camera->getPosition3D();
 
 	// 根据方向键控制摄像机的平移
@@ -383,6 +388,17 @@ void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Ev
 	camera->setPosition3D(currentPosition);
 }
 
+void MainGameScene::KeyPressedForBackgroundMusic(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+		if (_musicManager->isMusicPanelOpen()) {
+			_musicManager->closeMusicPanel();
+		}
+		else {
+			_musicManager->openMusicPanel(PLAYER);
+		}
+	}
+}
+
 void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	// 处理不同的按键
 	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
@@ -407,6 +423,9 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 			KeyPressedForNPCInteract(keyCode, event);
 		}
+		if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+			KeyPressedForBackgroundMusic(keyCode,event);
+		}
 	}
 	else {
 		if (keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW ||
@@ -427,20 +446,6 @@ void MainGameScene::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 		KeyReleasedForPlayerMove(keyCode, event);
 	}
 }
-
-void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed) {
-	Vec3 cameraPosition = camera->getPosition3D();
-	float ScrollY = event->getScrollY();
-
-	//通过滚轮输入，调整摄像机高度
-	cameraPosition.z += ScrollY * ScrollSpeed;
-
-	// 限制 Z 值范围
-	cameraPosition.z = std::min(cameraPosition.z, MaxHeight); // 最大高度
-	cameraPosition.z = std::max(cameraPosition.z, MinHeight); // 最小高度
-	camera->setPosition3D(cameraPosition);
-}
-
 
 void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
 	// 处理小地图中的传送门

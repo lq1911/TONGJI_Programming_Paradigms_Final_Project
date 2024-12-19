@@ -12,9 +12,6 @@ using namespace std;
 class music : public cocos2d::Node
 {
 private:
-	// 音乐面板
-	cocos2d::Node* musicPanel;
-
 	// 音量背景面板
 	cocos2d::Sprite* volumeBackground;  
 
@@ -27,8 +24,6 @@ private:
 	// 构造函数
 	music() : volumeBackground(nullptr), volumeSlider(nullptr), audioId(-1)
 	{
-		musicPanel = Node::create();
-		this->addChild(musicPanel);
 		is_open = false;
 		volumeBackground = nullptr;
 		volumeSlider = nullptr;

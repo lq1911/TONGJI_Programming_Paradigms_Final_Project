@@ -627,7 +627,10 @@ void BagManager::showCharacterInfo()
         PlayerElementType = "Grass";
         break;
     case 3:
-        PlayerElementType = "Water";
+        PlayerElementType = "Ice";
+        break;
+    case 4:
+        PlayerElementType = "Rock";
         break;
     }
     string player_elementType = "ElementType: " + PlayerElementType;
@@ -643,13 +646,13 @@ void BagManager::showCharacterInfo()
     characterHP->setAnchorPoint(Vec2(0, 0.5));
     characterHP->setPosition(Vec2(1, 320));
     _characterBackground->addChild(characterHP);
-    // MP
-    string player_MP = "MP: " + to_string(player.current_mp);
-    auto characterMP = Label::createWithTTF(player_MP, "fonts/arial.ttf", 16);
+    // 等级
+    string player_level = "level: " + to_string(player.level);
+    auto characterLevel = Label::createWithTTF(player_level, "fonts/arial.ttf", 16);
     // 设置锚点，从左边开始
-    characterMP->setAnchorPoint(Vec2(0, 0.5));
-    characterMP->setPosition(Vec2(1, 300));
-    _characterBackground->addChild(characterMP);
+    characterLevel->setAnchorPoint(Vec2(0, 0.5));
+    characterLevel->setPosition(Vec2(1, 300));
+    _characterBackground->addChild(characterLevel);
 
     // 显示角色的攻击力、防御力、速度
     // 攻击力

@@ -26,6 +26,9 @@ private:
 	vector<Monster*> monster;
 	bool is_moving;
 	MapManager* map_manager;
+	Sprite* healthBarBackground;  // 血条背景
+	Sprite* healthBar;            // 实时显示血量的血条
+	Label* hpLabel;               // 显示hp值
 protected:
 public:
 	/* 构造函数 */
@@ -43,6 +46,23 @@ public:
 		is_moving = 0;
 		scene->addChild(this);
 		this->scheduleUpdate();
+		// 初始化血条
+		healthBarBackground = Sprite::create("health/health_bg.png");
+		healthBarBackground->setAnchorPoint(Vec2(0, 1));
+		healthBarBackground->setPosition(Vec2(-920, 800));  
+		this->mySprite->addChild(healthBarBackground);
+
+		healthBar = Sprite::create("health/health_bar.png");  
+		healthBar->setAnchorPoint(Vec2(0, 1));
+		healthBar->setPosition(Vec2(-920, 800));
+		healthBar->setColor(Color3B::RED);
+		this->mySprite->addChild(healthBar);
+
+		// 显示hp值
+		hpLabel = Label::createWithTTF("hp:" + to_string(current_hp), "fonts/arial.ttf", 18);
+		hpLabel->setAnchorPoint(Vec2(0, 1));
+		hpLabel->setPosition(Vec2(-975,800));
+		this->mySprite->addChild(hpLabel);
 	}
 	// 调试用构造函数
 	Player() {
@@ -63,8 +83,10 @@ public:
 
 	/* 判断交互范围 */
 	virtual bool isTrigger(const Vec2& pos);
+
 	// 改变is_moving
 	void ChangeIsMoving();
+
 	// 技能，以组合技形式出现
 	//void Combo();
 
@@ -91,7 +113,6 @@ public:
 		level = other.level;
 		hp = other.hp;
 		current_hp = other.current_hp;
-		current_mp = other.current_mp;
 		atk = other.atk;
 		def = other.def;
 		speed = other.speed;

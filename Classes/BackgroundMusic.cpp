@@ -22,15 +22,14 @@ music* music::getInstance()
 void music::openMusicPanel(Player* player)
 {
 	is_open = true;
-	musicPanel->setVisible(true);
 	// 创建音乐背景面板
 	volumeBackground = Sprite::create("music/volumeBackground.png");
 	volumeBackground->setAnchorPoint(Vec2(0.5, 0.5));
-	volumeBackground->setPosition(player->getXY());
-	musicPanel->addChild(volumeBackground);
+	volumeBackground->setPosition(Vec2(0, 0));
+	player->mySprite->addChild(volumeBackground);
 
 	// 创建一个Slider来控制音量
-	volumeSlider= ui::Slider::create();
+	volumeSlider = ui::Slider::create();
 	volumeSlider->loadBarTexture("music/slider_bg.png");
 	volumeSlider->loadSlidBallTextures("music/slider_ball_normal.png", "music/slider_ball_pressed.png", "");
 	volumeSlider->loadProgressBarTexture("music/slider_progress.png");
@@ -64,9 +63,8 @@ void music::closeMusicPanel()
 {
 	// 将音乐控制面板设置为不可见
 	is_open = false;
-	musicPanel->setVisible(false);
 	// 删除子节点
-	musicPanel->removeAllChildren();
+	volumeBackground->removeFromParent();
 	volumeBackground = nullptr;
 	volumeSlider = nullptr;
 }
