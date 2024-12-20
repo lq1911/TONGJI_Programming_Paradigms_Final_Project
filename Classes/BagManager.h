@@ -43,6 +43,18 @@ public:
 
     // 设置任务状态为已完成(type:1主线/0支线)
     void taskFinish(const bool type, const int idx);
+
+    task* Mtask1 = new task("Task 1", "This is the 1st Mtask.", 1, 0);
+    task* Mtask2 = new task("Task 2", "This is the 2nd Mtask.", 1, 0);
+    task* Mtask3 = new task("Task 3", "This is the 3rd Mtask.", 1, 0);
+    task* Mtask4 = new task("Task 4", "This is the 4th Mtask.", 1, 0);
+    task* Mtask5 = new task("Final Task", "This is the 5th Mtask.", 1, 0);
+
+    task* Ltask1 = new task("Task 1", "This is the 1st Ltask.", 0, 0);
+    task* Ltask2 = new task("Task 2", "This is the 2nd Ltask.", 0, 0);
+    task* Ltask3 = new task("Task 3", "This is the 3rd Ltask.", 0, 0);
+    task* Ltask4 = new task("Task 4", "This is the 4th Ltask.", 0, 0);
+    task* Ltask5 = new task("Task 5", "This is the 5th Ltask.", 0, 0);
 private:
     // 初始化背包管理器
     bool init();
