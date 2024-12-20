@@ -12,13 +12,14 @@ void Player::update(float dt) {
     else {
         nums = 0;
       
+        /*
         log("player**********************************");
         log("position:%f %f", pos.x, pos.y);
         log("hp:%d", hp);
         log("mp:%d", mp);
         log("atk:%d", atk);
         log("def:%d", def);
-        
+        */
     }
     Vec2 move_by;
 
