@@ -57,51 +57,31 @@ private:
     std::vector<NPC*> npcList;  // 存储所有npc
     Player* player;             // 玩家对象的引用
     BagManager* bag;            // 玩家背包
+    Scene* NPCscene;
 public:
     /* 构造函数 */
-    NPCManager(Player* playerRef, BagManager* bagManager) : player(playerRef), bag(bagManager) {  }
+    //idx:场景
+    NPCManager(Player* playerRef, BagManager* bagManager, Scene* scene, int idx);
+
+    /* 析构函数 */
+    ~NPCManager();
 
     /* 访问npc */
     NPC* visitNPC(const int& idx) { return npcList[idx]; }
     vector<NPC*> visitNPC() { return npcList; }
 
     /* 添加npc */
-    void addNPC(std::string role, int x, int y, float scale, Scene* scene) {
-        NPC* newNpc = new NPC(role, x, y, scale, scene, player, bag);
-        npcList.push_back(newNpc);
-    }
-
-    /* 移除npc */
-    void removeNPC(NPC* npc) {
-        npcList.erase(std::remove(npcList.begin(), npcList.end(), npc), npcList.end());
-        npc->removeFromParent(); //?
-        delete npc; 
-    }
+    void addNPC(std::string role, int x, int y, float scale);
 
     /* 全部npc触发检测 */
-    void checkTriggers() {
-        for (auto npc : npcList) {
-            if (npc->isTrigger()) {
-                npc->Chat();
-            }
-        }
-    }
+    void checkTriggers();
 
     /* 检测对话状态 */
-    bool getChattingStates() {
-        for (auto npc : npcList) {
-            if (npc->getChattingState())
-                return true;
-        }
-        return false;
-    }
+    bool getChattingStates();
+   
     /* 清理所有NPC */
-    void clearAllNPCs() {
-        for (auto npc : npcList) {
-            delete npc;
-        }
-        npcList.clear();
-    }
+    void clearAllNPCs();
+
 };
 /******************** END/NPC管理类 ********************/
 

@@ -128,24 +128,7 @@ void MainGameScene::LoadMonsterRespawnToScene() {
 
 void MainGameScene::LoadNPCToScene() {
 	// NPC管理器
-	_npcManager = new NPCManager(PLAYER, _bagManager);
-
-	// 在地图中加入npc
-	// 初始化地点待修改
-	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f, this);
-	_npcManager->addNPC("npc2", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f, this);
-	_npcManager->addNPC("npc3", VisibleSize.width / 2 + 500, VisibleSize.height / 2 + 500, 0.6f, this);
-	_npcManager->addNPC("npc4", VisibleSize.width / 2 - 500, VisibleSize.height / 2, 0.6f, this);
-	_npcManager->addNPC("npc5", VisibleSize.width / 2 - 500, VisibleSize.height / 2 - 500, 0.6f, this);
-	_npcManager->addNPC("npc6", VisibleSize.width / 2 - 500, VisibleSize.height / 2 + 500, 0.6f, this);
-	_npcManager->addNPC("npc7", VisibleSize.width / 2 + 500, VisibleSize.height / 2 - 500, 0.6f, this);
-
-	// 监测npc是否在有效触发范围内
-	this->schedule([=](float dt) {
-		for (auto npc : _npcManager->visitNPC()) {
-			npc->update();
-		}
-		}, 0.1f, "npc_check_scheduler");
+	_npcManager = new NPCManager(PLAYER, _bagManager, this, 0);
 }
 
 void MainGameScene::LoadBackgroundMusicToScene() {
