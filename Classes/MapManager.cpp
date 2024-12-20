@@ -27,7 +27,9 @@ TMXTiledMap* MapManager::GetTiledMap(int MapID) {
 	return MapList[MapID];
 }
 
-int MapManager::GetPlayerInWhichMap() const { return PlayerInWhichMap; }
+int MapManager::GetPlayerInWhichMap() const { 
+	return PlayerInWhichMap;
+}
 
 void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 	TMXObjectGroup* ObjectLayer = TiledMap->getObjectGroup("Obstacles");    //获取障碍物层
@@ -102,17 +104,9 @@ size_t MapManager::GetBlackFogListSize() {
 }
 
 bool MapManager::IsMoveable(const Vec2& Position) {
-	//取以人物为中心的四个点，设置碰撞箱
-	const Vec2 PositionLeft = Position - Vec2(12.0f, -6.0f);
-	const Vec2 PositionRight = Position + Vec2(12.0f, 6.0f);
-	const Vec2 PositionUp = Position + Vec2(0.0f, 12.0f);
-
 	//遍历障碍物列表中的每一个障碍物
 	for (const auto& obstacle : ObstacleList) {
-		if (obstacle.containsPoint(Position) &&
-			obstacle.containsPoint(PositionLeft) &&
-			obstacle.containsPoint(PositionRight) &&
-			obstacle.containsPoint(PositionUp)) {
+		if (obstacle.containsPoint(Position)) {
 
 			/// 如果人物的碰撞箱在障碍物范围内，则不可移动
 			return false;

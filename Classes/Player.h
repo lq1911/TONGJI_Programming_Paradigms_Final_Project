@@ -49,9 +49,10 @@ public:
 		_accessories = nullptr;
 		coins = 1000;
 		is_moving = 0;
-		mySprite->setAnchorPoint(Vec2(0.5, 0.1));
+		mySprite->setAnchorPoint(Vec2(0.5f, 0.1f));
 		scene->addChild(this);
 		this->scheduleUpdate();
+		/*
 		// 初始化血条
 		healthBarBackground = Sprite::create("health/health_bg.png");
 		healthBarBackground->setAnchorPoint(Vec2(0, 1));
@@ -68,7 +69,7 @@ public:
 		hpLabel = Label::createWithTTF("hp:" + to_string(current_hp), "fonts/arial.ttf", 18);
 		hpLabel->setAnchorPoint(Vec2(0, 1));
 		hpLabel->setPosition(Vec2(-975,800));
-		this->mySprite->addChild(hpLabel);
+		this->mySprite->addChild(hpLabel);*/
 	}
 	// 调试用构造函数
 	Player() {

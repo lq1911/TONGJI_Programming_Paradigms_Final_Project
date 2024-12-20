@@ -329,18 +329,17 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 }
 
 void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event) {
-	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		if (_npcManager->getChattingStates())
 			return;
+
 		/* npc交互 */
-		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
-			_npcManager->checkTriggers();
-		}
+		_npcManager->checkTriggers();
 	}
 }
 
 void MainGameScene::KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, Event* event) {
-	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		//如果玩家在触发范围内，则解锁传送门
 		if (_mapManager->IsTeleportUnlockable(PLAYER->mySprite->getPosition())) {
 			this->UnlockMapTeleport();
@@ -349,7 +348,7 @@ void MainGameScene::KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, 
 }
 
 void MainGameScene::KeyPressedForGetInDoor(EventKeyboard::KeyCode keyCode, Event* event) {
-	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		//如果玩家在触发范围内，则触发交互
 		string SceneName;
 		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName)) {
@@ -416,10 +415,7 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			keyCode == EventKeyboard::KeyCode::KEY_D) {
 			KeyPressedForPlayerMove(keyCode, event);
 		}
-		if (keyCode == EventKeyboard::KeyCode::KEY_I ||
-			keyCode == EventKeyboard::KeyCode::KEY_J ||
-			keyCode == EventKeyboard::KeyCode::KEY_K ||
-			keyCode == EventKeyboard::KeyCode::KEY_L) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_J) {
 			KeyPressedForPlayerAttack(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
