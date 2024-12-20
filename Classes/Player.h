@@ -24,7 +24,7 @@ private:
 	int current_exp;       // 角色现有经验值
 	int next_level_exp;    // 达到下一级所需经验值
 	vector<Monster*> monster;
-	bool is_moving;
+	
 	MapManager* map_manager;
 	Sprite* healthBarBackground;  // 血条背景
 	Sprite* healthBar;            // 实时显示血量的血条
@@ -85,8 +85,11 @@ public:
 	/* 释放攻击技能 */
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
-	virtual Animate* Attack(vector<Monster*>monster);
-	
+	virtual void Attack(vector<Monster*>monster);
+	//技能1
+	void Skill(int skill_num,vector<Monster*>monster);
+	void Skill_Animate1();
+	void Skill_Animate2();
 	/* 判断交互范围 */
 	virtual bool isTrigger(const Vec2& pos);
 
