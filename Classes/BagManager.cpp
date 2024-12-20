@@ -241,7 +241,7 @@ void BagManager::createScrollView(Vec2 position, vector<task*> myTask)
             taskButton->addChild(taskLabel);
             // 设置按钮点击事件
             taskButton->addClickEventListener([=](Ref* sender) {
-                createTaskInfoPanel(myLineQuest, i);
+                createTaskInfoPanel(myTask, i);
                 });
         }
     }
@@ -936,18 +936,6 @@ void BagManager::equipItem(int index)
 
 // 解锁任务(type:1主线/0支线)
 void BagManager::taskUnlock(const bool type, const int idx) {
-    task* Mtask1 = new task("Task 1", "This is the 1st task.", 1, 0);
-    task* Mtask2 = new task("Task 2", "This is the 2nd task.", 1, 0);
-    task* Mtask3 = new task("Task 3", "This is the 3rd task.", 1, 0);
-    task* Mtask4 = new task("Task 4", "This is the 4th task.", 1, 0);
-    task* Mtask5 = new task("Final Task", "This is the 5th task.", 1, 0);
-
-    task* Ltask1 = new task("Task 1", "This is the 1st task.", 0, 0);
-    task* Ltask2 = new task("Task 2", "This is the 2nd task.", 0, 0);
-    task* Ltask3 = new task("Task 3", "This is the 3rd task.", 0, 0);
-    task* Ltask4 = new task("Task 4", "This is the 4th task.", 0, 0);
-    task* Ltask5 = new task("Task 5", "This is the 5th task.", 0, 0);
-
     if (type) {
         switch (idx) {
         case 1:
@@ -990,12 +978,16 @@ void BagManager::taskUnlock(const bool type, const int idx) {
             break;
         }
     }
+
+
 }
 
-// 设置任务状态为已完成(type:1主线/0支线)
+
+/* 设置任务状态为已完成 */
+// type:1主线/0支线,idx为人物编号
 void BagManager::taskFinish(const bool type, const int idx) {
     if (type)
-        myMainlineTask[idx]->isFinished = true;
+        myMainlineTask[idx-1]->isFinished = true;
     else
-        myLineQuest[idx]->isFinished = true;
+        myLineQuest[idx-1]->isFinished = true;
 }

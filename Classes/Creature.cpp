@@ -55,7 +55,7 @@ void Creature::initSprite() {
 void Creature::editSizeOffset(Size size, Vec2 vec) {
     collisionBoxSize = size;
     collisionBoxOffset = vec;
-    drawCollisionBox();
+    //drawCollisionBox();
 }
 
 /* ·ÀÖ¹Åö×² */
