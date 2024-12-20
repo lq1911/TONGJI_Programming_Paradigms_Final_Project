@@ -9,7 +9,6 @@ Scene* MainGameScene::createScene() {
 }
 
 bool MainGameScene::init() {
-	CCLOG("MainGameScene::init()");
 	if (!Scene::init()) {
 		return false;
 	}
@@ -17,9 +16,10 @@ bool MainGameScene::init() {
 	this->LoadMapToScene();    //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
-	this->LoadBagToScene();    //加载背包到场景
 	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
 	this->LoadNPCToScene();    //加载npc到场景
+	this->LoadBagToScene();    //加载背包到场景
+	this->LoadBackgroundMusicToScene();    //加载背景音乐到场景
 
 	//添加键盘监听器，检测键盘活动
 	_keyboardListener = EventListenerKeyboard::create();
@@ -100,7 +100,7 @@ void MainGameScene::LoadBagToScene() {
 	_bagManager = BagManager::getInstance();
 	if (_bagManager->getParent() == nullptr)
 	{
-		PLAYER->addChild(_bagManager);
+		this->addChild(_bagManager);
 	}
 }
 
@@ -139,6 +139,13 @@ void MainGameScene::LoadNPCToScene() {
 		}, 0.2f, "npc_check_scheduler");
 }
 
+void MainGameScene::LoadBackgroundMusicToScene() {
+	_musicManager = music::getInstance();
+	if (_musicManager->getInstance() == nullptr) {
+		this->addChild(_musicManager);
+	}
+	_musicManager->playBackgroundMusic("music/peace.mp3");
+}
 /****************************************************************/
 	////////////////以下为本场景声明的本场景特有功能函数/////////////////
 void MainGameScene::CameraFollowController() {
@@ -309,20 +316,11 @@ void MainGameScene::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std
 }
 
 void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Event* event) {
-	/* 攻击:I/K/J/L */
-	if (keyCode == EventKeyboard::KeyCode::KEY_I) {
-		PLAYER->Attack(UP, _monsterRespawn->GetMonster());
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_K) {
-		PLAYER->Attack(DOWN, _monsterRespawn->GetMonster());
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+	/* 攻击:J */
+	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
 		CCLOG("into attack");
-		PLAYER->Attack(LEFT, _monsterRespawn->GetMonster());
+		PLAYER->Attack(_monsterRespawn->GetMonster());
 		CCLOG("out attack");
-	}
-	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
-		PLAYER->Attack(RIGHT, _monsterRespawn->GetMonster());
 	}
 }
 
@@ -363,6 +361,17 @@ void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Ev
 	camera->setPosition3D(currentPosition);
 }
 
+void MainGameScene::KeyPressedForBackgroundMusic(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+		if (_musicManager->isMusicPanelOpen()) {
+			_musicManager->closeMusicPanel();
+		}
+		else {
+			_musicManager->openMusicPanel(PLAYER);
+		}
+	}
+}
+
 void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	// 处理不同的按键
 	if (keyCode == EventKeyboard::KeyCode::KEY_M) {
@@ -386,6 +395,9 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 			KeyPressedForNPCInteract(keyCode, event);
+		}
+		if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+			KeyPressedForBackgroundMusic(keyCode,event);
 		}
 	}
 	else {
