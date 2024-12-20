@@ -104,6 +104,8 @@ public:
 
 	/* 移动 */
 	virtual void Move(int dir);
+	virtual void learnMove(int dir);
+
 
 	/* 转变场景 */
 	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)

@@ -49,6 +49,14 @@ void Creature::initSprite() {
 #endif
 }
 
+/* 更改碰撞框 */
+void Creature::editSizeOffset(Size size, Vec2 vec) {
+    collisionBoxSize = size;
+    collisionBoxOffset = vec;
+    //drawCollisionBox();
+}
+
+
 /* 防止碰撞 */
 void Creature::preventOverlap(Creature* creature1, Creature* creature2) {
     Rect rect1 = creature1->getCollisionRect();
@@ -309,14 +317,14 @@ void Creature::Heal() {
 }
 
 /* 走路动画 */
-void Creature::Move(int dir) {
+Animate* Creature::Move(int dir) {
     // 死了,直接返回
     if (isDead) {
-        return;
+        return nullptr;
     }
 
     if (role == "Monster1")
-        return;
+        return nullptr;
 
     /* 更改面朝方向 */
     face_to = dir;
@@ -379,7 +387,7 @@ void Creature::Move(int dir) {
     // 执行动作
     mySprite->runAction(animate);
     log("Move");
-    return;
+    return animate;
 }
 
 /* 死亡 */
