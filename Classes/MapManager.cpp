@@ -1,6 +1,6 @@
 #include "MapManager.h"
 
-void MapManager::InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene) {
+void MapManager::InitialMap(const string mapName, const Vec2& MapPosition, Scene* TargetScene) {
 	auto TiledMap = TMXTiledMap::create(mapName);    //创建地图对象
 	TiledMap->setAnchorPoint(Vec2(0.5f, 0.5f));    //设置地图的锚点为中心点
 	TiledMap->setPosition(MapPosition);    //设置地图的位置

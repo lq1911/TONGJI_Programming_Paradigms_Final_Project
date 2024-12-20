@@ -30,7 +30,7 @@ public:
 	void InitialObjects(TMXTiledMap* TiledMap, int mapIndex);
 	
 	/*初始化瓦片地图*/
-	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
+	void InitialMap(const string mapName, const Vec2& MapPosition, Scene* TargetScene);
 	
 	/*返回某个瓦片地图*/
 	TMXTiledMap* GetTiledMap(int MapID);
