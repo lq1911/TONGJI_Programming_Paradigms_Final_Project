@@ -9,8 +9,9 @@ NPCManager::NPCManager(Player* playerRef, BagManager* bagManager, Scene* scene, 
     switch (idx) {
     // 初始地图
     case(0) :
-        addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f);
-        addNPC("npc2", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f);
+        addNPC("npc9", VisibleSize.width / 2 , VisibleSize.height / 2, 0.6f);
+        //addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f);
+        addNPC("npc8", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f);
         addNPC("npc3", VisibleSize.width / 2 + 500, VisibleSize.height / 2 + 500, 0.6f);
         addNPC("npc4", VisibleSize.width / 2 - 500, VisibleSize.height / 2, 0.6f);
         addNPC("npc5", VisibleSize.width / 2 - 500, VisibleSize.height / 2 - 500, 0.6f);
@@ -18,7 +19,18 @@ NPCManager::NPCManager(Player* playerRef, BagManager* bagManager, Scene* scene, 
     // 室内地图1
     case(1) :
         addNPC("npc6", VisibleSize.width / 2 - 500, VisibleSize.height / 2 + 500, 0.6f);
+        break;
+    // 室内地图2
+    case(2):
         addNPC("npc7", VisibleSize.width / 2 + 500, VisibleSize.height / 2 - 500, 0.6f);
+        break;
+    // 室内地图3
+    case(3):
+        addNPC("npc8", VisibleSize.width / 2 , VisibleSize.height / 2, 0.6f);
+        break;
+    // 室内地图4
+    case(4):
+        addNPC("npc9", VisibleSize.width / 2+500, VisibleSize.height / 2, 0.6f);
         break;
     default:
         break;
