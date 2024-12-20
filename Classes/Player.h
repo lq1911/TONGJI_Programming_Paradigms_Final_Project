@@ -46,6 +46,7 @@ public:
 		_accessories = nullptr;
 		coins = 1000;
 		is_moving = 0;
+		mySprite->setAnchorPoint(Vec2(0.5, 0.1));
 		scene->addChild(this);
 		this->scheduleUpdate();
 	}

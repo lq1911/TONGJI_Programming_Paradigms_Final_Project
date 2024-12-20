@@ -72,6 +72,9 @@ public:
 	}
 
 
+	/*初始化精灵*/
+	void initSprite();
+
 	/* 释放攻击技能 */
 	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖

@@ -108,6 +108,12 @@ public:
 	/*鼠标事件处理，最终处理鼠标滚轮事件函数*/
 	void MouseScroll(EventMouse* event);
 
+	/*鼠标传送事件处理，最终处理鼠标点击事件函数*/
+	void MouseClickedForTeleport(EventMouse* event);
+
+	/*鼠标事件处理，最终处理鼠标点击事件函数*/
+	void MouseClicked(EventMouse* event);
+
 	CREATE_FUNC(MainGameScene);
 };
 

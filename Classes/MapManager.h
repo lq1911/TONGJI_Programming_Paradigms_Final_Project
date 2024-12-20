@@ -31,6 +31,8 @@ public:
 	/*初始化瓦片地图*/
 	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
 	
+	void TiledMapPosToScenePos(Vec2& TiledPos, TMXTiledMap* TiledMap);
+
 	/*返回某个瓦片地图*/
 	TMXTiledMap* GetTiledMap(int MapID);
 
