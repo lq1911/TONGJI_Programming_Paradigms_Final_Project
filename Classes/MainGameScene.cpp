@@ -180,7 +180,6 @@ void MainGameScene::MainCameraFollowPlayer() {
 		Vec2 playerPosition = PLAYER->mySprite->getPosition();    //获取玩家位置
 		_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), playerPosition, updatedCameraZ);    //更新摄像机位置
 		_mapManager->PlayerPositionInWhichMap(playerPosition);    //更新玩家所在地图
-		UnlockMapTeleport();        //解锁传送门函数
 		}, "camera_update_key");
 }
 
