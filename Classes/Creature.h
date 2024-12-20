@@ -58,6 +58,7 @@ public:
 		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr), current_hp(hp), current_mp(mp), x(x), y(y) {
 		// 初始化精灵
 		initSprite();
+		is_moving = false;
 		// 初始元素为无
 		this->setElementType(NONE);
 		levelBonus();
