@@ -1,6 +1,6 @@
 #include "MapManager.h"
 
-void MapManager::InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene) {
+void MapManager::InitialMap(const string mapName, const Vec2& MapPosition, Scene* TargetScene) {
 	auto TiledMap = TMXTiledMap::create(mapName);    //创建地图对象
 	TiledMap->setAnchorPoint(Vec2(0.5f, 0.5f));    //设置地图的锚点为中心点
 	TiledMap->setPosition(MapPosition);    //设置地图的位置
@@ -48,22 +48,8 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float y = obstacle["Y"].asFloat();
 				float width = obstacle["Width"].asFloat() * MapToSceneRatio;
 				float height = obstacle["Height"].asFloat() * MapToSceneRatio;
-				
 				// 创建矩形区域
 				Rect obstacleRect(TiledMapPosToScenePos(Vec2(x, y), mapID).x, TiledMapPosToScenePos(Vec2(x, y), mapID).y - height, width, height);
-
-				if(mapID == 0)
-				{
-					CCLOG("Obstacle Rect: %f, %f, %f, %f", obstacleRect.origin.x, obstacleRect.origin.y, obstacleRect.size.width, obstacleRect.size.height);
-					// 创建一个带颜色的 LayerColor 作为矩形背景
-					auto layer = cocos2d::LayerColor::create(cocos2d::Color4B(255, 0, 0, 100), obstacleRect.size.width, obstacleRect.size.height);
-
-					// 设置矩形的位置
-					layer->setPosition(obstacleRect.origin);
-
-					// 将 LayerColor 添加到父节点
-					this->addChild(layer);
-				}
 				// 这里可以存储或使用这个区域来进行碰撞检测
 				// 比如添加到一个障碍物列表中
 				ObstacleList.push_back(obstacleRect);
@@ -75,10 +61,6 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float y = obstacle["Y"].asFloat();
 				// 保存传送点坐标
 				TeleportList.push_back(TiledMapPosToScenePos(Vec2(x, y), mapID));
-				if (mapID == 0)
-				{
-					CCLOG("Teleport Point: %f, %f", TeleportList.back().x, TeleportList.back().y);
-				}
 			}
 			else if (objectType == "Interaction") {
 				// 根据对象类型读取其属性
