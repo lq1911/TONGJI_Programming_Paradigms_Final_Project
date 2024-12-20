@@ -450,8 +450,8 @@ void NPC::npc5(std::function<void()> callback) {
 		// ½âËøÈÎÎñ
 		NextButton->removeFromParent();
 		NextButton = nullptr;
-		if (!Mtasks[5]) {
-			Mtasks[5] = true;
+		if (!Mtasks[4]) {
+			Mtasks[4] = true;
 			if (bag) {
 				bag->taskUnlock(1, 5);
 				bag->taskUnlock(0, 5);
