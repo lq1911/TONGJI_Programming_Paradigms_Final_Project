@@ -10,7 +10,7 @@ USING_NS_CC;
 using namespace std;
 
 // 触发距离
-const int DIST = 100;
+const int DIST = 50;
 
 struct Bonus {
 	//Object object;
@@ -26,8 +26,16 @@ private:
 	vector<Monster*> monster;
 	bool is_moving;
 	MapManager* map_manager;
+	Sprite* healthBarBackground;  // 血条背景
+	Sprite* healthBar;            // 实时显示血量的血条
+	Label* hpLabel;               // 显示hp值
 protected:
+	// 玩家名字在Creature类里已定义了:(	
+
+	//int x, y;       // 坐标
 public:
+	// 精灵//Creature中有了:( 
+
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
 	Player(std::string who, Scene* scene, int x, int y, float scale, int hp, int mp, int atk, int atk_range, int def, int speed, int level) :
@@ -41,8 +49,26 @@ public:
 		_accessories = nullptr;
 		coins = 1000;
 		is_moving = 0;
+		mySprite->setAnchorPoint(Vec2(0.5, 0.1));
 		scene->addChild(this);
 		this->scheduleUpdate();
+		// 初始化血条
+		healthBarBackground = Sprite::create("health/health_bg.png");
+		healthBarBackground->setAnchorPoint(Vec2(0, 1));
+		healthBarBackground->setPosition(Vec2(-920, 800));  
+		this->mySprite->addChild(healthBarBackground);
+
+		healthBar = Sprite::create("health/health_bar.png");  
+		healthBar->setAnchorPoint(Vec2(0, 1));
+		healthBar->setPosition(Vec2(-920, 800));
+		healthBar->setColor(Color3B::RED);
+		this->mySprite->addChild(healthBar);
+
+		// 显示hp值
+		hpLabel = Label::createWithTTF("hp:" + to_string(current_hp), "fonts/arial.ttf", 18);
+		hpLabel->setAnchorPoint(Vec2(0, 1));
+		hpLabel->setPosition(Vec2(-975,800));
+		this->mySprite->addChild(hpLabel);
 	}
 	// 调试用构造函数
 	Player() {
@@ -57,15 +83,16 @@ public:
 	void Init(vector<Monster*>monster, MapManager* map_manager);
 
 	/* 释放攻击技能 */
-	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
-	virtual Animate* Attack(int dir, vector<Monster*>monster);
+	virtual Animate* Attack(vector<Monster*>monster);
 
 	/* 判断交互范围 */
 	virtual bool isTrigger(const Vec2& pos);
+
 	// 改变is_moving
 	void ChangeIsMoving();
+
 	// 技能，以组合技形式出现
 	//void Combo();
 
@@ -92,7 +119,6 @@ public:
 		level = other.level;
 		hp = other.hp;
 		current_hp = other.current_hp;
-		current_mp = other.current_mp;
 		atk = other.atk;
 		def = other.def;
 		speed = other.speed;
@@ -102,11 +128,6 @@ public:
 		_accessories = other._accessories;
 		coins = other.coins;
 		this->setElementType(other.elementType);
-		if (other.mySprite != nullptr)
-		{
-			x = other.getXY().x;
-			y = other.getXY().y;
-		}
 		if (mySprite == nullptr)
 		{
 			mySprite = Sprite::create("Role/" + other.role + "/1.png");

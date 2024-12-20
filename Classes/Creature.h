@@ -37,13 +37,19 @@ public:
 
 	/* 构造函数 */
 	// who:玩家为Player1~Player5,NPC为npc1~npc5
+	// 建议:speed默认设为50,atk_range默认设100
 	Creature(std::string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y, float scale, Scene* scene) :
 		role(role), hp(hp), mp(mp), atk(atk), atk_range(atk_range), def(def), speed(speed), level(level), scale(scale),
 		face_to(DOWN), isDead(false), scene(scene), mySprite(nullptr), current_hp(hp), current_mp(mp), x(x), y(y) {
-		// 初始化精灵
-		initSprite();	
+
+		// 精灵初始化
+		mySprite = Sprite::create("Role/" + role + "/1.png");
+		mySprite->setPosition(Vec2(x, y));
+		mySprite->setScale(scale);
+		scene->addChild(mySprite);
 		// 初始元素为无
 		this->setElementType(NONE);
+
 		levelBonus();
 	}
 
@@ -65,14 +71,16 @@ public:
 		level = 1;
 	}
 
-	/* 初始化精灵 */
+
+	/*初始化精灵*/
 	void initSprite();
 
 	/* 释放攻击技能 */
-	// dir为方向:LEFT RIGHT UP DOWN,默认为DOWN
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
 	virtual Animate* Attack(int dir = DOWN, Creature* opp = nullptr);
+	virtual Animate* Attack(Creature* opp = nullptr);
+	int getDir() { return face_to; }
 
 	/* 受伤 */
 	virtual void Hurt();

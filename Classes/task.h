@@ -1,14 +1,8 @@
 #pragma once
 #ifndef __TASK_H__
 #define __TASK_H__
-
-#include "cocos2d.h"
 #include <string>
-#include "ui/CocosGUI.h"
 
-USING_NS_CC;
-using namespace ui;
-using namespace std;
 class task
 {
 public:

@@ -31,6 +31,8 @@ public:
 	/*初始化瓦片地图*/
 	void InitialMap(const char* mapName, const Vec2& MapPosition, Scene* TargetScene);
 	
+	void TiledMapPosToScenePos(Vec2& TiledPos, TMXTiledMap* TiledMap);
+
 	/*返回某个瓦片地图*/
 	TMXTiledMap* GetTiledMap(int MapID);
 
@@ -45,9 +47,6 @@ public:
 
 	/*判断玩家所在的地图编号*/
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
-
-	/*\判断鼠标移动至的地图编号*/
-	int PositionInWhichMap(Vec2& Position);
 
 	/*获取玩家所在的地图编号*/
 	int GetPlayerInWhichMap()const;

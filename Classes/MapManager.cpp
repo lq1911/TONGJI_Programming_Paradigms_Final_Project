@@ -7,7 +7,7 @@ void MapManager::InitialMap(const char* mapName, const Vec2& MapPosition, Scene*
 	TargetScene->addChild(TiledMap);    //将地图添加到场景中
 
 	MapList.push_back(TiledMap);    //将地图添加到已经创建的地图列表中
-	this->InitialObjects(TiledMap, (int)MapList.size() - 1);    //初始化障碍物
+	InitialObjects(TiledMap, (int)MapList.size() - 1);    //初始化障碍物
 
 	BlackFogList.push_back(TiledMap->getLayer("BlackFog"));    //初始化黑色雾列表
 	IsBlackFogVisible.push_back(false);    //初始化黑色雾的可见性为false
@@ -23,21 +23,11 @@ void MapManager::PlayerPositionInWhichMap(Vec2& PlayerPosition) {
 	}	
 }
 
-int MapManager::PositionInWhichMap(Vec2& Position) {
-	for (int i = 0; i < (int)MapList.size(); i++) {
-		if (MapList[i]->getBoundingBox().containsPoint(Position)) {    //判断鼠标是否在某个地图的范围内
-			return i;
-		}
-	}
-}
-
 TMXTiledMap* MapManager::GetTiledMap(int MapID) {
 	return MapList[MapID];
 }
 
-int MapManager::GetPlayerInWhichMap() const {
-	return PlayerInWhichMap;
-}
+int MapManager::GetPlayerInWhichMap() const { return PlayerInWhichMap; }
 
 void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 	TMXObjectGroup* ObjectLayer = TiledMap->getObjectGroup("Obstacles");    //获取障碍物层
@@ -48,17 +38,17 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 			ValueMap obstacle = Object.asValueMap();     //获取障碍物的属性
 			
 			auto objectType=obstacle["type"].asString();    //获取障碍物的类型
-			
+
 			if (objectType == "") {
 				// 根据对象类型读取其属性
 				// 障碍物全为矩形
-				float x = obstacle["x"].asFloat();
-				float y = obstacle["y"].asFloat();
-				float width = obstacle["width"].asFloat();
-				float height = obstacle["height"].asFloat();
-
+				float x = obstacle["X"].asFloat();
+				float y = obstacle["Y"].asFloat();
+				float width = obstacle["Width"].asFloat() * MapToSceneRatio;
+				float height = obstacle["Height"].asFloat() * MapToSceneRatio;
+				
 				// 创建矩形区域
-				Rect obstacleRect(tiledMapPosToScenePos(Vec2(x, y), mapID).x, tiledMapPosToScenePos(Vec2(x, y), mapID).y, width, height);
+				Rect obstacleRect(tiledMapPosToScenePos(Vec2(x, y), mapID).x, tiledMapPosToScenePos(Vec2(x, y), mapID).y - height, width, height);
 
 				// 这里可以存储或使用这个区域来进行碰撞检测
 				// 比如添加到一个障碍物列表中
@@ -67,9 +57,8 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 			else if (objectType == "Teleport") {
 				// 根据对象类型读取其属性
 				// 传送点
-				float x = obstacle["x"].asFloat();
-				float y = obstacle["y"].asFloat();
-
+				float x = obstacle["X"].asFloat();
+				float y = obstacle["Y"].asFloat();
 				// 保存传送点坐标
 				TeleportList.push_back(tiledMapPosToScenePos(Vec2(x, y), mapID));
 			}
@@ -82,7 +71,6 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				// 保存可交互区域坐标
 				InteractionList.push_back(tiledMapPosToScenePos(Vec2(x, y), mapID));
 			}
-			
 		}
 	}
 }
