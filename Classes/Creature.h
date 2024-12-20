@@ -104,12 +104,8 @@ public:
 	virtual void Heal();
 
 	/* 移动 */
-<<<<<<< HEAD
-	virtual void Move(int dir);
-=======
 	virtual Animate* Move(int dir);
 	virtual void learnMove(int dir);
->>>>>>> 8e9009c0643f79da9676b4d35a8262d276d73a4b
 
 	/* 转变场景 */
 	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
