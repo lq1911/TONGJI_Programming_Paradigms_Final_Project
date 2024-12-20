@@ -1,5 +1,5 @@
-#ifndef __SET_MAP_H__
-#define __SET_MAP_H__
+#ifndef __MAIN_GAME_SCENE_H__
+#define __MAIN_GAME_SCENE_H__
 
 #include "cocos2d.h"
 #include "Player.h"
@@ -137,4 +137,4 @@ public:
 	CREATE_FUNC(MainGameScene);
 };
 
-#endif // __SET_MAP_H__
+#endif // __MAIN_GAME_SCENE_H__

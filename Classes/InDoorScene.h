@@ -1,5 +1,5 @@
-#ifndef __WINTER_HOUSE_H__
-#define __WINTER_HOUSE_H__
+#ifndef __INDOOR_SCENE_H__
+#define __INDOOR_SCENE_H__
 
 #include "MainGameScene.h"
 #include "cocos2d.h"
@@ -33,4 +33,4 @@ public:
 	void LoadNPCToScene() override;
 };
 
-#endif // __WINTER_HOUSE_H__
+#endif // __INDOOR_SCENE_H__
