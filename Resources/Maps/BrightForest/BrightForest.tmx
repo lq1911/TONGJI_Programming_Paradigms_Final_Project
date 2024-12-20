@@ -58,36 +58,36 @@
   </data>
  </layer>
  <objectgroup id="14" name="Obstacles" opacity="0.9">
-  <object id="1" x="-1.33333" y="481.333" width="157.333" height="118.667">
+  <object id="1" x="-1.33333" y="481.333" width="130" height="127.334">
    <properties>
-    <property name="Height" type="float" value="118.667"/>
-    <property name="Width" type="float" value="157.333"/>
-    <property name="X" type="float" value="-1.33333"/>
-    <property name="Y" type="float" value="481.333"/>
+    <property name="Height" type="float" value="127.33"/>
+    <property name="Width" type="float" value="130"/>
+    <property name="X" type="float" value="-1.33"/>
+    <property name="Y" type="float" value="481.33"/>
    </properties>
   </object>
-  <object id="2" x="129.333" y="604" width="33.3333" height="224">
+  <object id="2" x="129.333" y="480.667" width="33.3333" height="347.333">
    <properties>
-    <property name="Height" type="float" value="224"/>
-    <property name="Width" type="float" value="33.3333"/>
-    <property name="X" type="float" value="129.333"/>
-    <property name="Y" type="float" value="604"/>
+    <property name="Height" type="float" value="347.33"/>
+    <property name="Width" type="float" value="33.33"/>
+    <property name="X" type="float" value="129.33"/>
+    <property name="Y" type="float" value="480.67"/>
    </properties>
   </object>
-  <object id="3" x="165.333" y="702.667" width="188" height="92">
+  <object id="3" x="165.333" y="702.667" width="188" height="128.667">
    <properties>
-    <property name="Height" type="float" value="92"/>
+    <property name="Height" type="float" value="128.67"/>
     <property name="Width" type="float" value="188"/>
-    <property name="X" type="float" value="165.333"/>
-    <property name="Y" type="float" value="702.667"/>
+    <property name="X" type="float" value="165.33"/>
+    <property name="Y" type="float" value="702.67"/>
    </properties>
   </object>
-  <object id="4" x="413.333" y="706.667" width="224" height="90.6667">
+  <object id="4" x="413.333" y="706.667" width="224" height="122">
    <properties>
-    <property name="Height" type="float" value="90.6667"/>
+    <property name="Height" type="float" value="122"/>
     <property name="Width" type="float" value="224"/>
-    <property name="X" type="float" value="413.333"/>
-    <property name="Y" type="float" value="706.667"/>
+    <property name="X" type="float" value="413.33"/>
+    <property name="Y" type="float" value="706.67"/>
    </properties>
   </object>
   <object id="5" x="242.667" y="865.333" width="29.3333" height="49.3333">
