@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="16" nextobjectid="59">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="116">
  <tileset firstgid="1" source="Grassland Tileset.tsx"/>
  <tileset firstgid="419" source="Pack 1 expansion.tsx"/>
  <tileset firstgid="559" source="Reg tree wall.tsx"/>
  <tileset firstgid="676" source="TX Props.tsx"/>
  <tileset firstgid="932" source="TX Struct.tsx"/>
+ <tileset firstgid="1188" source="../volcano/TX Props.tsx"/>
  <layer id="2" name="Ground" width="50" height="50" locked="1">
   <data encoding="base64" compression="zlib">
    eJzNmWty2kAQhJcYc4JUQCdIReIEtoH73ypQpS4+Nb2LZLCTH1OAtI+eV8/sciilHM5yPMvpLPsZsq3IOsjrWTZn6UbR88v4ftyb+2sc9/N1TuOzw7jGdny2VPqK3NNNWFoi7NrLdZBeW9igH9/dW9vlUBHXixiSr+aK1qAO8uVx/HQ7LVmb8XDCekmSr3aj8Puu3PpT+E5Bh1PJMV2L/dranJdwOG5+H0bp8V2/3Z/KLdehhpuxvqvIa8BFbLX8GcL3odTj1O2lnKAOeu95uivXWB8qsi63uO5h0t5JpxoXeJy4LzSus72kh/OK7J/8VsObcNXy5168UtcNPsnRxCs7pb3cd8nOnie0SSv/Ui74O/cPa8yptG3Tsv2xMtfjUdh8LbeJ8yvfEY/GaU9xpecpc6Vme+ZdirWErfb8Hu8z3lXrnGtTnlOfhJ/2TXbV/LWN3ZVpDLsQF7Ec4WONZRyl2uy8w55LOcVcSjnue3Z41gURbv6mfQfbvxvtI11f8bsWs8497u/UW6Z+KPWftD2x0aYD/MS1U51s1SCtm3iEPm71dN5jOifsy7XH4b5DmfaFjDXqoJz3+kT+1LqM3w57M1/u6UD84iPqsC7XGFIcCT/jYMA62tfrR62OdmWKYY1niZNqHEuc4mS+875ca3Fv2cB5d29zvWeS3bY2RuIYuZ/n6B5j5WPWM+9FGRt9udWhw9gN5ngN6fFuKFMdVOfII+ms6JzDuOE8cpDbpi+3OSj8GuN1O50N/NkQnouT3f60ofdtmi++8l5KdmYO1ji5Fcupn019udZj/JNbXQevReRg6s6cpm9lI/cl46ZV2/ks9biOnVicy1Jt9f7C/bi2ueRezythTrWdOu7M9uI+j1E/B5CPU65QH2ES1poOXZnqSh86v3r8Kcb2Npf9lHJJvZXubPxcT1u4PsKXuMLvUFLv5zrwvEKbpJ5dn+S1ZC/XJ/nIc4g1T5je4H/H35XbeKYdUs+VziDMEc95cl7NR+wf/U5vNQpzwvdKPE6+pF9Zl7oytQk5g/HGcb29S/ps8H1VpjbpbI+t7Z/wb0vdrl671BcTp/yU7q30Xndr1MfzIO1Hm7gPkk3dZ+5z5Wetj6Eu1G0o01xxTvc6d3n2Mor3g+Qf+cu5UPkmLvQ+kznkOc/+mr0Nz95+xvM5v4I4d2ot5zXag/Hmsev36sSr+OA5uXa/rHWox5+G+LkgcZFzuN8dpbMeecjjgzp4HWyt+9EQ9mp+ZnKbpj6Vuns99vMxa3nrzMtxPfz9syFuQ6/rqQekz/xOT2ul/2ecS1v/sQgf8/N3Q/w8z77e+w3vVWt1UN/dF167W7gkl3mqN28N2Yx6e/4SO/OYQh72u7Ra3yF8LUwu76WdGx9Bf+ZL4qpks9r+mtONNkrYLpz5slCcq1bBNzyfsv6xh1EN4pncexnh78O+LqketCTppnxame31XnnL/z3EbcKpusgxfcX/Se7pOUfvl3LtG+eK8mD4xFzK3Nifo/eqtHm5xtXy0Ry8S9evSUvvy/uUu8/ENodfH5G3B7Au3ecr5f0BrM/mf5dL3i7hsM9iFbZH8vxZ8mMm1qV16l/I0hr0v8p3+j71FM+SOT57Bvd/tZ0+2898p8yx01+HIg/z
@@ -12,7 +13,7 @@
  </layer>
  <layer id="1" name="Wall" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmMsOwUAUhueFeAYeD2tsEEuxwVptsMbG5R28hHOSM9E0rU7HdKbD/yVftHJizp/MpapUXAzJhVJz7Zjut6GbqohkUC2yLfL9OGRTFizEDtkV9Xcxwf0mIs8p/typ+HLwOjiLj9T1LmRTFpzUu/dn6voSsqk/hfeq0QdjYane8yjPWCjKodd7LBTl0Os9FpahG3CEzxy8pyQ16fOs4+eDT3uK1rQubdlZl839zbNjyBx5YyCH27oq/EoOl2Mghxk9si8OahqDMd3jbceYkFNxZjBG3WeVjxzp/1yu90aNbY4VuRY3JbVNzrEnD+KxpLbJOa7kTbxb/oZLYntPUwS/vynbM7JUrfeBydzNUrXeB8jRrBwAAAAAAAAAAIArXlPwFHo=
+   eJztmE0OgjAQRnshPYMeT12rGzUuCRt1LW7Utbrx5w5ewplkiA1RKbW0VL+XvAhmQudLSgsoFRdDMlFqnjum83XopioiGVSLbIt8Pg7ZlAWJ2CG7Yv5fTHC/mchzin83Kr4cfB8cxZt2vAnZlAUH9ez9rh2fQjb1p/BaNfpgLKTqOY9eGQvI0SzS0A04wmcOXlOymvS51/Hzwac5nGtap1u21xVzf/PsGDLHqzGQw21dFX4lh8sxkMOMHtkXBzWNwZiu8bZjTMipODMYo+69ykcO/Z3L9dqYY5tjQS7FVUltk3NsyZ24L6ltco4zeRGvltdwSWzfad7B32/K1owiVet9YDJ3i1St9wFyNCsHAAAAAAAAAADgigfkHRRV
   </data>
  </layer>
  <layer id="4" name="Surface" width="50" height="50" locked="1">
@@ -30,9 +31,9 @@
    eJztz7dOQ0EQRuG1G4JJPWCCedB5F7JJJdkBl+RgKMnBpjTJgIEjbQMtHiSK/0ifNLrF3J0QfjaaCGEM45jAJKYwjSxmMJsI/75F3riEZaxgFWtYRw55FBzumGPHPBYiYza+WfObY5vs3cI2drCLPezjAIc4crijyI4NlCJjtqLjHafsPcM5LnCJK1zjBre4c7ijzI5jnETGbGXHO2rsfcAjnvCMF9Txije8O9xRYUcV95ExW8XxjpZkCK1oQztS6EAnutCNnmTz/2nw/g98RsZsDcc7enljH/qRxgAGMYRhZDDicMdf9/0OpZRSSimllFJKKaWUUkoppZRSSin1+74AZo9LnA==
   </data>
  </layer>
- <layer id="12" name="Decorate" width="50" height="50" locked="1">
+ <layer id="12" name="Decorate" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmLtPVEEUh2caMBHtfDWohcZXI7FRQVAotfABidoqYKK0PhqhUSMoNRJwtQZrrcRaK7Gz8RH1D1ASpeJb9hLGm7m7O8y5M1yyv+TLDMPOnDPnTOZMrlJKPdVKjYOPdjJ/l2UNibXr1QvsvPS0dZj5RyxrSKydt8wc2OKeHturK7goK59bBWNj5sAW9/TYMV3BRaHyuQ0b22GHYatablzz4aIH8BAewSVHOwf4/UE4ZMyrlpta+fhu9M14dNfh1wQ8g8k6/E7rJOu3Q4dHnC/DFbiaGnc9UzMwC6+MsePMPxHonrkJt2AIzmPzAlzU7mfjLczBO2PsLGucM9bJipmP0j6PMHaN9jr0w4DjPj7CPHyCUjL3NbwxfmPGTEo2n2/T3oG7cE/gPLyHD8bf92FYVWImJZvPj2lHYQye1NjHGf1/G0s2n6dop+G5Xj0bKzqlVanM56Tfm/y/N/I+qvlsUye+dyb7SPqqC0577CPk+29F+Fwqsw+7+xO6knativH+I+4lg7k+vZyX5baaYsQ8D9WKuU/NWk/yqVkS+gJf4ZvnOtI1y1W/4Q8seK7jUrPyUBM2m2GTp23X+7+oCnkP5GkrxD0wyLo3dL62Qt4DWbYk8hTyHsiyJZGnkPdAli3JMxGz7kueiZh1X/JMxKz7kmchZt2XPAsx637sN6CUYr8BpbSe34BHtb1fNPVoe7+hYiuPb9YxlMc36xjK45t1Q8XVD/gJv2I74qm/8A8WYzviqc3UvhbYUvAa2Ir/u2FPwfdRVtsG2ENDDYXSEphboOI=
+   eJztmLtvFDEQh+0mICXQAUlDoADxaojSJBDuEJRQ8GiAlkCQSFqSNCENIJ41IJKFGqih4qhJFehoeIjwBwBSoOI73Z6wVt7LOZ61b9H9pE/es84zszOWx1qllLqvlXoAPupn/YDFhoTtdvUUP888fe1n/QGLDQnbRcusgS3v2bmduoGL8uq5WTA3Zg1sec/ODesGLgpVzy342ArbDF+tauNaDxfdgJtwC846+tnD//fCPmNdq9qsVY+vxrOZj2NtxPUQHsHjNuLO6hD2D8OYR57PwXm4kJl33VPP4QW8NOZGWD8a6Jy5CpMwBafweRrOaPe98QZq8NaYO4GNk4advJz5KBvzPHMXGcfhElx2fI9leA8fIEnXvoLXxn/MnEnJFvM1xmmYgVmB/fAOlozfc3BdNXImJVvMtxnvwF241+H9sylbzE8YF2BR/9sbTR3RKqnzMX0OHW+eWsVsU4XYK+l7pM+qCkc96hby/tcUMSd1duF3d0o1HderGPc/8p4Y1OpzlXRspRg5L0Jr5dynZ3WSfHqWhD7BZ/jiaUe6Z7nqB/yEX552YvesHnxugI2evl3P/7Iq5DlQpK8Q58AEdq/oYn2FPAfyfEnUKeQ5kOdLok4hz4E8X5J7Imbfl9wTMfu+5J6I2fcl90LMvi+5F2L2/dh3QCnFvgNKqZPvgAe1/blsOq7tz12VW0V8s46hIr5Zx1AR36y7Kq++wQp8jx2Ip1bhN/yJHYineul9fbCp5D1wO/EPwo6Sv0ddQ//BO3TVVSj9BQtXnwI=
   </data>
  </layer>
  <layer id="7" name="Forest" width="50" height="50" locked="1">
@@ -40,9 +41,14 @@
    eJztljlPw0AQRq38I1IBCQVnEQIUnAUQqKCCAAVnwVlwFpwF50/lRcKSZbF4vXY0gzRPelKktbWzq/nGiSLDMAzDMAzDMIrQU4miasXv2Q2e28Q2buE27ni+2y162b8P+7GGdRzIqGmX9T3cxwM8xCPhcwyy/xAO4wiO4lhGTcesn+ApnuE5Xgifo8H+49jECZzEqYyaLlm/wmu8wVu8Ez7HNPvP4CzO4TwupGpKZ+ee3w/4iE/4jC/C51hk/yVcxhau4OpPTa7svOIbvuMHfuKX8Dli1qhjPVVLSHY0EpIdjfhk5z/wV3akyfPdjvktO1KEfLe7RchdxmiYPWXcpYbZU8Zdapg9ZdylhtlT9C6TuUrOniJ5CyH0Ll25kp5deee4K1caZlceXLnSMLuSZPW3K1caZlcH3/525UrD7OqQt79duZL+36Stv0PR0t9F0dLfZSHd34ZhGIZh+PMNibNcQA==
   </data>
  </layer>
- <layer id="8" name="Magic" width="50" height="50" locked="1">
+ <layer id="16" name="Teleport" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt2DEOgCAMAECCq///gou7i48zxkWMTqIWc7eUsRDaFFICqG/IX2dQx/STfUBkYy5jq+ZcRmDTd2WMxLzS7hns79O6NrNxx1l/itiz4E1qAAAAiKDFt4l/Brh2rAW1wZMWjDMHsw==
+   eJztz7ENgDAQA8AUSc0I7F8CEwATAAPBt2loKNBLd5Ll1i4FAMhoqqXMkaX+veSbNfZvkT35jyP2n5Er+Y+79p3V0PrOamx9AwAAAAAAAO8e4h4JbQ==
+  </data>
+ </layer>
+ <layer id="8" name="Magic" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2D0OhCAQBlDDWnr/K9hsb+NRPIKHMNs5Riv/mM17zUcJhJkATQNwvb68PYNrDH+yDqjZt8TMaiwxedfUxsxqbmNm1H1i1sR9Je8erM/Tb+zOxhl7/anGngVPUgMAAEANMr5N/DPAsW0tqA3utAAsDgtT
   </data>
  </layer>
  <layer id="15" name="BlackFog" width="50" height="50">
@@ -51,66 +57,813 @@
   </data>
  </layer>
  <objectgroup id="14" name="Obstacles" opacity="0.9">
-  <object id="1" x="-1.33333" y="481.333" width="157.333" height="118.667"/>
-  <object id="2" x="129.333" y="604" width="33.3333" height="224"/>
-  <object id="3" x="165.333" y="702.667" width="188" height="92"/>
-  <object id="4" x="413.333" y="706.667" width="224" height="90.6667"/>
-  <object id="5" x="242.667" y="865.333" width="29.3333" height="49.3333"/>
-  <object id="6" x="33.3333" y="904" width="121.333" height="122.667"/>
-  <object id="7" x="241.333" y="1002.67" width="29.3333" height="72"/>
-  <object id="8" x="478.667" y="1048" width="128" height="100"/>
-  <object id="10" x="42.6667" y="766.667" width="44" height="89.3333"/>
-  <object id="11" x="570.667" y="826.667" width="141.333" height="126.667"/>
-  <object id="12" x="777.333" y="736" width="45.3333" height="90.6667"/>
-  <object id="13" x="674.667" y="1056" width="128" height="84"/>
-  <object id="14" x="846.667" y="940" width="36" height="48"/>
-  <object id="15" x="765.333" y="533.333" width="130.667" height="96"/>
-  <object id="16" x="997.333" y="658.667" width="120" height="100"/>
-  <object id="17" x="1188" y="542.667" width="121.333" height="88"/>
-  <object id="18" x="608" y="417.333" width="32" height="290.667"/>
-  <object id="19" x="710.667" y="421.333" width="242.667" height="117.333"/>
-  <object id="20" x="926.667" y="540" width="29.3333" height="448"/>
-  <object id="21" x="956" y="864" width="260" height="122.667"/>
-  <object id="22" x="1345.33" y="860" width="256" height="133.333"/>
-  <object id="23" x="956" y="416" width="418.667" height="122.667"/>
-  <object id="24" x="1346.67" y="224" width="25.3333" height="190.667"/>
-  <object id="25" x="1377.33" y="221.333" width="158.667" height="102.667"/>
-  <object id="26" x="1541.33" y="222.667" width="53.3333" height="62.6667"/>
-  <object id="27" x="1570.67" y="285.333" width="29.3333" height="33.3333"/>
-  <object id="28" x="1382.67" y="34.6667" width="84" height="152"/>
-  <object id="29" x="1506.67" y="42.6667" width="92" height="145.333"/>
-  <object id="30" x="1414.67" y="-8" width="156" height="46.6667"/>
-  <object id="31" x="964" y="32" width="185.333" height="156"/>
-  <object id="32" x="520" y="146.667" width="84" height="66.6667"/>
-  <object id="33" x="258.667" y="45.3333" width="188" height="173.333"/>
-  <object id="34" x="130.667" y="54.6667" width="122.667" height="130.667"/>
-  <object id="35" x="37.3333" y="201.333" width="86.6667" height="100"/>
-  <object id="36" x="522.667" y="600" width="42.6667" height="65.3333"/>
-  <object id="37" x="1508" y="358" width="23.3333" height="20.6667"/>
-  <object id="38" x="1574.67" y="357.333" width="20" height="22.6667"/>
-  <object id="39" x="1379.33" y="664" width="117.333" height="159.333"/>
-  <object id="40" x="1408.67" y="1184" width="160" height="92.6667"/>
-  <object id="41" x="1479.33" y="1424.67" width="19.3333" height="42"/>
-  <object id="42" x="351.667" y="798" width="6.33333" height="92.3333"/>
-  <object id="43" x="411" y="794" width="5.33333" height="100.667"/>
-  <object id="44" x="152" y="1166" width="137.333" height="106.667"/>
-  <object id="45" x="897.333" y="140.667" width="30" height="48.6667"/>
-  <object id="46" x="864.667" y="78.6667" width="60.6667" height="47.3333"/>
-  <object id="47" x="853.333" y="156.667" width="26" height="28.6667"/>
-  <object id="48" x="692" y="157.333" width="25.3333" height="26.6667"/>
-  <object id="49" x="755.333" y="94" width="29.3333" height="27.3333"/>
-  <object id="50" x="786" y="29.3333" width="30" height="30"/>
-  <object id="51" x="597.333" y="94.6667" width="29.3333" height="26.6667"/>
-  <object id="52" x="1262.67" y="193.333" width="34" height="24.6667"/>
-  <object id="53" x="1196" y="100" width="46.6667" height="22.6667"/>
-  <object id="54" x="1283.33" y="53.3333" width="25.3333" height="8.66667"/>
-  <object id="55" x="1297.33" y="96" width="32" height="22"/>
-  <object id="56" x="48" y="20" width="34" height="32"/>
+  <object id="1" x="-1.33333" y="481.333" width="157.333" height="118.667">
+   <properties>
+    <property name="Height" type="float" value="118.667"/>
+    <property name="Width" type="float" value="157.333"/>
+    <property name="X" type="float" value="-1.33333"/>
+    <property name="Y" type="float" value="481.333"/>
+   </properties>
+  </object>
+  <object id="2" x="129.333" y="604" width="33.3333" height="224">
+   <properties>
+    <property name="Height" type="float" value="224"/>
+    <property name="Width" type="float" value="33.3333"/>
+    <property name="X" type="float" value="129.333"/>
+    <property name="Y" type="float" value="604"/>
+   </properties>
+  </object>
+  <object id="3" x="165.333" y="702.667" width="188" height="92">
+   <properties>
+    <property name="Height" type="float" value="92"/>
+    <property name="Width" type="float" value="188"/>
+    <property name="X" type="float" value="165.333"/>
+    <property name="Y" type="float" value="702.667"/>
+   </properties>
+  </object>
+  <object id="4" x="413.333" y="706.667" width="224" height="90.6667">
+   <properties>
+    <property name="Height" type="float" value="90.6667"/>
+    <property name="Width" type="float" value="224"/>
+    <property name="X" type="float" value="413.333"/>
+    <property name="Y" type="float" value="706.667"/>
+   </properties>
+  </object>
+  <object id="5" x="242.667" y="865.333" width="29.3333" height="49.3333">
+   <properties>
+    <property name="Height" type="float" value="49.3333"/>
+    <property name="Width" type="float" value="29.3333"/>
+    <property name="X" type="float" value="242.667"/>
+    <property name="Y" type="float" value="865.333"/>
+   </properties>
+  </object>
+  <object id="6" x="33.3333" y="904" width="121.333" height="122.667">
+   <properties>
+    <property name="Height" type="float" value="122.667"/>
+    <property name="Width" type="float" value="121.333"/>
+    <property name="X" type="float" value="33.3333"/>
+    <property name="Y" type="float" value="904"/>
+   </properties>
+  </object>
+  <object id="7" x="241.333" y="1002.67" width="29.3333" height="72">
+   <properties>
+    <property name="Height" type="float" value="72"/>
+    <property name="Width" type="float" value="29.3333"/>
+    <property name="X" type="float" value="241.333"/>
+    <property name="Y" type="float" value="1002.67"/>
+   </properties>
+  </object>
+  <object id="8" x="478.667" y="1048" width="128" height="100">
+   <properties>
+    <property name="Height" type="float" value="100"/>
+    <property name="Width" type="float" value="128"/>
+    <property name="X" type="float" value="478.667"/>
+    <property name="Y" type="float" value="1048"/>
+   </properties>
+  </object>
+  <object id="10" x="42.6667" y="766.667" width="44" height="89.3333">
+   <properties>
+    <property name="Height" type="float" value="89.3333"/>
+    <property name="Width" type="float" value="44"/>
+    <property name="X" type="float" value="42.6667"/>
+    <property name="Y" type="float" value="766.667"/>
+   </properties>
+  </object>
+  <object id="11" x="570.667" y="826.667" width="141.333" height="126.667">
+   <properties>
+    <property name="Height" type="float" value="126.667"/>
+    <property name="Width" type="float" value="141.333"/>
+    <property name="X" type="float" value="570.667"/>
+    <property name="Y" type="float" value="826.667"/>
+   </properties>
+  </object>
+  <object id="12" x="777.333" y="736" width="45.3333" height="90.6667">
+   <properties>
+    <property name="Height" type="float" value="90.6667"/>
+    <property name="Width" type="float" value="45.3333"/>
+    <property name="X" type="float" value="777.333"/>
+    <property name="Y" type="float" value="736"/>
+   </properties>
+  </object>
+  <object id="13" x="674.667" y="1056" width="128" height="84">
+   <properties>
+    <property name="Height" type="float" value="84"/>
+    <property name="Width" type="float" value="128"/>
+    <property name="X" type="float" value="674.667"/>
+    <property name="Y" type="float" value="1056"/>
+   </properties>
+  </object>
+  <object id="14" x="846.667" y="940" width="36" height="48">
+   <properties>
+    <property name="Height" type="float" value="48"/>
+    <property name="Width" type="float" value="36"/>
+    <property name="X" type="float" value="846.667"/>
+    <property name="Y" type="float" value="940"/>
+   </properties>
+  </object>
+  <object id="15" x="765.333" y="533.333" width="130.667" height="96">
+   <properties>
+    <property name="Height" type="float" value="96"/>
+    <property name="Width" type="float" value="130.667"/>
+    <property name="X" type="float" value="765.333"/>
+    <property name="Y" type="float" value="533.333"/>
+   </properties>
+  </object>
+  <object id="16" x="997.333" y="658.667" width="120" height="100">
+   <properties>
+    <property name="Height" type="float" value="100"/>
+    <property name="Width" type="float" value="120"/>
+    <property name="X" type="float" value="997.333"/>
+    <property name="Y" type="float" value="658.667"/>
+   </properties>
+  </object>
+  <object id="17" x="1188" y="542.667" width="121.333" height="88">
+   <properties>
+    <property name="Height" type="float" value="88"/>
+    <property name="Width" type="float" value="121.333"/>
+    <property name="X" type="float" value="1188"/>
+    <property name="Y" type="float" value="542.667"/>
+   </properties>
+  </object>
+  <object id="18" x="608" y="417.333" width="32" height="290.667">
+   <properties>
+    <property name="Height" type="float" value="290.667"/>
+    <property name="Width" type="float" value="32"/>
+    <property name="X" type="float" value="608"/>
+    <property name="Y" type="float" value="417.333"/>
+   </properties>
+  </object>
+  <object id="19" x="710.667" y="421.333" width="242.667" height="117.333">
+   <properties>
+    <property name="Height" type="float" value="117.333"/>
+    <property name="Width" type="float" value="242.667"/>
+    <property name="X" type="float" value="710.667"/>
+    <property name="Y" type="float" value="421.333"/>
+   </properties>
+  </object>
+  <object id="20" x="926.667" y="540" width="29.3333" height="448">
+   <properties>
+    <property name="Height" type="float" value="448"/>
+    <property name="Width" type="float" value="29.3333"/>
+    <property name="X" type="float" value="926.667"/>
+    <property name="Y" type="float" value="540"/>
+   </properties>
+  </object>
+  <object id="21" x="956" y="864" width="260" height="122.667">
+   <properties>
+    <property name="Height" type="float" value="122.667"/>
+    <property name="Width" type="float" value="260"/>
+    <property name="X" type="float" value="956"/>
+    <property name="Y" type="float" value="864"/>
+   </properties>
+  </object>
+  <object id="22" x="1345.33" y="860" width="256" height="133.333">
+   <properties>
+    <property name="Height" type="float" value="133.333"/>
+    <property name="Width" type="float" value="256"/>
+    <property name="X" type="float" value="1345.33"/>
+    <property name="Y" type="float" value="860"/>
+   </properties>
+  </object>
+  <object id="23" x="956" y="416" width="418.667" height="122.667">
+   <properties>
+    <property name="Height" type="float" value="122.667"/>
+    <property name="Width" type="float" value="418.667"/>
+    <property name="X" type="float" value="956"/>
+    <property name="Y" type="float" value="416"/>
+   </properties>
+  </object>
+  <object id="24" x="1346.67" y="224" width="25.3333" height="190.667">
+   <properties>
+    <property name="Height" type="float" value="190.667"/>
+    <property name="Width" type="float" value="25.3333"/>
+    <property name="X" type="float" value="1346.67"/>
+    <property name="Y" type="float" value="224"/>
+   </properties>
+  </object>
+  <object id="25" x="1377.33" y="221.333" width="224.667" height="127.667">
+   <properties>
+    <property name="Height" type="float" value="127.667"/>
+    <property name="Width" type="float" value="224.667"/>
+    <property name="X" type="float" value="1377.33"/>
+    <property name="Y" type="float" value="221.333"/>
+   </properties>
+  </object>
+  <object id="28" x="1382.67" y="34.6667" width="214" height="152">
+   <properties>
+    <property name="Height" type="float" value="152"/>
+    <property name="Width" type="float" value="214"/>
+    <property name="X" type="float" value="1382.67"/>
+    <property name="Y" type="float" value="34.6667"/>
+   </properties>
+  </object>
+  <object id="30" x="1414.67" y="-8" width="156" height="46.6667">
+   <properties>
+    <property name="Height" type="float" value="46.6667"/>
+    <property name="Width" type="float" value="156"/>
+    <property name="X" type="float" value="1414.67"/>
+    <property name="Y" type="float" value="-8"/>
+   </properties>
+  </object>
+  <object id="31" x="964" y="66.6667" width="185.333" height="121.333">
+   <properties>
+    <property name="Height" type="float" value="121.333"/>
+    <property name="Width" type="float" value="185.333"/>
+    <property name="X" type="float" value="964"/>
+    <property name="Y" type="float" value="66.6667"/>
+   </properties>
+  </object>
+  <object id="32" x="520" y="146.667" width="84" height="66.6667">
+   <properties>
+    <property name="Height" type="float" value="66.6667"/>
+    <property name="Width" type="float" value="84"/>
+    <property name="X" type="float" value="520"/>
+    <property name="Y" type="float" value="146.667"/>
+   </properties>
+  </object>
+  <object id="33" x="258.667" y="45.3333" width="188" height="173.333">
+   <properties>
+    <property name="Height" type="float" value="173.333"/>
+    <property name="Width" type="float" value="188"/>
+    <property name="X" type="float" value="258.667"/>
+    <property name="Y" type="float" value="45.3333"/>
+   </properties>
+  </object>
+  <object id="34" x="130.667" y="54.6667" width="122.667" height="130.667">
+   <properties>
+    <property name="Height" type="float" value="130.667"/>
+    <property name="Width" type="float" value="122.667"/>
+    <property name="X" type="float" value="130.667"/>
+    <property name="Y" type="float" value="54.6667"/>
+   </properties>
+  </object>
+  <object id="35" x="37.3333" y="201.333" width="86.6667" height="100">
+   <properties>
+    <property name="Height" type="float" value="100"/>
+    <property name="Width" type="float" value="86.6667"/>
+    <property name="X" type="float" value="37.3333"/>
+    <property name="Y" type="float" value="201.333"/>
+   </properties>
+  </object>
+  <object id="36" x="522.667" y="600" width="42.6667" height="65.3333">
+   <properties>
+    <property name="Height" type="float" value="65.3333"/>
+    <property name="Width" type="float" value="42.6667"/>
+    <property name="X" type="float" value="522.667"/>
+    <property name="Y" type="float" value="600"/>
+   </properties>
+  </object>
+  <object id="39" x="1379.33" y="664" width="117.333" height="159.333">
+   <properties>
+    <property name="Height" type="float" value="159.333"/>
+    <property name="Width" type="float" value="117.333"/>
+    <property name="X" type="float" value="1379.33"/>
+    <property name="Y" type="float" value="664"/>
+   </properties>
+  </object>
+  <object id="40" x="1408.67" y="1184" width="160" height="92.6667">
+   <properties>
+    <property name="Height" type="float" value="92.6667"/>
+    <property name="Width" type="float" value="160"/>
+    <property name="X" type="float" value="1408.67"/>
+    <property name="Y" type="float" value="1184"/>
+   </properties>
+  </object>
+  <object id="41" x="1479.33" y="1424.67" width="19.3333" height="42">
+   <properties>
+    <property name="Height" type="float" value="42"/>
+    <property name="Width" type="float" value="19.3333"/>
+    <property name="X" type="float" value="1479.33"/>
+    <property name="Y" type="float" value="1424.67"/>
+   </properties>
+  </object>
+  <object id="44" x="152" y="1166" width="137.333" height="106.667">
+   <properties>
+    <property name="Height" type="float" value="106.667"/>
+    <property name="Width" type="float" value="137.333"/>
+    <property name="X" type="float" value="152"/>
+    <property name="Y" type="float" value="1166"/>
+   </properties>
+  </object>
+  <object id="45" x="897.333" y="140.667" width="30" height="48.6667">
+   <properties>
+    <property name="Height" type="float" value="48.6667"/>
+    <property name="Width" type="float" value="30"/>
+    <property name="X" type="float" value="897.333"/>
+    <property name="Y" type="float" value="140.667"/>
+   </properties>
+  </object>
+  <object id="46" x="864.667" y="78.6667" width="60.6667" height="47.3333">
+   <properties>
+    <property name="Height" type="float" value="47.3333"/>
+    <property name="Width" type="float" value="60.6667"/>
+    <property name="X" type="float" value="864.667"/>
+    <property name="Y" type="float" value="78.6667"/>
+   </properties>
+  </object>
+  <object id="47" x="853.333" y="156.667" width="26" height="28.6667">
+   <properties>
+    <property name="Height" type="float" value="28.6667"/>
+    <property name="Width" type="float" value="26"/>
+    <property name="X" type="float" value="853.333"/>
+    <property name="Y" type="float" value="156.667"/>
+   </properties>
+  </object>
+  <object id="48" x="692" y="157.333" width="25.3333" height="26.6667">
+   <properties>
+    <property name="Height" type="float" value="26.6667"/>
+    <property name="Width" type="float" value="25.3333"/>
+    <property name="X" type="float" value="692"/>
+    <property name="Y" type="float" value="157.333"/>
+   </properties>
+  </object>
+  <object id="49" x="755.333" y="94" width="29.3333" height="27.3333">
+   <properties>
+    <property name="Height" type="float" value="27.3333"/>
+    <property name="Width" type="float" value="29.3333"/>
+    <property name="X" type="float" value="755.333"/>
+    <property name="Y" type="float" value="94"/>
+   </properties>
+  </object>
+  <object id="50" x="786" y="29.3333" width="30" height="30">
+   <properties>
+    <property name="Height" type="float" value="30"/>
+    <property name="Width" type="float" value="30"/>
+    <property name="X" type="float" value="786"/>
+    <property name="Y" type="float" value="29.3333"/>
+   </properties>
+  </object>
+  <object id="51" x="597.333" y="94.6667" width="29.3333" height="26.6667">
+   <properties>
+    <property name="Height" type="float" value="26.6667"/>
+    <property name="Width" type="float" value="29.3333"/>
+    <property name="X" type="float" value="597.333"/>
+    <property name="Y" type="float" value="94.6667"/>
+   </properties>
+  </object>
+  <object id="52" x="1262.67" y="193.333" width="34" height="24.6667">
+   <properties>
+    <property name="Height" type="float" value="24.6667"/>
+    <property name="Width" type="float" value="34"/>
+    <property name="X" type="float" value="1262.67"/>
+    <property name="Y" type="float" value="193.333"/>
+   </properties>
+  </object>
+  <object id="53" x="1196" y="100" width="46.6667" height="22.6667">
+   <properties>
+    <property name="Height" type="float" value="22.6667"/>
+    <property name="Width" type="float" value="46.6667"/>
+    <property name="X" type="float" value="1196"/>
+    <property name="Y" type="float" value="100"/>
+   </properties>
+  </object>
+  <object id="54" x="1283.33" y="53.3333" width="25.3333" height="8.66667">
+   <properties>
+    <property name="Height" type="float" value="8.66667"/>
+    <property name="Width" type="float" value="25.3333"/>
+    <property name="X" type="float" value="1283.33"/>
+    <property name="Y" type="float" value="53.3333"/>
+   </properties>
+  </object>
+  <object id="55" x="1297.33" y="96" width="32" height="22">
+   <properties>
+    <property name="Height" type="float" value="22"/>
+    <property name="Width" type="float" value="32"/>
+    <property name="X" type="float" value="1297.33"/>
+    <property name="Y" type="float" value="96"/>
+   </properties>
+  </object>
+  <object id="56" x="48" y="20" width="34" height="32">
+   <properties>
+    <property name="Height" type="float" value="32"/>
+    <property name="Width" type="float" value="34"/>
+    <property name="X" type="float" value="48"/>
+    <property name="Y" type="float" value="20"/>
+   </properties>
+  </object>
   <object id="57" type="Interaction" x="18" y="632">
+   <properties>
+    <property name="Height" type="float" value="0"/>
+    <property name="Width" type="float" value="0"/>
+    <property name="X" type="float" value="18"/>
+    <property name="Y" type="float" value="632"/>
+   </properties>
    <point/>
   </object>
-  <object id="58" type="Teleport" x="1529" y="384" width="47" height="32">
-   <ellipse/>
+  <object id="59" x="2" y="601" width="30" height="32">
+   <properties>
+    <property name="Height" type="float" value="32"/>
+    <property name="Width" type="float" value="30"/>
+    <property name="X" type="float" value="2"/>
+    <property name="Y" type="float" value="601"/>
+   </properties>
+  </object>
+  <object id="60" x="487" y="84" width="48" height="39">
+   <properties>
+    <property name="Height" type="float" value="39"/>
+    <property name="Width" type="float" value="48"/>
+    <property name="X" type="float" value="487"/>
+    <property name="Y" type="float" value="84"/>
+   </properties>
+  </object>
+  <object id="61" x="583" y="10" width="49" height="51">
+   <properties>
+    <property name="Height" type="float" value="51"/>
+    <property name="Width" type="float" value="49"/>
+    <property name="X" type="float" value="583"/>
+    <property name="Y" type="float" value="10"/>
+   </properties>
+  </object>
+  <object id="62" x="639" y="416.5" width="8.5" height="193">
+   <properties>
+    <property name="Height" type="float" value="193"/>
+    <property name="Width" type="float" value="8.5"/>
+    <property name="X" type="float" value="639"/>
+    <property name="Y" type="float" value="416.5"/>
+   </properties>
+  </object>
+  <object id="63" x="697.5" y="415.5" width="7" height="191">
+   <properties>
+    <property name="Height" type="float" value="191"/>
+    <property name="Width" type="float" value="7"/>
+    <property name="X" type="float" value="697.5"/>
+    <property name="Y" type="float" value="415.5"/>
+   </properties>
+  </object>
+  <object id="64" x="454.5" y="446.5" width="49" height="30.5">
+   <properties>
+    <property name="Height" type="float" value="30.5"/>
+    <property name="Width" type="float" value="49"/>
+    <property name="X" type="float" value="454.5"/>
+    <property name="Y" type="float" value="446.5"/>
+   </properties>
+  </object>
+  <object id="65" x="236" y="515" width="43.5" height="26">
+   <properties>
+    <property name="Height" type="float" value="26"/>
+    <property name="Width" type="float" value="43.5"/>
+    <property name="X" type="float" value="236"/>
+    <property name="Y" type="float" value="515"/>
+   </properties>
+  </object>
+  <object id="66" x="230" y="627" width="51" height="40.5">
+   <properties>
+    <property name="Height" type="float" value="40.5"/>
+    <property name="Width" type="float" value="51"/>
+    <property name="X" type="float" value="230"/>
+    <property name="Y" type="float" value="627"/>
+   </properties>
+  </object>
+  <object id="67" x="101" y="741.5" width="25" height="21.5">
+   <properties>
+    <property name="Height" type="float" value="21.5"/>
+    <property name="Width" type="float" value="25"/>
+    <property name="X" type="float" value="101"/>
+    <property name="Y" type="float" value="741.5"/>
+   </properties>
+  </object>
+  <object id="68" x="1" y="679" width="28.5" height="20.5">
+   <properties>
+    <property name="Height" type="float" value="20.5"/>
+    <property name="Width" type="float" value="28.5"/>
+    <property name="X" type="float" value="1"/>
+    <property name="Y" type="float" value="679"/>
+   </properties>
+  </object>
+  <object id="69" x="104" y="1131" width="44" height="39">
+   <properties>
+    <property name="Height" type="float" value="39"/>
+    <property name="Width" type="float" value="44"/>
+    <property name="X" type="float" value="104"/>
+    <property name="Y" type="float" value="1131"/>
+   </properties>
+  </object>
+  <object id="70" x="43" y="1267" width="50" height="38">
+   <properties>
+    <property name="Height" type="float" value="38"/>
+    <property name="Width" type="float" value="50"/>
+    <property name="X" type="float" value="43"/>
+    <property name="Y" type="float" value="1267"/>
+   </properties>
+  </object>
+  <object id="71" x="41" y="1513" width="42" height="51">
+   <properties>
+    <property name="Height" type="float" value="51"/>
+    <property name="Width" type="float" value="42"/>
+    <property name="X" type="float" value="41"/>
+    <property name="Y" type="float" value="1513"/>
+   </properties>
+  </object>
+  <object id="72" x="236" y="1489" width="42" height="41">
+   <properties>
+    <property name="Height" type="float" value="41"/>
+    <property name="Width" type="float" value="42"/>
+    <property name="X" type="float" value="236"/>
+    <property name="Y" type="float" value="1489"/>
+   </properties>
+  </object>
+  <object id="73" x="361" y="1417" width="50" height="52">
+   <properties>
+    <property name="Height" type="float" value="52"/>
+    <property name="Width" type="float" value="50"/>
+    <property name="X" type="float" value="361"/>
+    <property name="Y" type="float" value="1417"/>
+   </properties>
+  </object>
+  <object id="74" x="582" y="1323" width="51" height="48">
+   <properties>
+    <property name="Height" type="float" value="48"/>
+    <property name="Width" type="float" value="51"/>
+    <property name="X" type="float" value="582"/>
+    <property name="Y" type="float" value="1323"/>
+   </properties>
+  </object>
+  <object id="75" x="649" y="1228" width="44" height="46">
+   <properties>
+    <property name="Height" type="float" value="46"/>
+    <property name="Width" type="float" value="44"/>
+    <property name="X" type="float" value="649"/>
+    <property name="Y" type="float" value="1228"/>
+   </properties>
+  </object>
+  <object id="76" x="550" y="1168" width="54" height="42">
+   <properties>
+    <property name="Height" type="float" value="42"/>
+    <property name="Width" type="float" value="54"/>
+    <property name="X" type="float" value="550"/>
+    <property name="Y" type="float" value="1168"/>
+   </properties>
+  </object>
+  <object id="77" x="530" y="1135" width="33" height="40">
+   <properties>
+    <property name="Height" type="float" value="40"/>
+    <property name="Width" type="float" value="33"/>
+    <property name="X" type="float" value="530"/>
+    <property name="Y" type="float" value="1135"/>
+   </properties>
+  </object>
+  <object id="78" x="721" y="1133" width="30" height="36">
+   <properties>
+    <property name="Height" type="float" value="36"/>
+    <property name="Width" type="float" value="30"/>
+    <property name="X" type="float" value="721"/>
+    <property name="Y" type="float" value="1133"/>
+   </properties>
+  </object>
+  <object id="79" x="625" y="944" width="28" height="34">
+   <properties>
+    <property name="Height" type="float" value="34"/>
+    <property name="Width" type="float" value="28"/>
+    <property name="X" type="float" value="625"/>
+    <property name="Y" type="float" value="944"/>
+   </properties>
+  </object>
+  <object id="80" x="209" y="1261" width="30" height="33">
+   <properties>
+    <property name="Height" type="float" value="33"/>
+    <property name="Width" type="float" value="30"/>
+    <property name="X" type="float" value="209"/>
+    <property name="Y" type="float" value="1261"/>
+   </properties>
+  </object>
+  <object id="81" x="555" y="1482" width="42" height="53">
+   <properties>
+    <property name="Height" type="float" value="53"/>
+    <property name="Width" type="float" value="42"/>
+    <property name="X" type="float" value="555"/>
+    <property name="Y" type="float" value="1482"/>
+   </properties>
+  </object>
+  <object id="82" x="677" y="1386" width="115" height="50">
+   <properties>
+    <property name="Height" type="float" value="50"/>
+    <property name="Width" type="float" value="115"/>
+    <property name="X" type="float" value="677"/>
+    <property name="Y" type="float" value="1386"/>
+   </properties>
+  </object>
+  <object id="83" x="838" y="1478" width="53" height="53">
+   <properties>
+    <property name="Height" type="float" value="53"/>
+    <property name="Width" type="float" value="53"/>
+    <property name="X" type="float" value="838"/>
+    <property name="Y" type="float" value="1478"/>
+   </properties>
+  </object>
+  <object id="84" x="1068" y="1416" width="47" height="50">
+   <properties>
+    <property name="Height" type="float" value="50"/>
+    <property name="Width" type="float" value="47"/>
+    <property name="X" type="float" value="1068"/>
+    <property name="Y" type="float" value="1416"/>
+   </properties>
+  </object>
+  <object id="85" x="1001" y="1290" width="50" height="57">
+   <properties>
+    <property name="Height" type="float" value="57"/>
+    <property name="Width" type="float" value="50"/>
+    <property name="X" type="float" value="1001"/>
+    <property name="Y" type="float" value="1290"/>
+   </properties>
+  </object>
+  <object id="86" x="837" y="1259" width="52" height="50">
+   <properties>
+    <property name="Height" type="float" value="50"/>
+    <property name="Width" type="float" value="52"/>
+    <property name="X" type="float" value="837"/>
+    <property name="Y" type="float" value="1259"/>
+   </properties>
+  </object>
+  <object id="87" x="351.5" y="703" width="7.5" height="193">
+   <properties>
+    <property name="Height" type="float" value="193"/>
+    <property name="Width" type="float" value="7.5"/>
+    <property name="X" type="float" value="351.5"/>
+    <property name="Y" type="float" value="703"/>
+   </properties>
+  </object>
+  <object id="88" x="409" y="705.5" width="8" height="191">
+   <properties>
+    <property name="Height" type="float" value="191"/>
+    <property name="Width" type="float" value="8"/>
+    <property name="X" type="float" value="409"/>
+    <property name="Y" type="float" value="705.5"/>
+   </properties>
+  </object>
+  <object id="89" x="222.667" y="324" width="30.6667" height="22.6667">
+   <properties>
+    <property name="Height" type="float" value="22.6667"/>
+    <property name="Width" type="float" value="30.6667"/>
+    <property name="X" type="float" value="222.667"/>
+    <property name="Y" type="float" value="324"/>
+   </properties>
+  </object>
+  <object id="90" x="1193.33" y="1012" width="46.6667" height="33.3333">
+   <properties>
+    <property name="Height" type="float" value="33.3333"/>
+    <property name="Width" type="float" value="46.6667"/>
+    <property name="X" type="float" value="1193.33"/>
+    <property name="Y" type="float" value="1012"/>
+   </properties>
+  </object>
+  <object id="91" x="1320" y="1012" width="49.3333" height="33.3333">
+   <properties>
+    <property name="Height" type="float" value="33.3333"/>
+    <property name="Width" type="float" value="49.3333"/>
+    <property name="X" type="float" value="1320"/>
+    <property name="Y" type="float" value="1012"/>
+   </properties>
+  </object>
+  <object id="92" x="1380" y="1317.33" width="52" height="56">
+   <properties>
+    <property name="Height" type="float" value="56"/>
+    <property name="Width" type="float" value="52"/>
+    <property name="X" type="float" value="1380"/>
+    <property name="Y" type="float" value="1317.33"/>
+   </properties>
+  </object>
+  <object id="93" x="1377.33" y="1472" width="58.6667" height="57.3333">
+   <properties>
+    <property name="Height" type="float" value="57.3333"/>
+    <property name="Width" type="float" value="58.6667"/>
+    <property name="X" type="float" value="1377.33"/>
+    <property name="Y" type="float" value="1472"/>
+   </properties>
+  </object>
+  <object id="94" x="1536" y="1313.33" width="57.3333" height="54.6667">
+   <properties>
+    <property name="Height" type="float" value="54.6667"/>
+    <property name="Width" type="float" value="57.3333"/>
+    <property name="X" type="float" value="1536"/>
+    <property name="Y" type="float" value="1313.33"/>
+   </properties>
+  </object>
+  <object id="95" x="1538.67" y="1472" width="60" height="56">
+   <properties>
+    <property name="Height" type="float" value="56"/>
+    <property name="Width" type="float" value="60"/>
+    <property name="X" type="float" value="1538.67"/>
+    <property name="Y" type="float" value="1472"/>
+   </properties>
+  </object>
+  <object id="96" x="1513.33" y="570.667" width="73.3333" height="61.3333">
+   <properties>
+    <property name="Height" type="float" value="61.3333"/>
+    <property name="Width" type="float" value="73.3333"/>
+    <property name="X" type="float" value="1513.33"/>
+    <property name="Y" type="float" value="570.667"/>
+   </properties>
+  </object>
+  <object id="98" x="1038.67" y="360" width="40" height="49.3333">
+   <properties>
+    <property name="Height" type="float" value="49.3333"/>
+    <property name="Width" type="float" value="40"/>
+    <property name="X" type="float" value="1038.67"/>
+    <property name="Y" type="float" value="360"/>
+   </properties>
+  </object>
+  <object id="99" x="1197.33" y="326.667" width="40" height="48">
+   <properties>
+    <property name="Height" type="float" value="48"/>
+    <property name="Width" type="float" value="40"/>
+    <property name="X" type="float" value="1197.33"/>
+    <property name="Y" type="float" value="326.667"/>
+   </properties>
+  </object>
+  <object id="100" x="1353.33" y="173.333" width="18.6667" height="18.6667">
+   <properties>
+    <property name="Height" type="float" value="18.6667"/>
+    <property name="Width" type="float" value="18.6667"/>
+    <property name="X" type="float" value="1353.33"/>
+    <property name="Y" type="float" value="173.333"/>
+   </properties>
+  </object>
+  <object id="102" x="1146.67" y="162.667" width="36" height="29.3333">
+   <properties>
+    <property name="Height" type="float" value="29.3333"/>
+    <property name="Width" type="float" value="36"/>
+    <property name="X" type="float" value="1146.67"/>
+    <property name="Y" type="float" value="162.667"/>
+   </properties>
+  </object>
+  <object id="104" x="926" y="188" width="35" height="35">
+   <properties>
+    <property name="Height" type="float" value="35"/>
+    <property name="Width" type="float" value="35"/>
+    <property name="X" type="float" value="926"/>
+    <property name="Y" type="float" value="188"/>
+   </properties>
+  </object>
+  <object id="105" x="1450" y="350" width="9" height="92">
+   <properties>
+    <property name="Height" type="float" value="92"/>
+    <property name="Width" type="float" value="9"/>
+    <property name="X" type="float" value="1450"/>
+    <property name="Y" type="float" value="350"/>
+   </properties>
+  </object>
+  <object id="106" x="1449" y="417" width="84" height="22">
+   <properties>
+    <property name="Height" type="float" value="22"/>
+    <property name="Width" type="float" value="84"/>
+    <property name="X" type="float" value="1449"/>
+    <property name="Y" type="float" value="417"/>
+   </properties>
+  </object>
+  <object id="107" x="1567" y="417" width="35" height="22">
+   <properties>
+    <property name="Height" type="float" value="22"/>
+    <property name="Width" type="float" value="35"/>
+    <property name="X" type="float" value="1567"/>
+    <property name="Y" type="float" value="417"/>
+   </properties>
+  </object>
+  <object id="109" x="1545" y="709" width="51" height="23">
+   <properties>
+    <property name="Height" type="float" value="23"/>
+    <property name="Width" type="float" value="51"/>
+    <property name="X" type="float" value="1545"/>
+    <property name="Y" type="float" value="709"/>
+   </properties>
+  </object>
+  <object id="110" x="1120" y="538" width="30" height="34">
+   <properties>
+    <property name="Height" type="float" value="34"/>
+    <property name="Width" type="float" value="30"/>
+    <property name="X" type="float" value="1120"/>
+    <property name="Y" type="float" value="538"/>
+   </properties>
+  </object>
+  <object id="112" x="1533.33" y="352" width="36" height="28">
+   <properties>
+    <property name="Height" type="float" value="28"/>
+    <property name="Width" type="float" value="36"/>
+    <property name="X" type="float" value="1533.33"/>
+    <property name="Y" type="float" value="352"/>
+   </properties>
+  </object>
+  <object id="113" x="1504.67" y="447.333" width="31.3333" height="28">
+   <properties>
+    <property name="Height" type="float" value="28"/>
+    <property name="Width" type="float" value="31.33"/>
+    <property name="X" type="float" value="1504.67"/>
+    <property name="Y" type="float" value="447.33"/>
+   </properties>
+  </object>
+  <object id="114" x="1568" y="449.333" width="31.3333" height="27.3333">
+   <properties>
+    <property name="Height" type="float" value="27.33"/>
+    <property name="Width" type="float" value="31.33"/>
+    <property name="X" type="float" value="1568"/>
+    <property name="Y" type="float" value="449.33"/>
+   </properties>
+  </object>
+  <object id="115" type="TeleportPoint" x="1550.67" y="391.333">
+   <properties>
+    <property name="X" type="float" value="1550.67"/>
+    <property name="Y" type="float" value="391.33"/>
+   </properties>
+   <point/>
   </object>
  </objectgroup>
 </map>

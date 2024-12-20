@@ -3,17 +3,7 @@
 USING_NS_CC;
 
 Scene* LearningScene::createScene() {
-    // 创建带物理世界的场景
-    auto scene = Scene::createWithPhysics();
-    
-    // 碰撞框:调试用
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
-    scene->getPhysicsWorld()->setGravity(Vec2(0, -0.1));
-    auto layer = LearningScene::create();
-    scene->addChild(layer);
-
-    return scene;
+    return LearningScene::create();
 }
 
 bool LearningScene::init() {
@@ -176,7 +166,7 @@ void LearningScene::learnAttack_1() {
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
     /* atkTxt */
-    auto atkTxt = Label::createWithTTF("Press I/K/J/L to release forward/backward/left/right attack. ", "fonts/Lacquer.ttf", 40);
+    auto atkTxt = Label::createWithTTF("Press J to attack. Cool-down time exists.", "fonts/Lacquer.ttf", 40);
     atkTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
     atkTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(atkTxt, 1);
@@ -209,12 +199,12 @@ void LearningScene::learnAttack_2() {
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
     /* atkTxt */
-    auto atkTxt = Label::createWithTTF("Press I/K/J/L to release forward/backward/left/right attack.", "fonts/Lacquer.ttf", 40);
+    auto atkTxt = Label::createWithTTF("Press J to attack. Cool-down time exists.", "fonts/Lacquer.ttf", 40);
     atkTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
     atkTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(atkTxt, 1);
     /* 键盘图 */
-    auto keyboardPic = Sprite::create("Others/KeyButtonIJKL.png");
+    auto keyboardPic = Sprite::create("Others/KeyButtonJ.png");
     keyboardPic->setPosition(Vec2(visibleSize.width / 2 - 400, visibleSize.height - 150));
     keyboardPic->setScale(0.8f);
     this->addChild(keyboardPic, 1);
@@ -288,12 +278,6 @@ void LearningScene::learnChat_1() {
 
 void LearningScene::learnChat_2() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
-
-    // 监测npc是否在有效触发范围内
-    this->schedule([=](float dt) {
-        CHATNPC->update();
-        }, 0.2f, "npc_check_scheduler");
-
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("Now have a try!", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
@@ -337,8 +321,6 @@ void LearningScene::learnChat_2() {
         // 取消键盘监听
         _eventDispatcher->removeEventListener(listener_chat);
         listener_chat = nullptr; 
-        // 取消npc监听
-        this->unschedule("npc_check_scheduler");
         // 下一步
         this->learnBag_1();
         });
@@ -463,8 +445,7 @@ void LearningScene::finish() {
 /* 键盘监听:Move */
 void LearningScene::MoveKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	Vec2 moveBy;
-	int speed = 30;
-	
+	int speed = 50;
 	/* 移动:W/S/A/D */
 	if (keyCode == EventKeyboard::KeyCode::KEY_W) {
 		moveBy = Vec2(0, speed);
@@ -546,7 +527,7 @@ void LearningScene::KeyReleased(EventKeyboard::KeyCode keyCode, Event* event) {
 /* 键盘监听:Move+Atk */
 void LearningScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
     Vec2 moveBy;
-    int speed = 30;
+    int speed = 50;
 
     /* 移动:W/S/A/D */
     if (keyCode == EventKeyboard::KeyCode::KEY_W) {
@@ -607,7 +588,7 @@ void LearningScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 /* 键盘监听:Move+Atk+Chat */
 void LearningScene::ChatKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
     Vec2 moveBy;
-    int speed = 30;
+    int speed = 50;
 
     /* 移动:W/S/A/D */
     if (keyCode == EventKeyboard::KeyCode::KEY_W) {
@@ -654,15 +635,9 @@ void LearningScene::ChatKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
                 }, 0.8f, "MoveRIGHT");
         }
     }
-    /* 攻击:I/K/J/L */
-    else if (keyCode == EventKeyboard::KeyCode::KEY_I)
-        LEARNER->Creature::Attack(UP);
-    else if (keyCode == EventKeyboard::KeyCode::KEY_K)
-        LEARNER->Creature::Attack(DOWN);
+    /* 攻击:J */
     else if (keyCode == EventKeyboard::KeyCode::KEY_J)
-        LEARNER->Creature::Attack(LEFT);
-    else if (keyCode == EventKeyboard::KeyCode::KEY_L)
-        LEARNER->Creature::Attack(RIGHT);
+        LEARNER->Creature::Attack(LEARNER->getDir());
     /* 对话 */
     else if (keyCode == EventKeyboard::KeyCode::KEY_C) {
         CHATNPC->Chat();

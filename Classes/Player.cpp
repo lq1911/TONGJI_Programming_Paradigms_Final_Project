@@ -11,18 +11,19 @@ void Player::update(float dt) {
     }
     else {
         nums = 0;
-
+      
+        /*
         log("player**********************************");
         log("position:%f %f", pos.x, pos.y);
         log("hp:%d", hp);
         log("mp:%d", mp);
         log("atk:%d", atk);
         log("def:%d", def);
-
+        */
     }
     Vec2 move_by;
 
-
+   
 
     if (is_moving) {
         if (face_to == 0) {
@@ -59,62 +60,73 @@ void Player::update(float dt) {
             ChangeXY(move_by);
         }
     }
+
+    //// ¼ÆËãÑªÁ¿Õ¼×ÜÑªÁ¿µÄ±ÈÀı
+    //float healthPercentage = (float)current_hp / (float)hp;
+
+    //// »ñÈ¡µ±Ç°ÑªÌõµÄ¿í¶È
+    //Size healthBarSize = healthBar->getContentSize();
+    //healthBar->setScaleX(healthPercentage);  // µ÷ÕûÑªÌõµÄºáÏòËõ·Å±ÈÀı
+
+    //// ¸üĞÂhpÖµ
+    //hpLabel->setString("hp:" + to_string(current_hp));
 }
 
 void Player::Init(vector<Monster*>monster, MapManager* map_manager) {
     this->monster = monster;
     this->map_manager = map_manager;
 }
-// äººç‰©æ”»å‡»
-// æ”»å‡»èŒƒå›´æ˜¯æ‰‡å½¢
-Animate* Player::Attack(int dir, vector<Monster*> monster) {
+// ÈËÎï¹¥»÷
+// ¹¥»÷·¶Î§ÊÇÉÈĞÎ
+Animate* Player::Attack(vector<Monster*> monster) {
+    int dir = getDir();
     Vec2 pos_player = mySprite->getPosition();
     for (int i = 0; i < monster.size(); i++) {
         Vec2 pos_monster = monster[i]->mySprite->getPosition();
         float distance = pos_monster.distance(pos_player);
         if (distance < atk_range) {
-            Vec2 direction = pos_monster - pos_player;// äººç‰©æŒ‡å‘æ€ªç‰©
-            float k = (direction.x + 1.0 - 1.0) / direction.y;// æ–œç‡
-            if (dir == 0 && k<1 && k>-1 && direction.x < 0)// å‘å·¦
+            Vec2 direction = pos_monster - pos_player;// ÈËÎïÖ¸Ïò¹ÖÎï
+            float k = (direction.x + 1.0 - 1.0) / direction.y;// Ğ±ÂÊ
+            if (dir == 0 && k<1 && k>-1 && direction.x < 0)// Ïò×ó
                 monster[i]->Hurt();
-            else if (dir == 1 && k<1 && k>-1 && direction.x > 0)// å³
+            else if (dir == 1 && k<1 && k>-1 && direction.x > 0)// ÓÒ
                 monster[i]->Hurt();
-            else if (dir == 2 && (k < -1 || k>1) && direction.y > 0)// ä¸Š
+            else if (dir == 2 && (k < -1 || k>1) && direction.y > 0)// ÉÏ
                 monster[i]->Hurt();
-            else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// ä¸‹
+            else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// ÏÂ
                 monster[i]->Hurt();
         }
-        Creature::Attack(dir, monster[i]);
+        Creature::Attack(monster[i]);
     }
     return nullptr;
 }
 
-// Playerè·å¾—å¥–åŠ±
+// Player»ñµÃ½±Àø
 void Player::GetBonus(Bonus bonus) {
-    //ç»éªŒå¥–åŠ±
+    //¾­Ñé½±Àø
     current_exp += bonus.exp;
-    //å‡çº§
+    //Éı¼¶
     while (current_exp >= next_level_exp) {
         current_exp -= next_level_exp;
         level++;
         next_level_exp *= (1 + level * 0.1);
     }
 
-    //ç‰©å“å¥–åŠ±
-    //æš‚å¾…ï¼Œéœ€ç‰©å“å’Œè£…å¤‡
-    
+    //ÎïÆ·½±Àø
+    //Ôİ´ı£¬ĞèÎïÆ·ºÍ×°±¸
+
 }
 
-// åˆ¤æ–­äº¤äº’èŒƒå›´
+// ÅĞ¶Ï½»»¥·¶Î§
 bool Player::isTrigger(const Vec2& pos) {
-   
+
     int dx = mySprite->getPosition().x - pos.x;
     int dy = mySprite->getPosition().y - pos.y;
 
     return std::pow(dx, 2) + std::pow(dy, 2) <= std::pow(DIST, 2);
 
 }
-// æ”¹å˜is_moving
+// ¸Ä±äis_moving
 void Player::ChangeIsMoving() {
     if (is_moving == 1) {
         is_moving = 0;

@@ -18,6 +18,7 @@ private:
 
 	vector<Rect>ObstacleList;    //储存障碍物的矩形区域
 	vector<Vec2>TeleportList;    //储存传送门的位置
+	vector<pair<Vec2,string>>InDoorList;    //储存地图内的门的位置以及对应的场景
 	vector<Vec2>InteractionList;    //储存交互区域的位置
 
 	vector<TMXLayer*> BlackFogList;    //储存黑雾的图层
@@ -43,11 +44,17 @@ public:
 	/*判断某个位置是否可以被移动到*/
 	bool IsMoveable(const Vec2& pos);
 
+	/*判断某个位置是否可以被交互*/
+	bool IsInteractable(const Vec2& pos);
+
+	/*判断某个某个位置是否可以解锁传送点*/
+	bool IsTeleportUnlockable(const Vec2& pos);
+
+	/*判断某个位置是否可以进入某个门*/
+	bool IsDoorIntoable(const Vec2& pos, string& SceneName);
+
 	/*判断玩家所在的地图编号*/
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);
-
-	/*\判断鼠标移动至的地图编号*/
-	int PositionInWhichMap(Vec2& Position);
 
 	/*获取玩家所在的地图编号*/
 	int GetPlayerInWhichMap()const;
@@ -62,7 +69,7 @@ public:
 	void ReverseIsBlackFogVisible();
 
 	/*瓦片地图坐标转场景坐标*/
-	Vec2 tiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex);
+	Vec2 TiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex);
 
 	CREATE_FUNC(MapManager);
 };

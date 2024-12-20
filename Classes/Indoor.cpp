@@ -68,7 +68,7 @@ void Indoor::LoadMonsterRespawnToScene() {
 	_monsterRespawn = new MonsterRespawn(PLAYER, this);
 
 	// 将怪导入角色
-	PLAYER->InitMonster(_monsterRespawn->GetMonster());
+	PLAYER->Init(_monsterRespawn->GetMonster(),_mapManager);
 }
 
 void Indoor::LoadNPCToScene() {
