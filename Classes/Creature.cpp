@@ -318,14 +318,14 @@ void Creature::Heal() {
 }
 
 /* 走路动画 */
-void Creature::Move(int dir) {
+Animate* Creature::Move(int dir) {
     // 死了,直接返回
     if (isDead) {
-        return;
+        return nullptr;
     }
 
     if (role == "Monster1")
-        return;
+        return nullptr;
 
     /* 更改面朝方向 */
     face_to = dir;
@@ -388,7 +388,7 @@ void Creature::Move(int dir) {
     // 执行动作
     mySprite->runAction(animate);
     log("Move");
-    return;
+    return animate;
 }
 
 void Creature::learnMove(int dir) {
