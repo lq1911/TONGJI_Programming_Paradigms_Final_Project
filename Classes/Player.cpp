@@ -14,6 +14,7 @@ void Player::update(float dt) {
     else {
         nums = 0;
       
+        
         log("player**********************************");
         log("position:%f %f", pos.x, pos.y);
         log("hp:%d", hp);
@@ -62,15 +63,15 @@ void Player::update(float dt) {
         }
     }
 
-    // 计算血量占总血量的比例
-    float healthPercentage = (float)current_hp / (float)hp;
+    //// 计算血量占总血量的比例
+    //float healthPercentage = (float)current_hp / (float)hp;
 
-    // 获取当前血条的宽度
-    Size healthBarSize = healthBar->getContentSize();
-    healthBar->setScaleX(healthPercentage);  // 调整血条的横向缩放比例
+    //// 获取当前血条的宽度
+    //Size healthBarSize = healthBar->getContentSize();
+    //healthBar->setScaleX(healthPercentage);  // 调整血条的横向缩放比例
 
-    // 更新hp值
-    hpLabel->setString("hp:" + to_string(current_hp));
+    //// 更新hp值
+    //hpLabel->setString("hp:" + to_string(current_hp));
 }
 
 void Player::Init(vector<Monster*>monster, MapManager* map_manager) {
@@ -88,14 +89,22 @@ Animate* Player::Attack(vector<Monster*> monster) {
         if (distance < atk_range) {
             Vec2 direction = pos_monster - pos_player;// 人物指向怪物
             float k = (direction.x + 1.0 - 1.0) / direction.y;// 斜率
-            if (dir == 0 && k<1 && k>-1 && direction.x < 0)// 向左
+            if (dir == 0 && k<1 && k>-1 && direction.x < 0) {// 向左
                 monster[i]->Hurt();
-            else if (dir == 1 && k<1 && k>-1 && direction.x > 0)// 右
+                monster[i]->DecreaseHp(DamageCal(this, monster[i]));
+            }
+            else if (dir == 1 && k<1 && k>-1 && direction.x > 0) {// 右
                 monster[i]->Hurt();
-            else if (dir == 2 && (k < -1 || k>1) && direction.y > 0)// 上
+                monster[i]->DecreaseHp(DamageCal(this, monster[i]));
+            }
+            else if (dir == 2 && (k < -1 || k>1) && direction.y > 0) {// 上
                 monster[i]->Hurt();
-            else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// 下
+                monster[i]->DecreaseHp(DamageCal(this, monster[i]));
+            }
+            else if (dir == 3 && (k < -1 || k>1) && direction.y < 0) {// 下
                 monster[i]->Hurt();
+                monster[i]->DecreaseHp(DamageCal(this, monster[i]));
+            }
         }
     }
     Creature::Attack();
