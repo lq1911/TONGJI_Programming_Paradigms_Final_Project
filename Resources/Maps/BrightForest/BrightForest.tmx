@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="116">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="17" nextobjectid="118">
  <tileset firstgid="1" source="Grassland Tileset.tsx"/>
  <tileset firstgid="419" source="Pack 1 expansion.tsx"/>
  <tileset firstgid="559" source="Reg tree wall.tsx"/>
@@ -52,7 +52,7 @@
    eJzt2LEJgDAQBdAQW/dfwcbexlEcwSHEzhMtJTl8r/lpA/cPklIAANqZa8ys1hqTtrYaM6u9xsxoHGLSlynpbF3n6TwvSe9BH572k53F3+kAAADQg4xvE/8M8O7eBd3gSwdzsgiH
   </data>
  </layer>
- <layer id="15" name="BlackFog" width="50" height="50">
+ <layer id="15" name="BlackFog" width="50" height="50" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwwEJAAAMBKHr3+RbLsdAwVVTVVVVVVVVVVXV5w+e2nK/
   </data>
@@ -851,6 +851,22 @@
     <property name="Y" type="float" value="391.333"/>
    </properties>
    <point/>
+  </object>
+  <object id="116" x="-12" y="-16" width="24" height="1632">
+   <properties>
+    <property name="Height" type="float" value="1632"/>
+    <property name="Width" type="float" value="24"/>
+    <property name="X" type="float" value="-12"/>
+    <property name="Y" type="float" value="-16"/>
+   </properties>
+  </object>
+  <object id="117" x="-22" y="1584" width="1628" height="30">
+   <properties>
+    <property name="Height" type="float" value="30"/>
+    <property name="Width" type="float" value="1628"/>
+    <property name="X" type="float" value="-22"/>
+    <property name="Y" type="float" value="1584"/>
+   </properties>
   </object>
  </objectgroup>
 </map>
