@@ -19,7 +19,7 @@ bool MainGameScene::init() {
 	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
 	this->LoadNPCToScene();    //加载npc到场景
 	this->LoadBagToScene();    //加载背包到场景
-	//this->LoadBackgroundMusicToScene();    //加载背景音乐到场景
+	this->LoadBackgroundMusicToScene();    //加载背景音乐到场景
 
 	//添加键盘监听器，检测键盘活动
 	_keyboardListener = EventListenerKeyboard::create();
@@ -46,7 +46,7 @@ MainGameScene::MainGameScene() {
 	_cameraManager = CameraManager::create();    // 初始化摄像机管理器
 	_mapManager = MapManager::create();    // 初始化地图管理器
 	_bagManager = BagManager::getInstance();     // 初始化背包管理器
-	//_musicManager = music::getInstance();    // 初始化背景音乐管理器
+	_musicManager = music::getInstance();    // 初始化背景音乐管理器
 }
 
 void MainGameScene::LoadCameraToScene() {
@@ -147,12 +147,12 @@ void MainGameScene::LoadNPCToScene() {
 		}, 0.1f, "npc_check_scheduler");
 }
 
-//void MainGameScene::LoadBackgroundMusicToScene() {
-//	if (_musicManager->getInstance() == nullptr) {
-//		this->addChild(_musicManager);
-//	}
-//	_musicManager->playBackgroundMusic("music/peace.mp3");
-//}
+void MainGameScene::LoadBackgroundMusicToScene() {
+	if (_musicManager->getInstance() == nullptr) {
+		this->addChild(_musicManager);
+	}
+	_musicManager->playBackgroundMusic("music/peace.mp3");
+}
 /****************************************************************/
 	////////////////以下为本场景声明的本场景特有功能函数/////////////////
 void MainGameScene::CameraFollowController() {
@@ -206,6 +206,10 @@ void MainGameScene::TeleportPlayer(int MapID) {
 		this->unscheduleAllCallbacks();  // 停止所有定时器
 		PLAYER->mySprite->setPosition(_mapManager->GetTeleportPosition(MapID));
 	}
+}
+
+void MainGameScene::ChangeToInDoorScene(const string SceneName) {
+
 }
 
 /**********************************************************************/
@@ -356,12 +360,36 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 }
 
 void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event) {
-	if (_npcManager->getChattingStates())
-		return;
-	/* npc交互 */
 	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
+		if (_npcManager->getChattingStates())
+			return;
+
+		/* npc交互 */
 		_npcManager->checkTriggers();
 	}
+}
+
+void MainGameScene::KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
+		//如果玩家在触发范围内，则解锁传送门
+		if (_mapManager->IsTeleportUnlockable(PLAYER->mySprite->getPosition())) {
+			this->UnlockMapTeleport();
+		}
+	}
+}
+
+void MainGameScene::KeyPressedForGetInDoor(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
+		//如果玩家在触发范围内，则触发交互
+		string SceneName;
+		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName)) {
+			this->ChangeToInDoorScene(SceneName);
+		}
+	}
+}
+
+void MainGameScene::KeyPressedForInteraction(EventKeyboard::KeyCode keyCode, Event* event) {
+
 }
 
 void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed) {
@@ -392,16 +420,16 @@ void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Ev
 	camera->setPosition3D(currentPosition);
 }
 
-//void MainGameScene::KeyPressedForBackgroundMusic(EventKeyboard::KeyCode keyCode, Event* event) {
-//	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
-//		if (_musicManager->isMusicPanelOpen()) {
-//			_musicManager->closeMusicPanel();
-//		}
-//		else {
-//			_musicManager->openMusicPanel(PLAYER);
-//		}
-//	}
-//}
+void MainGameScene::KeyPressedForBackgroundMusic(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+		if (_musicManager->isMusicPanelOpen()) {
+			_musicManager->closeMusicPanel();
+		}
+		else {
+			_musicManager->openMusicPanel(PLAYER);
+		}
+	}
+}
 
 void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 	// 处理不同的按键
@@ -418,18 +446,18 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			keyCode == EventKeyboard::KeyCode::KEY_D) {
 			KeyPressedForPlayerMove(keyCode, event);
 		}
-		if (keyCode == EventKeyboard::KeyCode::KEY_I ||
-			keyCode == EventKeyboard::KeyCode::KEY_J ||
-			keyCode == EventKeyboard::KeyCode::KEY_K ||
-			keyCode == EventKeyboard::KeyCode::KEY_L) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_J) {
 			KeyPressedForPlayerAttack(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 			KeyPressedForNPCInteract(keyCode, event);
+			KeyPressedForUnlockTeleport(keyCode, event);
+			KeyPressedForGetInDoor(keyCode, event);
+			KeyPressedForInteraction(keyCode, event);
 		}
-		/*if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
 			KeyPressedForBackgroundMusic(keyCode,event);
-		}*/
+		}
 	}
 	else {
 		if (keyCode == EventKeyboard::KeyCode::KEY_UP_ARROW ||
