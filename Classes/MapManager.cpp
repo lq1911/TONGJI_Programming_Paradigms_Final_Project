@@ -48,10 +48,8 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float y = obstacle["Y"].asFloat();
 				float width = obstacle["Width"].asFloat() * MapToSceneRatio;
 				float height = obstacle["Height"].asFloat() * MapToSceneRatio;
-				
 				// 创建矩形区域
 				Rect obstacleRect(TiledMapPosToScenePos(Vec2(x, y), mapID).x, TiledMapPosToScenePos(Vec2(x, y), mapID).y - height, width, height);
-
 				// 这里可以存储或使用这个区域来进行碰撞检测
 				// 比如添加到一个障碍物列表中
 				ObstacleList.push_back(obstacleRect);
@@ -205,7 +203,7 @@ Vec2 MapManager::TiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex) {
 		scenePos.y = tiledMapPosRect.y + RTPos.y + MapField;
 	}
 	else if (mapIndex == 3) { //DeathDesert
-		scenePos.x = tiledMapPosRect.x + RTPos.y + MapField;
+		scenePos.x = tiledMapPosRect.x + RTPos.x + MapField;
 		scenePos.y = tiledMapPosRect.y + RTPos.y - MapField;
 	}
 	else if (mapIndex == 4) { //BrightForest
