@@ -14,14 +14,13 @@ void Player::update(float dt) {
     else {
         nums = 0;
       
-        /*
         log("player**********************************");
         log("position:%f %f", pos.x, pos.y);
         log("hp:%d", hp);
         log("mp:%d", mp);
         log("atk:%d", atk);
         log("def:%d", def);
-        */
+        
     }
     Vec2 move_by;
 
@@ -63,15 +62,15 @@ void Player::update(float dt) {
         }
     }
 
-    //// 计算血量占总血量的比例
-    //float healthPercentage = (float)current_hp / (float)hp;
+    // 计算血量占总血量的比例
+    float healthPercentage = (float)current_hp / (float)hp;
 
-    //// 获取当前血条的宽度
-    //Size healthBarSize = healthBar->getContentSize();
-    //healthBar->setScaleX(healthPercentage);  // 调整血条的横向缩放比例
+    // 获取当前血条的宽度
+    Size healthBarSize = healthBar->getContentSize();
+    healthBar->setScaleX(healthPercentage);  // 调整血条的横向缩放比例
 
-    //// 更新hp值
-    //hpLabel->setString("hp:" + to_string(current_hp));
+    // 更新hp值
+    hpLabel->setString("hp:" + to_string(current_hp));
 }
 
 void Player::Init(vector<Monster*>monster, MapManager* map_manager) {
