@@ -49,8 +49,7 @@ public:
 	Rect getCollisionRect() const;         // 获取碰撞框
 	bool isCollision(const Rect& rect1, const Rect& rect2);        // 判断碰撞
 	void preventOverlap(Creature* creature1, Creature* creature2); // 防止碰撞
-	void drawCollisionBox();     // 画碰撞框:调试用
-	void editSizeOffset(Size size, Vec2 vec);  // 更改碰撞框
+	void Creature::drawCollisionBox();     // 画碰撞框:调试用
 
 	/* 构造函数 */
 	Creature(std::string role, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y, float scale, Scene* scene) :
@@ -104,12 +103,7 @@ public:
 	virtual void Heal();
 
 	/* 移动 */
-<<<<<<< HEAD
 	virtual void Move(int dir);
-=======
-	virtual Animate* Move(int dir);
-	virtual void learnMove(int dir);
->>>>>>> 8e9009c0643f79da9676b4d35a8262d276d73a4b
 
 	/* 转变场景 */
 	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
@@ -132,7 +126,7 @@ public:
 	int getAtk()const { return atk; }              // 返回atk
 	int getDef()const { return def; }              // 返回def
 	int getAtkRange()const { return atk_range; }   // 返回攻击范围atk_range
-
+	bool getIsDead()const { return isDead; }       // 返回是否死亡
 	/* 设置属性 */
 	void setElementType(ElementType _elementType);
 	// 改变XY
@@ -144,6 +138,8 @@ public:
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
 	//改变face_tp
 	void ChangeFaceTo(int face_to) { this->face_to = face_to; }
+	//减血
+	void DecreaseHp(int damage) { current_hp -= damage; }
 };
 
 #endif __CREATURE_H__
