@@ -103,7 +103,7 @@ public:
 	virtual void Heal();
 
 	/* ÒÆ¶¯ */
-	virtual Animate* Move(int dir);
+	virtual void Move(int dir);
 	virtual void learnMove(int dir);
 
 
