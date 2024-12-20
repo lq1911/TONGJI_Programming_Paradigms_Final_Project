@@ -43,8 +43,10 @@ MainGameScene::MainGameScene() {
 	//获取屏幕尺寸
 	VisibleSize = Director::getInstance()->getVisibleSize();
 
-	_cameraManager = CameraManager::create();  // 初始化摄像机管理器
-	_mapManager = MapManager::create();  // 初始化地图管理器
+	_cameraManager = CameraManager::create();    // 初始化摄像机管理器
+	_mapManager = MapManager::create();    // 初始化地图管理器
+	_bagManager = BagManager::getInstance();     // 初始化背包管理器
+	_musicManager = music::getInstance();    // 初始化背景音乐管理器
 }
 
 void MainGameScene::LoadCameraToScene() {
@@ -97,7 +99,6 @@ void MainGameScene::LoadMapToScene() {
 }
 
 void MainGameScene::LoadBagToScene() {
-	_bagManager = BagManager::getInstance();
 	if (_bagManager->getParent() == nullptr)
 	{
 		this->addChild(_bagManager);
@@ -140,7 +141,6 @@ void MainGameScene::LoadNPCToScene() {
 }
 
 void MainGameScene::LoadBackgroundMusicToScene() {
-	_musicManager = music::getInstance();
 	if (_musicManager->getInstance() == nullptr) {
 		this->addChild(_musicManager);
 	}
