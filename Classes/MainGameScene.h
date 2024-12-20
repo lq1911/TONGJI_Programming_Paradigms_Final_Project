@@ -13,7 +13,7 @@
 USING_NS_CC;
 
 class MainGameScene :public cocos2d::Scene {
-private:
+protected:
 	Size VisibleSize;    // 可见屏幕大小
 
 	EventListenerKeyboard* _keyboardListener;    // 键盘监听器
@@ -117,7 +117,7 @@ public:
 	void KeyPressedForBackgroundMusic(EventKeyboard::KeyCode keyCode, Event* event);
 
 	/*键盘事件处理，最终处理键盘按下事件函数*/
-	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
+	virtual void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
 	/*键盘事件处理，最终处理键盘释放事件函数*/
 	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
@@ -125,11 +125,11 @@ public:
 	/*鼠标事件处理，滚动滚轮控制地图缩放*/
 	void MouseScrollForCameraZoom(EventMouse* event, Camera* camera, float MaxHeight, float MinHeight, float ScrollSpeed);
 
-	/*鼠标事件处理，最终处理鼠标滚轮事件函数*/
-	void MouseScroll(EventMouse* event);
-
 	/*鼠标传送事件处理，最终处理鼠标点击事件函数*/
 	void MouseClickedForTeleport(EventMouse* event);
+
+	/*鼠标事件处理，最终处理鼠标滚轮事件函数*/
+	void MouseScroll(EventMouse* event);
 
 	/*鼠标事件处理，最终处理鼠标点击事件函数*/
 	void MouseClicked(EventMouse* event);
