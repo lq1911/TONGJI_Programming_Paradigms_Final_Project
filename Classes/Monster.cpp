@@ -27,19 +27,25 @@ void Monster::update(float dt) {
 	state = ai->GetState();
 	//根据状态实现对应行为
 	if (state == MonsterState::ATTACK) {
+		is_moving = false;
 		Attack();
 	}
 	else if (state == MonsterState::CHASE) {
-		
+		is_moving = true;
 		Chase();
 		
 	}
 	else if (state == MonsterState::FLEE) {
+		is_moving = true;
 		Flee();
 		
 	}
 	else {
-		;
+		is_moving = false;
+	}
+	if (current_hp < 0) {
+		isDead = true;
+		Die();//所有死亡机制
 	}
 	if (is_moving) {
 		if(face_to==0)
@@ -56,6 +62,7 @@ void Monster::update(float dt) {
 //怪物死亡机制
 void Monster::Die() {
 	is_moving = false;
+	isDead = true;
  	target->GetBonus(bonus);
  	Creature::Die();
 }

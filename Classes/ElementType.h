@@ -6,9 +6,11 @@
 enum ElementType 
 {
 	NONE,  // 0
-	FIRE,   // 1
-	GRASS,  // 2
-	WATER    // 3
+	FIRE,  // 1
+	GRASS, // 2
+	ICE,   // 3
+	ROCK   // 4
+
 };
 
 #endif

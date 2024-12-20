@@ -77,12 +77,12 @@ void InDoorScene::LoadMonsterRespawnToScene() {
 
 void InDoorScene::LoadNPCToScene() {
 	// NPC管理器
-	_npcManager = new NPCManager(PLAYER, _bagManager);
+	_npcManager = new NPCManager(PLAYER, _bagManager, this, 1);
 
-	// 监测npc是否在有效触发范围内
-	this->schedule([=](float dt) {
-		for (auto npc : _npcManager->visitNPC()) {
-			npc->update();
-		}
-		}, 0.2f, "npc_check_scheduler");
+	//// 监测npc是否在有效触发范围内
+	//this->schedule([=](float dt) {
+	//	for (auto npc : _npcManager->visitNPC()) {
+	//		npc->update();
+	//	}
+	//	}, 0.2f, "npc_check_scheduler");
 }
