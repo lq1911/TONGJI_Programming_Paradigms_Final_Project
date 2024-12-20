@@ -32,7 +32,7 @@ protected:
 	int level;        // 等级
 	int x, y;         // 位置
 	ElementType elementType; // 属性
-
+	bool is_moving;
 	float scale;      // 缩放比例
 	Scene* scene;     // 场景指针
 
