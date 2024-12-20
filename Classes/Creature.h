@@ -85,8 +85,8 @@ public:
 
 	/* 释放攻击技能 */
 	// opp为攻击对象
-	virtual Animate* Attack(int dir = DOWN, Creature* opp = nullptr);
-	virtual Animate* Attack(Creature* opp = nullptr);
+	
+	virtual void Attack();
 	int getDir() { return face_to; }
 
 	/* 受伤 */
@@ -103,7 +103,7 @@ public:
 	virtual void Heal();
 
 	/* 移动 */
-	virtual Animate* Move(int dir);
+	virtual void Move(int dir);
 
 	/* 转变场景 */
 	//需要修改，与地图对接，需要地图类返回GetScene的值（一个类型为Scene*的scene)
@@ -129,16 +129,15 @@ public:
 
 	/* 设置属性 */
 	void setElementType(ElementType _elementType);
-<<<<<<< HEAD
 	// 改变XY
 	void ChangeXY(Vec2 change);
 	// 返回坐标
-=======
 
 	/* 坐标相关操作 */
->>>>>>> 89dc58ed99cfcdf0533756e633701edfcce39c18
+
 	Vec2 getXY()const { return Vec2(mySprite->getPosition().x, mySprite->getPosition().y); }
-	void ChangeXY(Vec2 change);
+	//改变face_tp
+	void ChangeFaceTo(int face_to) { this->face_to = face_to; }
 };
 
 #endif __CREATURE_H__

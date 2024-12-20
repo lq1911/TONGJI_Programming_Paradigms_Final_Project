@@ -80,7 +80,7 @@ public:
 	// 对于部分怪物,无方向一说:Monster1树妖
 	// opp为攻击对象
 	virtual Animate* Attack(vector<Monster*>monster);
-
+	
 	/* 判断交互范围 */
 	virtual bool isTrigger(const Vec2& pos);
 

@@ -4,6 +4,8 @@
 
 // update
 void Player::update(float dt) {
+    x = getXY().x;
+    y = getXY().y;
     Vec2 pos = mySprite->getPosition();
     static int nums = 50;
     if (nums < 60) {
@@ -96,8 +98,8 @@ Animate* Player::Attack(vector<Monster*> monster) {
             else if (dir == 3 && (k < -1 || k>1) && direction.y < 0)// об
                 monster[i]->Hurt();
         }
-        Creature::Attack(monster[i]);
     }
+    Creature::Attack();
     return nullptr;
 }
 
