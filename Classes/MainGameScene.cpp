@@ -201,6 +201,10 @@ void MainGameScene::TeleportPlayer(int MapID) {
 	}
 }
 
+void MainGameScene::ChangeToInDoorScene(const string SceneName) {
+
+}
+
 /**********************************************************************/
 ////////////////以下为本场景所有与监视器相关的回调函数/////////////////
 void MainGameScene::KeyPressedForRevealMicroMap(EventKeyboard::KeyCode keyCode, Event* event) {
@@ -325,12 +329,37 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 }
 
 void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Event* event) {
-	if (_npcManager->getChattingStates())
-		return;
-	/* npc交互 */
-	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
-		_npcManager->checkTriggers();
+	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		if (_npcManager->getChattingStates())
+			return;
+		/* npc交互 */
+		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
+			_npcManager->checkTriggers();
+		}
 	}
+}
+
+void MainGameScene::KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		//如果玩家在触发范围内，则解锁传送门
+		if (_mapManager->IsTeleportUnlockable(PLAYER->mySprite->getPosition())) {
+			this->UnlockMapTeleport();
+		}
+	}
+}
+
+void MainGameScene::KeyPressedForGetInDoor(EventKeyboard::KeyCode keyCode, Event* event) {
+	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		//如果玩家在触发范围内，则触发交互
+		string SceneName;
+		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName)) {
+			this->ChangeToInDoorScene(SceneName);
+		}
+	}
+}
+
+void MainGameScene::KeyPressedForInteraction(EventKeyboard::KeyCode keyCode, Event* event) {
+
 }
 
 void MainGameScene::KeyPressedForMicroMapMove(EventKeyboard::KeyCode keyCode, Event* event, Camera* camera, float MaxHeight, float MinHeight, float MaxWidth, float MinWidth, float ScrollSpeed) {
@@ -395,6 +424,9 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 			KeyPressedForNPCInteract(keyCode, event);
+			KeyPressedForUnlockTeleport(keyCode, event);
+			KeyPressedForGetInDoor(keyCode, event);
+			KeyPressedForInteraction(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
 			KeyPressedForBackgroundMusic(keyCode,event);
