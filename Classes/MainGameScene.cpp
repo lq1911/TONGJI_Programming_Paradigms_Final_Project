@@ -30,6 +30,7 @@ bool MainGameScene::init() {
 	//添加鼠标监听器，检测鼠标活动
 	_mouseListener = EventListenerMouse::create();
 	_mouseListener->onMouseScroll = CC_CALLBACK_1(MainGameScene::MouseScroll, this);
+	_mouseListener->onMouseDown = CC_CALLBACK_1(MainGameScene::MouseClicked, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(_mouseListener, this);
 
 	this->MainCameraFollowPlayer();    //注册主地图摄像机跟随玩家的函数
@@ -177,9 +178,9 @@ void MainGameScene::MainCameraFollowPlayer() {
 	this->schedule([=](float dt) {
 		float updatedCameraZ = _cameraManager->GetMainCamera()->getPosition3D().z;    //获取摄像机的高度
 		Vec2 playerPosition = PLAYER->mySprite->getPosition();    //获取玩家位置
-		_mapManager->PlayerPositionInWhichMap(playerPosition);    //获取玩家所在地图
 		_cameraManager->UpdateCameraPosition(_cameraManager->GetMainCamera(), playerPosition, updatedCameraZ);    //更新摄像机位置
-		CCLOG("Player Position: %f, %f", playerPosition.x, playerPosition.y);
+		_mapManager->PlayerPositionInWhichMap(playerPosition);    //更新玩家所在地图
+		UnlockMapTeleport();        //解锁传送门函数
 		}, "camera_update_key");
 }
 
@@ -194,7 +195,8 @@ void MainGameScene::MicroCameraFollowPlayer() {
 
 void MainGameScene::UnlockMapTeleport() {
 	// 解锁传送门
-	if (PLAYER->isTrigger(_mapManager->GetTeleportPosition(_mapManager->GetPlayerInWhichMap()))) {
+	if (PLAYER->mySprite->getPosition().distance(_mapManager->GetTeleportPosition(_mapManager->GetPlayerInWhichMap())) < 70.0f
+		&& _mapManager->GetIsRegionRevealed(_mapManager->GetPlayerInWhichMap()) == false) {
 		_mapManager->SetIsRegionRevealedTrue();
 	}
 }
@@ -204,7 +206,9 @@ void MainGameScene::TeleportPlayer(int MapID) {
 	if (_mapManager->GetTeleportPosition(MapID) != Vec2(0, 0)) {
 		PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
 		this->unscheduleAllCallbacks();  // 停止所有定时器
+		Vec2 playerPosition = PLAYER->mySprite->getPosition();
 		PLAYER->mySprite->setPosition(_mapManager->GetTeleportPosition(MapID));
+		PLAYER->ChangeXY(_mapManager->GetTeleportPosition(MapID) - playerPosition);
 	}
 }
 
@@ -494,12 +498,24 @@ void MainGameScene::MouseScrollForCameraZoom(EventMouse* event, Camera* camera, 
 
 void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
 	// 处理小地图中的传送门
-
-	int MapID = _mapManager->GetPlayerInWhichMap();
-	// 传送玩家
-	TeleportPlayer(MapID);
-
+	// 获取鼠标点击位置
 	Vec2 MousePosition = event->getLocationInView();
+
+	// 转换屏幕坐标到场景坐标
+	Vec2 ScenePosition = ScreenToScene(MousePosition);
+
+	for (int i = 0; i < 5; i++) {         // 遍历五个传送门，顺序是RebirthTemple->volcano->SnowyWinter->DeathDesert->BrightForest
+		if (_mapManager->GetTeleportPosition(i).distance(ScenePosition) < 50.0f) {// 如果点击位置在传送门在周围区域内
+			if (_mapManager->GetIsRegionRevealed(i)) {
+				// 传送玩家
+				TeleportPlayer(i);
+				break;
+			}
+			else {
+				// 显示提示框
+			}
+		}
+	}
 }
 
 void MainGameScene::MouseScroll(EventMouse* event) {
@@ -515,4 +531,45 @@ void MainGameScene::MouseClicked(EventMouse* event) {
 	if (_cameraManager->IsInMicroMap()) {
 		MouseClickedForTeleport(event);
 	}
+}
+
+Vec2 MainGameScene::ScreenToScene(const Vec2& screenPos) {
+	// 屏幕坐标转为世界坐标
+	// 获取屏幕分辨率
+	cocos2d::Size screenSize = cocos2d::Director::getInstance()->getWinSize();
+	float screenWidth = screenSize.width;
+	float screenHeight = screenSize.height;
+
+	// 1. 屏幕坐标转换为 NDC 坐标
+	float ndcX = (2.0f * screenPos.x) / screenWidth - 1.0f;
+	float ndcY = (2.0f * screenPos.y) / screenHeight - 1.0f;
+
+	// 2. NDC 转换为裁剪空间坐标
+	cocos2d::Vec4 clipCoords(ndcX, ndcY, -1.0f, 1.0f);
+
+	// 3. 裁剪空间到视图空间
+	cocos2d::Mat4 invProjectionMatrix = _cameraManager->GetMicroCamera()->getProjectionMatrix();
+	invProjectionMatrix.inverse();
+	cocos2d::Vec4 viewCoords = invProjectionMatrix * clipCoords;
+
+	// 4. 归一化视图坐标
+	viewCoords = viewCoords / viewCoords.w;
+
+	// 5. 视图空间到世界空间
+	cocos2d::Mat4 invViewMatrix = _cameraManager->GetMicroCamera()->getViewMatrix();
+	invViewMatrix.inverse();
+	cocos2d::Vec4 worldCoords = invViewMatrix * viewCoords;
+
+	// 6. 射线与地面平面 (z = 0) 交点
+	cocos2d::Vec3 rayOrigin = _cameraManager->GetMicroCamera()->getPosition3D();
+	cocos2d::Vec3 rayDir(worldCoords.x - rayOrigin.x, worldCoords.y - rayOrigin.y, worldCoords.z - rayOrigin.z);
+	rayDir.normalize();
+
+	float t = -rayOrigin.z / rayDir.z; // 平面 z = 0
+	Vec3 outWorldPos = rayOrigin + rayDir * t;
+
+
+	CCLOG("World Position: x = %f, y = %f", outWorldPos.x, outWorldPos.y);
+
+	return Vec2(outWorldPos.x, outWorldPos.y);
 }

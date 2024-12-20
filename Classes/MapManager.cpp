@@ -52,6 +52,18 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				// 创建矩形区域
 				Rect obstacleRect(TiledMapPosToScenePos(Vec2(x, y), mapID).x, TiledMapPosToScenePos(Vec2(x, y), mapID).y - height, width, height);
 
+				if(mapID == 0)
+				{
+					CCLOG("Obstacle Rect: %f, %f, %f, %f", obstacleRect.origin.x, obstacleRect.origin.y, obstacleRect.size.width, obstacleRect.size.height);
+					// 创建一个带颜色的 LayerColor 作为矩形背景
+					auto layer = cocos2d::LayerColor::create(cocos2d::Color4B(255, 0, 0, 100), obstacleRect.size.width, obstacleRect.size.height);
+
+					// 设置矩形的位置
+					layer->setPosition(obstacleRect.origin);
+
+					// 将 LayerColor 添加到父节点
+					this->addChild(layer);
+				}
 				// 这里可以存储或使用这个区域来进行碰撞检测
 				// 比如添加到一个障碍物列表中
 				ObstacleList.push_back(obstacleRect);
@@ -63,6 +75,10 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float y = obstacle["Y"].asFloat();
 				// 保存传送点坐标
 				TeleportList.push_back(TiledMapPosToScenePos(Vec2(x, y), mapID));
+				if (mapID == 0)
+				{
+					CCLOG("Teleport Point: %f, %f", TeleportList.back().x, TeleportList.back().y);
+				}
 			}
 			else if (objectType == "Interaction") {
 				// 根据对象类型读取其属性
@@ -162,11 +178,26 @@ bool MapManager::IsDoorIntoable(const Vec2& pos,string& SceneName) {
 
 Vec2 MapManager::GetTeleportPosition(int mapID)const {
 	// 获取指定地图的传送点坐标
-	if (IsRegionRevealed[PlayerInWhichMap] == false) {
-		// 如果传送点列表为空或玩家不在传送点列表中，则返回Vec2::ZERO
-		return Vec2::ZERO;
+	if (mapID < 0 || mapID >= (int)TeleportList.size()) {
+		return Vec2(-10000, -10000);
 	}
-	return TeleportList[PlayerInWhichMap];
+	if (mapID == 0) { //RebirthTemple
+		return TeleportList[0];
+	}
+	else if (mapID == 1) { //volcano
+		return TeleportList[1];
+	}
+	else if (mapID == 2) { //SnowyWinter
+		return TeleportList[2];
+	}
+	else if (mapID == 3) { //DeathDesert
+		return TeleportList[3];
+	}
+	else if (mapID == 4) { //BrightForest
+		return TeleportList[4];
+	}
+	else
+		return Vec2(-10000, -10000);
 }
 
 void MapManager::ReverseIsBlackFogVisible() {
@@ -180,7 +211,27 @@ void MapManager::SetIsRegionRevealedTrue() {
 	// 解锁小地图以及其相应传送点
 	if (IsRegionRevealed[PlayerInWhichMap] == false) {
 		IsRegionRevealed[PlayerInWhichMap] = true;
+		if (PlayerInWhichMap == 0) { //RebirthTemple
+			;
+		}
+		else if (PlayerInWhichMap == 1) { //volcano
+			IsRegionRevealed[6] = true;
+		}
+		else if (PlayerInWhichMap == 2) { //SnowyWinter
+			IsRegionRevealed[5] = true;
+		}
+		else if (PlayerInWhichMap == 3) { //DeathDesert
+			IsRegionRevealed[7] = true;
+		}
+		else if (PlayerInWhichMap == 4) { //BrightForest
+			IsRegionRevealed[8] = true;
+		}
 	}
+}
+
+bool MapManager::GetIsRegionRevealed(int MapID)const {
+	// 获取指定地图的区域是否被揭示
+	return IsRegionRevealed[MapID];
 }
 
 Vec2 MapManager::TiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex) {
@@ -205,7 +256,7 @@ Vec2 MapManager::TiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex) {
 		scenePos.y = tiledMapPosRect.y + RTPos.y + MapField;
 	}
 	else if (mapIndex == 3) { //DeathDesert
-		scenePos.x = tiledMapPosRect.x + RTPos.y + MapField;
+		scenePos.x = tiledMapPosRect.x + RTPos.x + MapField;
 		scenePos.y = tiledMapPosRect.y + RTPos.y - MapField;
 	}
 	else if (mapIndex == 4) { //BrightForest
@@ -229,7 +280,7 @@ Vec2 MapManager::TiledMapPosToScenePos(const Vec2& tiledMapPos, int mapIndex) {
 		scenePos.y = tiledMapPosRect.y + RTPos.y - MapField;
 	}
 	else
-		scenePos = Vec2::ZERO;
+		scenePos = Vec2(-10000, -10000);
 
 	return scenePos;
 }

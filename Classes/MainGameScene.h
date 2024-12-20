@@ -134,6 +134,11 @@ public:
 	/*鼠标事件处理，最终处理鼠标点击事件函数*/
 	void MouseClicked(EventMouse* event);
 
+	/**********************************************************************/
+	///////////////////以下为本场景关于坐标转换的辅助函数///////////////////
+	/*将屏幕坐标转换为场景坐标*/
+	Vec2 ScreenToScene(const Vec2& screenPos);
+
 	CREATE_FUNC(MainGameScene);
 };
 
