@@ -740,12 +740,12 @@
     <property name="Y" type="float" value="323.333"/>
    </properties>
   </object>
-  <object id="93" type="Teleport" x="93" y="1087" width="35" height="23">
+  <object id="93" type="Teleport" x="85.5" y="1084.5" width="51" height="37.5">
    <properties>
-    <property name="Height" type="float" value="23"/>
-    <property name="Width" type="float" value="35"/>
-    <property name="X" type="float" value="93"/>
-    <property name="Y" type="float" value="1087"/>
+    <property name="Height" type="float" value="37.5"/>
+    <property name="Width" type="float" value="51"/>
+    <property name="X" type="float" value="85.5"/>
+    <property name="Y" type="float" value="1084.5"/>
    </properties>
    <ellipse/>
   </object>
