@@ -26,7 +26,7 @@ private:
 	Player* PLAYER;     // 操作用户
 	MonsterRespawn* _monsterRespawn;    // 怪物管理器
 	NPCManager* _npcManager;   // NPC管理器
-	music* _musicManager; // 音乐管理器
+	//music* _musicManager; // 音乐管理器
 
 	vector<bool> isKeyPressed = { false,false,false,false };    // 按键是否按下:W/S/A/D
 public:
@@ -60,7 +60,7 @@ public:
 	virtual void LoadNPCToScene();
 
 	/*初始化背景音乐管理器*/
-	virtual void LoadBackgroundMusicToScene();
+	//virtual void LoadBackgroundMusicToScene();
 
 	/****************************************************************/
 	////////////////以下为本场景声明的本场景特有功能函数/////////////////
