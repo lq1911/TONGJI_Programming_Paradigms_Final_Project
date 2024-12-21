@@ -193,7 +193,7 @@ void BagManager::createTaskPanel()
     _bagPanel->addChild(_taskBackground);
 
     // 创建标题
-    auto titleLabel = Label::createWithTTF("MY TASK", "fonts/arial.ttf", 32);
+    auto titleLabel = Label::createWithTTF("MY TASK", "fonts/Bebas.ttf", 32);
     titleLabel->setPosition(Vec2(_taskBackground->getContentSize().width / 2, _taskBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     titleLabel->setTextColor(Color4B(255, 215, 0, 255));
@@ -428,7 +428,7 @@ void BagManager::createBagBackground()
     _bagPanel->addChild(_bagBackground);
 
     // 创建背包标题
-    auto titleLabel = Label::createWithTTF("MY BAG", "fonts/arial.ttf", 32);
+    auto titleLabel = Label::createWithTTF("MY BAG", "fonts/Bebas.ttf", 32);
     titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     titleLabel->setTextColor(Color4B(255, 215, 0, 255));
@@ -654,7 +654,7 @@ void BagManager::createCharacterPanelUI()
     _bagPanel->addChild(_characterBackground, -1);
 
     // 创建角色面板标题
-    auto characterTitleLabel = Label::createWithTTF("MY CHARACTER", "fonts/arial.ttf", 32);
+    auto characterTitleLabel = Label::createWithTTF("MY CHARACTER", "fonts/Bebas.ttf", 32);
     characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     characterTitleLabel->setTextColor(Color4B(255, 215, 0, 255));

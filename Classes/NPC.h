@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "BagManager.h"
 
+
 USING_NS_CC;
 
 /************************ NPC¿‡ ************************/
