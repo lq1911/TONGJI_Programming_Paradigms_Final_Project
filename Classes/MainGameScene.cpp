@@ -10,7 +10,13 @@ Scene* MainGameScene::createScene() {
 
 Scene* MainGameScene::createScene(int _ODorID, int NPC_choice, int Monster_choice) {
 	MainGameScene* scene = new MainGameScene(_ODorID, NPC_choice, Monster_choice);
+	if (scene && scene->init()) {
 
+	}
+	else {
+		delete scene;
+		scene = nullptr;
+	}
 	return scene;
 }
 
@@ -125,7 +131,7 @@ void MainGameScene::LoadInDoorMapToScene() {
 }
 void MainGameScene::LoadFightMapToScene() {
 	// 将战斗地图添加到场景中
-	_mapManager->InitialMap("Maps/Fight/Fight.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
+	_mapManager->InitialMap("Maps/BossFight/BossRoom.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
 }
 
 void MainGameScene::LoadBagToScene() {
@@ -137,7 +143,22 @@ void MainGameScene::LoadBagToScene() {
 
 void MainGameScene::LoadPlayerToScene() {
 	// 玩家
-	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 200, 10, 192, 1);
+	float PlayerX;
+	float PlayerY;
+	if (DoorID == 0) {
+		PlayerX = VisibleSize.width / 2 - 350;
+		PlayerY = VisibleSize.height / 2 + 750;
+	}
+	else if (DoorID == 1) {
+		PlayerX = 800;
+		PlayerY = 1000;
+	}
+	else if (DoorID == 2) {
+		PlayerX = VisibleSize.width / 2;
+		PlayerY = VisibleSize.height / 2;
+	}
+
+	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, PlayerX, PlayerY, 0.5f, 100, 50, 20, 200, 10, 192, 1);
 	
 	this->schedule([=](float dt) {
 		for (auto npc : _npcManager->visitNPC()) {

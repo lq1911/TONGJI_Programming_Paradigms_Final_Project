@@ -1,48 +1,211 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="25" height="21" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="20">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="24">
  <tileset firstgid="1" source="DeepInDoors.tsx"/>
  <tileset firstgid="404" source="Library.tsx"/>
- <layer id="1" name="Floor" width="25" height="21">
+ <tileset firstgid="1140" source="../volcano/tf_A1_ashlands_3.tsx"/>
+ <layer id="1" name="Floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJy7zsTAcH0Uj+JRPIpH8SgexaOYAAYAL9G9FQ==
+   eJztwwEJAAAMA6Dx/v1WZzkOCvaSqqqqqqqqqqqq6vMDk5lHnQ==
   </data>
  </layer>
- <layer id="2" name="Laber" width="25" height="21">
+ <layer id="2" name="Laber" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0UlOAkEYxfES3CIqICh6CNcMooLjIVjjxKAMHoIDOLBmLYoTKngI1uAsCngF/530otKBpI2hVrzkly95SeUtSohhzOZsRIiS5BwXKOMSV7jGDW5RwR3u8aBfI62vooZHNNCUPOEZL3jFG97xgU+08IVvtPVrpPUddPEDm0WIMYkd45jAJBxwwoUpuOHBNGb0a6T1XsxiDj74JQEEsYAQFrGEZYQRwQpWsaZfI61fxwY2EcOWZBs72MUe4kggiRT2cYA0Msgih0NL7//u1R/RHeMEpyj0eWs2xX++N5O6gg2rdfAb8wo2ogo28go2Kgo2Wgo23KOD3xjmb/kFPGJCcw==
+   eJzt2FtS1FAQBuDk6LMIKheBnaAoCIhuQ6AER7yNyiJYgIKCugMBQRBGdgKMqCMXt+CfIl10evqkEiRFAf1XfUVSSXcOD9B1ThBYLBaLxZI/C2EQfIHFjJbgKyzDCnyDVViDCnyPryV6llbPrQrUY0ERrb8KP2A7o5/wC35DDf7ADuzCHuzH1xI9S6vndgTqUVVE6290QdAEVzK6CtegGVqgFdrgOrRDR3wt0bO0eq5NoB6Nimj93XALbmfUA71wB/qgHwbgLgzCvfhaomdp9dyAQD26FdH6S/AYxjN6Ak/hGTyHF1CGl/AKXsfXEj1Lq+fKAvUoKaL1T8E0vMvof/MePWZgFj7AR/iUo++Uqzd9DOuyWLR8Dg/MwXyYnIvazFoPD2vy1NEsk/NNzlC6932Hv8/7bsQ2YUvMRW1m/WU1eepolsn5Jmco3fu+w9/nfS+5Aw1w2SXnojazOt1hTZ46mmVyvskZSve+7/D3ed+u2A246ZJzUZtZ91lNnjqaZXK+yRlK977v8Pd539HYGDxyybmozayHrCZPnZyVE07/e6X3fN/hfXhfyhtcv3XJuZglR63LG/qOxWI5/Zm8cNIrOJ6snJHfo3ZGfo+Wiye9AovlfOQB/mcMwTCMnJL/H/J8VuM7gy2athfW9rSVsP58VuM7gy2athfW9rTRvTyf1fjOYIum7YW1PW27qz+f1fjOYIum7YW1Pe2gq99zanxnsEUrs5/ynFeu22KxWCyW85x/466MSw==
   </data>
  </layer>
- <layer id="4" name="Decoration" width="25" height="21">
+ <layer id="4" name="Decoration" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0zlTFEEYh/GZXaoACRQQQVAEWfgGggTKKQjIbYRiwmGM4EEhpSFXwqFYYsQZABEqZoCKpUSiGHAFHigIiCBXhD5d1ZRj77DUlIS8Vb/qnX57/j3bs6tp+/U/1WDXtEY04Z7dde8hWvDIsM5sbsCmaYPSkBjpDeE5XuC+rmnNeKA7917jDUYMeWZzi+T+kJbESG8JP7GMl2QP45Xu3FvHBjYNeWZzQXw+Jh0XoxsjgnECK2T/wqru3HMgHBFuf/PM5lLITZXSxEgvDReQjhC+WyhO2px7OcjFRUOe2dxNcm9J5co7Tic3A5nIsu38O8mjdwmXkY8rytpuzqBH6tX/7VWw9jYqXeSLqqJfjRrUok5ZP07uhDSp7LHG9Tq+cc8s5vAd81jYZV9jubPWQ/JU7gvj2gE/zvAI/BGAowi0m+eZ1SkyIqUoZY9srnOQQF4iziEJyThvYY8CMgqlImWPO1zfRQl511CKMlzHDWWPPtY9xhM8RT+eybx6xgapcYczbuWdtKEdHehEl/LuPnLvJ3zGF8zgq4V39pa8UbzDe4zhg7LHQb7XIXjDB744bOE8t8j7LTJ5Lh022JVnPEPeWcQgFnGIt7CHqAkyJzGFaQtnsFtt/z9EefBMnjgAL4vP56q2/x+iIsmNwmlE7+EexioktwjFuGphjz8zTnj1
+   eJzt1rdTFGEYx/ENzAhamMWAGf0PBC3MGcSAVqZG0NqEOupoaWoE06iVsVArYyeYRq0MWABamDMY0Ur93uwy7u69t/e+xw7V85v5DOzu+zzv+x7v3WFZEolEIpFIJBKJRCLp6tS6llWHAzjoxj87imM4HhinumeaesfT4OjXXHfCdfXM34AbuIlDtmUdxhE7/dld3MP9wJpV91TzxKXV8bQZ7OOzE65rZf42fMFX3GL9t3HHTn/Wjl/4HViz6p5qnrgUuZ6hBn/TIW64riiPnxiG4fjG+r/jh53+rBhjMDbvfz/VPdU8cSlzPeUG+5jrhuvKmL8c81CBEbx2IzHKSX9WicVYEliz6p5qnrhsdj1bDPaxyc1cV8Ha52MBFsachaU8W4blWIGVirFx8ySRc5yX874LdvjZVtazDduznOddPN+NPdiLfQbvT1UyrScuTYxt9rVE6n5y3Y63rOsd3uMDPuKT4VpNegXXo1vXjd/zfQWRfqO5LkZ/zsEAFGIgBmGw4dkw6RVcj27dOMaU+Eoj+1jEdSWmM34GZmIWZmOO4T5MegXXo1u3ijFVvurIPnZwvRNrGb8O67EBG1ETmfsi4y7hMq7gKq45ufUKnivduv2MqfXVZTjzJ+h3EqdwGmdwNvJeek7tC7zEK7zGG0U/nV6qc65Tly0PGP8Qj/AYjXgS6dGT16YXeqMP+qKf4uzp9FKdc526bPnD+L+pGvracOBGXuuJrHkSJmMKpmKaYh86vVTnXKdOJ83UtOApnnXy+yFbP9U578z8HZ/dqeTz2hagO3rk+H1s2i+p+Ts+u1MpobYU4zEhx32Y9kt6/lSqqK3GaqxJ4P+jpPtJJBKJRCKRSCSSrs0/nZTY0Q==
   </data>
  </layer>
- <layer id="5" name="UpLayer" width="25" height="21">
+ <layer id="5" name="UpLayer" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFowA3mM3IwDCHkXx5YvSdBNKn8JhBSJ4Yfd+B9A88ZuCS/0hAjJC5xAB5JuLEBgIYAt1hRGW3aALN+8XI0PATiNuYGA7EA/kJNPZvL9D8PirboQo0T40JNx8EkMNvLjCdzIOmFULpCgaCgXpDmHDzQQA5/E4DzTgDNQeUhlYD2WugeC0j+ekKFn6aUP2aSObcBJp7C4pvU5gXrgP132BE0DDADrSPA4o5KYxHVqB+NiYEDQOmQLYZFJtjseM40D0nKPRfMtDcFChOpVGanwg0dxIUT6aBHQBj8jDF
+   eJztlTtuwkAQhndXgpBTUIHkkkgkB4EeJMg9UqULEqGE5AIhd0jHs4ckp0iVR5Xf0lpsYWN7MLZA/yeNVvuYmX92pVmlCCGEEEIIIYQQEsZYKzXR8v0icbUtMC736IzbLxJX2zfGnz064/aPyVdIXnetSG1pqJpka+dKA7VeZVSvNJbEz8P5P63ufmH3Rr11MO8K65DGylJDwAP8Bxm9hzSWxK+G83UTPfdx3/kJveE5oj8kiZXWL65fBbRwvm2i5z7uO68QYx1RR5JYaf383vSCfFNrr1rer4J39qy/J4wj5R3aP6x9HvhXbOC/1bsxTy5wbxVrlwfeYQn+ZbMb86SJfNfWbkJyz3Cv8wL/9KT5e9Det3Z7wn/5ENofrY1OuA5CCCGEEEJIvvwDO4lDoA==
   </data>
  </layer>
  <objectgroup id="6" name="Obstacles">
-  <object id="1" x="1.33333" y="96" width="32" height="213.333"/>
-  <object id="2" x="172" y="93.3333" width="125.333" height="169.333"/>
-  <object id="3" x="292" y="128" width="114" height="140.667"/>
-  <object id="4" x="398" y="99.3333" width="399" height="154.667"/>
-  <object id="5" x="160" y="265.333" width="30.6667" height="46.6667"/>
-  <object id="6" x="0" y="448" width="32" height="58.6667"/>
-  <object id="7" x="161.333" y="449.333" width="30.6667" height="60"/>
-  <object id="8" x="258.667" y="342.667" width="54.6667" height="32"/>
-  <object id="9" x="264" y="410.667" width="46.6667" height="38.6667"/>
-  <object id="10" x="261.333" y="577.333" width="70.6667" height="54.6667"/>
-  <object id="11" x="367" y="545" width="97" height="107"/>
-  <object id="12" x="615" y="441" width="168" height="93"/>
-  <object id="13" x="640" y="512" width="46" height="60"/>
-  <object id="14" x="702" y="512" width="47" height="58"/>
-  <object id="15" x="285" y="276" width="48" height="44"/>
-  <object id="16" x="319" y="325" width="41" height="136"/>
-  <object id="17" x="462" y="324" width="44" height="141"/>
-  <object id="18" x="358" y="354" width="109" height="74"/>
-  <object id="19" x="310" y="303">
+  <object id="1" x="385.333" y="544" width="32" height="213.333">
+   <properties>
+    <property name="Height" type="float" value="213.33"/>
+    <property name="Width" type="float" value="32"/>
+    <property name="X" type="float" value="385.33"/>
+    <property name="Y" type="float" value="544"/>
+   </properties>
+  </object>
+  <object id="2" x="556" y="556" width="125.333" height="169.333">
+   <properties>
+    <property name="Height" type="float" value="169.33"/>
+    <property name="Width" type="float" value="125.33"/>
+    <property name="X" type="float" value="556"/>
+    <property name="Y" type="float" value="556"/>
+   </properties>
+  </object>
+  <object id="3" x="676" y="576" width="114" height="140.667">
+   <properties>
+    <property name="Height" type="float" value="140.67"/>
+    <property name="Width" type="float" value="114"/>
+    <property name="X" type="float" value="676"/>
+    <property name="Y" type="float" value="576"/>
+   </properties>
+  </object>
+  <object id="4" x="782" y="547.333" width="399" height="154.667">
+   <properties>
+    <property name="Height" type="float" value="154.67"/>
+    <property name="Width" type="float" value="399"/>
+    <property name="X" type="float" value="782"/>
+    <property name="Y" type="float" value="547.33"/>
+   </properties>
+  </object>
+  <object id="5" x="544" y="713.333" width="30.6667" height="46.6667">
+   <properties>
+    <property name="Height" type="float" value="46.67"/>
+    <property name="Width" type="float" value="30.67"/>
+    <property name="X" type="float" value="544"/>
+    <property name="Y" type="float" value="713.33"/>
+   </properties>
+  </object>
+  <object id="6" x="384" y="896" width="32" height="58.6667">
+   <properties>
+    <property name="Height" type="float" value="58.67"/>
+    <property name="Width" type="float" value="32"/>
+    <property name="X" type="float" value="384"/>
+    <property name="Y" type="float" value="896"/>
+   </properties>
+  </object>
+  <object id="7" x="545.333" y="897.333" width="30.6667" height="60">
+   <properties>
+    <property name="Height" type="float" value="60"/>
+    <property name="Width" type="float" value="30.67"/>
+    <property name="X" type="float" value="0"/>
+    <property name="Y" type="float" value="897.33"/>
+   </properties>
+  </object>
+  <object id="8" x="642.667" y="790.667" width="54.6667" height="32">
+   <properties>
+    <property name="Height" type="float" value="32"/>
+    <property name="Width" type="float" value="54.67"/>
+    <property name="X" type="float" value="642.67"/>
+    <property name="Y" type="float" value="790.67"/>
+   </properties>
+  </object>
+  <object id="9" x="648" y="858.667" width="46.6667" height="38.6667">
+   <properties>
+    <property name="Height" type="float" value="38.67"/>
+    <property name="Width" type="float" value="46.67"/>
+    <property name="X" type="float" value="648"/>
+    <property name="Y" type="float" value="858.67"/>
+   </properties>
+  </object>
+  <object id="10" x="645.333" y="1025.33" width="70.6667" height="54.6667">
+   <properties>
+    <property name="Height" type="float" value="54.67"/>
+    <property name="Width" type="float" value="70.67"/>
+    <property name="X" type="float" value="645.33"/>
+    <property name="Y" type="float" value="1025.33"/>
+   </properties>
+  </object>
+  <object id="11" x="751" y="993" width="97" height="107">
+   <properties>
+    <property name="Height" type="float" value="107"/>
+    <property name="Width" type="float" value="97"/>
+    <property name="X" type="float" value="751"/>
+    <property name="Y" type="float" value="993"/>
+   </properties>
+  </object>
+  <object id="12" x="999" y="889" width="168" height="93">
+   <properties>
+    <property name="Height" type="float" value="93"/>
+    <property name="Width" type="float" value="168"/>
+    <property name="X" type="float" value="999"/>
+    <property name="Y" type="float" value="889"/>
+   </properties>
+  </object>
+  <object id="13" x="1024" y="960" width="46" height="60">
+   <properties>
+    <property name="Height" type="float" value="60"/>
+    <property name="Width" type="float" value="46"/>
+    <property name="X" type="float" value="1024"/>
+    <property name="Y" type="float" value="960"/>
+   </properties>
+  </object>
+  <object id="14" x="1086" y="960" width="47" height="58">
+   <properties>
+    <property name="Height" type="float" value="58"/>
+    <property name="Width" type="float" value="47"/>
+    <property name="X" type="float" value="1086"/>
+    <property name="Y" type="float" value="960"/>
+   </properties>
+  </object>
+  <object id="15" x="669" y="724" width="48" height="44">
+   <properties>
+    <property name="Height" type="float" value="44"/>
+    <property name="Width" type="float" value="48"/>
+    <property name="X" type="float" value="669"/>
+    <property name="Y" type="float" value="724"/>
+   </properties>
+  </object>
+  <object id="16" x="703" y="773" width="41" height="136">
+   <properties>
+    <property name="Height" type="float" value="136"/>
+    <property name="Width" type="float" value="41"/>
+    <property name="X" type="float" value="703"/>
+    <property name="Y" type="float" value="773"/>
+   </properties>
+  </object>
+  <object id="17" x="846" y="772" width="44" height="141">
+   <properties>
+    <property name="Height" type="float" value="141"/>
+    <property name="Width" type="float" value="44"/>
+    <property name="X" type="float" value="846"/>
+    <property name="Y" type="float" value="772"/>
+   </properties>
+  </object>
+  <object id="18" x="742" y="796.667" width="109" height="74">
+   <properties>
+    <property name="Height" type="float" value="74"/>
+    <property name="Width" type="float" value="109"/>
+    <property name="X" type="float" value="742"/>
+    <property name="Y" type="float" value="796.67"/>
+   </properties>
+  </object>
+  <object id="19" type="InDoorPoint" x="480.667" y="500.333">
+   <properties>
+    <property name="X" type="float" value="480.67"/>
+    <property name="Y" type="float" value="500.33"/>
+   </properties>
    <point/>
+  </object>
+  <object id="20" x="1184" y="408" width="21.3333" height="749.333">
+   <properties>
+    <property name="Height" type="float" value="749.33"/>
+    <property name="Width" type="float" value="21.33"/>
+    <property name="X" type="float" value="1184"/>
+    <property name="Y" type="float" value="408"/>
+   </properties>
+  </object>
+  <object id="21" x="268" y="1158.67" width="936" height="26.6667">
+   <properties>
+    <property name="Height" type="float" value="26.67"/>
+    <property name="Width" type="float" value="936"/>
+    <property name="X" type="float" value="268"/>
+    <property name="Y" type="float" value="1158.67"/>
+   </properties>
+  </object>
+  <object id="22" x="369.333" y="412" width="13.3333" height="754.667">
+   <properties>
+    <property name="Height" type="float" value="754.67"/>
+    <property name="Width" type="float" value="13.33"/>
+    <property name="X" type="float" value="369.33"/>
+    <property name="Y" type="float" value="412"/>
+   </properties>
+  </object>
+  <object id="23" x="321.333" y="404" width="912" height="14.6667">
+   <properties>
+    <property name="Height" type="float" value="14.67"/>
+    <property name="Width" type="float" value="912"/>
+    <property name="X" type="float" value="321.33"/>
+    <property name="Y" type="float" value="404"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

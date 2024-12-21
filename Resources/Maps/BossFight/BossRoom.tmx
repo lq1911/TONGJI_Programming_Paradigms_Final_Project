@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="15" height="15" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="11">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="11">
  <tileset firstgid="1" source="../volcano/tf_A1_ashlands_3.tsx"/>
- <layer id="1" name="BossRoom" width="15" height="15">
+ <layer id="1" name="BossRoom" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJxby8DAsHYUj+JRPGAYAIosmA4=
+   eJztwwEJAAAMBKHr3+U7LsdAwVVTVVVVVVVVVVXV5w8KPpnP
   </data>
  </layer>
  <objectgroup id="2" name="Obstacles">
-  <object id="6" x="-2" y="-4" width="8" height="488.667">
+  <object id="6" x="-4" y="0" width="28" height="1596.67">
    <properties>
-    <property name="Height" type="float" value="488.67"/>
-    <property name="Width" type="float" value="8"/>
-    <property name="X" type="float" value="-2"/>
-    <property name="Y" type="float" value="-4"/>
+    <property name="Height" type="float" value="1596.67"/>
+    <property name="Width" type="float" value="28"/>
+    <property name="X" type="float" value="-4"/>
+    <property name="Y" type="float" value="0"/>
    </properties>
   </object>
-  <object id="7" x="0.666667" y="474" width="482.667" height="7.5">
+  <object id="7" x="5.33333" y="1585.27" width="1594" height="14.1667">
    <properties>
-    <property name="Height" type="float" value="7.5"/>
-    <property name="Width" type="float" value="482.67"/>
-    <property name="X" type="float" value="0.67"/>
-    <property name="Y" type="float" value="474"/>
+    <property name="Height" type="float" value="14.17"/>
+    <property name="Width" type="float" value="1594"/>
+    <property name="X" type="float" value="5.33"/>
+    <property name="Y" type="float" value="1585.27"/>
    </properties>
   </object>
-  <object id="8" x="476" y="-1.33333" width="7.5" height="481.333">
+  <object id="8" x="1580" y="4.66667" width="17.5" height="1583.33">
    <properties>
-    <property name="Height" type="float" value="481.33"/>
-    <property name="Width" type="float" value="7.5"/>
-    <property name="X" type="float" value="476"/>
-    <property name="Y" type="float" value="-1.33"/>
+    <property name="Height" type="float" value="1583.33"/>
+    <property name="Width" type="float" value="17.5"/>
+    <property name="X" type="float" value="1580"/>
+    <property name="Y" type="float" value="4.67"/>
    </properties>
   </object>
-  <object id="9" x="-0.666667" y="-6" width="484.667" height="12">
+  <object id="9" x="-0.666667" y="-6" width="1602.67" height="26">
    <properties>
-    <property name="Height" type="float" value="12"/>
-    <property name="Width" type="float" value="484.67"/>
+    <property name="Height" type="float" value="26"/>
+    <property name="Width" type="float" value="1602.67"/>
     <property name="X" type="float" value="-0.67"/>
     <property name="Y" type="float" value="-6"/>
    </properties>
   </object>
-  <object id="10" type="InDoorPoint" x="14.6667" y="252.667">
+  <object id="10" type="InDoorPoint" x="66.6667" y="772.667">
    <properties>
     <property name="MonsterIndex" type="int" value="0"/>
     <property name="NPCIndex" type="int" value="0"/>
     <property name="SceneName" type="int" value="0"/>
-    <property name="X" type="int" value="1467"/>
-    <property name="Y" type="int" value="25267"/>
+    <property name="X" type="float" value="66.67"/>
+    <property name="Y" type="float" value="772.67"/>
    </properties>
    <point/>
   </object>

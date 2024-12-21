@@ -6,7 +6,6 @@
 #include "Creature.h"
 #include "Item.h"
 #include "MapManager.h"
-#include "Monster.h"
 USING_NS_CC;
 using namespace std;
 

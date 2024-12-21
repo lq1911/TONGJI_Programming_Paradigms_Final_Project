@@ -9,7 +9,9 @@ void MapManager::InitialMap(const string mapName, const Vec2& MapPosition, Scene
 	MapList.push_back(TiledMap);    //将地图添加到已经创建的地图列表中
 	InitialObjects(TiledMap, (int)MapList.size() - 1);    //初始化障碍物
 
-	BlackFogList.push_back(TiledMap->getLayer("BlackFog"));    //初始化黑色雾列表
+	if (TiledMap->getLayer("BlackFog")) {
+		BlackFogList.push_back(TiledMap->getLayer("BlackFog"));    //初始化黑色雾列表
+	}
 	IsBlackFogVisible.push_back(false);    //初始化黑色雾的可见性为false
 	IsRegionRevealed.push_back(false);    //初始化地图区域是否被揭示为false
 }
@@ -52,6 +54,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				Rect obstacleRect(TiledMapPosToScenePos(Vec2(x, y), mapID).x, TiledMapPosToScenePos(Vec2(x, y), mapID).y - height, width, height);
 				// 这里可以存储或使用这个区域来进行碰撞检测
 				// 比如添加到一个障碍物列表中
+				
 				ObstacleList.push_back(obstacleRect);
 			}
 			else if (objectType == "TeleportPoint") {
@@ -68,8 +71,10 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float x = obstacle["X"].asFloat();
 				float y = obstacle["Y"].asFloat();
 
+
 				// 保存可交互区域坐标
 				InteractionList.push_back(TiledMapPosToScenePos(Vec2(x, y), mapID));
+				
 			}
 			else if (objectType == "InDoorPoint") {
 				// 根据对象类型读取其属性
@@ -89,6 +94,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 }
 
 void MapManager::SetBlackFogInMicroMap() {
+	
 	for (int i = 0; i < (int)BlackFogList.size(); i++) {
 		if (!BlackFogList[i]->getParent()) {
 			this->addChild(BlackFogList[i]);
