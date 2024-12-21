@@ -41,7 +41,7 @@ bool MainGameScene::init() {
 /****************************************************************/
 ////////////////以下为本场景所有用到的初始化函数/////////////////
 
-MainGameScene::MainGameScene(int _ODorID = 0, int NPC_choice = 0, int Monster_choice = 0) {
+MainGameScene::MainGameScene(int _ODorID, int NPC_choice, int Monster_choice) {
 	// 初始化场景参数
 	ODorID = _ODorID;
 	_NPC_choice = NPC_choice;
