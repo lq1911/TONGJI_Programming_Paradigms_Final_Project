@@ -9,16 +9,23 @@ NPCManager::NPCManager(Player* playerRef, BagManager* bagManager, Scene* scene, 
     switch (idx) {
     // 初始地图
     case(0) :
-        addNPC("npc9", VisibleSize.width / 2 , VisibleSize.height / 2, 0.6f);
-        //addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f);
-        addNPC("npc8", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f);
-        addNPC("npc3", VisibleSize.width / 2 + 500, VisibleSize.height / 2 + 500, 0.6f);
-        addNPC("npc4", VisibleSize.width / 2 - 500, VisibleSize.height / 2, 0.6f);
-        addNPC("npc5", VisibleSize.width / 2 - 500, VisibleSize.height / 2 - 500, 0.6f);
+        // 复活神塔
+        addNPC("npc1", 1298.5f, 1354.7, 0.8f);
+        addNPC("npc6", 577.0f, 455.8f, 0.6f);
+        // 火山
+        addNPC("npc2", -1230.8f, 3366.5f, 0.6f);
+        // 雪地
+        addNPC("npc3", 2880.0f, 2726.9f, 0.6f);
+        // 森林
+        addNPC("npc4", -1013.5, -395.0f, 0.6f);
+
+        
         break;
     // 室内地图1
     case(1) :
-        addNPC("npc6", VisibleSize.width / 2 - 500, VisibleSize.height / 2 + 500, 0.6f);
+        // 沙漠
+        addNPC("npc5", 1357.0f, 871.0f, 0.6f); //室内
+       
         break;
     // 室内地图2
     case(2):

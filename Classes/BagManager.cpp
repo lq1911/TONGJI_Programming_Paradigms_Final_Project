@@ -63,7 +63,7 @@ void BagManager::showBag(Player& _player)
         //Director::getInstance()->pause();
 
         // 播放背包打开的音效
-        cocos2d::experimental::AudioEngine::play2d("music/bag.mp3");
+        cocos2d::AudioEngine::play2d("music/bag.mp3");
 
         // 如果打开了任务面板，就关闭任务面板
         if (_taskBackground)
@@ -85,7 +85,7 @@ void BagManager::showBag(Player& _player)
         createTaskButton();
 
         // 播放背包打开的音效
-        cocos2d::experimental::AudioEngine::play2d("music/bag.mp3");
+        cocos2d::AudioEngine::play2d("music/bag.mp3");
 
         _bagPanel->setVisible(true);  // 显示背包面板
         _isBagOpen = true;
@@ -133,7 +133,7 @@ void BagManager::hideBag(Player& _player)
         // 恢复游戏
         //Director::getInstance()->resume();
         // 播放关闭背包的音效
-        cocos2d::experimental::AudioEngine::play2d("music/bag.mp3");
+        cocos2d::AudioEngine::play2d("music/bag.mp3");
         _bagPanel->setVisible(false);  // 隐藏背包面板
         _bagPanel->removeAllChildren(); // 清除子节点
         _bagBackground = nullptr;  // 清除背景指针
@@ -177,7 +177,7 @@ void BagManager::createTaskButton()
     taskButton->addClickEventListener([=](Ref* sender) {
         hideBag();
         createTaskPanel();
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         });
 }
 
@@ -216,7 +216,7 @@ void BagManager::createTaskPanel()
         _bagPanel->removeChild(_taskBackground);
         _taskBackground = nullptr;
         showBag();
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         });
     updateTaskUI();
     
@@ -283,7 +283,7 @@ void BagManager::createScrollView(Vec2 position, vector<task*> myTask)
 
             // 设置按钮点击事件
             taskButton->addClickEventListener([=](Ref* sender) {
-                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+                cocos2d::AudioEngine::play2d("music/lock.mp3");
                 });
             // 表示任务未解锁
             auto lock = Button::create("Bag/lock.png");
@@ -300,7 +300,7 @@ void BagManager::createScrollView(Vec2 position, vector<task*> myTask)
             // 设置按钮点击事件
             taskButton->addClickEventListener([=](Ref* sender) {
                 createTaskInfoPanel(myTask, i);
-                cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+                cocos2d::AudioEngine::play2d("music/click.mp3");
                 });
         }
     }
@@ -367,7 +367,7 @@ void BagManager::createTaskInfoPanel(vector<task*> myTask, int index)
     closeButton->addClickEventListener([=](Ref* sender) {
         // 点击×按钮时移除 itemInfoBackground
         taskInfoBackground->removeFromParent();  // 从父节点移除
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         });
     
     // 将关闭按钮添加到背景中
@@ -478,7 +478,7 @@ void BagManager::createCharacterPanel()
     button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y + borderHeight / 2 - 30));
     button1->addClickEventListener([=](Ref* sender) {
         // 点击格子音效
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         });// 添加按钮点击事件
     _characterBackground->addChild(button1);
     auto label1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 12);// 添加文字 
@@ -503,7 +503,7 @@ void BagManager::createCharacterPanel()
     auto closeButton1 = Button::create("Bag/close_button.png");
     closeButton1->setPosition(Vec2(button1->getContentSize().width, button1->getContentSize().height)); // 右上角位置
     closeButton1->addClickEventListener([=](Ref* sender) {
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         if (player._weapon != nullptr)
         {
             player.atk -= player._weapon->increase_attribute;
@@ -521,7 +521,7 @@ void BagManager::createCharacterPanel()
     button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y - borderHeight / 2 + 30));
     button2->addClickEventListener([=](Ref* sender) {
         // 点击格子音效
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3"); 
+        cocos2d::AudioEngine::play2d("music/click.mp3"); 
         });
     _characterBackground->addChild(button2);
     auto label2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 12);
@@ -546,7 +546,7 @@ void BagManager::createCharacterPanel()
     auto closeButton2 = Button::create("Bag/close_button.png");
     closeButton2->setPosition(Vec2(button2->getContentSize().width, button2->getContentSize().height)); // 右上角位置
     closeButton2->addClickEventListener([=](Ref* sender) {
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         if (player._armor != nullptr)
         {
             player.def -= player._armor->increase_attribute;
@@ -563,7 +563,7 @@ void BagManager::createCharacterPanel()
     button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y + borderHeight / 2 - 30));
     button3->addClickEventListener([=](Ref* sender) {
         // 点击格子音效
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         });
     _characterBackground->addChild(button3);
     auto label3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 12);
@@ -588,7 +588,7 @@ void BagManager::createCharacterPanel()
     auto closeButton3 = Button::create("Bag/close_button.png");
     closeButton3->setPosition(Vec2(0, button3->getContentSize().height)); // 右上角位置
     closeButton3->addClickEventListener([=](Ref* sender) {
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         if (player._shoes != nullptr)
         {
             player.speed -= player._shoes->increase_attribute;
@@ -605,7 +605,7 @@ void BagManager::createCharacterPanel()
     button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y - borderHeight / 2 + 30));
     button4->addClickEventListener([=](Ref* sender) {
         // 点击格子音效
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         });
     _characterBackground->addChild(button4);
     auto label4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 12);
@@ -630,7 +630,7 @@ void BagManager::createCharacterPanel()
     auto closeButton4 = Button::create("Bag/close_button.png");
     closeButton4->setPosition(Vec2(0, button4->getContentSize().height)); // 右上角位置
     closeButton4->addClickEventListener([=](Ref* sender) {
-        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        cocos2d::AudioEngine::play2d("music/click.mp3");
         if (player._accessories != nullptr)
         {
             // 角色属性为空
@@ -760,7 +760,7 @@ void BagManager::showCharacterInfo()
 void BagManager::slot_click(Button* slot, int row, int col)
 {
     // 点击格子音效
-    cocos2d::experimental::AudioEngine::play2d("music/click.mp3"); 
+    cocos2d::AudioEngine::play2d("music/click.mp3"); 
 
     // 点击格子时检查是否有物品
     if (items[row * 5 + col] != NULL)
@@ -778,7 +778,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
         closeButton->addClickEventListener([=](Ref* sender) {
             // 点击×按钮时移除 itemInfoBackground
             itemInfoBackground->removeFromParent();  // 从父节点移除
-            cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+            cocos2d::AudioEngine::play2d("music/click.mp3");
             });
 
         // 将关闭按钮添加到背景中
@@ -825,7 +825,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
                     player.current_hp = player.hp;
                 dynamic_cast<item*>(items[row * 5 + col]);
                 // 播放音效
-                cocos2d::experimental::AudioEngine::play2d("music/eat.mp3");
+                cocos2d::AudioEngine::play2d("music/eat.mp3");
 
                 // 丢弃该物品
                 discardItems(row * 5 + col);
@@ -854,7 +854,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
         dicardButton->addClickEventListener([=](Ref* sender) {
             // 丢弃该物品
             discardItems(row * 5 + col);
-            cocos2d::experimental::AudioEngine::play2d("music/item.mp3");
+            cocos2d::AudioEngine::play2d("music/item.mp3");
             itemInfoBackground->removeFromParent();  // 丢弃后关闭物品信息面板
             }); // 添加鼠标点击事件
         itemInfoBackground->addChild(dicardButton);
@@ -889,10 +889,10 @@ void BagManager::slot_click(Button* slot, int row, int col)
                     itemInfoBackground->removeFromParent();
                     slot_click(slot, row, col);
                     // 武器升级音效
-                    cocos2d::experimental::AudioEngine::play2d("music/upgrade.mp3");
+                    cocos2d::AudioEngine::play2d("music/upgrade.mp3");
                 }
                 else
-                    cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+                    cocos2d::AudioEngine::play2d("music/lock.mp3");
                 });
             itemInfoBackground->addChild(upgradeButton);
             // 为按钮添加文字
@@ -924,7 +924,7 @@ void BagManager::addItem(item* it)
             updateBagUI();
         items_num++; // 物品数量加1
         // 添加物品音效
-        cocos2d::experimental::AudioEngine::play2d("music/item.mp3");
+        cocos2d::AudioEngine::play2d("music/item.mp3");
     }
 }
 
@@ -974,7 +974,7 @@ bool BagManager::equipItem(int index)
             else
             {
                 flag = false;
-                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+                cocos2d::AudioEngine::play2d("music/lock.mp3");
             }
         }
         else if (auto armorItem = dynamic_cast<armor*>(items[index])) // 物品是护甲类
@@ -996,7 +996,7 @@ bool BagManager::equipItem(int index)
             else
             {
                 flag = false;
-                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+                cocos2d::AudioEngine::play2d("music/lock.mp3");
             }
         }
         else if (auto shoesItem = dynamic_cast<shoes*>(items[index])) // 物品是鞋子类
@@ -1018,7 +1018,7 @@ bool BagManager::equipItem(int index)
             else
             {
                 flag = false;
-                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+                cocos2d::AudioEngine::play2d("music/lock.mp3");
             }
         }
         else if (auto accessoriesItem = dynamic_cast<accessories*>(items[index])) // 物品是饰品类
@@ -1040,10 +1040,10 @@ bool BagManager::equipItem(int index)
             else
             {
                 flag = false;
-                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+                cocos2d::AudioEngine::play2d("music/lock.mp3");
             }
         }
-        cocos2d::experimental::AudioEngine::play2d("music/equip.mp3");
+        cocos2d::AudioEngine::play2d("music/equip.mp3");
     }
     return flag;
 }
