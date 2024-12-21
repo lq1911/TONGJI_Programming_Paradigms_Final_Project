@@ -14,6 +14,9 @@ USING_NS_CC;
 
 class MainGameScene :public cocos2d::Scene {
 protected:
+	int _NPC_choice;     // NPC选择标志,加载不同的NPC
+	int _Monster_choice; // 怪物选择标志,加载不同的怪物
+	int DoorID;          //加载室外还是室内地图标志， 0为室外，1为室内，2为战斗，默认为0
 	Size VisibleSize;    // 可见屏幕大小
 
 	EventListenerKeyboard* _keyboardListener;    // 键盘监听器
@@ -33,10 +36,11 @@ public:
 	/****************************************************************/
 	////////////////以下为本场景所有用到的初始化函数/////////////////
 	/* 构造函数，获取屏幕的大小*/
-	MainGameScene();
+	MainGameScene(int _ODorID = 0, int _NPC_choice = 0, int _Monster_choice = 0);
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
+	Scene* MainGameScene::createScene(int _ODorID, int NPC_choice, int Monster_choice);
 
 	/*初始化地图函数*/
 	virtual bool init();
@@ -45,7 +49,16 @@ public:
 	void LoadCameraToScene();
 
 	/*初始化地图*/
-	virtual void LoadMapToScene();
+	void LoadMapToScene();
+
+	/*初始化室外地图*/
+	virtual void LoadOutDoorMapToScene();
+
+	/*初始化室内地图*/
+	virtual void LoadInDoorMapToScene();
+
+	/*初始化战斗地图*/
+	virtual void LoadFightMapToScene();
 
 	/*初始化背包界面*/
 	void LoadBagToScene();
@@ -79,8 +92,8 @@ public:
 	/*将玩家传送到选择的传送点*/
 	void TeleportPlayer(int MapID);
 
-	/*进入室内场景*/
-	void ChangeToInDoorScene(const string SceneName);
+	/*切换室内外场景*/
+	void ChangeScene(const int SceneName, const int NPCIndex, const int MonsterIndex);
 
 	/**********************************************************************/
 	////////////////以下为本场景所有与监视器相关的回调函数/////////////////
@@ -104,8 +117,8 @@ public:
 	/*键盘事件处理，按下C键解锁传送点*/
 	void KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, Event* event);
 
-	/*键盘事件处理，按下C键进入室内场景*/
-	void KeyPressedForGetInDoor(EventKeyboard::KeyCode keyCode, Event* event);
+	/*键盘事件处理，按下C键切换室内外场景*/
+	void KeyPressedForChangeScene(EventKeyboard::KeyCode keyCode, Event* event);
 
 	/*键盘事件处理，按下C键与场景互动，主要是打开箱子*/
 	void KeyPressedForInteraction(EventKeyboard::KeyCode keyCode, Event* event);

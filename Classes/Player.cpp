@@ -62,6 +62,9 @@ void Player::update(float dt) {
             ChangeXY(move_by);
         }
     }
+    else {
+        Heal();
+    }
 
     // 计算血量占总血量的比例
     float healthPercentage = (float)current_hp / (float)hp;
@@ -72,8 +75,16 @@ void Player::update(float dt) {
     if (current_hp<0) {
         isDead = true;
         Die();
-        mySprite->setPosition(1080, 720);
-        Revive();
+        static int n = 0;
+        if (n < 120) {
+            n++;
+        }
+        else {
+            n = 0;
+            mySprite->setPosition(1080, 720);
+            Revive();
+            ReSetHp();
+        }
     }
     // 更新hp值
     hpLabel->setString("hp:" + to_string(current_hp));
@@ -166,7 +177,7 @@ void Player::Skill(int skill_num,vector<Monster*>monster) {
 //
 void Player::Skill_Animate1() {
     //技能1的动画
-    auto particleSystem = ParticleSystemQuad::create("Aura.plist");
+    auto particleSystem = ParticleSystemQuad::create();
 
     // 设置粒子系统的位置
     particleSystem->setPosition(mySprite->getPosition());
@@ -180,17 +191,72 @@ void Player::Skill_Animate1() {
     particleSystem->setGravity(Vec2(0, -200)); // 重力
 
     // 设置粒子图片
-    particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Aura.png"));
+    particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Role/PlayerSkill2/1.png"));
 
     // 将粒子系统添加到人物节点
     mySprite->addChild(particleSystem);
 
     // 启动粒子系统
     particleSystem->resetSystem();
+
+
+
 }
 //技能2的动画
 void Player::Skill_Animate2() {
+    // 死了,直接返回
+    if (isDead)
+        return;
+    std::string s = "Role/PlayerSkill1/";
+    
+    // 帧动画
+    Vector<SpriteFrame*> animFrames;
+    animFrames.reserve(12);
+    Vec2 pos;
+    if (face_to == 0) {
+        pos=Vec2(x-100,y);
+    }
+    else if (face_to == 1) {
+        pos = Vec2(x + 100, y);
+    }
+    else if (face_to == 2) {
+        pos = Vec2(x, y + 100);
+    }
+    else if (face_to == 3) {
+        pos = Vec2(x, y - 100);
+    }
+    // 定义动画播放的起始位置
+    Vec2 startPosition = mySprite->getPosition()+pos; // 这里设置你想要的起始位置
+        for (int i = 1; i <  12; i++) {
+            auto texture = Director::getInstance()->getTextureCache()->addImage(s +"smoke" +std::to_string(i) + ".png");
+            float width = texture->getPixelsWide();
+            float height = texture->getPixelsHigh();
+            Rect rectInPixels(0, 0, width, height);
+            auto spriteFrame = SpriteFrame::createWithTexture(
+                texture,
+                CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+            );
+            spriteFrame->setOffsetInPixels(startPosition);
+            animFrames.pushBack(spriteFrame);
+        }
+    
+    auto texture = Director::getInstance()->getTextureCache()->addImage("Role/PlayerSkill1/smoke" + std::to_string(1) + ".png");
+    float width = texture->getPixelsWide();
+    float height = texture->getPixelsHigh();
+    Rect rectInPixels(0, 0, width, height);
+    auto spriteFrame = SpriteFrame::createWithTexture(
+        texture,
+        CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+    );
+    animFrames.pushBack(spriteFrame);
+    // 播放
+    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+    Animate* animate = Animate::create(animation);
+    mySprite->stopAllActions();
+    mySprite->runAction(animate);
+    CCLOG("%s attack", role);
 
+    return;
 }
 // Player获得奖励
 void Player::GetBonus(Bonus bonus) {
@@ -204,7 +270,7 @@ void Player::GetBonus(Bonus bonus) {
     }
 
     //物品奖励
-    //暂待，需物品和装备
+    /*BagManager->addItem(bonus.equipment)*/
 
 }
 

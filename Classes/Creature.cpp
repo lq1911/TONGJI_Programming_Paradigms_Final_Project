@@ -269,6 +269,14 @@ void Creature::Hurt() {
 
 /* 恢复动画 */
 void Creature::Heal() {
+    static int nums = 0;
+    if (nums < 60) {
+        return;
+    }
+    else {
+        nums = 0;
+        current_hp += (hp + 1.0 - 1.0) / 50;
+    }
     // 死了,直接返回
     if (isDead) 
         return;

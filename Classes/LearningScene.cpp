@@ -16,7 +16,6 @@ bool LearningScene::init() {
     LEARNER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, visibleSize.width / 2, visibleSize.height / 2, 1.0f, 100, 50, 20, 50, 10, 80, 1);
 
     /* 加载背景图 */
-    // 待确认:是否加载地图
     auto background = Sprite::create("Scene/LearningScene.png");
     if (background) {
         auto visibleSize = Director::getInstance()->getVisibleSize();
@@ -70,48 +69,15 @@ void LearningScene::welcome() {
         this->removeChild(YesTxt);
         YesTxt = nullptr;
         // 下一步
-        this->learnMove_1();
+        this->learnMove();
         });
 }
 
 /* 学走路 */
-void LearningScene::learnMove_1() {
+void LearningScene::learnMove() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("1.Move", "fonts/KuaiLe_Chinese.ttf", 60);
-    titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
-    titleTxt->setTextColor(Color4B(0, 0, 0, 255));
-    this->addChild(titleTxt, 1);
-    /* moveTxt */
-    auto moveTxt = Label::createWithTTF("Press W/S/A/D to go forward/back/left/right. ", "fonts/Lacquer.ttf", 40);
-    moveTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
-    moveTxt->setTextColor(Color4B(0, 0, 0, 255));
-    this->addChild(moveTxt, 1);
-    /* NextButton */
-    auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
-    NextButton->ignoreContentAdaptWithSize(false);
-    NextButton->setContentSize(Size(60, 60));
-    NextButton->setPosition(Vec2(visibleSize.width / 2 + 580, visibleSize.height - 250));
-    NextButton->setOpacity(180);
-    this->addChild(NextButton, 1);
-    /* NextButton监听 */
-    NextButton->addClickEventListener([=](Ref* sender)mutable {
-        // 移除Button&Txt
-        this->removeChild(titleTxt);
-        titleTxt = nullptr;
-        this->removeChild(moveTxt);
-        moveTxt = nullptr;
-        this->removeChild(NextButton);
-        NextButton = nullptr;
-        // 下一步
-        this->learnMove_2();
-        });
-}
-
-void LearningScene::learnMove_2() {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    /* titleTxt */
-    auto titleTxt = Label::createWithTTF("Now have a try!", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
@@ -153,48 +119,15 @@ void LearningScene::learnMove_2() {
         _eventDispatcher->removeEventListener(listener_move);
         listener_move = nullptr;
         // 下一步
-        this->learnAttack_1();
+        this->learnAttack();
         });
 }
 
 /* 学攻击 */
-void LearningScene::learnAttack_1() {
+void LearningScene::learnAttack() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* titleTxt */
     auto titleTxt = Label::createWithTTF("2.Attack", "fonts/KuaiLe_Chinese.ttf", 60);
-    titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
-    titleTxt->setTextColor(Color4B(0, 0, 0, 255));
-    this->addChild(titleTxt, 1);
-    /* atkTxt */
-    auto atkTxt = Label::createWithTTF("Press J to attack. Cool-down time exists.", "fonts/Lacquer.ttf", 40);
-    atkTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
-    atkTxt->setTextColor(Color4B(0, 0, 0, 255));
-    this->addChild(atkTxt, 1);
-    /* NextButton */
-    auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
-    NextButton->ignoreContentAdaptWithSize(false);
-    NextButton->setContentSize(Size(60, 60));
-    NextButton->setPosition(Vec2(visibleSize.width / 2 + 660, visibleSize.height - 250));
-    NextButton->setOpacity(180);
-    this->addChild(NextButton, 1);
-    /* NextButton监听 */
-    NextButton->addClickEventListener([=](Ref* sender)mutable {
-        // 移除Button&Txt
-        this->removeChild(titleTxt);
-        titleTxt = nullptr;
-        this->removeChild(atkTxt);
-        atkTxt = nullptr;
-        this->removeChild(NextButton);
-        NextButton = nullptr;
-        // 下一步
-        this->learnAttack_2();
-        });
-}
-
-void LearningScene::learnAttack_2() {
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    /* titleTxt */
-    auto titleTxt = Label::createWithTTF("Now have a try!", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
@@ -236,48 +169,16 @@ void LearningScene::learnAttack_2() {
         _eventDispatcher->removeEventListener(listener_atk);
         listener_atk = nullptr;
         // 下一步
-        this->learnChat_1();
+        this->learnChat();
         });
 }
 
-/* 学交互 */
-void LearningScene::learnChat_1() {
+/* 学跟npc交流 */
+void LearningScene::learnChat() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* 加入NPC */
     CHATNPC = new NPC("npc0", visibleSize.width / 2 - 250, visibleSize.height / 2, 1.0f, this, LEARNER, nullptr);
-    LEARNER->editSizeOffset(Size(45,110),Vec2(0,50));
-    /* titleTxt */
-    auto titleTxt = Label::createWithTTF("3.Chat", "fonts/KuaiLe_Chinese.ttf", 60);
-    titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
-    titleTxt->setTextColor(Color4B(0, 0, 0, 255));
-    this->addChild(titleTxt, 1);
-    /* chatTxt */
-    auto chatTxt = Label::createWithTTF("Walk up to the NPC and press C to chat with him.", "fonts/Lacquer.ttf", 40);
-    chatTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
-    chatTxt->setTextColor(Color4B(0, 0, 0, 255));
-    this->addChild(chatTxt, 1);
-    /* NextButton */
-    auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
-    NextButton->ignoreContentAdaptWithSize(false);
-    NextButton->setContentSize(Size(60, 60));
-    NextButton->setPosition(Vec2(visibleSize.width / 2 + 580, visibleSize.height - 250));
-    NextButton->setOpacity(180);
-    this->addChild(NextButton, 1);
-    /* NextButton监听 */
-    NextButton->addClickEventListener([=](Ref* sender)mutable {
-        // 移除Button&Txt
-        this->removeChild(titleTxt);
-        titleTxt = nullptr;
-        this->removeChild(chatTxt);
-        chatTxt = nullptr;
-        this->removeChild(NextButton);
-        NextButton = nullptr;
-        // 下一步
-        this->learnChat_2();
-        });
-}
-
-void LearningScene::learnChat_2() {
+    LEARNER->editSizeOffset(Size(45, 110), Vec2(0, 50));
     // 监测npc是否在有效触发范围内
     this->schedule([=](float dt) {
         CHATNPC->update();
@@ -287,9 +188,8 @@ void LearningScene::learnChat_2() {
         LEARNER->preventOverlap(LEARNER, CHATNPC);
         }, 0.001f, "player_check_collision_scheduler");
 
-    auto visibleSize = Director::getInstance()->getVisibleSize();
     /* titleTxt */
-    auto titleTxt = Label::createWithTTF("Now have a try!", "fonts/KuaiLe_Chinese.ttf", 60);
+    auto titleTxt = Label::createWithTTF("3.Chat", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
@@ -335,23 +235,28 @@ void LearningScene::learnChat_2() {
         this->unschedule("player_check_collision_scheduler");
         this->unschedule("npc_check_scheduler");
         // 下一步
-        this->learnBag_1();
+        this->learnInteract();
         });
 }
 
-/* 学习背包 */
-void LearningScene::learnBag_1() {
+/* 学交互 */
+void LearningScene::learnInteract() {
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* titleTxt */
-    auto titleTxt = Label::createWithTTF("4.BagSystem", "fonts/KuaiLe_Chinese.ttf", 60);
+    auto titleTxt = Label::createWithTTF("4.Interaction", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
-    /* bagTxt */
-    auto bagTxt = Label::createWithTTF("Press B to open the bag and checkout the tasks.", "fonts/Lacquer.ttf", 40);
-    bagTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
-    bagTxt->setTextColor(Color4B(0, 0, 0, 255));
-    this->addChild(bagTxt, 1);
+    /* chatTxt */
+    auto chatTxt = Label::createWithTTF("You can also press C to enter the house or clear the mist.", "fonts/Lacquer.ttf", 40);
+    chatTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 250));
+    chatTxt->setTextColor(Color4B(0, 0, 0, 255));
+    this->addChild(chatTxt, 1);
+    /* 键盘图 */
+    auto keyboardPic = Sprite::create("Others/KeyButtonC.png");
+    keyboardPic->setPosition(Vec2(visibleSize.width / 2 - 400, visibleSize.height - 150));
+    keyboardPic->setScale(0.8f);
+    this->addChild(keyboardPic, 1);
     /* NextButton */
     auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
     NextButton->ignoreContentAdaptWithSize(false);
@@ -364,16 +269,19 @@ void LearningScene::learnBag_1() {
         // 移除Button&Txt
         this->removeChild(titleTxt);
         titleTxt = nullptr;
-        this->removeChild(bagTxt);
-        bagTxt = nullptr;
+        this->removeChild(chatTxt);
+        chatTxt = nullptr;
         this->removeChild(NextButton);
         NextButton = nullptr;
+        this->removeChild(keyboardPic);
+        keyboardPic = nullptr;
         // 下一步
-        this->learnBag_2();
+        this->learnBag();
         });
 }
 
-void LearningScene::learnBag_2() {
+/* 学习背包 */
+void LearningScene::learnBag() {
     /* 实例化背包 */ 
     BagManager* bagManager = BagManager::getInstance();
     if (bagManager->getParent() == nullptr)
@@ -381,7 +289,7 @@ void LearningScene::learnBag_2() {
     // visibleSize
     auto visibleSize = Director::getInstance()->getVisibleSize();
     /* titleTxt */
-    auto titleTxt = Label::createWithTTF("Now have a try!", "fonts/KuaiLe_Chinese.ttf", 60);
+    auto titleTxt = Label::createWithTTF("5.BagSystem", "fonts/KuaiLe_Chinese.ttf", 60);
     titleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 150));
     titleTxt->setTextColor(Color4B(0, 0, 0, 255));
     this->addChild(titleTxt, 1);
@@ -644,5 +552,42 @@ void LearningScene::BagKeyPressed(EventKeyboard::KeyCode keyCode, Event* event) 
         else
             // 打开背包
             BagManager::getInstance()->showBag(*LEARNER);
+    }
+    /* 移动:W/S/A/D */
+    else if (keyCode == EventKeyboard::KeyCode::KEY_W) {
+        if (!isKeyPressed[0]) {
+            isKeyPressed[0] = true;
+            LEARNER->learnMove(UP);
+            this->schedule([&](float dt) {
+                LEARNER->learnMove(UP);
+                }, 0.8f, "MoveUP");
+        }
+    }
+    else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
+        if (!isKeyPressed[1]) {
+            isKeyPressed[1] = true;
+            LEARNER->learnMove(DOWN);
+            this->schedule([&](float dt) {
+                LEARNER->learnMove(DOWN);
+                }, 0.8f, "MoveDOWN");
+        }
+    }
+    else if (keyCode == EventKeyboard::KeyCode::KEY_A) {
+        if (!isKeyPressed[2]) {
+            isKeyPressed[2] = true;
+            LEARNER->learnMove(LEFT);
+            this->schedule([&](float dt) {
+                LEARNER->learnMove(LEFT);
+                }, 0.8f, "MoveLEFT");
+        }
+    }
+    else if (keyCode == EventKeyboard::KeyCode::KEY_D) {
+        if (!isKeyPressed[3]) {
+            isKeyPressed[3] = true;
+            LEARNER->learnMove(RIGHT);
+            this->schedule([&](float dt) {
+                LEARNER->learnMove(RIGHT);
+                }, 0.8f, "MoveRIGHT");
+        }
     }
 }

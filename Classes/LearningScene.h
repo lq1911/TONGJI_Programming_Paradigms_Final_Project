@@ -22,8 +22,7 @@ public:
 	virtual void welcome();
 
 	/* 学走路 */
-	virtual void learnMove_1();
-	virtual void learnMove_2();
+	virtual void learnMove();
 	// 键盘监听
 	void MoveKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 	void KeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
@@ -31,18 +30,18 @@ public:
 	std::vector<bool> isKeyPressed = { false,false,false,false };
 
 	/* 学攻击 */
-	virtual void learnAttack_1();
-	virtual void learnAttack_2();
+	virtual void learnAttack();
 	void KeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
-	/* 学交互 */
-	virtual void learnChat_1();
-	virtual void learnChat_2();
+	/* 学跟npc交流 */
+	virtual void learnChat();
 	void ChatKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
+	/* 学交互 */
+	virtual void learnInteract();
+
 	/* 学背包 */
-	virtual void learnBag_1();
-	virtual void learnBag_2();
+	virtual void learnBag();
 	void BagKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
 
 	/* 完成教程提示 */
