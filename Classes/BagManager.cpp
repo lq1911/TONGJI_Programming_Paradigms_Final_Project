@@ -193,7 +193,7 @@ void BagManager::createTaskPanel()
     _bagPanel->addChild(_taskBackground);
 
     // 创建标题
-    auto titleLabel = Label::createWithTTF("MY TASK", "fonts/arial.ttf", 32);
+    auto titleLabel = Label::createWithTTF("MY TASK", "fonts/Bebas.ttf", 32);
     titleLabel->setPosition(Vec2(_taskBackground->getContentSize().width / 2, _taskBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     titleLabel->setTextColor(Color4B(255, 215, 0, 255));
@@ -428,7 +428,7 @@ void BagManager::createBagBackground()
     _bagPanel->addChild(_bagBackground);
 
     // 创建背包标题
-    auto titleLabel = Label::createWithTTF("MY BAG", "fonts/arial.ttf", 32);
+    auto titleLabel = Label::createWithTTF("MY BAG", "fonts/Bebas.ttf", 32);
     titleLabel->setPosition(Vec2(_bagBackground->getContentSize().width / 2, _bagBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     titleLabel->setTextColor(Color4B(255, 215, 0, 255));
@@ -654,7 +654,7 @@ void BagManager::createCharacterPanelUI()
     _bagPanel->addChild(_characterBackground, -1);
 
     // 创建角色面板标题
-    auto characterTitleLabel = Label::createWithTTF("MY CHARACTER", "fonts/arial.ttf", 32);
+    auto characterTitleLabel = Label::createWithTTF("MY CHARACTER", "fonts/Bebas.ttf", 32);
     characterTitleLabel->setPosition(Vec2(_characterBackground->getContentSize().width / 2, _characterBackground->getContentSize().height - 20));
     // 设置字体颜色为金色 (RGB: 255, 215, 0)
     characterTitleLabel->setTextColor(Color4B(255, 215, 0, 255));
@@ -1048,68 +1048,17 @@ bool BagManager::equipItem(int index)
     return flag;
 }
 
+
 // 解锁任务(type:1主线/0支线)
-void BagManager::taskUnlock(const bool type, const int idx) {
-    task* Mtask1 = new task("Task 1", "This is the 1st task.", 1, 0);
-    task* Mtask2 = new task("Task 2", "This is the 2nd task.", 1, 0);
-    task* Mtask3 = new task("Task 3", "This is the 3rd task.", 1, 0);
-    task* Mtask4 = new task("Task 4", "This is the 4th task.", 1, 0);
-    task* Mtask5 = new task("Final Task", "This is the 5th task.", 1, 0);
+void BagManager::taskUnlock(const bool type, task* newTask){
+    if (type)
+        myMainlineTask.push_back(newTask);
+    else
+        myLineQuest.push_back(newTask);
 
-    task* Ltask1 = new task("Task 1", "This is the 1st task.", 0, 0);
-    task* Ltask2 = new task("Task 2", "This is the 2nd task.", 0, 0);
-    task* Ltask3 = new task("Task 3", "This is the 3rd task.", 0, 0);
-    task* Ltask4 = new task("Task 4", "This is the 4th task.", 0, 0);
-    task* Ltask5 = new task("Task 5", "This is the 5th task.", 0, 0);
-
-    if (type) {
-        switch (idx) {
-        case 1:
-            myMainlineTask.push_back(Mtask1);
-            break;
-        case 2:
-            myMainlineTask.push_back(Mtask2);
-            break;
-        case 3:
-            myMainlineTask.push_back(Mtask3);
-            break;
-        case 4:
-            myMainlineTask.push_back(Mtask4);
-            break;
-        case 5:
-            myMainlineTask.push_back(Mtask5);
-            break;
-        default:
-            break;
-        }
-    }
-    else {
-        switch (idx) {
-        case 1:
-            myLineQuest.push_back(Ltask1);
-            break;
-        case 2:
-            myLineQuest.push_back(Ltask2);
-            break;
-        case 3:
-            myLineQuest.push_back(Ltask3);
-            break;
-        case 4:
-            myLineQuest.push_back(Ltask4);
-            break;
-        case 5:
-            myLineQuest.push_back(Ltask5);
-            break;
-        default:
-            break;
-        }
-    }
 }
 
-// 设置任务状态为已完成(type:1主线/0支线)
-void BagManager::taskFinish(const bool type, const int idx) {
-    if (type)
-        myMainlineTask[idx]->isFinished = true;
-    else
-        myLineQuest[idx]->isFinished = true;
+// 设置任务状态为已完成
+void BagManager::taskFinish(task* newTask) {
+    newTask->isFinished = true;
 }

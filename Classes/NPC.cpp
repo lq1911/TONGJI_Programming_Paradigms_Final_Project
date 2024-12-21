@@ -146,9 +146,57 @@ void NPC::Chat() {
 
 }
 
+/* npc对应任务 */
+void NPC::setTasks() {
+	// 主线任务
+	if (role == "npc1") {
+		npc_task = new task("Task 1", "This is the 1st task.", 1, 0);
+	}
+	else if (role == "npc2") {
+		npc_task = new task("Task 2", "This is the 2nd task.", 1, 0);
+	}
+	else if (role == "npc3") {
+		npc_task = new task("Task 3", "This is the 3rd task.", 1, 0);
+	}
+	else if (role == "npc4") {
+		npc_task= new task("Task 4", "This is the 4th task.", 1, 0);
+	}
+	else if (role == "npc5") {
+		npc_task = new task("Final Task", "This is the 5th task.", 1, 0);
+	}
+	// 支线任务
+	else if (role == "npc6") {
+		npc_task = new task("LTask 1", "This is the 1st task.", 0, 0);
+	}
+	else if (role == "npc7") {
+		npc_task = new task("LTask 2", "This is the 2nd task.", 0, 0);
+	}
+	else if (role == "npc8") {
+		npc_task = new task("LTask 3", "This is the 3rd task.", 0, 0);
+	}
+	else if (role == "npc9") {
+		npc_task = new task("LTask 4", "This is the 4th task.", 0, 0);
+	}
+}
+
+/* NPC解锁任务 */
+void NPC::NPCunlockTask(bool idx) {
+	if (idx) {
+		bag->taskUnlock(1, npc_task);
+	}
+	else {
+		bag->taskUnlock(0, npc_task);
+	}
+}
+
+/* NPC完成任务 */
+void NPC::NPCfinishTask() {
+	npc_task->isFinished = true;
+}
+
 /* npc对话逻辑 */
 /************ 教学npc ************/
-void  NPC::npc0(std::function<void()> callback) {
+void NPC::npc0(std::function<void()> callback) {
 	auto winSize = Director::getInstance()->getWinSize();
 	/* npc说话-1 */
 	auto npcTxt1 = Label::createWithTTF("Hello! Welcome to this new world!", "fonts/Lacquer.ttf", 35);
@@ -267,8 +315,7 @@ void NPC::npc1(std::function<void()> callback) {
 		if (!Mtasks[0]) {
 			Mtasks[0] = true;
 			if (bag) {
-				bag->taskUnlock(1, 1);
-				bag->taskUnlock(0, 1);
+				NPCunlockTask(1);
 			}	
 			// 对话
 			npcTxt1->setString("The 1st main-line task is unlocked.\nClose the chat window and checkout your bag!");
@@ -320,8 +367,7 @@ void NPC::npc2(std::function<void()> callback) {
 		if (!Mtasks[1]) {
 			Mtasks[1] = true;
 			if (bag) {
-				bag->taskUnlock(1, 2);
-				bag->taskUnlock(0, 2);
+				NPCunlockTask(1);
 			}
 				
 			// 对话
@@ -375,8 +421,7 @@ void NPC::npc3(std::function<void()> callback) {
 		if (!Mtasks[2]) {
 			Mtasks[2] = true;
 			if (bag) {
-				bag->taskUnlock(1, 3);
-				bag->taskUnlock(0, 3);
+				NPCunlockTask(1);
 			}
 			// 对话
 			npcTxt1->setString("The 3rd main-line task is unlocked.\nClose the chat window and checkout your bag!");
@@ -429,8 +474,7 @@ void NPC::npc4(std::function<void()> callback) {
 		if (!Mtasks[3]) {
 			Mtasks[3] = true;
 			if (bag) {
-				bag->taskUnlock(1, 4);
-				bag->taskUnlock(0, 4);
+				NPCunlockTask(1);
 			}
 			// 对话
 			npcTxt1->setString("The 4th main-line task is unlocked.\nClose the chat window and checkout your bag!");
@@ -481,8 +525,7 @@ void NPC::npc5(std::function<void()> callback) {
 		if (!Mtasks[4]) {
 			Mtasks[4] = true;
 			if (bag) {
-				bag->taskUnlock(1, 5);
-				bag->taskUnlock(0, 5);
+				NPCunlockTask(1);
 			}
 			// 对话
 			npcTxt1->setString("The 5th main-line task is unlocked.\nClose the chat window and checkout your bag!");
@@ -513,18 +556,18 @@ void NPC::npc5(std::function<void()> callback) {
 void NPC::npc6(std::function<void()> callback) {
 	isChatting = true;
 	/* npc说话-1 */
-	auto npcTxt1 = Label::createWithTTF("This is npc6 speaking 1", "fonts/Lacquer.ttf", 35);
+	auto npcTxt1 = Label::createWithTTF("What do you want to eat?", "fonts/Lacquer.ttf", 35);
 	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 110));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 2);
 
 	/* player回答选择1 */
-	auto playerAns1 = Label::createWithTTF("This is player's answer 1", "fonts/KuaiLe_Chinese.ttf", 25);
+	auto playerAns1 = Label::createWithTTF("Apple!", "fonts/KuaiLe_Chinese.ttf", 25);
 	playerAns1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));
 	playerAns1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(playerAns1, 2);
 	/* player回答选择2 */
-	auto playerAns2 = Label::createWithTTF("This is player's answer 2", "fonts/KuaiLe_Chinese.ttf", 25);
+	auto playerAns2 = Label::createWithTTF("Beer", "fonts/KuaiLe_Chinese.ttf", 25);
 	playerAns2->setPosition(Vec2(who->getXY().x, who->getXY().y - 220));
 	playerAns2->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(playerAns2, 2);
@@ -546,6 +589,10 @@ void NPC::npc6(std::function<void()> callback) {
 
 	/* 回答选择1 */
 	Ans1Button->addClickEventListener([=](Ref* sender) mutable {
+		// 背包加苹果
+		goods _goods;
+		consumable* it = new consumable(_goods.apple);
+		bag->addItem(it);
 		// 移除第一次问答的元素
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
@@ -553,7 +600,7 @@ void NPC::npc6(std::function<void()> callback) {
 		Ans1Button->removeFromParent();
 		Ans2Button->removeFromParent();
 		/* npc说话-2-choice1 */
-		auto npcTxt2_1 = Label::createWithTTF("This is npc6 speaking 2-1", "fonts/Lacquer.ttf", 35);
+		auto npcTxt2_1 = Label::createWithTTF("Here you are!", "fonts/Lacquer.ttf", 35);
 		npcTxt2_1->setPosition(Vec2(who->getXY().x, who->getXY().y - 120));
 		npcTxt2_1->setTextColor(Color4B(0, 0, 0, 255));
 		scene->addChild(npcTxt2_1, 2);
@@ -565,6 +612,7 @@ void NPC::npc6(std::function<void()> callback) {
 		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 180));
 		scene->addChild(CloseButton, 2);
 		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			isChatting = false;
 			npcTxt2_1->removeFromParent();
 			CloseButton->removeFromParent();
 			if (callback) {
@@ -576,13 +624,18 @@ void NPC::npc6(std::function<void()> callback) {
 		});
 	/* 回答选择2 */
 	Ans2Button->addClickEventListener([=](Ref* sender) mutable {
+		// 背包加啤酒
+		goods _goods;
+		consumable* it = new consumable(_goods.beer);
+		bag->addItem(it);
+		// 移除UI组件
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
 		playerAns2->removeFromParent();
 		Ans1Button->removeFromParent();
 		Ans2Button->removeFromParent();
 		/* npc说话-2-choice2 */
-		auto npcTxt2_2 = Label::createWithTTF("This is npc6 speaking 2-2", "fonts/Lacquer.ttf", 35);
+		auto npcTxt2_2 = Label::createWithTTF("Here you are!", "fonts/Lacquer.ttf", 35);
 		npcTxt2_2->setPosition(Vec2(who->getXY().x, who->getXY().y - 120));
 		npcTxt2_2->setTextColor(Color4B(0, 0, 0, 255));
 		scene->addChild(npcTxt2_2, 2);
@@ -594,6 +647,7 @@ void NPC::npc6(std::function<void()> callback) {
 		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 180));
 		scene->addChild(CloseButton, 2);
 		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			isChatting = false;
 			npcTxt2_2->removeFromParent();
 			CloseButton->removeFromParent();
 			if (callback) {
@@ -601,7 +655,6 @@ void NPC::npc6(std::function<void()> callback) {
 			}
 			return;
 			});
-
 		});
 }
 
@@ -641,6 +694,7 @@ void NPC::npc7(std::function<void()> callback) {
 
 	/* 回答选择1 */
 	Ans1Button->addClickEventListener([=](Ref* sender) mutable {
+		isChatting = false;
 		// 移除第一次问答的元素
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
@@ -671,6 +725,7 @@ void NPC::npc7(std::function<void()> callback) {
 		});
 	/* 回答选择2 */
 	Ans2Button->addClickEventListener([=](Ref* sender) mutable {
+		isChatting = false;
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
 		playerAns2->removeFromParent();
@@ -736,6 +791,7 @@ void NPC::npc8(std::function<void()> callback) {
 
 	/* 回答选择1 */
 	Ans1Button->addClickEventListener([=](Ref* sender) mutable {
+		isChatting = false;
 		// 移除第一次问答的元素
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
@@ -766,6 +822,7 @@ void NPC::npc8(std::function<void()> callback) {
 		});
 	/* 回答选择2 */
 	Ans2Button->addClickEventListener([=](Ref* sender) mutable {
+		isChatting = false;
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
 		playerAns2->removeFromParent();
