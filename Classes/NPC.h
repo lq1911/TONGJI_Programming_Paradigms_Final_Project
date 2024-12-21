@@ -47,6 +47,9 @@ public:
     void npc5(std::function<void()> callback);
 	// ∆‰À¸npc
     void npc6(std::function<void()> callback);
+    void npc7(std::function<void()> callback);
+    void npc8(std::function<void()> callback);
+    void npc9(std::function<void()> callback);
 };
 /********************** END/NPC¿‡ **********************/
 
