@@ -40,6 +40,7 @@ public:
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
+	Scene* MainGameScene::createScene(int _ODorID, int NPC_choice, int Monster_choice);
 
 	/*初始化地图函数*/
 	virtual bool init();
