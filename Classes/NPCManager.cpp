@@ -18,8 +18,6 @@ NPCManager::NPCManager(Player* playerRef, BagManager* bagManager, Scene* scene, 
         addNPC("npc3", 2880.0f, 2726.9f, 0.6f);
         // É­ÁÖ
         addNPC("npc4", -1013.5, -395.0f, 0.6f);
-
-        
         break;
     // ÊÒÄÚµØÍ¼1
     case(1) :
