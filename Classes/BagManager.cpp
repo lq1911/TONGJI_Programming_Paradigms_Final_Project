@@ -62,6 +62,45 @@ void BagManager::showBag(Player& _player)
         // 游戏暂停
         //Director::getInstance()->pause();
 
+        // 播放背包打开的音效
+        cocos2d::experimental::AudioEngine::play2d("music/bag.mp3");
+
+        // 如果打开了任务面板，就关闭任务面板
+        if (_taskBackground)
+        {
+            _bagPanel->removeAllChildren();
+            _taskBackground = nullptr;
+        }
+
+        // 创建背包背景
+        createBagBackground();
+
+        // 更新物品栏内的物品
+        updateBagUI();
+
+        // 创建角色面板
+        createCharacterPanel();
+
+        // 打开任务面板按钮
+        createTaskButton();
+
+        // 播放背包打开的音效
+        cocos2d::experimental::AudioEngine::play2d("music/bag.mp3");
+
+        _bagPanel->setVisible(true);  // 显示背包面板
+        _isBagOpen = true;
+    }
+}
+
+// 显示背包(重载函数)
+void BagManager::showBag()
+{
+    // 如果背包尚未打开，则创建并显示背包背景
+    if (!_isBagOpen)
+    {
+        // 游戏暂停
+        //Director::getInstance()->pause();
+
         // 如果打开了任务面板，就关闭任务面板
         if (_taskBackground)
         {
@@ -93,7 +132,8 @@ void BagManager::hideBag(Player& _player)
     {
         // 恢复游戏
         //Director::getInstance()->resume();
-
+        // 播放关闭背包的音效
+        cocos2d::experimental::AudioEngine::play2d("music/bag.mp3");
         _bagPanel->setVisible(false);  // 隐藏背包面板
         _bagPanel->removeAllChildren(); // 清除子节点
         _bagBackground = nullptr;  // 清除背景指针
@@ -101,6 +141,20 @@ void BagManager::hideBag(Player& _player)
         coinsLabel = nullptr;
         _isBagOpen = false;  // 更新状态
         _player = player;
+    }
+}
+
+// 隐藏背包(重载函数)
+void BagManager::hideBag()
+{
+    if (_isBagOpen)
+    {
+        _bagPanel->setVisible(false);  // 隐藏背包面板
+        _bagPanel->removeAllChildren(); // 清除子节点
+        _bagBackground = nullptr;  // 清除背景指针
+        _characterBackground = nullptr;
+        coinsLabel = nullptr;
+        _isBagOpen = false;  // 更新状态
     }
 }
 
@@ -121,8 +175,9 @@ void BagManager::createTaskButton()
     taskButton->addChild(taskLabel);
     // 设置按钮点击事件
     taskButton->addClickEventListener([=](Ref* sender) {
-        hideBag(player);
+        hideBag();
         createTaskPanel();
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
         });
 }
 
@@ -160,7 +215,8 @@ void BagManager::createTaskPanel()
     bagButton->addClickEventListener([=](Ref* sender) {
         _bagPanel->removeChild(_taskBackground);
         _taskBackground = nullptr;
-        showBag(player);
+        showBag();
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
         });
     updateTaskUI();
     
@@ -226,7 +282,9 @@ void BagManager::createScrollView(Vec2 position, vector<task*> myTask)
             taskButton->addChild(taskLabel);
 
             // 设置按钮点击事件
-            taskButton->addClickEventListener([](Ref* sender) {});
+            taskButton->addClickEventListener([=](Ref* sender) {
+                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+                });
             // 表示任务未解锁
             auto lock = Button::create("Bag/lock.png");
             lock->setPosition(Vec2(taskButton->getContentSize().width, taskButton->getContentSize().height));
@@ -242,6 +300,7 @@ void BagManager::createScrollView(Vec2 position, vector<task*> myTask)
             // 设置按钮点击事件
             taskButton->addClickEventListener([=](Ref* sender) {
                 createTaskInfoPanel(myTask, i);
+                cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
                 });
         }
     }
@@ -308,8 +367,9 @@ void BagManager::createTaskInfoPanel(vector<task*> myTask, int index)
     closeButton->addClickEventListener([=](Ref* sender) {
         // 点击×按钮时移除 itemInfoBackground
         taskInfoBackground->removeFromParent();  // 从父节点移除
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
         });
-
+    
     // 将关闭按钮添加到背景中
     taskInfoBackground->addChild(closeButton);
 }
@@ -416,7 +476,10 @@ void BagManager::createCharacterPanel()
     // 武器
     auto button1 = Button::create("Bag/item_slot.png");// 添加按钮
     button1->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y + borderHeight / 2 - 30));
-    button1->addClickEventListener([](Ref* sender) {});// 添加按钮点击事件
+    button1->addClickEventListener([=](Ref* sender) {
+        // 点击格子音效
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        });// 添加按钮点击事件
     _characterBackground->addChild(button1);
     auto label1 = Label::createWithTTF("Weapon", "fonts/arial.ttf", 12);// 添加文字 
     label1->setPosition(Vec2(20, -6));
@@ -440,9 +503,11 @@ void BagManager::createCharacterPanel()
     auto closeButton1 = Button::create("Bag/close_button.png");
     closeButton1->setPosition(Vec2(button1->getContentSize().width, button1->getContentSize().height)); // 右上角位置
     closeButton1->addClickEventListener([=](Ref* sender) {
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
         if (player._weapon != nullptr)
         {
             player.atk -= player._weapon->increase_attribute;
+            player.criticalChance -= player._weapon->increase_criticalChance;
             auto _item = dynamic_cast<item*>(player._weapon); // 将武器类指针转换为物品类指针
             player._weapon = nullptr; // 将角色武器指针置为空指针
             addItem(_item); // 将卸下的装备放回物品栏
@@ -454,7 +519,10 @@ void BagManager::createCharacterPanel()
     // 护甲
     auto button2 = Button::create("Bag/item_slot.png");
     button2->setPosition(Vec2(borderPosition.x - borderWidth / 2 - 40, borderPosition.y - borderHeight / 2 + 30));
-    button2->addClickEventListener([](Ref* sender) {});
+    button2->addClickEventListener([=](Ref* sender) {
+        // 点击格子音效
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3"); 
+        });
     _characterBackground->addChild(button2);
     auto label2 = Label::createWithTTF("Armor", "fonts/arial.ttf", 12);
     label2->setPosition(Vec2(20, -6));
@@ -478,6 +546,7 @@ void BagManager::createCharacterPanel()
     auto closeButton2 = Button::create("Bag/close_button.png");
     closeButton2->setPosition(Vec2(button2->getContentSize().width, button2->getContentSize().height)); // 右上角位置
     closeButton2->addClickEventListener([=](Ref* sender) {
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
         if (player._armor != nullptr)
         {
             player.def -= player._armor->increase_attribute;
@@ -492,7 +561,10 @@ void BagManager::createCharacterPanel()
     // 鞋子
     auto button3 = Button::create("Bag/item_slot.png");
     button3->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y + borderHeight / 2 - 30));
-    button3->addClickEventListener([](Ref* sender) {});
+    button3->addClickEventListener([=](Ref* sender) {
+        // 点击格子音效
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        });
     _characterBackground->addChild(button3);
     auto label3 = Label::createWithTTF("Shoes", "fonts/arial.ttf", 12);
     label3->setPosition(Vec2(20, -6));
@@ -516,6 +588,7 @@ void BagManager::createCharacterPanel()
     auto closeButton3 = Button::create("Bag/close_button.png");
     closeButton3->setPosition(Vec2(0, button3->getContentSize().height)); // 右上角位置
     closeButton3->addClickEventListener([=](Ref* sender) {
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
         if (player._shoes != nullptr)
         {
             player.speed -= player._shoes->increase_attribute;
@@ -530,7 +603,10 @@ void BagManager::createCharacterPanel()
     // 饰品
     auto button4 = Button::create("Bag/item_slot.png");
     button4->setPosition(Vec2(borderPosition.x + borderWidth / 2 + 40, borderPosition.y - borderHeight / 2 + 30));
-    button4->addClickEventListener([](Ref* sender) {});
+    button4->addClickEventListener([=](Ref* sender) {
+        // 点击格子音效
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
+        });
     _characterBackground->addChild(button4);
     auto label4 = Label::createWithTTF("Accessories", "fonts/arial.ttf", 12);
     label4->setPosition(Vec2(20, -6));
@@ -554,6 +630,7 @@ void BagManager::createCharacterPanel()
     auto closeButton4 = Button::create("Bag/close_button.png");
     closeButton4->setPosition(Vec2(0, button4->getContentSize().height)); // 右上角位置
     closeButton4->addClickEventListener([=](Ref* sender) {
+        cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
         if (player._accessories != nullptr)
         {
             // 角色属性为空
@@ -682,6 +759,9 @@ void BagManager::showCharacterInfo()
 // 点击物品栏事件
 void BagManager::slot_click(Button* slot, int row, int col)
 {
+    // 点击格子音效
+    cocos2d::experimental::AudioEngine::play2d("music/click.mp3"); 
+
     // 点击格子时检查是否有物品
     if (items[row * 5 + col] != NULL)
     {
@@ -698,6 +778,7 @@ void BagManager::slot_click(Button* slot, int row, int col)
         closeButton->addClickEventListener([=](Ref* sender) {
             // 点击×按钮时移除 itemInfoBackground
             itemInfoBackground->removeFromParent();  // 从父节点移除
+            cocos2d::experimental::AudioEngine::play2d("music/click.mp3");
             });
 
         // 将关闭按钮添加到背景中
@@ -727,13 +808,13 @@ void BagManager::slot_click(Button* slot, int row, int col)
 
         // 创建使用物品按钮
         auto useButton = Button::create("Bag/use_button.png");
-        useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 120));
+        useButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 150));
         useButton->addClickEventListener([=](Ref* sender) {
             if (auto equipmentItem = dynamic_cast<equipment*>(items[row * 5 + col]))
             {
                 // 装备该物品
-                equipItem(row * 5 + col);
-                itemInfoBackground->removeFromParent();  // 丢弃后关闭物品信息面板
+                if (equipItem(row * 5 + col))
+                    itemInfoBackground->removeFromParent();  // 丢弃后关闭物品信息面板
             }
             else if (auto consumableItem = dynamic_cast<consumable*>(items[row * 5 + col]))
             {
@@ -743,6 +824,9 @@ void BagManager::slot_click(Button* slot, int row, int col)
                 else
                     player.current_hp = player.hp;
                 dynamic_cast<item*>(items[row * 5 + col]);
+                // 播放音效
+                cocos2d::experimental::AudioEngine::play2d("music/eat.mp3");
+
                 // 丢弃该物品
                 discardItems(row * 5 + col);
                 itemInfoBackground->removeFromParent();  // 丢弃后关闭物品信息面板
@@ -766,10 +850,11 @@ void BagManager::slot_click(Button* slot, int row, int col)
 
         // 创建丢弃物品按钮
         auto dicardButton = Button::create("Bag/use_button.png");
-        dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 150));
+        dicardButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 180));
         dicardButton->addClickEventListener([=](Ref* sender) {
             // 丢弃该物品
             discardItems(row * 5 + col);
+            cocos2d::experimental::AudioEngine::play2d("music/item.mp3");
             itemInfoBackground->removeFromParent();  // 丢弃后关闭物品信息面板
             }); // 添加鼠标点击事件
         itemInfoBackground->addChild(dicardButton);
@@ -788,12 +873,12 @@ void BagManager::slot_click(Button* slot, int row, int col)
         {
             // 设置按钮的位置
             auto upgradeButton = Button::create("Bag/use_button.png");
-            upgradeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 180));
+            upgradeButton->setPosition(Vec2(itemInfoBackground->getContentSize().width / 2, itemInfoBackground->getContentSize().height - 210));
             upgradeButton->addClickEventListener([=](Ref* sender) {
-                if (player.coins >= equipmentNeedsUpgraded->equipment_cost)
+                if (player.coins >= equipmentNeedsUpgraded->equipment_cost && equipmentNeedsUpgraded->equipment_level < equipmentNeedsUpgraded->equipment_levelMax)
                 {
                     // 角色金币数减少
-                        player.coins -= equipmentNeedsUpgraded->equipment_cost;
+                    player.coins -= equipmentNeedsUpgraded->equipment_cost;
                     // 更新显示金币数量
                     showcoins();
                     // 武器升级，增加数值和升级消耗
@@ -803,8 +888,11 @@ void BagManager::slot_click(Button* slot, int row, int col)
                     equipmentNeedsUpgraded->updateDescription();
                     itemInfoBackground->removeFromParent();
                     slot_click(slot, row, col);
-
+                    // 武器升级音效
+                    cocos2d::experimental::AudioEngine::play2d("music/upgrade.mp3");
                 }
+                else
+                    cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
                 });
             itemInfoBackground->addChild(upgradeButton);
             // 为按钮添加文字
@@ -835,6 +923,8 @@ void BagManager::addItem(item* it)
         if (_isBagOpen)
             updateBagUI();
         items_num++; // 物品数量加1
+        // 添加物品音效
+        cocos2d::experimental::AudioEngine::play2d("music/item.mp3");
     }
 }
 
@@ -858,8 +948,9 @@ void BagManager::discardItems(int index)
 }
 
 // 将背包内的物品装备到角色身上
-void BagManager::equipItem(int index)
+bool BagManager::equipItem(int index)
 {
+    bool flag = true;
     if (items[index] != nullptr)
     {
         if (auto weaponItem = dynamic_cast<weapon*>(items[index])) // 物品是武器类
@@ -870,6 +961,8 @@ void BagManager::equipItem(int index)
                 player._weapon = weaponItem;
                 // 增加角色攻击力
                 player.atk += player._weapon->increase_attribute;
+                // 增加角色暴击率
+                player.criticalChance += player._weapon->increase_criticalChance;
                 // 不可以清除物品信息
                 items[index] = nullptr; // 清空该位置
                 // 更新物品数量
@@ -877,6 +970,11 @@ void BagManager::equipItem(int index)
                 // 如果背包UI已经显示，刷新UI
                 if (_isBagOpen)
                     updateBagUI();
+            }
+            else
+            {
+                flag = false;
+                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
             }
         }
         else if (auto armorItem = dynamic_cast<armor*>(items[index])) // 物品是护甲类
@@ -895,6 +993,11 @@ void BagManager::equipItem(int index)
                 if (_isBagOpen)
                     updateBagUI();
             }
+            else
+            {
+                flag = false;
+                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+            }
         }
         else if (auto shoesItem = dynamic_cast<shoes*>(items[index])) // 物品是鞋子类
         {
@@ -911,6 +1014,11 @@ void BagManager::equipItem(int index)
                 // 如果背包UI已经显示，刷新UI
                 if (_isBagOpen)
                     updateBagUI();
+            }
+            else
+            {
+                flag = false;
+                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
             }
         }
         else if (auto accessoriesItem = dynamic_cast<accessories*>(items[index])) // 物品是饰品类
@@ -929,13 +1037,31 @@ void BagManager::equipItem(int index)
                 if (_isBagOpen)
                     updateBagUI();
             }
+            else
+            {
+                flag = false;
+                cocos2d::experimental::AudioEngine::play2d("music/lock.mp3");
+            }
         }
+        cocos2d::experimental::AudioEngine::play2d("music/equip.mp3");
     }
-
+    return flag;
 }
 
 // 解锁任务(type:1主线/0支线)
 void BagManager::taskUnlock(const bool type, const int idx) {
+    task* Mtask1 = new task("Task 1", "This is the 1st task.", 1, 0);
+    task* Mtask2 = new task("Task 2", "This is the 2nd task.", 1, 0);
+    task* Mtask3 = new task("Task 3", "This is the 3rd task.", 1, 0);
+    task* Mtask4 = new task("Task 4", "This is the 4th task.", 1, 0);
+    task* Mtask5 = new task("Final Task", "This is the 5th task.", 1, 0);
+
+    task* Ltask1 = new task("Task 1", "This is the 1st task.", 0, 0);
+    task* Ltask2 = new task("Task 2", "This is the 2nd task.", 0, 0);
+    task* Ltask3 = new task("Task 3", "This is the 3rd task.", 0, 0);
+    task* Ltask4 = new task("Task 4", "This is the 4th task.", 0, 0);
+    task* Ltask5 = new task("Task 5", "This is the 5th task.", 0, 0);
+
     if (type) {
         switch (idx) {
         case 1:
@@ -978,16 +1104,12 @@ void BagManager::taskUnlock(const bool type, const int idx) {
             break;
         }
     }
-
-
 }
 
-
-/* 设置任务状态为已完成 */
-// type:1主线/0支线,idx为人物编号
+// 设置任务状态为已完成(type:1主线/0支线)
 void BagManager::taskFinish(const bool type, const int idx) {
     if (type)
-        myMainlineTask[idx-1]->isFinished = true;
+        myMainlineTask[idx]->isFinished = true;
     else
-        myLineQuest[idx-1]->isFinished = true;
+        myLineQuest[idx]->isFinished = true;
 }
