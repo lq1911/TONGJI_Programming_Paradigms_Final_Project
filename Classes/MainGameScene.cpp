@@ -160,6 +160,7 @@ void MainGameScene::LoadPlayerToScene() {
 
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, PlayerX, PlayerY, 0.5f, 100, 50, 20, 200, 10, 192, 1);
 	
+>>>>>>> e76cbee3cddee9c77df7ee85174fb39b5e484f73
 	this->schedule([=](float dt) {
 		for (auto npc : _npcManager->visitNPC()) {
 			PLAYER->preventOverlap(PLAYER, npc);
