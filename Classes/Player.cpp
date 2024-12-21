@@ -197,7 +197,59 @@ void Player::Skill_Animate1() {
 }
 //技能2的动画
 void Player::Skill_Animate2() {
+    // 死了,直接返回
+    if (isDead)
+        return;
+    std::string s = "Role/PlayerSkill1/";
+    
+    // 帧动画
+    Vector<SpriteFrame*> animFrames;
+    animFrames.reserve(12);
+    Vec2 pos;
+    if (face_to == 0) {
+        pos=Vec2(x-100,y);
+    }
+    else if (face_to == 1) {
+        pos = Vec2(x + 100, y);
+    }
+    else if (face_to == 2) {
+        pos = Vec2(x, y + 100);
+    }
+    else if (face_to == 3) {
+        pos = Vec2(x, y - 100);
+    }
+    // 定义动画播放的起始位置
+    Vec2 startPosition = mySprite->getPosition()+pos; // 这里设置你想要的起始位置
+        for (int i = 1; i <  12; i++) {
+            auto texture = Director::getInstance()->getTextureCache()->addImage(s +"smoke" +std::to_string(i) + ".png");
+            float width = texture->getPixelsWide();
+            float height = texture->getPixelsHigh();
+            Rect rectInPixels(0, 0, width, height);
+            auto spriteFrame = SpriteFrame::createWithTexture(
+                texture,
+                CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+            );
+            spriteFrame->setOffsetInPixels(startPosition);
+            animFrames.pushBack(spriteFrame);
+        }
+    
+    auto texture = Director::getInstance()->getTextureCache()->addImage("Role/PlayerSkill1/smoke" + std::to_string(1) + ".png");
+    float width = texture->getPixelsWide();
+    float height = texture->getPixelsHigh();
+    Rect rectInPixels(0, 0, width, height);
+    auto spriteFrame = SpriteFrame::createWithTexture(
+        texture,
+        CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+    );
+    animFrames.pushBack(spriteFrame);
+    // 播放
+    Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
+    Animate* animate = Animate::create(animation);
+    mySprite->stopAllActions();
+    mySprite->runAction(animate);
+    CCLOG("%s attack", role);
 
+    return;
 }
 // Player获得奖励
 void Player::GetBonus(Bonus bonus) {
