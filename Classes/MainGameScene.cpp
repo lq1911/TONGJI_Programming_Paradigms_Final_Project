@@ -134,7 +134,7 @@ void MainGameScene::LoadBagToScene() {
 
 void MainGameScene::LoadPlayerToScene() {
 	// Íæ¼Ò
-	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
+	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 200, 10, 192, 1);
 	
 	this->schedule([=](float dt) {
 		for (auto npc : _npcManager->visitNPC()) {
@@ -369,7 +369,7 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 			this->scheduleOnce([&](float dt) {
 				canAttack = true; // 2Ãëºó»Ö¸´¹¥»÷×´Ì¬
 				CCLOG("Attack ready again");
-				}, 3.0f, "attack_cooldown_timer");
+				}, 0.4f, "attack_cooldown_timer");
 		}
 		else {
 			CCLOG("Attack on cooldown, please wait");
