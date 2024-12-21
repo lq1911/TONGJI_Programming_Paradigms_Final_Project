@@ -46,10 +46,11 @@ public:
     }
 
     // 解锁任务(type:1主线/0支线)
-    void taskUnlock(const bool type, const int idx);
+    void taskUnlock(const bool type, task* newTask);
 
-    // 设置任务状态为已完成(type:1主线/0支线)
-    void taskFinish(const bool type, const int idx);
+    // 设置任务状态为已完成
+    void taskFinish(task* newTask);
+
 private:
     // 初始化背包管理器
     bool init();

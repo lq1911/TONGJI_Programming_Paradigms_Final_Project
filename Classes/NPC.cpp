@@ -146,9 +146,55 @@ void NPC::Chat() {
 
 }
 
+/* npc对应任务 */
+void NPC::setTasks() {
+	if (role == "npc1") {
+		npc_task = new task("Task 1", "This is the 1st task.", 1, 0);
+	}
+	else if (role == "npc2") {
+		npc_task = new task("Task 2", "This is the 2nd task.", 1, 0);
+	}
+	else if (role == "npc3") {
+		npc_task = new task("Task 3", "This is the 3rd task.", 1, 0);
+	}
+	else if (role == "npc4") {
+		npc_task= new task("Task 4", "This is the 4th task.", 1, 0);
+	}
+	else if (role == "npc5") {
+		npc_task = new task("Final Task", "This is the 5th task.", 1, 0);
+	}
+	else if (role == "npc6") {
+		npc_task = new task("LTask 1", "This is the 1st task.", 0, 0);
+	}
+	else if (role == "npc7") {
+		npc_task = new task("LTask 2", "This is the 2nd task.", 0, 0);
+	}
+	else if (role == "npc8") {
+		npc_task = new task("LTask 3", "This is the 3rd task.", 0, 0);
+	}
+	else if (role == "npc9") {
+		npc_task = new task("LTask 4", "This is the 4th task.", 0, 0);
+	}
+}
+
+/* NPC解锁任务 */
+void NPC::NPCunlockTask(bool idx) {
+	if (idx) {
+		bag->taskUnlock(1, npc_task);
+	}
+	else {
+		bag->taskUnlock(0, npc_task);
+	}
+}
+
+/* NPC完成任务 */
+void NPC::NPCfinishTask() {
+	npc_task->isFinished = true;
+}
+
 /* npc对话逻辑 */
 /************ 教学npc ************/
-void  NPC::npc0(std::function<void()> callback) {
+void NPC::npc0(std::function<void()> callback) {
 	auto winSize = Director::getInstance()->getWinSize();
 	/* npc说话-1 */
 	auto npcTxt1 = Label::createWithTTF("Hello! Welcome to this new world!", "fonts/Lacquer.ttf", 35);
@@ -267,8 +313,7 @@ void NPC::npc1(std::function<void()> callback) {
 		if (!Mtasks[0]) {
 			Mtasks[0] = true;
 			if (bag) {
-				bag->taskUnlock(1, 1);
-				bag->taskUnlock(0, 1);
+				NPCunlockTask(1);
 			}	
 			// 对话
 			npcTxt1->setString("The 1st main-line task is unlocked.\nClose the chat window and checkout your bag!");
@@ -320,8 +365,7 @@ void NPC::npc2(std::function<void()> callback) {
 		if (!Mtasks[1]) {
 			Mtasks[1] = true;
 			if (bag) {
-				bag->taskUnlock(1, 2);
-				bag->taskUnlock(0, 2);
+				NPCunlockTask(1);
 			}
 				
 			// 对话
@@ -375,8 +419,7 @@ void NPC::npc3(std::function<void()> callback) {
 		if (!Mtasks[2]) {
 			Mtasks[2] = true;
 			if (bag) {
-				bag->taskUnlock(1, 3);
-				bag->taskUnlock(0, 3);
+				NPCunlockTask(1);
 			}
 			// 对话
 			npcTxt1->setString("The 3rd main-line task is unlocked.\nClose the chat window and checkout your bag!");
@@ -429,8 +472,7 @@ void NPC::npc4(std::function<void()> callback) {
 		if (!Mtasks[3]) {
 			Mtasks[3] = true;
 			if (bag) {
-				bag->taskUnlock(1, 4);
-				bag->taskUnlock(0, 4);
+				NPCunlockTask(1);
 			}
 			// 对话
 			npcTxt1->setString("The 4th main-line task is unlocked.\nClose the chat window and checkout your bag!");
@@ -481,8 +523,7 @@ void NPC::npc5(std::function<void()> callback) {
 		if (!Mtasks[4]) {
 			Mtasks[4] = true;
 			if (bag) {
-				bag->taskUnlock(1, 5);
-				bag->taskUnlock(0, 5);
+				NPCunlockTask(1);
 			}
 			// 对话
 			npcTxt1->setString("The 5th main-line task is unlocked.\nClose the chat window and checkout your bag!");
