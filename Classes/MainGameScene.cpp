@@ -497,7 +497,9 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			keyCode == EventKeyboard::KeyCode::KEY_D) {
 			KeyPressedForPlayerMove(keyCode, event);
 		}
-		if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_J||
+			keyCode == EventKeyboard::KeyCode::KEY_K||
+			keyCode == EventKeyboard::KeyCode::KEY_L) {
 			KeyPressedForPlayerAttack(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
