@@ -35,7 +35,7 @@ void music::openMusicPanel(Player* player)
 	volumeSlider->loadProgressBarTexture("music/slider_progress.png");
 	volumeSlider->setAnchorPoint(Vec2(0.5, 0.5));
 	volumeSlider->setPosition(Vec2(volumeBackground->getContentSize().width / 2, volumeBackground->getContentSize().height / 2));
-	volumeSlider->setPercent(volume * 100);
+	volumeSlider->setPercent(volume * 50);
 	volumeSlider->addEventListener([=](Ref* sender, ui::Slider::EventType type) {
 		if (type == ui::Slider::EventType::ON_PERCENTAGE_CHANGED) {
 			int percent = volumeSlider->getPercent();
@@ -73,4 +73,10 @@ void music::switchBackgroundMusic(string musicName)
 {
 	cocos2d::AudioEngine::pause(audioId);
 	playBackgroundMusic(musicName);
+}
+
+void music::stopBackgroundMusic()
+{
+	cocos2d::
+		AudioEngine::pause(audioId);
 }

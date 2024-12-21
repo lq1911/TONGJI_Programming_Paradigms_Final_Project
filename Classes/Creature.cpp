@@ -12,7 +12,7 @@ void Creature::initSprite() {
 
     // 创建碰撞框
     std::unordered_map<std::string, Size> bodySizeMap = {
-        {"Player1", Size(40, 70)},//
+        {"Player1", Size(40, 70)},
         {"Player2", Size(40, 60)},
         {"Player3", Size(40, 70)},
         {"Player4", Size(40, 70)},
@@ -22,18 +22,28 @@ void Creature::initSprite() {
         {"npc2", Size(50, 80)},
         {"npc3", Size(50, 80)},
         {"npc4", Size(50, 80)},
-        {"npc5", Size(50, 65)}, 
+        {"npc5", Size(50, 65)},
         {"npc6", Size(50, 65)},
-        {"npc7", Size(50, 75)}
+        {"npc7", Size(50, 75)},
+        {"npc8", Size(50, 80)},
+        {"npc9", Size(50, 80)}
+        /*,
+        {"Monster1", Size(90, 80)},
+        {"Monster2", Size(90, 80)},
+        {"Monster3", Size(90, 80)},
+        {"Monster4", Size(50, 80)},
+        {"Monster5", Size(50, 65)},
+        {"Monster6", Size(50, 65)},
+        {"Monster7", Size(50, 75)}*/
     };
 
     if (bodySizeMap.find(role) != bodySizeMap.end()) {
         collisionBoxSize = bodySizeMap[role];  // 根据角色设置碰撞框大小
         if (role == "Player1" || role == "Player2" || role == "Player3" || role == "Player4" || role == "Player5")
             collisionBoxOffset = Vec2(0, 30);
-        else if(role == "npc1" || role == "npc7")
+        else if (role == "npc1" || role == "npc7")
             collisionBoxOffset = Vec2(0, -30);
-        else if (role == "npc2" || role == "npc3" || role == "npc4" || role == "npc5" || role == "npc6")
+        else if (role == "npc2" || role == "npc3" || role == "npc4" || role == "npc5" || role == "npc6" || role == "npc8" || role == "npc9")
             collisionBoxOffset = Vec2(0, -20);
     }
 
@@ -41,12 +51,10 @@ void Creature::initSprite() {
     mySprite->setPosition(Vec2(x, y));
     mySprite->setScale(scale);
     scene->addChild(mySprite, 0);
-   
+
     // 碰撞框
-#if DEBUG
-    drawCollisionBox();
-#else
-#endif
+    // drawCollisionBox();
+
 }
 
 /* 更改碰撞框 */
