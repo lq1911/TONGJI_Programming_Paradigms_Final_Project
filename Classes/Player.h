@@ -5,6 +5,7 @@
 #include "cocos2d.h"
 #include "Creature.h"
 #include "Item.h"
+#include "MapManager.h"
 USING_NS_CC;
 using namespace std;
 

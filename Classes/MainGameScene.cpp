@@ -189,7 +189,7 @@ void MainGameScene::LoadBackgroundMusicToScene() {
 	_musicManager->playBackgroundMusic("music/peace.mp3");
 }
 /****************************************************************/
-	////////////////以下为本场景声明的本场景特有功能函数/////////////////
+////////////////以下为本场景声明的本场景特有功能函数/////////////
 void MainGameScene::CameraFollowController() {
 	// 注册鼠标事件，用于控制摄像机跟随
 	if (_cameraManager->IsInMicroMap()) {
