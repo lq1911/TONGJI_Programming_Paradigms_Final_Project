@@ -15,12 +15,14 @@ private:
     BagManager* bag;  // 玩家背包
     bool isChatting = false;  // 是否正在对话
     std::vector<bool> Mtasks = { false,false,false,false,false};  // 主线任务是否已解锁
+    task* npc_task;
 public:
 	/* 构造函数 */
 	NPC(std::string role, int x, int y, float scale, Scene* scene, Player* player, BagManager* bagManager) 
         :Creature(role, 0, 0, 0, 0, 0, 0, 0, x, y, scale, scene) {
 		who = player;
         bag = bagManager;
+        setTasks();
 	}
 
     /* 玩家靠近:npc提示(换图) */
@@ -36,6 +38,16 @@ public:
 	
     /* 互动 */
 	void Chat();
+
+    /* npc对应任务 */
+    void setTasks();
+
+    /* 解锁任务 */
+    // idx:1主线/0支线
+    void NPCunlockTask(bool idx);
+
+    /* 完成任务 */
+    void NPCfinishTask();
 
 	/* npc */
     // 教学npc
