@@ -77,10 +77,12 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float x = obstacle["X"].asFloat();
 				float y = obstacle["Y"].asFloat();
 				// 对应场景的名称
-				string SceneName = obstacle["SceneName"].asString();
+				int NPCIndex = obstacle["NPCIndex"].asInt();
+				int MonsterIndex = obstacle["MonsterIndex"].asInt();
+				int SceneName = obstacle["SceneName"].asInt();
 
 				// 保存门坐标
-				InDoorList.push_back({ TiledMapPosToScenePos(Vec2(x, y), mapID), SceneName });
+				InDoorList.push_back({ TiledMapPosToScenePos(Vec2(x, y), mapID), SceneName,NPCIndex,MonsterIndex });
 			}
 		}
 	}
@@ -143,13 +145,15 @@ bool MapManager::IsTeleportUnlockable(const Vec2& pos) {
 	return false;
 }
 
-bool MapManager::IsDoorIntoable(const Vec2& pos,string& SceneName) {
+bool MapManager::IsDoorIntoable(const Vec2& pos, int& SceneName, int& NPCIndex, int& MonsterIndex) {
 	//遍历传送点列表中的每一个传送点
 	for (const auto& teleport : InDoorList) {
-		if (pos.distance(teleport.first) < 32.0f) {
+		if (pos.distance(teleport.Position) < 32.0f) {
 
 			// 如果玩家在传送点范围内，则传送点可使用
-			SceneName = teleport.second;
+			SceneName = teleport.SceneName;
+			NPCIndex = teleport.NPCIndex;
+			MonsterIndex = teleport.MonsterIndex;
 			return true;
 		}
 	}

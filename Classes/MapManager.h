@@ -10,6 +10,13 @@ const int MapField = 1843;    //单张瓦片地图的大小
 const Vec2 RTPos = Vec2(258.5f, 1568.5f + 720.0f - 647.0f+32.0f);    //RebirthTemple左上角的场景坐标，720.0f - 647.0f是消除误差的修正
 const float MapToSceneRatio = 1.151875f;    //瓦片地图坐标转场景坐标的比例
 
+struct DoorScene {
+	Vec2 Position;    //门的位置
+	int SceneName;    //门对应的场景名称
+	int NPCIndex;    //门对应的NPC编号
+	int MonsterIndex;    //门对应的怪物编号
+};
+
 class MapManager :public Node {
 private:
 	int PlayerInWhichMap = 0;    //玩家所在的地图编号
@@ -18,7 +25,7 @@ private:
 
 	vector<Rect>ObstacleList;    //储存障碍物的矩形区域
 	vector<Vec2>TeleportList;    //储存传送门的位置
-	vector<pair<Vec2,string>>InDoorList;    //储存地图内的门的位置以及对应的场景
+	vector<DoorScene>InDoorList;    //储存地图内的门的位置以及对应的场景
 	vector<Vec2>InteractionList;    //储存交互区域的位置
 
 	vector<TMXLayer*> BlackFogList;    //储存黑雾的图层
@@ -51,7 +58,7 @@ public:
 	bool IsTeleportUnlockable(const Vec2& pos);
 
 	/*判断某个位置是否可以进入某个门*/
-	bool IsDoorIntoable(const Vec2& pos, string& SceneName);
+	bool IsDoorIntoable(const Vec2& pos, int& SceneName, int& NPCIndex, int& MonsterIndex);
 
 	/*判断玩家所在的地图编号*/
 	void PlayerPositionInWhichMap(Vec2& PlayerPosition);

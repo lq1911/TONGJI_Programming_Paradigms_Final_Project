@@ -62,6 +62,9 @@ void Player::update(float dt) {
             ChangeXY(move_by);
         }
     }
+    else {
+        Heal();
+    }
 
     // 计算血量占总血量的比例
     float healthPercentage = (float)current_hp / (float)hp;
@@ -74,6 +77,7 @@ void Player::update(float dt) {
         Die();
         mySprite->setPosition(1080, 720);
         Revive();
+        ReSetHp();
     }
     // 更新hp值
     hpLabel->setString("hp:" + to_string(current_hp));
@@ -166,7 +170,7 @@ void Player::Skill(int skill_num,vector<Monster*>monster) {
 //
 void Player::Skill_Animate1() {
     //技能1的动画
-    auto particleSystem = ParticleSystemQuad::create("Aura.plist");
+    auto particleSystem = ParticleSystemQuad::create();
 
     // 设置粒子系统的位置
     particleSystem->setPosition(mySprite->getPosition());
@@ -180,13 +184,16 @@ void Player::Skill_Animate1() {
     particleSystem->setGravity(Vec2(0, -200)); // 重力
 
     // 设置粒子图片
-    particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Aura.png"));
+    particleSystem->setTexture(Director::getInstance()->getTextureCache()->addImage("Role/PlayerSkill2/1.png"));
 
     // 将粒子系统添加到人物节点
     mySprite->addChild(particleSystem);
 
     // 启动粒子系统
     particleSystem->resetSystem();
+
+
+
 }
 //技能2的动画
 void Player::Skill_Animate2() {

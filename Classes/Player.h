@@ -6,7 +6,11 @@
 #include "Creature.h"
 #include "Item.h"
 #include "MapManager.h"
+<<<<<<< HEAD
 
+=======
+#include "Monster.h"
+>>>>>>> e76cbee3cddee9c77df7ee85174fb39b5e484f73
 USING_NS_CC;
 using namespace std;
 

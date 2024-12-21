@@ -292,7 +292,9 @@ void MonsterRespawn::update(float dt) {
 	for(it = monster.begin(); it != monster.end(); it++) {
 		if ((*it)->getIsDead()) {
 			(*it)->Revive();
+			log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 			(*it)->setPosition(monster_pos[it - monster.begin()]);
+			(*it)->ReSetHp();
 		}
 	}
 }

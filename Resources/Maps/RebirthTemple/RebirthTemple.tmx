@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="180">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="181">
  <tileset firstgid="1" source="RebirthGrass.tsx"/>
  <tileset firstgid="65" source="RebirthStruct.tsx"/>
  <tileset firstgid="321" source="RebirthWall.tsx"/>
@@ -1113,6 +1113,16 @@
    <properties>
     <property name="X" type="float" value="144.5"/>
     <property name="Y" type="float" value="901"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="180" type="InDoorPoint" x="1199.33" y="1292">
+   <properties>
+    <property name="MonsterIndex" type="int" value="9"/>
+    <property name="NPCIndex" type="int" value="9"/>
+    <property name="SceneName" type="int" value="2"/>
+    <property name="X" type="float" value="1199.33"/>
+    <property name="Y" type="float" value="1292"/>
    </properties>
    <point/>
   </object>

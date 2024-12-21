@@ -8,11 +8,17 @@ Scene* MainGameScene::createScene() {
 	return MainGameScene::create();
 }
 
+Scene* MainGameScene::createScene(int _ODorID, int NPC_choice, int Monster_choice) {
+	MainGameScene* scene = new MainGameScene(_ODorID, NPC_choice, Monster_choice);
+
+	return scene;
+}
+
 bool MainGameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
-
+	CCLOG("MainGameScene::init");
 	this->LoadMapToScene();       //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
@@ -40,10 +46,9 @@ bool MainGameScene::init() {
 
 /****************************************************************/
 ////////////////以下为本场景所有用到的初始化函数/////////////////
-
 MainGameScene::MainGameScene(int _ODorID, int NPC_choice, int Monster_choice) {
 	// 初始化场景参数
-	ODorID = _ODorID;
+	DoorID = _ODorID;
 	_NPC_choice = NPC_choice;
 	_Monster_choice = Monster_choice;
 	//获取屏幕尺寸
@@ -67,21 +72,19 @@ void MainGameScene::LoadCameraToScene() {
 }
 
 void MainGameScene::LoadMapToScene() {
-	if (ODorID == 0) {
+	if (DoorID == 0) {
 		this->LoadOutDoorMapToScene();    //加载外景地图
 	}
-	else if (ODorID == 1) {
+	else if (DoorID == 1) {
 		this->LoadInDoorMapToScene();     //加载室内地图
 	}
-	else if (ODorID == 2) {
+	else if (DoorID == 2) {
 		this->LoadFightMapToScene();     //加载战斗地图
 	}
 
 	// 将地图管理器添加到场景中
 	this->addChild(_mapManager);
 }
-
-
 void MainGameScene::LoadOutDoorMapToScene() {
 	//地图的长度与宽度均为50，每个图块像素大小为32，所以地图大小为1600
 	const int MapSize = 1600;
@@ -116,17 +119,14 @@ void MainGameScene::LoadOutDoorMapToScene() {
 	//初始化小地图中黑色雾的显示
 	_mapManager->SetBlackFogInMicroMap();
 }
-
 void MainGameScene::LoadInDoorMapToScene() {
 	// 将室内地图添加到场景中
 	_mapManager->InitialMap("Maps/Indoors/InDoors.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
 }
-
 void MainGameScene::LoadFightMapToScene() {
 	// 将战斗地图添加到场景中
 	_mapManager->InitialMap("Maps/Fight/Fight.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
 }
-
 
 void MainGameScene::LoadBagToScene() {
 	if (_bagManager->getParent() == nullptr)
@@ -137,8 +137,13 @@ void MainGameScene::LoadBagToScene() {
 
 void MainGameScene::LoadPlayerToScene() {
 	// 玩家
+<<<<<<< HEAD
 	PLAYER = new Player("Monster5" , this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
 	//PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
+=======
+	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 200, 10, 192, 1);
+	
+>>>>>>> e76cbee3cddee9c77df7ee85174fb39b5e484f73
 	this->schedule([=](float dt) {
 		for (auto npc : _npcManager->visitNPC()) {
 			PLAYER->preventOverlap(PLAYER, npc);
@@ -224,15 +229,24 @@ void MainGameScene::TeleportPlayer(int MapID) {
 	}
 }
 
-void MainGameScene::ChangeToInDoorScene(const string SceneName) {
-	// 切换到室内场景
+void MainGameScene::ChangeScene(const int SceneName, const int NPCIndex, const int MonsterIndex) {
+	if (DoorID == 0) { // 室外切换到室内
+		this->pause();
+		CCLOG("Switch to Indoor Scene");
+        auto Transition = TransitionFadeTR::create(0.5f, MainGameScene::createScene(SceneName, NPCIndex, MonsterIndex));
+        Director::getInstance()->pushScene(Transition);
+		CCLOG("Switch to Indoor Scene");
+    } else { // 返回上一个场景
+		// 返回到室外场景
+		Director::getInstance()->popScene();
 
-
-	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, MainGameScene::MainGameScene(1).createScene()));
-
+		// 恢复上一个场景的行为
+		auto outdoorScene = dynamic_cast<MainGameScene*>(Director::getInstance()->getRunningScene());
+		if (outdoorScene) {
+			outdoorScene->resume();
+		}
+    }
 }
-
-
 
 /**********************************************************************/
 ////////////////以下为本场景所有与监视器相关的回调函数/////////////////
@@ -371,7 +385,7 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 			this->scheduleOnce([&](float dt) {
 				canAttack = true; // 2秒后恢复攻击状态
 				CCLOG("Attack ready again");
-				}, 3.0f, "attack_cooldown_timer");
+				}, 0.4f, "attack_cooldown_timer");
 		}
 		else {
 			CCLOG("Attack on cooldown, please wait");
@@ -431,12 +445,12 @@ void MainGameScene::KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, 
 	}
 }
 
-void MainGameScene::KeyPressedForGetInDoor(EventKeyboard::KeyCode keyCode, Event* event) {
+void MainGameScene::KeyPressedForChangeScene(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		//如果玩家在触发范围内，则触发交互
-		string SceneName;
-		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName)) {
-			this->ChangeToInDoorScene(SceneName);
+		int SceneName = 0, NPCIndex = 0, MonsterIndex = 0;
+		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName, NPCIndex, MonsterIndex)) {
+			this->ChangeScene(SceneName, NPCIndex, MonsterIndex);
 		}
 	}
 }
@@ -499,13 +513,15 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			keyCode == EventKeyboard::KeyCode::KEY_D) {
 			KeyPressedForPlayerMove(keyCode, event);
 		}
-		if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_J||
+			keyCode == EventKeyboard::KeyCode::KEY_K||
+			keyCode == EventKeyboard::KeyCode::KEY_L) {
 			KeyPressedForPlayerAttack(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 			KeyPressedForNPCInteract(keyCode, event);
 			KeyPressedForUnlockTeleport(keyCode, event);
-			KeyPressedForGetInDoor(keyCode, event);
+			KeyPressedForChangeScene(keyCode, event);
 			KeyPressedForInteraction(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
