@@ -143,6 +143,7 @@ public:
 	void ChangeFaceTo(int face_to) { this->face_to = face_to; }
 	//¼õÑª
 	void DecreaseHp(int damage) { current_hp -= damage; }
+	void ReSetHp() { current_hp = hp; }
 };
 
 #endif __CREATURE_H__

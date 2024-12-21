@@ -1,5 +1,5 @@
 #include "MainGameScene.h"
-#include "NPC.h"
+
 #define Derivation 243
 
 USING_NS_CC;
@@ -13,7 +13,7 @@ bool MainGameScene::init() {
 		return false;
 	}
 
-	this->LoadMapToScene();       //加载地图到场景
+	this->LoadMapToScene();    //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
 	this->LoadMonsterRespawnToScene();    //加载怪物刷新点到场景
@@ -40,12 +40,7 @@ bool MainGameScene::init() {
 
 /****************************************************************/
 ////////////////以下为本场景所有用到的初始化函数/////////////////
-
-MainGameScene::MainGameScene(int _ODorID, int NPC_choice, int Monster_choice) {
-	// 初始化场景参数
-	ODorID = _ODorID;
-	_NPC_choice = NPC_choice;
-	_Monster_choice = Monster_choice;
+MainGameScene::MainGameScene() {
 	//获取屏幕尺寸
 	VisibleSize = Director::getInstance()->getVisibleSize();
 
@@ -67,24 +62,11 @@ void MainGameScene::LoadCameraToScene() {
 }
 
 void MainGameScene::LoadMapToScene() {
-	if (ODorID == 0) {
-		this->LoadOutDoorMapToScene();    //加载外景地图
-	}
-	else if (ODorID == 1) {
-		this->LoadInDoorMapToScene();     //加载室内地图
-	}
-	else if (ODorID == 2) {
-		this->LoadFightMapToScene();     //加载战斗地图
-	}
+	//地图的长度与宽度均为50，每个图块像素大小为32，所以地图大小为1600
+	const int MapSize = 1600;
 
 	// 将地图管理器添加到场景中
 	this->addChild(_mapManager);
-}
-
-
-void MainGameScene::LoadOutDoorMapToScene() {
-	//地图的长度与宽度均为50，每个图块像素大小为32，所以地图大小为1600
-	const int MapSize = 1600;
 
 	// 将复苏神庙地图加载至场景中
 	_mapManager->InitialMap("Maps/RebirthTemple/RebirthTemple.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
@@ -117,17 +99,6 @@ void MainGameScene::LoadOutDoorMapToScene() {
 	_mapManager->SetBlackFogInMicroMap();
 }
 
-void MainGameScene::LoadInDoorMapToScene() {
-	// 将室内地图添加到场景中
-	_mapManager->InitialMap("Maps/Indoors/InDoors.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
-}
-
-void MainGameScene::LoadFightMapToScene() {
-	// 将战斗地图添加到场景中
-	_mapManager->InitialMap("Maps/Fight/Fight.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
-}
-
-
 void MainGameScene::LoadBagToScene() {
 	if (_bagManager->getParent() == nullptr)
 	{
@@ -137,7 +108,7 @@ void MainGameScene::LoadBagToScene() {
 
 void MainGameScene::LoadPlayerToScene() {
 	// 玩家
-	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 50, 10, 192, 1);
+	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, VisibleSize.width / 2, VisibleSize.height / 2, 0.5f, 100, 50, 20, 200, 10, 192, 1);
 	
 	this->schedule([=](float dt) {
 		for (auto npc : _npcManager->visitNPC()) {
@@ -157,14 +128,30 @@ void MainGameScene::LoadMonsterRespawnToScene() {
 
 void MainGameScene::LoadNPCToScene() {
 	// NPC管理器
-	_npcManager = new NPCManager(PLAYER, _bagManager, this, 0);
+	_npcManager = new NPCManager(PLAYER, _bagManager);
+
+	// 在地图中加入npc
+	// 初始化地点待修改
+	_npcManager->addNPC("npc1", VisibleSize.width / 2, VisibleSize.height / 2, 0.8f, this);
+	_npcManager->addNPC("npc2", VisibleSize.width / 2 + 500, VisibleSize.height / 2, 0.6f, this);
+	_npcManager->addNPC("npc3", VisibleSize.width / 2 + 500, VisibleSize.height / 2 + 500, 0.6f, this);
+	_npcManager->addNPC("npc4", VisibleSize.width / 2 - 500, VisibleSize.height / 2, 0.6f, this);
+	_npcManager->addNPC("npc5", VisibleSize.width / 2 - 500, VisibleSize.height / 2 - 500, 0.6f, this);
+	_npcManager->addNPC("npc6", VisibleSize.width / 2 - 500, VisibleSize.height / 2 + 500, 0.6f, this);
+	_npcManager->addNPC("npc7", VisibleSize.width / 2 + 500, VisibleSize.height / 2 - 500, 0.6f, this);
+
+	// 监测npc是否在有效触发范围内
+	this->schedule([=](float dt) {
+		for (auto npc : _npcManager->visitNPC()) {
+			npc->update();
+		}
+		}, 0.1f, "npc_check_scheduler");
 }
 
 void MainGameScene::LoadBackgroundMusicToScene() {
 	if (_musicManager->getInstance() == nullptr) {
 		this->addChild(_musicManager);
 	}
-
 	_musicManager->playBackgroundMusic("music/peace.mp3");
 }
 /****************************************************************/
@@ -225,14 +212,8 @@ void MainGameScene::TeleportPlayer(int MapID) {
 }
 
 void MainGameScene::ChangeToInDoorScene(const string SceneName) {
-	// 切换到室内场景
-
-
-	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, MainGameScene::MainGameScene(1).createScene()));
 
 }
-
-
 
 /**********************************************************************/
 ////////////////以下为本场景所有与监视器相关的回调函数/////////////////
@@ -499,7 +480,9 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 			keyCode == EventKeyboard::KeyCode::KEY_D) {
 			KeyPressedForPlayerMove(keyCode, event);
 		}
-		if (keyCode == EventKeyboard::KeyCode::KEY_J) {
+		if (keyCode == EventKeyboard::KeyCode::KEY_J||
+			keyCode == EventKeyboard::KeyCode::KEY_K||
+			keyCode == EventKeyboard::KeyCode::KEY_L) {
 			KeyPressedForPlayerAttack(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {

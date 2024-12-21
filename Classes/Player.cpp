@@ -62,6 +62,9 @@ void Player::update(float dt) {
             ChangeXY(move_by);
         }
     }
+    else {
+        Heal();
+    }
 
     // 计算血量占总血量的比例
     float healthPercentage = (float)current_hp / (float)hp;
@@ -74,6 +77,7 @@ void Player::update(float dt) {
         Die();
         mySprite->setPosition(1080, 720);
         Revive();
+        ReSetHp();
     }
     // 更新hp值
     hpLabel->setString("hp:" + to_string(current_hp));
