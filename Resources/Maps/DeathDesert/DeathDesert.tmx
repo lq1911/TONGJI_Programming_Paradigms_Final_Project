@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="325">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="328">
  <tileset firstgid="1" source="DesertItem.tsx"/>
  <tileset firstgid="1985" source="DesertRoad.tsx"/>
  <tileset firstgid="2245" source="DesertRock.tsx"/>
@@ -815,6 +815,36 @@
    <properties>
     <property name="X" type="float" value="207"/>
     <property name="Y" type="float" value="1289"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="325" type="InDoorPoint" x="1101.33" y="393.333">
+   <properties>
+    <property name="MonsterIndex" type="int" value="0"/>
+    <property name="NPCIndex" type="int" value="32"/>
+    <property name="SceneName" type="int" value="1"/>
+    <property name="X" type="float" value="1101.33"/>
+    <property name="Y" type="float" value="393.33"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="326" type="InDoorPoint" x="1377.33" y="246.667">
+   <properties>
+    <property name="MonsterIndex" type="int" value="0"/>
+    <property name="NPCIndex" type="int" value="31"/>
+    <property name="SceneName" type="int" value="1"/>
+    <property name="X" type="float" value="1377.33"/>
+    <property name="Y" type="float" value="246.67"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="327" type="InDoorPoint" x="718.667" y="737.333">
+   <properties>
+    <property name="MonsterIndex" type="int" value="31"/>
+    <property name="NPCIndex" type="int" value="0"/>
+    <property name="SceneName" type="int" value="2"/>
+    <property name="X" type="float" value="718.67"/>
+    <property name="Y" type="float" value="737.33"/>
    </properties>
    <point/>
   </object>
