@@ -204,7 +204,7 @@ void Player::GetBonus(Bonus bonus) {
     }
 
     //物品奖励
-    //暂待，需物品和装备
+    /*BagManager->addItem(bonus.equipment)*/
 
 }
 
