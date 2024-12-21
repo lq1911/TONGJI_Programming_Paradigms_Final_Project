@@ -75,9 +75,16 @@ void Player::update(float dt) {
     if (current_hp<0) {
         isDead = true;
         Die();
-        mySprite->setPosition(1080, 720);
-        Revive();
-        ReSetHp();
+        static int n = 0;
+        if (n < 120) {
+            n++;
+        }
+        else {
+            n = 0;
+            mySprite->setPosition(1080, 720);
+            Revive();
+            ReSetHp();
+        }
     }
     // ¸üÐÂhpÖµ
     hpLabel->setString("hp:" + to_string(current_hp));
