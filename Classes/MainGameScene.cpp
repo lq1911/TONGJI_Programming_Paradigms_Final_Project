@@ -43,7 +43,7 @@ bool MainGameScene::init() {
 
 MainGameScene::MainGameScene(int _ODorID, int NPC_choice, int Monster_choice) {
 	// 初始化场景参数
-	ODorID = _ODorID;
+	DoorID = _ODorID;
 	_NPC_choice = NPC_choice;
 	_Monster_choice = Monster_choice;
 	//获取屏幕尺寸
@@ -67,21 +67,19 @@ void MainGameScene::LoadCameraToScene() {
 }
 
 void MainGameScene::LoadMapToScene() {
-	if (ODorID == 0) {
+	if (DoorID == 0) {
 		this->LoadOutDoorMapToScene();    //加载外景地图
 	}
-	else if (ODorID == 1) {
+	else if (DoorID == 1) {
 		this->LoadInDoorMapToScene();     //加载室内地图
 	}
-	else if (ODorID == 2) {
+	else if (DoorID == 2) {
 		this->LoadFightMapToScene();     //加载战斗地图
 	}
 
 	// 将地图管理器添加到场景中
 	this->addChild(_mapManager);
 }
-
-
 void MainGameScene::LoadOutDoorMapToScene() {
 	//地图的长度与宽度均为50，每个图块像素大小为32，所以地图大小为1600
 	const int MapSize = 1600;
@@ -106,6 +104,8 @@ void MainGameScene::LoadOutDoorMapToScene() {
 
 	//将火山森林边界加载至场景中
 	_mapManager->InitialMap("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx", Vec2(VisibleSize.width / 2 - MapSize - Derivation, VisibleSize.height / 2), this);
+	auto sprite=Sprite::create("Others/hjy,jpg");
+	sprite->setPosition(Vec2(VisibleSize.width / 2 - MapSize - Derivation - 3000, VisibleSize.height / 2));
 
 	//将沙漠雪地边界加载至场景中
 	_mapManager->InitialMap("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx", Vec2(VisibleSize.width / 2 + MapSize + Derivation, VisibleSize.height / 2), this);
@@ -116,17 +116,14 @@ void MainGameScene::LoadOutDoorMapToScene() {
 	//初始化小地图中黑色雾的显示
 	_mapManager->SetBlackFogInMicroMap();
 }
-
 void MainGameScene::LoadInDoorMapToScene() {
 	// 将室内地图添加到场景中
 	_mapManager->InitialMap("Maps/Indoors/InDoors.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
 }
-
 void MainGameScene::LoadFightMapToScene() {
 	// 将战斗地图添加到场景中
 	_mapManager->InitialMap("Maps/Fight/Fight.tmx", Vec2(VisibleSize.width / 2, VisibleSize.height / 2), this);
 }
-
 
 void MainGameScene::LoadBagToScene() {
 	if (_bagManager->getParent() == nullptr)
@@ -224,15 +221,16 @@ void MainGameScene::TeleportPlayer(int MapID) {
 	}
 }
 
-void MainGameScene::ChangeToInDoorScene(const string SceneName) {
+void MainGameScene::ChangeScene(const int SceneName, const int NPCIndex, const int MonsterIndex) {
 	// 切换到室内场景
-
-
-	Director::getInstance()->pushScene(TransitionFadeTR::create(0.5f, MainGameScene::MainGameScene(1).createScene()));
-
+	if (DoorID == 0) {
+		auto Transition = TransitionFadeTR::create(0.5f, MainGameScene::MainGameScene(SceneName, NPCIndex, MonsterIndex).createScene());
+		Director::getInstance()->pushScene(Transition);
+	}
+	else {
+		Director::getInstance()->popScene();
+	}
 }
-
-
 
 /**********************************************************************/
 ////////////////以下为本场景所有与监视器相关的回调函数/////////////////
@@ -431,12 +429,12 @@ void MainGameScene::KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, 
 	}
 }
 
-void MainGameScene::KeyPressedForGetInDoor(EventKeyboard::KeyCode keyCode, Event* event) {
+void MainGameScene::KeyPressedForChangeScene(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		//如果玩家在触发范围内，则触发交互
-		string SceneName;
-		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName)) {
-			this->ChangeToInDoorScene(SceneName);
+		int SceneName = 0, int NPCIndex = 0, int MonsterIndex = 0;
+		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName, NPCIndex, MonsterIndex)) {
+			this->ChangeScene(SceneName, NPCIndex, MonsterIndex);
 		}
 	}
 }
@@ -505,7 +503,7 @@ void MainGameScene::KeyPressed(EventKeyboard::KeyCode keyCode, Event* event) {
 		if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 			KeyPressedForNPCInteract(keyCode, event);
 			KeyPressedForUnlockTeleport(keyCode, event);
-			KeyPressedForGetInDoor(keyCode, event);
+			KeyPressedForChangeScene(keyCode, event);
 			KeyPressedForInteraction(keyCode, event);
 		}
 		if (keyCode == EventKeyboard::KeyCode::KEY_ESCAPE) {
