@@ -2,7 +2,8 @@
 #include "ui/CocosGUI.h"
 #include "SetPlayerScene.h"
 #include "Player.h"
-#include "MainGameScene.h"
+#include "LoadingScene.h"
+
 
 USING_NS_CC;
 // 定义静态成员变量
@@ -97,34 +98,34 @@ bool SetPlayerScene::init() {
     P1Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player1");
         who = Player1;
-        auto scene = MainGameScene::createScene();
-        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        auto scene = LoadingScene::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P2Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player2");
         who = Player2;
-        auto scene = MainGameScene::createScene();
-        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        auto scene = LoadingScene::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P3Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player3");
         who = Player3;
-        auto scene = MainGameScene::createScene();
-        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        auto scene = LoadingScene::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P4Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player4");
         who = Player4;
-        auto scene = MainGameScene::createScene();
-        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        auto scene = LoadingScene::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P5Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player5");
         who = Player5;
 
         //auto scene = MainGameScene::createScene();
-        auto scene = LearningScene::createScene();
-        Director::getInstance()->replaceScene(TransitionFade::create(1.0f, scene, Color3B::BLACK));
+        auto scene = LoadingScene::createScene();
+        Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
 
     return true;

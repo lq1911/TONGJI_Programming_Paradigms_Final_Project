@@ -447,6 +447,7 @@ void MainGameScene::KeyPressedForNPCInteract(EventKeyboard::KeyCode keyCode, Eve
 
 		/* npc½»»¥ */
 		_npcManager->checkTriggers();
+		
 	}
 }
 

@@ -4,7 +4,6 @@
 #include <string>
 #include "cocos2d.h"
 #include "Player.h"
-#include "LearningScene.h"
 
 /* 角色姓名:用于表示选择的角色 */
 enum Who { Player1, Player2, Player3, Player4, Player5 };
