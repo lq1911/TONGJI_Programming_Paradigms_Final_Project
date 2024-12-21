@@ -8,11 +8,17 @@ Scene* MainGameScene::createScene() {
 	return MainGameScene::create();
 }
 
+Scene* MainGameScene::createScene(int _ODorID, int NPC_choice, int Monster_choice) {
+	MainGameScene* scene = new MainGameScene(_ODorID, NPC_choice, Monster_choice);
+
+	return scene;
+}
+
 bool MainGameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
-
+	CCLOG("MainGameScene::init");
 	this->LoadMapToScene();       //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
@@ -40,7 +46,6 @@ bool MainGameScene::init() {
 
 /****************************************************************/
 ////////////////以下为本场景所有用到的初始化函数/////////////////
-
 MainGameScene::MainGameScene(int _ODorID, int NPC_choice, int Monster_choice) {
 	// 初始化场景参数
 	DoorID = _ODorID;
@@ -104,8 +109,6 @@ void MainGameScene::LoadOutDoorMapToScene() {
 
 	//将火山森林边界加载至场景中
 	_mapManager->InitialMap("Maps/Vol_Forest_Ecotonal/Vol_Forest_Ecotonal.tmx", Vec2(VisibleSize.width / 2 - MapSize - Derivation, VisibleSize.height / 2), this);
-	auto sprite=Sprite::create("Others/hjy,jpg");
-	sprite->setPosition(Vec2(VisibleSize.width / 2 - MapSize - Derivation - 3000, VisibleSize.height / 2));
 
 	//将沙漠雪地边界加载至场景中
 	_mapManager->InitialMap("Maps/Desert_Snow_Ecotonal/Desert_Snow_Ecotonal.tmx", Vec2(VisibleSize.width / 2 + MapSize + Derivation, VisibleSize.height / 2), this);
@@ -222,14 +225,22 @@ void MainGameScene::TeleportPlayer(int MapID) {
 }
 
 void MainGameScene::ChangeScene(const int SceneName, const int NPCIndex, const int MonsterIndex) {
-	// 切换到室内场景
-	if (DoorID == 0) {
-		auto Transition = TransitionFadeTR::create(0.5f, MainGameScene::MainGameScene(SceneName, NPCIndex, MonsterIndex).createScene());
-		Director::getInstance()->pushScene(Transition);
-	}
-	else {
+	if (DoorID == 0) { // 室外切换到室内
+		this->pause();
+		CCLOG("Switch to Indoor Scene");
+        auto Transition = TransitionFadeTR::create(0.5f, MainGameScene::createScene(SceneName, NPCIndex, MonsterIndex));
+        Director::getInstance()->pushScene(Transition);
+		CCLOG("Switch to Indoor Scene");
+    } else { // 返回上一个场景
+		// 返回到室外场景
 		Director::getInstance()->popScene();
-	}
+
+		// 恢复上一个场景的行为
+		auto outdoorScene = dynamic_cast<MainGameScene*>(Director::getInstance()->getRunningScene());
+		if (outdoorScene) {
+			outdoorScene->resume();
+		}
+    }
 }
 
 /**********************************************************************/
@@ -432,7 +443,7 @@ void MainGameScene::KeyPressedForUnlockTeleport(EventKeyboard::KeyCode keyCode, 
 void MainGameScene::KeyPressedForChangeScene(EventKeyboard::KeyCode keyCode, Event* event) {
 	if (keyCode == EventKeyboard::KeyCode::KEY_C) {
 		//如果玩家在触发范围内，则触发交互
-		int SceneName = 0, int NPCIndex = 0, int MonsterIndex = 0;
+		int SceneName = 0, NPCIndex = 0, MonsterIndex = 0;
 		if (_mapManager->IsDoorIntoable(PLAYER->mySprite->getPosition(), SceneName, NPCIndex, MonsterIndex)) {
 			this->ChangeScene(SceneName, NPCIndex, MonsterIndex);
 		}
