@@ -160,7 +160,6 @@ void MainGameScene::LoadPlayerToScene() {
 
 	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, PlayerX, PlayerY, 0.5f, 100, 50, 20, 200, 10, 192, 1);
 	
->>>>>>> e76cbee3cddee9c77df7ee85174fb39b5e484f73
 	this->schedule([=](float dt) {
 		for (auto npc : _npcManager->visitNPC()) {
 			PLAYER->preventOverlap(PLAYER, npc);
@@ -179,7 +178,7 @@ void MainGameScene::LoadMonsterRespawnToScene() {
 
 void MainGameScene::LoadNPCToScene() {
 	// NPC管理器
-	_npcManager = new NPCManager(PLAYER, _bagManager, this, 0);
+	_npcManager = new NPCManager(PLAYER, _bagManager, this, _NPC_choice);
 }
 
 void MainGameScene::LoadBackgroundMusicToScene() {
@@ -249,10 +248,8 @@ void MainGameScene::TeleportPlayer(int MapID) {
 void MainGameScene::ChangeScene(const int SceneName, const int NPCIndex, const int MonsterIndex) {
 	if (DoorID == 0) { // 室外切换到室内
 		this->pause();
-		CCLOG("Switch to Indoor Scene");
         auto Transition = TransitionFadeTR::create(0.5f, MainGameScene::createScene(SceneName, NPCIndex, MonsterIndex));
         Director::getInstance()->pushScene(Transition);
-		CCLOG("Switch to Indoor Scene");
     } else { // 返回上一个场景
 		// 返回到室外场景
 		Director::getInstance()->popScene();
