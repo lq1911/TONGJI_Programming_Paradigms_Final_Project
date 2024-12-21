@@ -14,6 +14,9 @@ USING_NS_CC;
 
 class MainGameScene :public cocos2d::Scene {
 protected:
+	int _NPC_choice;     // NPC选择标志,加载不同的NPC
+	int _Monster_choice; // 怪物选择标志,加载不同的怪物
+	int ODorID;          //加载室外还是室内地图标志， 0为室外，1为室内，2为战斗，默认为0
 	Size VisibleSize;    // 可见屏幕大小
 
 	EventListenerKeyboard* _keyboardListener;    // 键盘监听器
@@ -33,7 +36,7 @@ public:
 	/****************************************************************/
 	////////////////以下为本场景所有用到的初始化函数/////////////////
 	/* 构造函数，获取屏幕的大小*/
-	MainGameScene();
+	MainGameScene(int _ODorID = 0, int _NPC_choice = 0, int _Monster_choice = 0);
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
@@ -45,7 +48,16 @@ public:
 	void LoadCameraToScene();
 
 	/*初始化地图*/
-	virtual void LoadMapToScene();
+	void LoadMapToScene();
+
+	/*初始化室外地图*/
+	virtual void LoadOutDoorMapToScene();
+
+	/*初始化室内地图*/
+	virtual void LoadInDoorMapToScene();
+
+	/*初始化战斗地图*/
+	virtual void LoadFightMapToScene();
 
 	/*初始化背包界面*/
 	void LoadBagToScene();
