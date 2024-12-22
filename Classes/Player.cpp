@@ -73,11 +73,19 @@ void Player::update(float dt) {
     Size healthBarSize = healthBar->getContentSize();
     healthBar->setScaleX(healthPercentage);  // 调整血条的横向缩放比例
     if (current_hp<0) {
+        
         isDead = true;
         Die();
-        mySprite->setPosition(1080, 720);
-        Revive();
-        ReSetHp();
+        static int n;
+        if (n < 120) {
+            n++;
+        }
+        else {
+            n = 0;
+            mySprite->setPosition(1080, 720);
+            Revive();
+            ReSetHp();
+        }
     }
     // 更新hp值
     hpLabel->setString("hp:" + to_string(current_hp));

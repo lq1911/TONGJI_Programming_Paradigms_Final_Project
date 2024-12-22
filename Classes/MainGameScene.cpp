@@ -24,7 +24,7 @@ bool MainGameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
-
+	CCLOG("MainGameScene::init");
 	this->LoadMapToScene();       //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
@@ -170,7 +170,8 @@ void MainGameScene::LoadPlayerToScene() {
 
 void MainGameScene::LoadMonsterRespawnToScene() {
 	// 加怪
-	_monsterRespawn = new MonsterRespawn(PLAYER, this);
+	_monsterRespawn = new MonsterRespawn(PLAYER, this,_mapManager);
+	
 
 	// 将怪导入角色
 	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);
@@ -185,7 +186,7 @@ void MainGameScene::LoadBackgroundMusicToScene() {
 	if (_musicManager->getInstance() == nullptr) {
 		this->addChild(_musicManager);
 	}
-	_musicManager->stopBackgroundMusic();
+
 	_musicManager->playBackgroundMusic("music/peace.mp3");
 }
 /****************************************************************/

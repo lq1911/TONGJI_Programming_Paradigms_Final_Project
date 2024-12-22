@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Creature.h"
 #include "Player.h"
+#include "MapManager.h"
 USING_NS_CC;
 
 using namespace std;
@@ -28,6 +29,7 @@ private:
 	Player* target;
 	Monster* monster;
 	float distance;
+	
 public:
 	friend class Monster;
 	MonsterAI(Player* target, Monster* monster) : currentState(MonsterState::PATROLLING), target(target), monster(monster) {}//Ä¬ÈÏÎªÑ²Âß
@@ -57,6 +59,7 @@ private:
 	MonsterAI* ai;
 	MonsterState state;
 	Vec2 direction;
+	MapManager* mapManager;
 public:
 	
 	Monster(string name, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,
@@ -84,6 +87,9 @@ public:
 		level = 2;
 		x = 1000;
 		y = 100;
+	}
+	void Init(MapManager* mapManager) {
+		this->mapManager = mapManager;
 	}
 	void update(float dt)override;
 	void levelBonus()override;
@@ -130,21 +136,32 @@ class MonsterRespawn:Node {
 	Monster* monster6;
 	Monster* monster7;
 	Monster* monster8;
-
+	MapManager* mapManager;
 
 public:
 	
-	MonsterRespawn(Player* player, Scene* scene) {
+	MonsterRespawn(Player* player, Scene* scene,MapManager*mapManager) {
 		// name,hp,mp,atk,atk_range,def,speed,level,x,y,exp,bonus,player,follow_range,scale,scene) :
 		MonsterBonus bonus;
-		monster1 = new Monster("Monster1", 100, 600, 20, 100, 5, 100, 2, 1000, 100, 100, bonus.monster_bonus1, player, 500, 1, scene);
-		monster2 = new Monster("Monster2", 100, 600, 20, 100, 5, 100, 2, 3000, 2000, 100, bonus.monster_bonus2, player,500, 1, scene);
-		monster3 = new Monster("Monster3", 100, 600, 20, 100, 5, 100, 2, 500, 100, 100, bonus.monster_bonus3, player, 500, 1, scene);
-		monster4 = new Monster("Monster4", 100, 600, 20, 100, 5, 100, 2, 600, 200, 100, bonus.monster_bonus4, player, 500, 1, scene);
-		monster5 = new Monster("Monster5", 100, 600, 20, 100, 5, 100, 2, -1899, 2600, 100, bonus.monster_bonus5, player, 500, 1, scene);
-		monster6 = new Monster("Monster6", 100, 600, 20, 100, 5, 100, 2, 100, 100, 100, bonus.monster_bonus6, player, 500, 1, scene);
-		monster7 = new Monster("Monster7", 100, 600, 20, 100, 5, 100, 2, 1500, 1200, 100, bonus.monster_bonus7, player, 500, 1, scene);
-		monster8 = new Monster("Monster8", 100, 600, 20, 100, 5, 100, 2, 600, 400, 100, bonus.monster_bonus8, player, 500, 1, scene);
+		monster1 = new Monster("Monster1", 100, 600, 20, 100, 5, 100, 2, 1000, 100, 100, bonus.monster_bonus1, player, 500, 0.5, scene);
+		//ÀÇ
+		monster2 = new Monster("Monster2", 100, 600, 20, 100, 5, 100, 2, 3000, 2000, 100, bonus.monster_bonus2, player,500, 0.5, scene);
+		
+		monster3 = new Monster("Monster3", 100, 600, 20, 100, 5, 100, 2, 500, 100, 100, bonus.monster_bonus3, player, 500, 0.5, scene);
+		monster4 = new Monster("Monster4", 100, 600, 20, 100, 5, 100, 2, 600, 200, 100, bonus.monster_bonus4, player, 500, 0.5, scene);
+		//Áú
+		monster5 = new Monster("Monster5", 100, 600, 20, 100, 5, 100, 2, -1899, 2600, 100, bonus.monster_bonus5, player, 500, 0.5, scene);
+		monster6 = new Monster("Monster6", 100, 600, 20, 100, 5, 100, 2, 100, 100, 100, bonus.monster_bonus6, player, 500, 0.5, scene);
+		monster7 = new Monster("Monster7", 100, 600, 20, 100, 5, 100, 2, 1500, 1200, 100, bonus.monster_bonus7, player, 500, 0.5, scene);
+		monster8 = new Monster("Monster8", 100, 600, 20, 100, 5, 100, 2, 600, 400, 100, bonus.monster_bonus8, player, 500, 0.5, scene);
+		monster1->Init(mapManager);
+		monster2->Init(mapManager);
+		monster3->Init(mapManager);
+		monster4->Init(mapManager);
+		monster5->Init(mapManager);
+		monster6->Init(mapManager);
+		monster7->Init(mapManager);
+		monster8->Init(mapManager);
 		monster.push_back(monster1);
 		monster.push_back(monster2);
 		monster.push_back(monster3);
