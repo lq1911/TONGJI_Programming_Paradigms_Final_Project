@@ -506,7 +506,7 @@ void Creature::Revive() {
     isDead = false;
     face_to = DOWN;
     mySprite->stopAllActions();
-    mySprite->setTexture("Role/" + role + "atked/17.png");
+    mySprite->setTexture("Role/" + role + "/1.png");
     mySprite->setPosition(Vec2(mySprite->getPosition().x, mySprite->getPosition().y + 30));
 }
 

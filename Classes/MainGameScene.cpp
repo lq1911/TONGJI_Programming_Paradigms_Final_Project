@@ -24,7 +24,7 @@ bool MainGameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
-
+	CCLOG("MainGameScene::init");
 	this->LoadMapToScene();       //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
@@ -170,10 +170,10 @@ void MainGameScene::LoadPlayerToScene() {
 
 void MainGameScene::LoadMonsterRespawnToScene() {
 	// 加怪
-	_monsterRespawn = new MonsterRespawn(PLAYER, this);
-
+	_monsterRespawn = new MonsterRespawn(PLAYER, this,_mapManager,DoorID);
+	
 	// 将怪导入角色
-	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);
+	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager,_bagManager);
 }
 
 void MainGameScene::LoadNPCToScene() {
@@ -185,11 +185,11 @@ void MainGameScene::LoadBackgroundMusicToScene() {
 	if (_musicManager->getInstance() == nullptr) {
 		this->addChild(_musicManager);
 	}
-	_musicManager->stopBackgroundMusic();
+
 	_musicManager->playBackgroundMusic("music/peace.mp3");
 }
 /****************************************************************/
-	////////////////以下为本场景声明的本场景特有功能函数/////////////////
+////////////////以下为本场景声明的本场景特有功能函数/////////////
 void MainGameScene::CameraFollowController() {
 	// 注册鼠标事件，用于控制摄像机跟随
 	if (_cameraManager->IsInMicroMap()) {
@@ -219,11 +219,11 @@ void MainGameScene::MainCameraFollowPlayer() {
 
 void MainGameScene::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
-	float InitCameraZinMicroMap = 2000.0f;
+	float InitCameraZinMicroMap = 1200.0f;
 
-	// 每次进入小地图时，将小摄像机的位置设置中心位置
-	Vec2 centerPosition(1200, 1200);
-	_cameraManager->UpdateCameraPosition(_cameraManager->GetMicroCamera(), centerPosition, InitCameraZinMicroMap);
+	// 每次进入小地图时，将小摄像机的位置设置玩家位置
+	auto PlayerPosition = PLAYER->mySprite->getPosition();
+	_cameraManager->UpdateCameraPosition(_cameraManager->GetMicroCamera(), PlayerPosition, InitCameraZinMicroMap);
 }
 
 void MainGameScene::UnlockMapTeleport() {

@@ -9,7 +9,6 @@
 #include "player.h"
 #include "task.h"
 #include "ui/CocosGUI.h"
-#include "audio/include/AudioEngine.h"
 
 USING_NS_CC;
 using namespace std;
@@ -24,14 +23,8 @@ public:
     // 显示背包
     void showBag(Player& _player);
 
-    // 显示背包(重载函数)
-    void showBag();
-
     // 隐藏背包
     void hideBag(Player& _player);
-
-    // 隐藏背包(重载函数)
-    void hideBag();
 
     // 判断背包是否可见
     bool isBagVisible() const { return _isBagOpen; }

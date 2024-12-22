@@ -13,18 +13,22 @@ using namespace std;
 const int DIST = 100;
 
 struct Bonus {
-	//Object object;
-	//报错，暂时注释掉
-	//Equipment equipment;
-	int exp = 0;
+	consumable c;
+	weapon w;
+	armor a;
+	shoes s;
+	accessories ac;
+	int exp;
+	int coin;
 };
 class Monster;
+class BagManager;
 class Player :public Creature {
 private:
 	int current_exp;       // 角色现有经验值
 	int next_level_exp;    // 达到下一级所需经验值
 	vector<Monster*> monster;
-	
+	BagManager* bag_manager;
 	MapManager* map_manager;
 	Sprite* healthBarBackground;  // 血条背景
 	Sprite* healthBar;            // 实时显示血量的血条
@@ -80,7 +84,7 @@ public:
 	}
 
 	/* 加入怪物 */
-	void Init(vector<Monster*>monster, MapManager* map_manager);
+	void Init(vector<Monster*>monster, MapManager* map_manager, BagManager* bag_manager);
 
 	/* 释放攻击技能 */
 	// 对于部分怪物,无方向一说:Monster1树妖

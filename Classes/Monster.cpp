@@ -46,16 +46,34 @@ void Monster::update(float dt) {
 	if (current_hp < 0) {
 		isDead = true;
 		Die();//所有死亡机制
+
 	}
+	Vec2 move_by;
 	if (is_moving) {
-		if(face_to==0)
-			mySprite->setPosition(x + (-speed + 1.0 - 1.0) / 60, y);
-		else if(face_to==1)
-			mySprite->setPosition(x + (speed + 1.0 - 1.0) / 60, y);
-		else if(face_to==2)
-			mySprite->setPosition(x, y + (speed + 1.0 - 1.0) / 60);
-		else if(face_to==3)
-			mySprite->setPosition(x, y + (-speed + 1.0 - 1.0) / 60);
+		if (face_to == 0) {
+			move_by.set(-speed / 60.0, 0);
+		}
+		else if (face_to == 1) {
+			move_by.set(speed / 60.0, 0);
+		}
+		else if (face_to == 2) {
+			move_by.set(0, speed / 60.0);
+		}
+		else if (face_to == 3) {
+			move_by.set(0, -speed / 60.0);
+		}
+		Vec2 targetPosition = mySprite->getPosition() + move_by;
+
+		if (mapManager->IsMoveable(targetPosition)) {
+			if (face_to == 0)
+				mySprite->setPosition(x + (-speed + 1.0 - 1.0) / 60, y);
+			else if (face_to == 1)
+				mySprite->setPosition(x + (speed + 1.0 - 1.0) / 60, y);
+			else if (face_to == 2)
+				mySprite->setPosition(x, y + (speed + 1.0 - 1.0) / 60);
+			else if (face_to == 3)
+				mySprite->setPosition(x, y + (-speed + 1.0 - 1.0) / 60);
+		}
 	}
 
 }
@@ -297,16 +315,4 @@ void MonsterRespawn::update(float dt) {
 			(*it)->ReSetHp();
 		}
 	}
-}
-//
-void MonsterBonus::init() {
-	monster_bonus1.exp = 10;
-	monster_bonus2.exp = 10;
-	monster_bonus3.exp = 10;
-	monster_bonus4.exp = 10;
-	monster_bonus5.exp = 10;
-	monster_bonus6.exp = 10;
-	monster_bonus7.exp = 10;
-	monster_bonus8.exp = 10;
-
 }

@@ -1,7 +1,7 @@
 #include <string>
 #include "Player.h"
 #include "Monster.h"
-
+#inlluce "BagManager.h"
 // update
 void Player::update(float dt) {
     x = getXY().x;
@@ -73,9 +73,10 @@ void Player::update(float dt) {
     Size healthBarSize = healthBar->getContentSize();
     healthBar->setScaleX(healthPercentage);  // 调整血条的横向缩放比例
     if (current_hp<0) {
+        
         isDead = true;
         Die();
-        static int n = 0;
+        static int n;
         if (n < 120) {
             n++;
         }
@@ -208,13 +209,13 @@ void Player::Skill_Animate2() {
     if (isDead)
         return;
     std::string s = "Role/PlayerSkill1/";
-    
+
     // 帧动画
     Vector<SpriteFrame*> animFrames;
     animFrames.reserve(12);
     Vec2 pos;
     if (face_to == 0) {
-        pos=Vec2(x-100,y);
+        pos = Vec2(x - 100, y);
     }
     else if (face_to == 1) {
         pos = Vec2(x + 100, y);
@@ -226,20 +227,20 @@ void Player::Skill_Animate2() {
         pos = Vec2(x, y - 100);
     }
     // 定义动画播放的起始位置
-    Vec2 startPosition = mySprite->getPosition()+pos; // 这里设置你想要的起始位置
-        for (int i = 1; i <  12; i++) {
-            auto texture = Director::getInstance()->getTextureCache()->addImage(s +"smoke" +std::to_string(i) + ".png");
-            float width = texture->getPixelsWide();
-            float height = texture->getPixelsHigh();
-            Rect rectInPixels(0, 0, width, height);
-            auto spriteFrame = SpriteFrame::createWithTexture(
-                texture,
-                CC_RECT_PIXELS_TO_POINTS(rectInPixels)
-            );
-            spriteFrame->setOffsetInPixels(startPosition);
-            animFrames.pushBack(spriteFrame);
-        }
-    
+    Vec2 startPosition = mySprite->getPosition() + pos; // 这里设置你想要的起始位置
+    for (int i = 1; i < 12; i++) {
+        auto texture = Director::getInstance()->getTextureCache()->addImage(s + "smoke" + std::to_string(i) + ".png");
+        float width = texture->getPixelsWide();
+        float height = texture->getPixelsHigh();
+        Rect rectInPixels(0, 0, width, height);
+        auto spriteFrame = SpriteFrame::createWithTexture(
+            texture,
+            CC_RECT_PIXELS_TO_POINTS(rectInPixels)
+        );
+        spriteFrame->setOffsetInPixels(startPosition);
+        animFrames.pushBack(spriteFrame);
+    }
+
     auto texture = Director::getInstance()->getTextureCache()->addImage("Role/PlayerSkill1/smoke" + std::to_string(1) + ".png");
     float width = texture->getPixelsWide();
     float height = texture->getPixelsHigh();
@@ -268,10 +269,28 @@ void Player::GetBonus(Bonus bonus) {
         level++;
         next_level_exp *= (1 + level * 0.1);
     }
-
-    //物品奖励
-    /*BagManager->addItem(bonus.equipment)*/
-
+    srand(0);
+    int a = rand() % 5;
+    if (a == 0) {
+        bag_manager->addItem(bonus.c);
+    }
+    else if (a == 1) {
+        bag_manager->addItem(bonus.w);
+    }
+    else if (a == 2) {
+        bag_manager->addItem(bonus.a);
+    }
+    else if (a == 3) {
+        bag_manager->addItem(bonus.s);
+    }
+    else if (a == 4) {
+        bag_manager->addItem(bonus.ac);
+    }
+   
+    coins += bonus.coin;
+    // 刷新显示
+    
+   
 }
 
 // 判断交互范围
