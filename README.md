@@ -9,7 +9,7 @@
 
 ## 🌟玩法说明
 
-- ### 按键功能汇总
+> ### 按键功能汇总
 
   | 按键 | 功能 | 
   | :---: | :---: |
@@ -22,7 +22,7 @@
   | Esc | 调节背景音乐音量 |
   | 鼠标滚轮 | 缩放大小地图 |
   
-- ### 角色创建与新手教程
+> ### 角色创建与新手教程
   
   - #### 角色创建
   
@@ -40,13 +40,13 @@
     
     接着进入新手教程，玩家将在此根据指引学习基础的移动、攻击、交互、解锁地图、传送等操作。
 
-- ### 开放世界简介
+> ### 开放世界简介
 
   完成新手教程后，初始地图解锁，玩家进入复苏神庙。游戏进入开放世界阶段，玩家可以自由探索地图、解锁地图区域、收集武器及特殊物品，并通过击败敌人提升实力。
 
   开放世界共分为四个不同的种族村落，分别具有不同的地形，分别为：雪地（冰寂之原）、森林（青木迷境）、火山（炎魂裂谷）、沙漠（赤砂荒原）。玩家可以自行前往不同区域，解锁不同的剧情。
 
-- ### 地图操作
+> ### 地图操作
 
   - #### 大地图
 
@@ -56,18 +56,81 @@
 
   - #### 小地图
 
-    小地图即整个开放世界的缩略图。在小地图中，依然保留了放大、缩小的功能。除此之外，还增加了移动视角的功能，以全面查看小地图的情况。需要特别指出的是，小地图默认有迷雾覆盖。玩家每前往一个新的区域，都需要找到神像并进行解锁的操作，使得小地图的迷雾消散。
+    小地图即整个开放世界的缩略图。在小地图中，依然保留了放大、缩小的功能。除此之外，还增加了移动视角的功能，以全面查看小地图的情况。需要特别指出的是，小地图默认有迷雾覆盖。玩家每前往一个新的区域，都需要找到神像并进行解锁锚点的操作，使得小地图的迷雾消散。该区域迷雾消散后，玩家可通过点击小地图上锚点的位置进行角色传送。
 
-- ### 背包操作 
+> ### 背包操作
 
-- ### NPC与任务系统
+  - #### 背包系统
+
+    背包中展示了玩家拥有的所有武器、装备及各种特殊物品。玩家可以选择给角色配备或卸下武器、装备等物品，也可以选择特殊物品进行使用。背包右侧的角色面板中还展示出了角色的血量、攻击力、等级、防御值及速度。除此之外，背包中还显示了玩家所拥有的金币，玩家可以通过与特定的NPC进行交互以购买武器、装备及特殊物品。
+
+    - 食物（示例）：
+
+      <div style="display: flex; align-items: center;">
+      <img src="Resources/goods/apple.png" alt="Image 1" width="7%" style="margin-right: 10px;">
+      <img src="Resources/goods/beer.png" alt="Image 2" width="7%" style="margin-right: 10px;">
+      <img src="Resources/goods/cheese.png" alt="Image 3" width="7%" style="margin-right: 10px;">
+      </div>
+  
+    - 装备（示例）：
+
+      <div style="display: flex; align-items: center;">
+      <img src="Resources/goods/final_armor.png" alt="Image 2" width="7%" style="margin-right: 10px;">
+      <img src="Resources/goods/shield.png" alt="Image 3" width="7%" style="margin-right: 10px;">
+      <img src="Resources/goods/final_boots.png" alt="Image 3" width="7%" style="margin-right: 10px;">
+      </div>
+
+    - 武器（示例）：
+
+     <div style="display: flex; align-items: center;">
+     <img src="Resources/goods/dagger.png" alt="Image 1" width="7%" style="margin-right: 10px;">
+     <img src="Resources/goods/final_sword.png" alt="Image 2" width="7%" style="margin-right: 10px;">
+     <img src="Resources/goods/forest_ scepter.png" alt="Image 3" width="7%" style="margin-right: 10px;">
+     </div>
+
+    - 特殊物品（示例）：
+
+     <div style="display: flex; align-items: center;">
+     <img src="Resources/goods/life_potion.png" alt="Image 1" width="7%" style="margin-right: 10px;">
+     <img src="Resources/goods/ice_nacklace.png" alt="Image 2" width="7%" style="margin-right: 10px;">
+     <img src="Resources/goods/fire_ring.png" alt="Image 3" width="7%" style="margin-right: 10px;">
+     </div>
+     
+  - #### 任务系统
+
+    任务系统中包含两个模块：主线任务、支线任务。玩家解锁任务后可查看任务的具体信息，任务完成后，任务状态会自动更改为已完成。在任务板块，玩家可以通过上下滑动滚动条来查看多个任务。
+
+> ### 战斗操作
+
+  开放世界中存在多个怪物，玩家可自行选择与怪物进行战斗。怪物具备高级AI，能根据玩家策略调整战斗行为。
+
+> ### NPC与任务系统
 
   开放世界中存在多个npc，每个村落中有一个NPC负责介绍剧情并引出主线任务。玩家前往与之交流，即可了解村落的背景故事，并解锁对应的主线任务，开启打怪的旅程。主线任务完成后，会自动更改成已完成的状态。
 
   除此之外，游戏还设置了多个支线任务，支线任务与主线任务相互独立，具有丰富的类型。如：购买装备、获取食物、寻找人物。
 
+  - 负责解锁剧情及各村落的主线任务的NPC：
 
-（待完善）
+  <div style="display: flex; align-items: center;">
+  <img src="Resources/Role/npc1/1.png" alt="Image 1" width="13%" style="margin-right: 10px;">
+  <img src="Resources/Role/npc2/1.png" alt="Image 2" width="13%" style="margin-right: 10px;">
+  <img src="Resources/Role/npc3/1.png" alt="Image 3" width="13%" style="margin-right: 10px;">
+  <img src="Resources/Role/npc4/1.png" alt="Image 4" width="13%" style="margin-right: 10px;">
+  <img src="Resources/Role/npc5/1.png" alt="Image 5" width="13%" style="margin-right: 10px;">
+  </div>
+
+  - 提供装备购买功能的NPC：
+  
+  <div style="display: flex; align-items: center;">
+  <img src="Resources/Role/npc7/1.png" alt="Image 7" width="13%" style="margin-right: 10px;">
+  </div>
+
+   - 免费提供特殊物品的NPC：
+  
+  <div style="display: flex; align-items: center;">
+  <img src="Resources/Role/npc6/1.png" alt="Image 6" width="13%" style="margin-right: 10px;">
+  </div>
 
 ## 🌟游戏功能
 
@@ -108,7 +171,6 @@
 #### 交互系统
 
 - [x] 玩家可以和环境中的多个元素进行交互，如NPC
-
   
 > ### 附加功能
 
@@ -120,7 +182,11 @@
 
 ## 🌟技术路线
 
+- 地图相关类
 
+- 人物相关类
+
+- 背包及任务相关类
 
 ## 🌟集成开发环境与编译运行环境
 
