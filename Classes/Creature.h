@@ -35,7 +35,7 @@ protected:
 	bool is_moving;
 	float scale;      // 缩放比例
 	Scene* scene;     // 场景指针
-
+	float criticalChance = 0;  // 角色暴击率
 	/************************** public **************************/
 public:
 	/* 精灵相关 */
@@ -114,9 +114,10 @@ public:
 
 	/* 等级加成 */
 	virtual void levelBonus();
-
+	double Element(Creature*, Creature*);
+	bool getElementType() { return elementType; }
 	/* 计算伤害 */
-	int DamageCal(Creature*, Creature*);
+	double DamageCal(Creature*, Creature*);
 
 	/* 返回变量值 */
 	bool ChangeIsDead(bool change) { isDead = change; }
