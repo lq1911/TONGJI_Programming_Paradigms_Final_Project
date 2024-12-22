@@ -80,6 +80,7 @@ void Monster::Die() {
 	is_moving = false;
 	isDead = true;
  	target->GetBonus(bonus);
+	this->mySprite->retain();
 	this->mySprite->removeFromParentAndCleanup(true);
  	Creature::Die();
 }

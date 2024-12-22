@@ -185,8 +185,12 @@ void MainGameScene::LoadBackgroundMusicToScene() {
 	if (_musicManager->getInstance() == nullptr) {
 		this->addChild(_musicManager);
 	}
+
 	_musicManager->stopBackgroundMusic();
-	_musicManager->playBackgroundMusic("music/peace.mp3");
+	if (DoorID == 2)
+		_musicManager->playBackgroundMusic("music/fight.mp3");
+	else
+		_musicManager->playBackgroundMusic("music/peace.mp3");
 }
 /****************************************************************/
 ////////////////以下为本场景声明的本场景特有功能函数/////////////
@@ -253,6 +257,9 @@ void MainGameScene::ChangeScene(const int SceneName, const int NPCIndex, const i
     } else { // 返回上一个场景
 		// 返回到室外场景
 		Director::getInstance()->popScene();
+
+		_musicManager->stopBackgroundMusic();
+		_musicManager->playBackgroundMusic("music/peace.mp3");
 
 		// 恢复上一个场景的行为
 		auto outdoorScene = dynamic_cast<MainGameScene*>(Director::getInstance()->getRunningScene());

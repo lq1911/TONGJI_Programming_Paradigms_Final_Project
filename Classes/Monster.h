@@ -184,14 +184,14 @@ public:
 			scene->addChild(monster2);
 		}
 		if (DoorID == 9) {
-			monster6 = new Monster("Monster6", 3000, 600, 20, 100, 5, 100, 2, 100, 100, 100, bonus.monster_bonus6, player, 500, 1.5f, scene);
+			monster6 = new Monster("Monster6", 3000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus6, player, 500, 1.5f, scene);
 			monster6->Init(mapManager);
 			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
 			monster.push_back(monster6);
 			scene->addChild(monster6);
 		}
 		else if (DoorID == 21) {
-			monster4 = new Monster("Monster4", 1000, 600, 20, 100, 5, 100, 2, 100, 100, 100, bonus.monster_bonus4, player, 500, 1.0f, scene);
+			monster4 = new Monster("Monster4", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus4, player, 500, 1.0f, scene);
 			monster4->Init(mapManager);
 			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
 			monster.push_back(monster4);

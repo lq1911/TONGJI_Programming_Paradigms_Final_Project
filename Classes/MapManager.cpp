@@ -68,7 +68,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				// 设置粒子特效
 				auto particle = ParticleGalaxy::create();
 				particle->setPosition(TiledMapPosToScenePos(Vec2(x, y), mapID));
-				particle->setScale(0.5f);
+				particle->setScale(0.3f);
 				this->addChild(particle);
 			}
 			else if (objectType == "Interaction") {
@@ -93,7 +93,7 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				// 设置粒子特效
 				auto particle = ParticleGalaxy::create();
 				particle->setPosition(TiledMapPosToScenePos(Vec2(x, y), mapID));
-				particle->setScale(0.5f);
+				particle->setScale(0.3f);
 				this->addChild(particle);
 
 				// 保存门坐标
