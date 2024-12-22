@@ -132,6 +132,10 @@
   <img src="Resources/Role/npc6/1.png" alt="Image 6" width="13%" style="margin-right: 10px;">
   </div>
 
+> ### 音乐系统
+
+  游戏中设置了背景音乐，且支持调整音量大小的功能。除此之外，玩家打开背包、配备装备、查看任务等操作均具有不同的特殊音效。
+
 ## 🌟游戏功能
 
 > ### 基础功能
@@ -184,9 +188,28 @@
 
 - 地图相关类
 
+  - [MapManager](Classes/MapManager.h)
+  - [MainGameScene](Classes/MainGameScene.h)
+  - [CameraManager](Classes/CameraManager.h)
+
 - 人物相关类
 
+  - [Creature](Classes/Creature.h)
+    - [NPC](Classes/NPC.h)
+    - [Player](Classes/Player.h)
+    - [Monster](Classes/Monster.h)
+
 - 背包及任务相关类
+
+  - [BagManager](Classes/BagManager.h)
+  - [item](Classes/item.h)
+
+- 其它类
+
+  - [music](Classes/BackgroundMusic.h)
+  - [LearningScene](Classes/LearningScene.h)
+  - [SetPlayerScene](Classes/SetPlayerScene.h)
+  - [LoadingScene](Classes/LoadingScene.h)
 
 ## 🌟集成开发环境与编译运行环境
 
@@ -201,8 +224,8 @@
 | 姓名 | 学号 | 贡献度 | 分工 | 
 | :---: | :---: | :---: | :---: |
 | [王雷](https://github.com/WingWR) | 2351299 | 20％ | 高级地图系统的设计与开发 |
-| [周达](https://github.com/zdlovepro) | 2354185 | 20％ | 人物系统及交互系统的设计与开发 |
-| [林琪](https://github.com/lq1911) | 2352609 | 20％ | 作战系统的设计与开发 |
+| [周达](https://github.com/zdlovepro) | 2354185 | 20％ | 作战系统的设计与开发 |
+| [林琪](https://github.com/lq1911) | 2352609 | 20％ | 人物系统及交互系统的设计与开发 |
 | [陈柏熙](https://github.com/cbx6666) | 2353120 | 20％ | 背包及装备系统、任务系统、音乐系统的设计与开发 |
 | [黄景胤](https://github.com/7719Drinkin) | 2351129 | 20％ | 高级地图系统的设计与开发 |
 
