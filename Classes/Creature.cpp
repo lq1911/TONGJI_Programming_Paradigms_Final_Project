@@ -13,7 +13,7 @@ void Creature::initSprite() {
     std::unordered_map<std::string, Size> bodySizeMap = {
         {"Player1", Size(40, 70)},
         {"Player2", Size(40, 60)},
-        {"Player3", Size(40, 70)},
+        {"Player3", Size(40, 50)},
         {"Player4", Size(40, 70)},
         {"Player5", Size(40, 70)},
         {"npc0", Size(60, 60)},
@@ -40,7 +40,7 @@ void Creature::initSprite() {
     if (bodySizeMap.find(role) != bodySizeMap.end()) {
         collisionBoxSize = bodySizeMap[role];  // 根据角色设置碰撞框大小
         if (role == "Player1" || role == "Player2" || role == "Player3" || role == "Player4" || role == "Player5")
-            collisionBoxOffset = Vec2(0, 30);
+            collisionBoxOffset = Vec2(0, -20);
         else if (role == "npc1" || role == "npc7")
             collisionBoxOffset = Vec2(0, -30);
         else if (role == "npc2" || role == "npc3" || role == "npc4" || role == "npc5" || role == "npc6" || role == "npc8" || role == "npc9" || role == "npc10")
@@ -54,7 +54,6 @@ void Creature::initSprite() {
 
     // 碰撞框
     // drawCollisionBox();
-
 }
 
 /* 更改碰撞框 */
@@ -504,53 +503,10 @@ void Creature::levelBonus() {
     atk = atk * (0.05 * level + 1);
     def = def * (0.05 * level + 1);
 }
-double Creature::Element(Creature* a, Creature* b) {
 
-    if (a->getElementType() == ElementType::FIRE && b->getElementType() == ElementType::GRASS) {
-        return 2;
-    }
-    else if (a->getElementType() == ElementType::GRASS && b->getElementType() == ElementType::ROCK) {
-        return 2;
-    }
-    else if (a->getElementType() == ElementType::ROCK && b->getElementType() == ElementType::ICE) {
-        return 2;
-    }
-    else if (a->getElementType() == ElementType::ICE && b->getElementType() == ElementType::FIRE) {
-        return 2;
-    }
-    if (a->getElementType() == ElementType::NONE && b->getElementType() == ElementType::NONE) {
-        return 1;
-    }
-    else if (a->getElementType() == ElementType::NONE && b->getElementType() != ElementType::NONE) {
-        return 0.5;
-    }
-    if (b->getElementType() == ElementType::NONE) {
-        return 2;
-    }
-    if (a->getElementType() == ElementType::FIRE && b->getElementType() == ElementType::ICE) {
-        return 0.5;
-    }
-    else if (a->getElementType() == ElementType::ICE && b->getElementType() == ElementType::ROCK) {
-        return 0.5;
-    }
-    else if (a->getElementType() == ElementType::ROCK && b->getElementType() == ElementType::GRASS) {
-        return 0.5;
-    }
-    else if (a->getElementType() == ElementType::GRASS && b->getElementType() == ElementType::FIRE) {
-        return 0.5;
-    }
-
-}
 /* 返回a对b的伤害 */
-double Creature::DamageCal(Creature* a, Creature* b) {
-    srand(0);
-    int rand_num = rand() % 100;
-    if (rand_num < 100 * criticalChance) {
-        return 2 * Element(a, b) * (a->getAtk() - b->getDef());
-    }
-    else {
-        return  Element(a, b) * (a->getAtk() - b->getDef());
-    }
+int Creature::DamageCal(Creature* a, Creature* b) {
+    return a->getAtk() - b->getDef();
 }
 
 /* 设置属性 */

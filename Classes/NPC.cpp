@@ -1,5 +1,6 @@
 #include <iostream>
 #include "NPC.h"
+#include "audio/include/AudioEngine.h"
 
 /* 交互提示 */
 void NPC::update() {
@@ -170,16 +171,18 @@ void NPC::setTasks() {
 	}
 	// 买东西
 	else if (role == "npc7") {
-		npc_task = new task("SHOPPING", "Go to the Crimson Wasteland and find Celeste, buy some equipment from her.", 0, 0);
+		npc_task = new task("BUY WEAPONS", "Go to the Crimson Wasteland and find Celeste, buy some weapons from her.", 0, 0);
 	}
 	else if (role == "npc8") {
-		npc_task = new task("LTask 3", "This is the 3rd task.", 0, 0);
+		npc_task = new task("BUY EQUIPMENT", "Go to the Realm of Verdant Woods and find Gabriel, buy some equipments from him.", 0, 0);
 	}
+	// 聊天
 	else if (role == "npc9") {
-		npc_task = new task("LTask 4", "This is the 4th task.", 0, 0);
+		npc_task = new task("CHAT", "Find Dylan and talk with him.", 0, 0);
 	}
-	else if (role == "npc9") {
-		npc_task = new task("LTask 4", "This is the 4th task.", 0, 0);
+	// 钓鱼
+	else if (role == "npc10") {
+		npc_task = new task("FISHING", "Go to the Glacier of Silence and get some fish from Lucas.", 0, 0);
 	}
 }
 
@@ -784,7 +787,7 @@ void NPC::npc7(std::function<void()> callback) {
 		scene->addChild(npcTxt2_1, 2);
 
 		/* player回答选择3 */
-		auto playerAns3 = Label::createWithTTF("Icon Sword : Attack+10 [price:100coins]", "fonts/KuaiLe_Chinese.ttf", 25);
+		auto playerAns3 = Label::createWithTTF("Iron Sword : Attack+10 [price:100coins]", "fonts/KuaiLe_Chinese.ttf", 25);
 		playerAns3->setPosition(Vec2(who->getXY().x, who->getXY().y - 170));
 		playerAns3->setTextColor(Color4B(0, 0, 0, 255));
 		scene->addChild(playerAns3, 2);
@@ -923,56 +926,82 @@ void NPC::npc7(std::function<void()> callback) {
 void NPC::npc8(std::function<void()> callback) {
 	isChatting = true;
 	/* npc说话-1 */
-	auto npcTxt1 = Label::createWithTTF("This is npc6 speaking 1", "fonts/Lacquer.ttf", 35);
-	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 110));
+	auto npcTxt1 = Label::createWithTTF("Buy something!", "fonts/Lacquer.ttf", 35);
+	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 100));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 2);
 
 	/* player回答选择1 */
-	auto playerAns1 = Label::createWithTTF("This is player's answer 1", "fonts/KuaiLe_Chinese.ttf", 25);
-	playerAns1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));
+	auto playerAns1 = Label::createWithTTF("Boots : Speed+10 [price:20coins]", "fonts/KuaiLe_Chinese.ttf", 25);
+	playerAns1->setPosition(Vec2(who->getXY().x, who->getXY().y - 140));
 	playerAns1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(playerAns1, 2);
 	/* player回答选择2 */
-	auto playerAns2 = Label::createWithTTF("This is player's answer 2", "fonts/KuaiLe_Chinese.ttf", 25);
-	playerAns2->setPosition(Vec2(who->getXY().x, who->getXY().y - 220));
+	auto playerAns2 = Label::createWithTTF("Diamond Shoes : Speed+7 [price:30coins]", "fonts/KuaiLe_Chinese.ttf", 25);
+	playerAns2->setPosition(Vec2(who->getXY().x, who->getXY().y - 180));
 	playerAns2->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(playerAns2, 2);
+	/* player回答选择3 */
+	auto playerAns3 = Label::createWithTTF("Final Shoes : Speed+12 [price:40coins]", "fonts/KuaiLe_Chinese.ttf", 25);
+	playerAns3->setPosition(Vec2(who->getXY().x, who->getXY().y - 220));
+	playerAns3->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(playerAns3, 2);
 
 	/* player回答选择1提交按钮 */
 	auto Ans1Button = ui::Button::create("Button/Choice1Button.png", "Button/Choice1ButtonClicked.png");
 	Ans1Button->ignoreContentAdaptWithSize(false);
 	Ans1Button->setContentSize(Size(40, 40));
 	Ans1Button->setTitleFontSize(24);
-	Ans1Button->setPosition(Vec2(who->getXY().x - 250, who->getXY().y - 160));
+	Ans1Button->setPosition(Vec2(who->getXY().x - 260, who->getXY().y - 140));
 	scene->addChild(Ans1Button, 2);
 	/* player回答选择2提交按钮 */
 	auto Ans2Button = ui::Button::create("Button/Choice2Button.png", "Button/Choice2ButtonClicked.png");
 	Ans2Button->ignoreContentAdaptWithSize(false);
 	Ans2Button->setContentSize(Size(40, 40));
 	Ans2Button->setTitleFontSize(24);
-	Ans2Button->setPosition(Vec2(who->getXY().x - 250, who->getXY().y - 220));
+	Ans2Button->setPosition(Vec2(who->getXY().x - 260, who->getXY().y - 180));
 	scene->addChild(Ans2Button, 2);
-
+	/* player回答选择3提交按钮 */
+	auto Ans3Button = ui::Button::create("Button/Choice1Button.png", "Button/Choice1ButtonClicked.png");
+	Ans3Button->ignoreContentAdaptWithSize(false);
+	Ans3Button->setContentSize(Size(40, 40));
+	Ans3Button->setTitleFontSize(24);
+	Ans3Button->setPosition(Vec2(who->getXY().x - 260, who->getXY().y - 220));
+	scene->addChild(Ans3Button, 2);
+	
 	/* 回答选择1 */
 	Ans1Button->addClickEventListener([=](Ref* sender) mutable {
 		// 移除第一次问答的元素
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
 		playerAns2->removeFromParent();
+		playerAns3->removeFromParent();
 		Ans1Button->removeFromParent();
 		Ans2Button->removeFromParent();
-		/* npc说话-2-choice1 */
-		auto npcTxt2_1 = Label::createWithTTF("This is npc6 speaking 2-1", "fonts/Lacquer.ttf", 35);
-		npcTxt2_1->setPosition(Vec2(who->getXY().x, who->getXY().y - 120));
+		Ans3Button->removeFromParent();
+		/* npc说话-2 */
+		auto npcTxt2_1 = Label::createWithTTF("OK!", "fonts/Lacquer.ttf", 35);
+		npcTxt2_1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));
 		npcTxt2_1->setTextColor(Color4B(0, 0, 0, 255));
 		scene->addChild(npcTxt2_1, 2);
+		// 加背包
+		if (who->coins >= 20) {
+			who->coins -= 20;
+			goods _goods;
+			shoes* it = new shoes(_goods.boots);
+			bag->addItem(it);
+			if (npc_task->isFinished != true)
+				npc_task->isFinished = true;
+		}
+		else {
+			npcTxt2_1->setString("Sorry, you don't have enough money!"); // npc说话
+		}
 		/* 结束对话 */
 		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
 		CloseButton->ignoreContentAdaptWithSize(false);
 		CloseButton->setContentSize(Size(40, 40));
 		CloseButton->setTitleFontSize(24);
-		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 180));
+		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 200));
 		scene->addChild(CloseButton, 2);
 		CloseButton->addClickEventListener([=](Ref* sender) mutable {
 			isChatting = false;
@@ -983,27 +1012,39 @@ void NPC::npc8(std::function<void()> callback) {
 			}
 			return;
 			});
-
 		});
 	/* 回答选择2 */
 	Ans2Button->addClickEventListener([=](Ref* sender) mutable {
-		isChatting = false;
 		npcTxt1->removeFromParent();
 		playerAns1->removeFromParent();
 		playerAns2->removeFromParent();
+		playerAns3->removeFromParent();
 		Ans1Button->removeFromParent();
 		Ans2Button->removeFromParent();
-		/* npc说话-2-choice2 */
-		auto npcTxt2_2 = Label::createWithTTF("This is npc6 speaking 2-2", "fonts/Lacquer.ttf", 35);
-		npcTxt2_2->setPosition(Vec2(who->getXY().x, who->getXY().y - 120));
+		Ans3Button->removeFromParent();
+		/* npc说话-2 */
+		auto npcTxt2_2 = Label::createWithTTF("OK!", "fonts/Lacquer.ttf", 35);
+		npcTxt2_2->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));
 		npcTxt2_2->setTextColor(Color4B(0, 0, 0, 255));
 		scene->addChild(npcTxt2_2, 2);
+		// 加背包
+		if (who->coins >= 30) {
+			who->coins -= 30;
+			goods _goods;
+			shoes* it = new shoes(_goods.diamond_shoes);
+			bag->addItem(it);
+			if (npc_task->isFinished != true)
+				npc_task->isFinished = true;
+		}
+		else {
+			npcTxt2_2->setString("Sorry, you don't have enough money!"); // npc说话
+		}
 		/* 结束对话 */
 		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
 		CloseButton->ignoreContentAdaptWithSize(false);
 		CloseButton->setContentSize(Size(40, 40));
 		CloseButton->setTitleFontSize(24);
-		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 180));
+		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 200));
 		scene->addChild(CloseButton, 2);
 		CloseButton->addClickEventListener([=](Ref* sender) mutable {
 			npcTxt2_2->removeFromParent();
@@ -1013,44 +1054,145 @@ void NPC::npc8(std::function<void()> callback) {
 			}
 			return;
 			});
-
+		});
+	/* 回答选择3 */
+	Ans3Button->addClickEventListener([=](Ref* sender) mutable {
+		// 移除第一次问答的元素
+		npcTxt1->removeFromParent();
+		playerAns1->removeFromParent();
+		playerAns2->removeFromParent();
+		playerAns3->removeFromParent();
+		Ans1Button->removeFromParent();
+		Ans2Button->removeFromParent();
+		Ans3Button->removeFromParent();
+		/* npc说话-2 */
+		auto npcTxt2_3 = Label::createWithTTF("OK!", "fonts/Lacquer.ttf", 35);
+		npcTxt2_3->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));
+		npcTxt2_3->setTextColor(Color4B(0, 0, 0, 255));
+		scene->addChild(npcTxt2_3, 2);
+		// 加背包
+		if (who->coins >= 40) {
+			who->coins -= 40;
+			goods _goods;
+			shoes* it = new shoes(_goods.final_shoes);
+			bag->addItem(it);
+			if (npc_task->isFinished != true)
+				npc_task->isFinished = true;
+		}
+		else {
+			npcTxt2_3->setString("Sorry, you don't have enough money!"); // npc说话
+		}
+		/* 结束对话 */
+		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+		CloseButton->ignoreContentAdaptWithSize(false);
+		CloseButton->setContentSize(Size(40, 40));
+		CloseButton->setTitleFontSize(24);
+		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 200));
+		scene->addChild(CloseButton, 2);
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			isChatting = false;
+			npcTxt2_3->removeFromParent();
+			CloseButton->removeFromParent();
+			if (callback) {
+				callback();
+			}
+			return;
+			});
 		});
 }
 
+// 聊天
+void NPC::npc9(std::function<void()> callback) {
+	isChatting = true;
+	npc_task->isFinished = true;
+	/* npc说话-1 */
+	auto npcTxt1 = Label::createWithTTF("Hello! I am Dylan.", "fonts/Lacquer.ttf", 30);
+	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));///////////
+	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(npcTxt1, 2);
+
+	/* NextButton */
+	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
+	NextButton->ignoreContentAdaptWithSize(false);
+	NextButton->setContentSize(Size(60, 60));
+	NextButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 230));///////////
+	NextButton->setOpacity(220);
+	scene->addChild(NextButton, 2);
+	/* NextButton监听 */
+	NextButton->addClickEventListener([=](Ref* sender)mutable {
+		// 解锁任务
+		NextButton->removeFromParent();
+		NextButton = nullptr;
+		npcTxt1->setString("Nice to meet you!");
+
+		// 下一步:结束对话
+		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
+		CloseButton->ignoreContentAdaptWithSize(false);
+		CloseButton->setContentSize(Size(40, 40));
+		CloseButton->setTitleFontSize(24);
+		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 230));///////////
+		scene->addChild(CloseButton, 4);
+		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			npcTxt1->removeFromParent();
+			CloseButton->removeFromParent();
+			isChatting = false;
+			if (callback) {
+				callback();
+			}
+			return;
+			});
+		});
+}
+
+// 钓鱼
 void NPC::npc10(std::function<void()> callback) {
 	isChatting = true;
 
 	/* npc说话-1 */
-	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 5", "fonts/Lacquer.ttf", 30);
-	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));///////////
+	auto npcTxt1 = Label::createWithTTF("Hi, I'm Lucas. Do you want any fish?", "fonts/Lacquer.ttf", 30);
+	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 140));///////////
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 2);
-
-	/* NextButton */
-	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
-	NextButton->ignoreContentAdaptWithSize(false);
-	NextButton->setContentSize(Size(60, 60));
-	NextButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 230));///////////
-	NextButton->setOpacity(220);
-	scene->addChild(NextButton, 2);
-	/* NextButton监听 */
-	NextButton->addClickEventListener([=](Ref* sender)mutable {
-		// 解锁任务
-		NextButton->removeFromParent();
-		NextButton = nullptr;
-		npcTxt1->setString("hahaha");
-		
-		// 下一步:结束对话
+	
+	/* player回答选择1 */
+	auto playerAns1 = Label::createWithTTF("Sure!", "fonts/KuaiLe_Chinese.ttf", 25);
+	playerAns1->setPosition(Vec2(who->getXY().x + 50, who->getXY().y - 210));
+	playerAns1->setTextColor(Color4B(0, 0, 0, 255));
+	scene->addChild(playerAns1, 2);
+	/* player回答选择1提交按钮 */
+	auto Ans1Button = ui::Button::create("Button/Choice1Button.png", "Button/Choice1ButtonClicked.png");
+	Ans1Button->ignoreContentAdaptWithSize(false);
+	Ans1Button->setContentSize(Size(40, 40));
+	Ans1Button->setTitleFontSize(24);
+	Ans1Button->setPosition(Vec2(who->getXY().x - 50, who->getXY().y - 210));
+	scene->addChild(Ans1Button, 2);
+	/* 回答选择1 */
+	Ans1Button->addClickEventListener([=](Ref* sender) mutable {
+		cocos2d::AudioEngine::play2d("music/fishing.mp3");
+		// 完成任务
+		if (npc_task->isFinished != true) {
+			npc_task->isFinished = true;
+		}
+		// 移除第一次问答的元素
+		npcTxt1->removeFromParent();
+		playerAns1->removeFromParent();
+		Ans1Button->removeFromParent();
+		/* npc说话-2-choice1 */
+		auto npcTxt2_1 = Label::createWithTTF("Here you are!", "fonts/Lacquer.ttf", 35);
+		npcTxt2_1->setPosition(Vec2(who->getXY().x, who->getXY().y - 140));
+		npcTxt2_1->setTextColor(Color4B(0, 0, 0, 255));
+		scene->addChild(npcTxt2_1, 2);
+		/* 结束对话 */
 		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
 		CloseButton->ignoreContentAdaptWithSize(false);
 		CloseButton->setContentSize(Size(40, 40));
 		CloseButton->setTitleFontSize(24);
-		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 230));///////////
-		scene->addChild(CloseButton, 4);
+		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 220));
+		scene->addChild(CloseButton, 2);
 		CloseButton->addClickEventListener([=](Ref* sender) mutable {
-			npcTxt1->removeFromParent();
-			CloseButton->removeFromParent();
 			isChatting = false;
+			npcTxt2_1->removeFromParent();
+			CloseButton->removeFromParent();
 			if (callback) {
 				callback();
 			}
@@ -1059,44 +1201,3 @@ void NPC::npc10(std::function<void()> callback) {
 		});
 }
 
-void NPC::npc9(std::function<void()> callback) {
-	isChatting = true;
-
-	/* npc说话-1 */
-	auto npcTxt1 = Label::createWithTTF("Taskkkkkk 5", "fonts/Lacquer.ttf", 30);
-	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));///////////
-	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
-	scene->addChild(npcTxt1, 2);
-
-	/* NextButton */
-	auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
-	NextButton->ignoreContentAdaptWithSize(false);
-	NextButton->setContentSize(Size(60, 60));
-	NextButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 230));///////////
-	NextButton->setOpacity(220);
-	scene->addChild(NextButton, 2);
-	/* NextButton监听 */
-	NextButton->addClickEventListener([=](Ref* sender)mutable {
-		// 解锁任务
-		NextButton->removeFromParent();
-		NextButton = nullptr;
-		npcTxt1->setString("hahaha");
-
-		// 下一步:结束对话
-		auto CloseButton = ui::Button::create("Button/CloseButton.png", "Button/CloseButtonClicked.png");
-		CloseButton->ignoreContentAdaptWithSize(false);
-		CloseButton->setContentSize(Size(40, 40));
-		CloseButton->setTitleFontSize(24);
-		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 230));///////////
-		scene->addChild(CloseButton, 4);
-		CloseButton->addClickEventListener([=](Ref* sender) mutable {
-			npcTxt1->removeFromParent();
-			CloseButton->removeFromParent();
-			isChatting = false;
-			if (callback) {
-				callback();
-			}
-			return;
-			});
-		});
-}

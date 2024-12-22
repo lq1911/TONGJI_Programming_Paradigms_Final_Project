@@ -15,7 +15,7 @@ private:
 	Player* who;      // 玩家
     BagManager* bag;  // 玩家背包
     bool isChatting = false;  // 是否正在对话
-    std::vector<bool> Mtasks = { false,false,false,false,false};  // 主线任务是否已解锁
+    std::vector<bool> Mtasks = { false,false,false,false,false};  // 任务是否已解锁
     task* npc_task;
 public:
 	/* 构造函数 */
@@ -76,6 +76,7 @@ private:
     Player* player;             // 玩家对象的引用
     BagManager* bag;            // 玩家背包
     Scene* NPCscene;
+    vector<bool> TASK = { false,false,false,false };
 public:
     /* 构造函数 */
     //idx:场景

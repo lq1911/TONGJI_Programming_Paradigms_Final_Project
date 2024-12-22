@@ -122,7 +122,7 @@ bool SetPlayerScene::init() {
     P5Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player5");
         who = Player5;
-        auto scene = LoadingScene::createScene(1);
+        auto scene = LoadingScene::createScene(0);
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
 
