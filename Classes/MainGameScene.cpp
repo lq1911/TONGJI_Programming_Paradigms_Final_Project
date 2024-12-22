@@ -24,7 +24,7 @@ bool MainGameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
-	CCLOG("MainGameScene::init");
+
 	this->LoadMapToScene();       //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
@@ -185,7 +185,7 @@ void MainGameScene::LoadBackgroundMusicToScene() {
 	if (_musicManager->getInstance() == nullptr) {
 		this->addChild(_musicManager);
 	}
-
+	_musicManager->stopBackgroundMusic();
 	_musicManager->playBackgroundMusic("music/peace.mp3");
 }
 /****************************************************************/

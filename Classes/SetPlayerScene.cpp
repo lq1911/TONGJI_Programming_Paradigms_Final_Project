@@ -98,33 +98,31 @@ bool SetPlayerScene::init() {
     P1Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player1");
         who = Player1;
-        auto scene = LoadingScene::createScene();
+        auto scene = LoadingScene::createScene(0);
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P2Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player2");
         who = Player2;
-        auto scene = LoadingScene::createScene();
+        auto scene = LoadingScene::createScene(0);
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P3Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player3");
         who = Player3;
-        auto scene = LoadingScene::createScene();
+        auto scene = LoadingScene::createScene(0);
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P4Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player4");
         who = Player4;
-        auto scene = LoadingScene::createScene();
+        auto scene = LoadingScene::createScene(0);
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
     P5Button->addClickEventListener([=](Ref* sender) mutable {
         CCLOG("Choose Player5");
         who = Player5;
-
-        //auto scene = MainGameScene::createScene();
-        auto scene = LoadingScene::createScene();
+        auto scene = LoadingScene::createScene(1);
         Director::getInstance()->replaceScene(TransitionFade::create(0.5f, scene, Color3B::BLACK));
         });
 
