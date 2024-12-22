@@ -220,11 +220,11 @@ void MainGameScene::MainCameraFollowPlayer() {
 
 void MainGameScene::MicroCameraFollowPlayer() {
 	// 设置摄像机的初始位置
-	float InitCameraZinMicroMap = 2000.0f;
+	float InitCameraZinMicroMap = 1200.0f;
 
-	// 每次进入小地图时，将小摄像机的位置设置中心位置
-	Vec2 centerPosition(1200, 1200);
-	_cameraManager->UpdateCameraPosition(_cameraManager->GetMicroCamera(), centerPosition, InitCameraZinMicroMap);
+	// 每次进入小地图时，将小摄像机的位置设置玩家位置
+	auto PlayerPosition = PLAYER->mySprite->getPosition();
+	_cameraManager->UpdateCameraPosition(_cameraManager->GetMicroCamera(), PlayerPosition, InitCameraZinMicroMap);
 }
 
 void MainGameScene::UnlockMapTeleport() {
