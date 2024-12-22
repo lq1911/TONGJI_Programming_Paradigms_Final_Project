@@ -841,7 +841,7 @@
   <object id="327" type="InDoorPoint" x="718.667" y="737.333">
    <properties>
     <property name="MonsterIndex" type="int" value="31"/>
-    <property name="NPCIndex" type="int" value="0"/>
+    <property name="NPCIndex" type="int" value="100"/>
     <property name="SceneName" type="int" value="2"/>
     <property name="X" type="float" value="718.67"/>
     <property name="Y" type="float" value="737.33"/>
