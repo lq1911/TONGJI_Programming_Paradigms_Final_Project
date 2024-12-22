@@ -16,9 +16,9 @@ struct ResourceToLoad {
 
 class LoadingScene : public cocos2d::Scene {
 private:
-	float i = 0.0f;
-    cocos2d::Size VisibleSize;
-    cocos2d::Sprite* LoadingBackground;
+	float i = 0.0f;    //进度条进度
+	int _SceneChoice;    //场景选择，为0进入教学场景，为1进入游戏场景
+    cocos2d::Size VisibleSize;    //屏幕大小
 	std::vector<ResourceToLoad> Resources = {
 	{ ResourceType::TILE_MAP, "Maps/RebirthTemple/RebirthTemple.tmx" },
 	{ ResourceType::TILE_MAP, "Maps/volcano/volcano.tmx" },
@@ -44,9 +44,16 @@ private:
 	{ ResourceType::MUSIC, "music/upgrade.mp3" },
 	};
 public:
-    static cocos2d::Scene* createScene();
-    void CreateUI();
+	/*构造函数*/
+	LoadingScene(int SceneChoice);
 
+	/*创建场景*/
+    static cocos2d::Scene* createScene(int SceneChoice);    
+    
+	/*加载UI等等资源*/
+	void CreateUI();
+
+	/*初始化场景*/
     virtual bool init();
 };
 
