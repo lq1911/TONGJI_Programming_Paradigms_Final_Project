@@ -1,7 +1,7 @@
 #include <string>
 #include "Player.h"
 #include "Monster.h"
-
+#inlluce "BagManager.h"
 // update
 void Player::update(float dt) {
     x = getXY().x;
@@ -269,10 +269,28 @@ void Player::GetBonus(Bonus bonus) {
         level++;
         next_level_exp *= (1 + level * 0.1);
     }
-
-    //物品奖励
-    /*BagManager->addItem(bonus.equipment)*/
-
+    srand(0);
+    int a = rand() % 5;
+    if (a == 0) {
+        bag_manager->addItem(bonus.c);
+    }
+    else if (a == 1) {
+        bag_manager->addItem(bonus.w);
+    }
+    else if (a == 2) {
+        bag_manager->addItem(bonus.a);
+    }
+    else if (a == 3) {
+        bag_manager->addItem(bonus.s);
+    }
+    else if (a == 4) {
+        bag_manager->addItem(bonus.ac);
+    }
+   
+    coins += bonus.coin;
+    // 刷新显示
+    
+   
 }
 
 // 判断交互范围

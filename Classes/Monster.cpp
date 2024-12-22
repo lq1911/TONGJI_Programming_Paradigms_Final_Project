@@ -46,6 +46,7 @@ void Monster::update(float dt) {
 	if (current_hp < 0) {
 		isDead = true;
 		Die();//所有死亡机制
+
 	}
 	Vec2 move_by;
 	if (is_moving) {
@@ -314,16 +315,4 @@ void MonsterRespawn::update(float dt) {
 			(*it)->ReSetHp();
 		}
 	}
-}
-//
-void MonsterBonus::init() {
-	monster_bonus1.exp = 10;
-	monster_bonus2.exp = 10;
-	monster_bonus3.exp = 10;
-	monster_bonus4.exp = 10;
-	monster_bonus5.exp = 10;
-	monster_bonus6.exp = 10;
-	monster_bonus7.exp = 10;
-	monster_bonus8.exp = 10;
-
 }

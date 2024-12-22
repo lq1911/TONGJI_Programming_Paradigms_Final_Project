@@ -170,11 +170,10 @@ void MainGameScene::LoadPlayerToScene() {
 
 void MainGameScene::LoadMonsterRespawnToScene() {
 	// 加怪
-	_monsterRespawn = new MonsterRespawn(PLAYER, this,_mapManager);
+	_monsterRespawn = new MonsterRespawn(PLAYER, this,_mapManager,DoorID);
 	
-
 	// 将怪导入角色
-	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);
+	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager,_bagManager);
 }
 
 void MainGameScene::LoadNPCToScene() {
