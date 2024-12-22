@@ -13,7 +13,7 @@ void Creature::initSprite() {
     std::unordered_map<std::string, Size> bodySizeMap = {
         {"Player1", Size(40, 70)},
         {"Player2", Size(40, 60)},
-        {"Player3", Size(40, 70)},
+        {"Player3", Size(40, 50)},
         {"Player4", Size(40, 70)},
         {"Player5", Size(40, 70)},
         {"npc0", Size(60, 60)},
@@ -40,7 +40,7 @@ void Creature::initSprite() {
     if (bodySizeMap.find(role) != bodySizeMap.end()) {
         collisionBoxSize = bodySizeMap[role];  // 根据角色设置碰撞框大小
         if (role == "Player1" || role == "Player2" || role == "Player3" || role == "Player4" || role == "Player5")
-            collisionBoxOffset = Vec2(0, 30);
+            collisionBoxOffset = Vec2(0, -20);
         else if (role == "npc1" || role == "npc7")
             collisionBoxOffset = Vec2(0, -30);
         else if (role == "npc2" || role == "npc3" || role == "npc4" || role == "npc5" || role == "npc6" || role == "npc8" || role == "npc9" || role == "npc10")
@@ -54,7 +54,6 @@ void Creature::initSprite() {
 
     // 碰撞框
     // drawCollisionBox();
-
 }
 
 /* 更改碰撞框 */

@@ -145,23 +145,23 @@ void NPC::setTasks() {
 	/*************** 主线任务 ***************/
 	// 复活神庙
 	if (role == "npc1") {
-		npc_task = new task("Task 1", "This is the 1st task.", 1, 0);
+		npc_task = new task("Revival Temple", "The Tower of Rebirth has chosen to resurrect you, a brave soul, to take on the task of defeating the monsters and saving this world.", 1, 0);
 	}
 	// 火山
 	else if (role == "npc2") {
-		npc_task = new task("Task 2", "This is the 2nd task.", 1, 0);
+		npc_task = new task("Rift of the Firebound", "Defeati the monsters and restore peace to this place.", 1, 0);
 	}
 	// 雪地
 	else if (role == "npc3") {
-		npc_task = new task("Task 3", "This is the 3rd task.", 1, 0);
+		npc_task = new task("Glacier of Silence", "Defeat the monster and bring hope back to this desolate land.", 1, 0);
 	}
 	// 森林
 	else if (role == "npc4") {
-		npc_task= new task("Task 4", "This is the 4th task.", 1, 0);
+		npc_task= new task("Realm of Verdant Woods", "Help defeat the monster that have taken over this place.", 1, 0);
 	}
 	// 沙漠
 	else if (role == "npc5") {
-		npc_task = new task("Final Task", "This is the 5th task.", 1, 0);
+		npc_task = new task("Crimson Wasteland", "Your mission is to traverse this blazing desert, defeat the lurking monsters, and bring life back to this land.", 1, 0);
 	}
 	/*************** 支线任务 ***************/
 	// 给食物
@@ -427,7 +427,7 @@ void NPC::npc3(std::function<void()> callback) {
 	isChatting = true;
 
 	/* npc说话 */
-	auto npcTxt1 = Label::createWithTTF("The Glacier of Silence is a wasteland frozen in eternal winter,\nwhere icy winds cut through the air like blades. A thousand\nyears ago, this was a prosperous kingdom.", "fonts/Lacquer.ttf", 25);
+	auto npcTxt1 = Label::createWithTTF("The Glacier of Silence is a wasteland frozen in eternal\nwinter, where icy winds cut through the air like blades.\nA thousand years ago, this was a prosperous kingdom.", "fonts/Lacquer.ttf", 25);
 	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 2);
@@ -491,7 +491,7 @@ void NPC::npc4(std::function<void()> callback) {
 	isChatting = true;
 
 	/* npc说话 */
-	auto npcTxt1 = Label::createWithTTF("The Realm of Verdant Woods is an ancient forest filled with\nvitality and light, with each tree carrying blessings\nfrom ancient times, whispering peace and wisdom.", "fonts/Lacquer.ttf", 25);
+	auto npcTxt1 = Label::createWithTTF("The Realm of Verdant Woods is an ancient forest filled\nwith vitality and light, with each tree carrying\nblessings from ancient times, whispering peace and wisdom.", "fonts/Lacquer.ttf", 25);
 	npcTxt1->setPosition(Vec2(who->getXY().x, who->getXY().y - 160));
 	npcTxt1->setTextColor(Color4B(0, 0, 0, 255));
 	scene->addChild(npcTxt1, 2);
@@ -505,7 +505,7 @@ void NPC::npc4(std::function<void()> callback) {
 	/* NextButton1监听 */
 	NextButton1->addClickEventListener([=](Ref* sender)mutable {
 		npcTxt1->setPosition(Vec2(who->getXY().x + 50, who->getXY().y - 160));
-		npcTxt1->setString("However, ever since it was taken over by monsters, everything has\nchanged, and the forest is no longer serene. Brave warrior,we\nimplore you to help us defeat the monsters that have stolen our home!");
+		npcTxt1->setString("However, ever since it was taken over by monsters,\neverything has changed, and the forest is no longer\nserene. Brave warrior,we implore you to help us\ndefeat the monsters that have stolen our home!");
 		NextButton1->removeFromParent();
 		NextButton1 = nullptr;
 		/* NextButton2 */

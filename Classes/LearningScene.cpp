@@ -152,7 +152,7 @@ void LearningScene::learnAttack() {
     auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
     NextButton->ignoreContentAdaptWithSize(false);
     NextButton->setContentSize(Size(60, 60));
-    NextButton->setPosition(Vec2(visibleSize.width / 2 + 660, visibleSize.height - 250));
+    NextButton->setPosition(Vec2(visibleSize.width / 2 + 600, visibleSize.height - 250));
     NextButton->setOpacity(180);
     this->addChild(NextButton, 1);
     /* NextButton¼àÌı */
@@ -262,7 +262,7 @@ void LearningScene::learnInteract() {
     auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
     NextButton->ignoreContentAdaptWithSize(false);
     NextButton->setContentSize(Size(60, 60));
-    NextButton->setPosition(Vec2(visibleSize.width / 2 + 580, visibleSize.height - 250));
+    NextButton->setPosition(Vec2(visibleSize.width / 2 + 620, visibleSize.height - 250));
     NextButton->setOpacity(180);
     this->addChild(NextButton, 1);
     /* NextButton¼àÌı */
@@ -312,7 +312,7 @@ void LearningScene::learnBag() {
     auto NextButton = ui::Button::create("Button/NextButton.png", "Button/NextButtonClicked.png");
     NextButton->ignoreContentAdaptWithSize(false);
     NextButton->setContentSize(Size(60, 60));
-    NextButton->setPosition(Vec2(visibleSize.width / 2 + 580, visibleSize.height - 250));
+    NextButton->setPosition(Vec2(visibleSize.width / 2 + 480, visibleSize.height - 250));
     NextButton->setOpacity(180);
     this->addChild(NextButton, 1);
     /* NextButton¼àÌı */
