@@ -4,38 +4,41 @@ USING_NS_CC;
 
 /* 构造函数 */
 NPCManager::NPCManager(Player* playerRef, BagManager* bagManager, Scene* scene, int idx) : player(playerRef), bag(bagManager), NPCscene(scene) {
-    // 初始化地点待修改
     auto VisibleSize = Director::getInstance()->getVisibleSize();
     switch (idx) {
-    // 初始地图
+    /* 初始地图 */
     case(0) :
         // 复活神塔
-        addNPC("npc1", 1298.5f, 1354.7, 0.8f);
-        addNPC("npc6", 577.0f, 455.8f, 0.6f);
+        addNPC("npc1", 1298.5f, 1354.7, 0.8f);    // 解锁主线任务
+        addNPC("npc6", 577.0f, 455.8f, 0.6f);     // 给食物
+        npcList[1]->NPCunlockTask(0);             // 解锁支线任务
         // 火山
-        addNPC("npc2", -1230.8f, 3366.5f, 0.6f);
+        addNPC("npc2", -1230.8f, 3366.5f, 0.6f);  // 解锁主线任务
         // 雪地
-        addNPC("npc3", 2880.0f, 2726.9f, 0.6f);
+        addNPC("npc3", 2880.0f, 2726.9f, 0.6f);   // 解锁主线任务
         // 森林
-        addNPC("npc4", -1013.5, -395.0f, 0.6f);
+        addNPC("npc4", -1013.5, -395.0f, 0.6f);   // 解锁主线任务
         break;
-    // 室内地图1
-    case(1) :
-        // 沙漠
-        addNPC("npc5", 1357.0f, 871.0f, 0.6f); //室内
-       
+    /* 沙漠室内1 */
+    case(31) :
+        addNPC("npc5", 1357.0f, 871.0f, 0.6f);    // 解锁主线任务
         break;
-    // 室内地图2
-    case(2):
-        addNPC("npc7", VisibleSize.width / 2 + 500, VisibleSize.height / 2 - 500, 0.6f);
+    /* 沙漠室内2 */
+    case(32):
+        addNPC("npc7", 1357.0f, 871.0f, 0.6f);    // 买武器
+        npcList[6]->NPCunlockTask(0);             // 解锁支线任务
         break;
-    // 室内地图3
-    case(3):
-        addNPC("npc8", VisibleSize.width / 2 , VisibleSize.height / 2, 0.6f);
+    /* 森林室内1 */
+    case(41):
+        addNPC("npc8", 1357.0f, 871.0f, 0.6f);   
+        break; 
+    /* 森林室内2 */
+    case(42):
+        addNPC("npc9", 1357.0f, 871.0f, 0.6f);
         break;
-    // 室内地图4
-    case(4):
-        addNPC("npc9", VisibleSize.width / 2+500, VisibleSize.height / 2, 0.6f);
+    /* 雪地室内 */
+    case(21):
+        addNPC("npc10", 1357.0f, 871.0f, 0.6f);
         break;
     default:
         break;

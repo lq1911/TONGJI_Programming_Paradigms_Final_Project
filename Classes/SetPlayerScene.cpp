@@ -32,9 +32,9 @@ bool SetPlayerScene::init() {
     }
 
     /* 文字提示选择角色 */
-    auto ChooseRoleTxt = Label::createWithTTF("Please choose your role!", "fonts/KuaiLe_Chinese.ttf", 60);
+    auto ChooseRoleTxt = Label::createWithTTF("Choose your role!", "fonts/Lacquer.ttf", 130);
     ChooseRoleTxt->setPosition(Vec2(visibleSize.width / 2, visibleSize.height - 300));
-    ChooseRoleTxt->setTextColor(Color4B(220, 220, 220, 255));
+    ChooseRoleTxt->setTextColor(Color4B(211, 211, 211, 245));
     this->addChild(ChooseRoleTxt, 0);
 
     /* 选择角色 */

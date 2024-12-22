@@ -26,7 +26,8 @@ void Creature::initSprite() {
         {"npc6", Size(50, 65)},
         {"npc7", Size(50, 75)},
         {"npc8", Size(50, 80)},
-        {"npc9", Size(50, 80)}
+        {"npc9", Size(50, 80)},
+        {"npc10", Size(50, 80)}
         /*,
         {"Monster1", Size(90, 80)},
         {"Monster2", Size(90, 80)},
@@ -43,7 +44,7 @@ void Creature::initSprite() {
             collisionBoxOffset = Vec2(0, 30);
         else if (role == "npc1" || role == "npc7")
             collisionBoxOffset = Vec2(0, -30);
-        else if (role == "npc2" || role == "npc3" || role == "npc4" || role == "npc5" || role == "npc6" || role == "npc8" || role == "npc9")
+        else if (role == "npc2" || role == "npc3" || role == "npc4" || role == "npc5" || role == "npc6" || role == "npc8" || role == "npc9" || role == "npc10")
             collisionBoxOffset = Vec2(0, -20);
     }
 

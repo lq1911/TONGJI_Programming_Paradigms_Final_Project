@@ -1057,8 +1057,3 @@ void BagManager::taskUnlock(const bool type, task* newTask){
         myLineQuest.push_back(newTask);
 
 }
-
-// 设置任务状态为已完成
-void BagManager::taskFinish(task* newTask) {
-    newTask->isFinished = true;
-}

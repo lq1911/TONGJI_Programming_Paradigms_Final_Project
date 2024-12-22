@@ -64,6 +64,7 @@ public:
     void npc7(std::function<void()> callback);
     void npc8(std::function<void()> callback);
     void npc9(std::function<void()> callback);
+    void npc10(std::function<void()> callback);
 };
 /********************** END/NPC¿‡ **********************/
 
@@ -84,7 +85,6 @@ public:
     ~NPCManager();
 
     /* ∑√Œ npc */
-    NPC* visitNPC(const int& idx) { return npcList[idx]; }
     vector<NPC*> visitNPC() { return npcList; }
 
     /* ÃÌº”npc */
