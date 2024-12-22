@@ -7,6 +7,11 @@ auto attackAction = MoveBy::create(1.0f, Vec2(100, 0));
 //距离小于怪物跟随距离时，怪物跟随
 //距离超过怪物跟随距离，怪物的状态回原态
 void Monster::update(float dt) {
+	//如果怪物死亡，停止一切更新
+	if (isDead) {
+		return;
+	}
+
 	 direction = target->mySprite->getPosition() - this->mySprite->getPosition();//怪物指向角色方向
 	//怪物AI
 	Vec2 mon = this->mySprite->getPosition();
@@ -29,12 +34,10 @@ void Monster::update(float dt) {
 	else if (state == MonsterState::CHASE) {
 		is_moving = true;
 		Chase();
-		
 	}
 	else if (state == MonsterState::FLEE) {
 		is_moving = true;
 		Flee();
-		
 	}
 	else {
 		is_moving = false;
@@ -42,7 +45,6 @@ void Monster::update(float dt) {
 	if (current_hp < 0) {
 		isDead = true;
 		Die();//所有死亡机制
-
 	}
 	Vec2 move_by;
 	if (is_moving) {
@@ -78,6 +80,7 @@ void Monster::Die() {
 	is_moving = false;
 	isDead = true;
  	target->GetBonus(bonus);
+	this->mySprite->removeFromParentAndCleanup(true);
  	Creature::Die();
 }
 void Monster::Attack() {

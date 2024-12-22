@@ -151,55 +151,65 @@ class MonsterRespawn:Node {
 public:
 	
 	MonsterRespawn(Player* player, Scene* scene,MapManager*mapManager,int DoorID) {
+		Size VisibleSize = Director::getInstance()->getVisibleSize();
 		// name,hp,mp,atk,atk_range,def,speed,level,x,y,exp,bonus,player,follow_range,scale,scene) :
 		MonsterBonus bonus;
 		if (DoorID == 0) {
-			monster1 = new Monster("Monster1", 100, 600, 20, 100, 5, 100, 2, 1000, 100, 100, bonus.monster_bonus1, player, 500, 0.5, scene);
-			//ÀÇ
-			monster2 = new Monster("Monster2", 100, 600, 20, 100, 5, 100, 2, 3000, 2000, 100, bonus.monster_bonus2, player, 500, 0.5, scene);
-
-			monster3 = new Monster("Monster3", 100, 600, 20, 100, 5, 100, 2, 500, 100, 100, bonus.monster_bonus3, player, 500, 0.5, scene);
-			monster4 = new Monster("Monster4", 100, 600, 20, 100, 5, 100, 2, 600, 200, 100, bonus.monster_bonus4, player, 500, 0.5, scene);
-			//Áú
-			monster5 = new Monster("Monster5", 100, 600, 20, 100, 5, 100, 2, -1899, 2600, 100, bonus.monster_bonus5, player, 500, 0.5, scene);
-			monster1->Init(mapManager);
-			monster2->Init(mapManager);
-			monster3->Init(mapManager);
-			monster4->Init(mapManager);
+			//»ðÉ½¹ÖÎï
+			monster5 = new Monster("Monster5", 1000, 600, 20, 100, 5, 100, 2, -1230.8f, 3366.5f, 100, bonus.monster_bonus5, player, 500, 1.0f, scene);
 			monster5->Init(mapManager);
-			monster.push_back(monster1);
-			monster.push_back(monster2);
-			monster.push_back(monster3);
-			monster.push_back(monster4);
 			monster.push_back(monster5);
-			monster_pos.push_back(Vec2(1000, 100));
-			monster_pos.push_back(Vec2(3000, 2000));
-			monster_pos.push_back(Vec2(500, -100));
-			monster_pos.push_back(Vec2(600, -200));
-			monster_pos.push_back(Vec2(-500, 100));
-			scene->addChild(monster1);
-			scene->addChild(monster2);
-			scene->addChild(monster3);
-			scene->addChild(monster4);
+			monster_pos.push_back(Vec2(-1230.8f, 3366.5f));
 			scene->addChild(monster5);
-		}
-		else if (DoorID == 2) {
-			monster6 = new Monster("Monster6", 100, 600, 20, 100, 5, 100, 2, 100, 100, 100, bonus.monster_bonus6, player, 500, 0.5, scene);
-			monster7 = new Monster("Monster7", 100, 600, 20, 100, 5, 100, 2, 1500, 1200, 100, bonus.monster_bonus7, player, 500, 0.5, scene);
-			monster8 = new Monster("Monster8", 100, 600, 20, 100, 5, 100, 2, 600, 400, 100, bonus.monster_bonus8, player, 500, 0.5, scene);
-			monster6->Init(mapManager);
-			monster7->Init(mapManager);
-			monster8->Init(mapManager);
-			monster.push_back(monster6);
-			monster.push_back(monster7);
-			monster.push_back(monster8);
-			monster_pos.push_back(Vec2(-100, -100));
-			monster_pos.push_back(Vec2(1500, 1200));
-			monster_pos.push_back(Vec2(600, 400));
 
-			scene->addChild(monster6);
-			scene->addChild(monster7);
+			//É­ÁÖ¹ÖÎï
+			monster1 = new Monster("Monster1", 100, 600, 20, 100, 5, 100, 2, -517.39, -1547.87, 100, bonus.monster_bonus1, player, 500, 0.5, scene);
+			monster1->Init(mapManager);
+			monster.push_back(monster1);
+			monster_pos.push_back(Vec2(-517.39, -1547.87));
+			scene->addChild(monster1);
+
+			//É³Ä®¹ÖÎï
+			monster8 = new Monster("Monster8", 100, 600, 20, 100, 5, 100, 2, 2153.66, -1298.14, 100, bonus.monster_bonus8, player, 500, 0.5, scene);
+			monster8->Init(mapManager);
+			monster.push_back(monster8);
+			monster_pos.push_back(Vec2(2153.66, -1298.14));
 			scene->addChild(monster8);
+
+			//Ñ©µØ¹ÖÎï
+			monster2 = new Monster("Monster2", 100, 600, 20, 100, 5, 100, 2, 2209.15, 3217.27, 100, bonus.monster_bonus2, player, 500, 0.5, scene);
+			monster2->Init(mapManager);
+			monster.push_back(monster2);
+			monster_pos.push_back(Vec2(2209.15, 3217.27));
+			scene->addChild(monster2);
+		}
+		if (DoorID == 9) {
+			monster6 = new Monster("Monster6", 3000, 600, 20, 100, 5, 100, 2, 100, 100, 100, bonus.monster_bonus6, player, 500, 1.5f, scene);
+			monster6->Init(mapManager);
+			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
+			monster.push_back(monster6);
+			scene->addChild(monster6);
+		}
+		else if (DoorID == 21) {
+			monster4 = new Monster("Monster4", 1000, 600, 20, 100, 5, 100, 2, 100, 100, 100, bonus.monster_bonus4, player, 500, 1.0f, scene);
+			monster4->Init(mapManager);
+			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
+			monster.push_back(monster4);
+			scene->addChild(monster4);
+		}
+		else if (DoorID == 31) {
+			monster3 = new Monster("Monster3", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus3, player, 500, 1.0f, scene);
+			monster3->Init(mapManager);
+			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
+			monster.push_back(monster3);
+			scene->addChild(monster3);
+		}
+		else if (DoorID == 41) {
+			monster7 = new Monster("Monster7", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus7, player, 500, 1.0f, scene);
+			monster7->Init(mapManager);
+			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
+			monster.push_back(monster7);
+			scene->addChild(monster7);
 		}
 
 		this->scheduleUpdate();

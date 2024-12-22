@@ -24,7 +24,7 @@ bool MainGameScene::init() {
 	if (!Scene::init()) {
 		return false;
 	}
-	CCLOG("MainGameScene::init");
+
 	this->LoadMapToScene();       //加载地图到场景
 	this->LoadCameraToScene();    //初始化摄像机
 	this->LoadPlayerToScene();    //加载玩家到场景
@@ -170,7 +170,7 @@ void MainGameScene::LoadPlayerToScene() {
 
 void MainGameScene::LoadMonsterRespawnToScene() {
 	// 加怪
-	_monsterRespawn = new MonsterRespawn(PLAYER, this,_mapManager,DoorID);
+	_monsterRespawn = new MonsterRespawn(PLAYER, this, _mapManager, _Monster_choice);
 	
 	// 将怪导入角色
 	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);
@@ -310,7 +310,6 @@ void MainGameScene::KeyPressedForPlayerMove(EventKeyboard::KeyCode keyCode, Even
 	else if (keyCode == EventKeyboard::KeyCode::KEY_S) {
 		if (PLAYER->canMove) {
 			PLAYER->ChangeIsMoving();
-			log("1");
 			HandlePlayerMove(Vec2(0, -speed), 1, "MoveDOWN", DOWN);
 		}
 		
@@ -347,7 +346,6 @@ void MainGameScene::KeyReleasedForPlayerMove(EventKeyboard::KeyCode keyCode, Eve
 			isKeyPressed[1] = false;
 			PLAYER->mySprite->stopAllActions();  // 停止当前的所有动作
 			PLAYER->ChangeIsMoving();
-			log("0");
 			this->unschedule("MoveDOWN");
 		}
 	}
@@ -373,14 +371,12 @@ void MainGameScene::HandlePlayerMove(const Vec2& moveBy, int keyIndex, const std
 
 	// 检查目标位置是否可移动
 	/*if (IsMoveable(targetPosition))*/ {
-		CCLOG("Move  first %d", direction);
 		if (!isKeyPressed[keyIndex]) {
 			isKeyPressed[keyIndex] = true;
 			PLAYER->Move(direction);
 			this->schedule([=](float dt) {
 				PLAYER->Move(direction);
 				}, 0.8f, scheduleKey);
-			CCLOG("Move %d", direction);
 		}
 	}
 }
@@ -392,50 +388,38 @@ void MainGameScene::KeyPressedForPlayerAttack(EventKeyboard::KeyCode keyCode, Ev
 	if (keyCode == EventKeyboard::KeyCode::KEY_J) {
 		if (canAttack) {
 			canAttack = false; 
-			CCLOG("into attack");
 			PLAYER->Attack(_monsterRespawn->GetMonster());
-			CCLOG("out attack");
 
 			this->scheduleOnce([&](float dt) {
 				canAttack = true; // 2秒后恢复攻击状态
-				CCLOG("Attack ready again");
 				}, 0.4f, "attack_cooldown_timer");
 		}
 		else {
-			CCLOG("Attack on cooldown, please wait");
 		}
 	}
 	else if(keyCode == EventKeyboard::KeyCode::KEY_K) {
 		if (canAttack) {
 			canAttack = false;
-			CCLOG("into attack");
 			PLAYER->Skill(1,_monsterRespawn->GetMonster());
-			CCLOG("out attack");
 
 			this->scheduleOnce([&](float dt) {
 				canAttack = true; // 2秒后恢复攻击状态
-				CCLOG("Attack ready again");
 				}, 3.0f, "attack_cooldown_timer");
 		}
 		else {
-			CCLOG("Attack on cooldown, please wait");
 		}
 		
 	}
 	else if (keyCode == EventKeyboard::KeyCode::KEY_L) {
 		if (canAttack) {
 			canAttack = false;
-			CCLOG("into attack");
 			PLAYER->Skill(2,_monsterRespawn->GetMonster());
-			CCLOG("out attack");
 
 			this->scheduleOnce([&](float dt) {
 				canAttack = true; // 2秒后恢复攻击状态
-				CCLOG("Attack ready again");
 				}, 3.0f, "attack_cooldown_timer");
 		}
 		else {
-			CCLOG("Attack on cooldown, please wait");
 		}
 	}
 }
@@ -582,6 +566,8 @@ void MainGameScene::MouseClickedForTeleport(EventMouse* event) {
 	// 转换屏幕坐标到场景坐标
 	Vec2 ScenePosition = ScreenToScene(MousePosition);
 
+	CCLOG("Scene Position: x = %f, y = %f", ScenePosition.x, ScenePosition.y);
+
 	for (int i = 0; i < 5; i++) {         // 遍历五个传送门，顺序是RebirthTemple->volcano->SnowyWinter->DeathDesert->BrightForest
 		if (_mapManager->GetTeleportPosition(i).distance(ScenePosition) < 50.0f) {// 如果点击位置在传送门在周围区域内
 			if (_mapManager->GetIsRegionRevealed(i)) {
@@ -645,9 +631,6 @@ Vec2 MainGameScene::ScreenToScene(const Vec2& screenPos) {
 
 	float t = -rayOrigin.z / rayDir.z; // 平面 z = 0
 	Vec3 outWorldPos = rayOrigin + rayDir * t;
-
-
-	CCLOG("World Position: x = %f, y = %f", outWorldPos.x, outWorldPos.y);
 
 	return Vec2(outWorldPos.x, outWorldPos.y);
 }

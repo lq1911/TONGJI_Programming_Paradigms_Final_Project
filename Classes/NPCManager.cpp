@@ -13,7 +13,7 @@ NPCManager::NPCManager(Player* playerRef, BagManager* bagManager, Scene* scene, 
         addNPC("npc6", 577.0f, 455.8f, 0.6f);     // 给食物
         npcList[1]->NPCunlockTask(0);             // 解锁支线任务
         // 火山
-        addNPC("npc2", -1230.8f, 3366.5f, 0.6f);  // 解锁主线任务
+        addNPC("npc2", -538.39, 2933.09, 0.6f);  // 解锁主线任务
         // 雪地
         addNPC("npc3", 2880.0f, 2726.9f, 0.6f);   // 解锁主线任务
         // 森林

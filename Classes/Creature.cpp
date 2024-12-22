@@ -6,7 +6,6 @@ void Creature::initSprite() {
     // 创建精灵
     mySprite = Sprite::create("Role/" + role + "/1.png");
     if (!mySprite) {
-        CCLOG("Fail to create sprite.");
         return;
     }
 
@@ -72,7 +71,6 @@ void Creature::preventOverlap(Creature* creature1, Creature* creature2) {
     Rect rect2 = creature2->getCollisionRect();
     // 检测是否重叠
     if (rect1.intersectsRect(rect2)) {
-        CCLOG("Collision detected.");
         Vec2 pos1 = creature1->mySprite->getPosition();
         Vec2 pos2 = creature2->mySprite->getPosition();
         Vec2 separation = pos1 - pos2;
@@ -157,7 +155,6 @@ void Creature::Attack() {
         Animate* animate = Animate::create(animation);
         mySprite->stopAllActions();
         mySprite->runAction(animate);
-        CCLOG("%s attack", role);
         
         return;
     }
@@ -205,7 +202,6 @@ void Creature::Attack() {
     Animate* animate = Animate::create(animation);
     mySprite->stopAllActions();
     mySprite->runAction(animate);
-    CCLOG("%s attack", role);
    
     return;
 }
@@ -237,7 +233,6 @@ void Creature::Hurt() {
         Animate* animate = Animate::create(animation);
         mySprite->stopAllActions();
         mySprite->runAction(animate);
-        CCLOG("%s hurt", role);
         return;
     }
 
@@ -273,7 +268,6 @@ void Creature::Hurt() {
     mySprite->stopAllActions();
     mySprite->runAction(animate);
 
-    CCLOG("%s hurt", role);
 }
 
 /* 恢复动画 */
@@ -330,7 +324,6 @@ void Creature::Heal() {
     mySprite->stopAllActions();
     mySprite->runAction(animate);
 
-    CCLOG("%s heal", role);
 }
 
 /* 走路动画 */
@@ -345,7 +338,6 @@ void  Creature::Move(int dir) {
 
     /* 更改面朝方向 */
     face_to = dir;
-    log("face_to:%d", face_to);
     /* 图片名前缀:除编号部分 */
     std::string s = "Role/" + role + "/";
 
@@ -395,15 +387,8 @@ void  Creature::Move(int dir) {
     Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.2f);
     Animate* animate = Animate::create(animation);
 
-    // 创建移动动作
-    // auto moveAction = MoveBy::create(0.8f, moveBy);
-    //log("MoveBy:%f%f", moveBy.x, moveBy.y);
-    // 同时执行动画和移动
-    //auto moveAndAnimate = Spawn::createWithTwoActions(animate, moveAction);
-
     // 执行动作
     mySprite->runAction(animate);
-    log("Move");
     return ;
 }
 
@@ -416,7 +401,6 @@ void Creature::learnMove(int dir) {
 
     /* 更改面朝方向 */
     face_to = dir;
-    log("face_to:%d", face_to);
 
     /* 图片名前缀:除编号部分 */
     std::string s = "Role/" + role + "/";

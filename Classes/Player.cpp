@@ -97,7 +97,6 @@ void Player::Attack(vector<Monster*> monster) {
             Vec2 direction = pos_monster - pos_player;// 人物指向怪物
             float k = (direction.x + 1.0 - 1.0) / direction.y;// 斜率
             if (dir == 0 && k<1 && k>-1 && direction.x < 0) {// 向左
-                log("player attack左&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
                 monster[i]->Hurt();
                 monster[i]->DecreaseHp(DamageCal(this, monster[i]));
             }
@@ -245,7 +244,6 @@ void Player::Skill_Animate2() {
     Animate* animate = Animate::create(animation);
     mySprite->stopAllActions();
     mySprite->runAction(animate);
-    CCLOG("%s attack", role);
 
     return;
 }

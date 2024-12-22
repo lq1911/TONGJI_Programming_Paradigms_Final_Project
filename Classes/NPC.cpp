@@ -3,7 +3,6 @@
 
 /* 交互提示 */
 void NPC::update() {
-	CCLOG("update is being called");
 	if (isTrigger()) {
 		triggerTip();  // 玩家进入触发范围
 	}
@@ -72,7 +71,6 @@ void NPC::Chat() {
 			// 当npc0的对话逻辑完成后，移除UI
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			CCLOG("npc0-chat over.");
 			});
 		break;
 	/* 解锁主线任务的npc */
@@ -80,35 +78,30 @@ void NPC::Chat() {
 		npc1([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			CCLOG("npc1-chat over.");
 			});
 		break;
 	case 2:
 		npc2([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			CCLOG("npc2-chat over.");
 			});
 		break;
 	case 3:
 		npc3([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc3-chat over.");
 			});
 		break;
 	case 4:
 		npc4([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc4-chat over.");
 			});
 		break;
 	case 5:
 		npc5([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc5-chat over.");
 			});
 		break;
 	/* 其它npc */
@@ -116,35 +109,30 @@ void NPC::Chat() {
 		npc6([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc6-chat over.");
 			});
 		break;
 	case 7:
 		npc7([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc7-chat over.");
 			});
 		break;
 	case 8:
 		npc8([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc8-chat over.");
 			});
 		break;
 	case 9:
 		npc9([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc9-chat over.");
 			});
 		break;
 	case 10:
 		npc9([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
-			log("npc10-chat over.");
 			});
 		break;
 	default:
