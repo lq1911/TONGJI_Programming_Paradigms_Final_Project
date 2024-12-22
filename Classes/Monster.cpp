@@ -18,10 +18,6 @@ void Monster::update(float dt) {
 	}
 	else {
 		nums = 0;
-		log("mon***************************");
-		log("position:%f %f", mon.x, mon.y);
-		log("speed:%d", speed);
-		log("direction:%f %f", direction.x, direction.y);
 	}
 	ai->update(dt);
 	state = ai->GetState();
@@ -93,8 +89,6 @@ void Monster::Attack() {
 	}
 	else {
 		nums = 0;
-		log("Monster:Attack*****************************************************************");
- 		  
  	}
 	if (abs(direction.x) > abs(direction.y)) {
 		if (direction.x > 0) {
@@ -134,8 +128,6 @@ void Monster::Chase() {
 	}
 	else {
 		nums = 0;
-		log("Monster:Chase*****************************************************************");
-		  
  	}
 	
 	if (abs(direction.x) > abs(direction.y)) {
@@ -168,11 +160,8 @@ void Monster::Chase() {
 	}
 	else {
 		nums = 0;
-		log("Monster:Flee*****************************************************************");	 
-		  
  	}
 	if (abs(direction.x) > abs(direction.y)) {
-		log("a");
 		if (direction.x > 0) {
 			Creature::Move(0);
 			face_to = 0;
@@ -183,7 +172,6 @@ void Monster::Chase() {
 		}
 	}
 	else {
-		log("b");
  		if (direction.y > 0) {
 			Creature::Move(3);
 			face_to = 3;
@@ -212,7 +200,6 @@ void MonsterAI::update(float dt) {
   }
   else {
 	  nums = 0;
-	  log("distance:%f", distance);
   }
 	switch (currentState) {
 	case MonsterState::PATROLLING:// Ö´ÐÐÑ²ÂßÂß¼­
@@ -263,8 +250,6 @@ void MonsterAI::update(float dt) {
  }
 //ÅÐ¶ÏÊÇ·ñÑ²Âß
 bool MonsterAI::shouldPatrol() {
-	 
-	 
 	if (distance >= monster->GetFollowRange()) {
 		return true;
 	}
@@ -272,8 +257,6 @@ bool MonsterAI::shouldPatrol() {
 }
 //ÅÐ¶ÏÊÇ·ñ¹¥»÷
 bool MonsterAI::shouldAttackPlayer() {
-	 
-	 
 	if (distance <= monster->getAtkRange()) {
 		return true;
 	}
@@ -281,8 +264,6 @@ bool MonsterAI::shouldAttackPlayer() {
 }
 //ÅÐ¶ÏÊÇ·ñ×·×Ù
 bool MonsterAI::shouldChasePlayer() {
-	 
-	 
 	if (distance < monster->GetFollowRange() && distance>monster->getAtkRange()) {
 		return true;
 	}
@@ -290,8 +271,6 @@ bool MonsterAI::shouldChasePlayer() {
 }
 //ÅÐ¶ÏÊÇ·ñÌÓÅÜ
 bool MonsterAI::shouldFlee() {
-	 
-	 
 	if (monster->getCurrentHp() < monster->getHp() / 10.0&&shouldChasePlayer()) {
 		return true;
 	}
@@ -310,7 +289,6 @@ void MonsterRespawn::update(float dt) {
 	for(it = monster.begin(); it != monster.end(); it++) {
 		if ((*it)->getIsDead()) {
 			(*it)->Revive();
-			log("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 			(*it)->setPosition(monster_pos[it - monster.begin()]);
 			(*it)->ReSetHp();
 		}

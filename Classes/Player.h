@@ -13,11 +13,6 @@ using namespace std;
 const int DIST = 100;
 
 struct Bonus {
-	consumable c;
-	weapon w;
-	armor a;
-	shoes s;
-	accessories ac;
 	int exp;
 	int coin;
 };
@@ -84,7 +79,7 @@ public:
 	}
 
 	/* 加入怪物 */
-	void Init(vector<Monster*>monster, MapManager* map_manager, BagManager* bag_manager);
+	void Init(vector<Monster*>monster, MapManager* map_manager);
 
 	/* 释放攻击技能 */
 	// 对于部分怪物,无方向一说:Monster1树妖

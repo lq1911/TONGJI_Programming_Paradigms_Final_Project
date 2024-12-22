@@ -1051,7 +1051,6 @@ bool BagManager::equipItem(int index)
     return flag;
 }
 
-
 // ½âËøÈÎÎñ(type:1Ö÷Ïß/0Ö§Ïß)
 void BagManager::taskUnlock(const bool type, task* newTask){
     if (type)
@@ -1059,8 +1058,4 @@ void BagManager::taskUnlock(const bool type, task* newTask){
     else
         myLineQuest.push_back(newTask);
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 8d552d0 (20241222:ä¿®æ”¹äº†Bagmanagerçš„æŠ¥é”™)

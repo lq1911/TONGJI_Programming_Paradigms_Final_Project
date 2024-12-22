@@ -1,4 +1,3 @@
-
 #ifndef __MONSTER_H__
 #define __MONSTER_H__
 #include "cocos2d.h"
@@ -6,9 +5,7 @@
 #include "Player.h"
 #include "MapManager.h"
 USING_NS_CC;
-
 using namespace std;
-
 
 enum class State {
 	IDLE, //空闲，静止，用于Npc
@@ -49,9 +46,7 @@ public:
 
 //怪物类
 class Monster :public Creature {
-
 private:
-	
 	int follow_range;
 	Bonus bonus;//击杀奖励
 	int base_exp;//怪物的基础经验值
@@ -61,7 +56,6 @@ private:
 	Vec2 direction;
 	MapManager* mapManager;
 public:
-	
 	Monster(string name, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,
 		int exp, Bonus bonus, Player* player, int follow_range, float scale, Scene* scene) :
 		Creature(name, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene),
@@ -72,8 +66,6 @@ public:
 		bonus.exp = base_exp;
 		;//暂待
 		target = player;
-
-
 		this->scheduleUpdate();
 	}
 	Monster() {
@@ -112,7 +104,6 @@ public:
 class MonsterBonus {
 public:
 	friend class MonsterRespawn;
-	goods goods;
 	Bonus monster_bonus1;
 	Bonus monster_bonus2;
 	Bonus monster_bonus3;
@@ -123,69 +114,22 @@ public:
 	Bonus monster_bonus8;
 public:
 	MonsterBonus() {
-		monster_bonus1.c = goods.pumkin;
-		monster_bonus1.w = goods.icon_sword;
-		monster_bonus1.a = goods.icon_conselet;
-		monster_bonus1.s = goods.boots;
-		monster_bonus1.ac = goods.forest_ring;
 		monster_bonus1.exp = 100;
-		monster_bonus1.coin = 100;
-
-		monster_bonus2.c = goods.apple;
-		monster_bonus2.w = goods.great_sword;
-		monster_bonus2.a = goods.shield;
-		monster_bonus2.s = goods.diamond_shoes;
-		monster_bonus2.ac = goods.ice_nacklace;
-		monster_bonus2.exp = 100;
-		monster_bonus2.coin = 100;
-
-		monster_bonus3.c = goods.chess;
-		monster_bonus3.w = goods.long_sword;
-		monster_bonus3.a = goods.helmet;
-		monster_bonus3.s = goods.final_shoes;
-		monster_bonus3.ac = goods.rack_cape;
-		monster_bonus3.exp = 100;
-		monster_bonus3.coin = 100;
-
-		monster_bonus4.c = goods.chicken;
-		monster_bonus4.w = goods.dagger;
-		monster_bonus4.a = goods.final_armor;
-		monster_bonus4.s = goods.boots;
-		monster_bonus4.ac = goods.fire_ring;
-		monster_bonus4.exp = 100;
-		monster_bonus4.coin = 100;
-
-		monster_bonus5.c = goods.beer;
-		monster_bonus5.w = goods.final_sword;
-		monster_bonus5.a = goods.icon_conselet;
-		monster_bonus5.s = goods.diamond_shoes;
-		monster_bonus5.ac = goods.ice_nacklace;
-		monster_bonus5.exp = 100;
-		monster_bonus5.coin = 100;
-
-		monster_bonus6.c = goods.life_potion;
-		monster_bonus6.w = goods.iron_sword;
-		monster_bonus6.a = goods.shield;
-		monster_bonus6.s = goods.final_shoes;
-		monster_bonus6.ac = goods.forest_scepter;
+		monster_bonus2.exp = 200;
+		monster_bonus3.exp = 300;
+		monster_bonus4.exp = 400;
+		monster_bonus5.exp = 500;
 		monster_bonus6.exp = 100;
+		monster_bonus7.exp = 200;
+		monster_bonus8.exp = 300;
+		monster_bonus1.coin = 100;
+		monster_bonus2.coin = 200;
+		monster_bonus3.coin = 300;
+		monster_bonus4.coin = 400;
+		monster_bonus5.coin = 500;
 		monster_bonus6.coin = 100;
-
-		monster_bonus7.c = goods.pumkin;
-		monster_bonus7.w = goods.great_sword;
-		monster_bonus7.a = goods.helmet;
-		monster_bonus7.s = goods.boots;
-		monster_bonus7.ac = goods.rack_cape;
-		monster_bonus7.exp = 100;
-		monster_bonus7.coin = 100;
-
-		monster_bonus8.c = goods.apple;
-		monster_bonus8.w = goods.long_sword;
-		monster_bonus8.a = goods.final_armor;
-		monster_bonus8.s = goods.diamond_shoes;
-		monster_bonus8.ac = goods.fire_ring;
-		monster_bonus8.exp = 100;
-		monster_bonus8.coin = 100;
+		monster_bonus7.coin = 200;
+		monster_bonus8.coin = 300;
 	}
 };
 // 怪物刷新类
@@ -267,4 +211,3 @@ public:
 };
 
 #endif __MONSTER_H__
-

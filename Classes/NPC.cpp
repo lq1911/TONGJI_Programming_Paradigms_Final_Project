@@ -834,7 +834,7 @@ void NPC::npc7(std::function<void()> callback) {
 			if (who->coins >= 100) {
 				who->coins -= 100;
 				goods _goods;
-				weapon* it = new weapon(_goods.icon_sword);
+				weapon* it = new weapon(_goods.iron_sword);
 				bag->addItem(it);
 				npcTxt2_1->setString("OK!");  // npcËµ»°
 			}

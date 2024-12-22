@@ -146,8 +146,8 @@ void MainGameScene::LoadPlayerToScene() {
 	float PlayerX;
 	float PlayerY;
 	if (DoorID == 0) {
-		PlayerX = VisibleSize.width / 2 - 350;
-		PlayerY = VisibleSize.height / 2 + 750;
+		PlayerX = VisibleSize.width / 2 - 365;
+		PlayerY = VisibleSize.height / 2 + 650;
 	}
 	else if (DoorID == 1) {
 		PlayerX = 800;
@@ -173,7 +173,7 @@ void MainGameScene::LoadMonsterRespawnToScene() {
 	_monsterRespawn = new MonsterRespawn(PLAYER, this,_mapManager,DoorID);
 	
 	// 将怪导入角色
-	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager,_bagManager);
+	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);
 }
 
 void MainGameScene::LoadNPCToScene() {
@@ -185,7 +185,7 @@ void MainGameScene::LoadBackgroundMusicToScene() {
 	if (_musicManager->getInstance() == nullptr) {
 		this->addChild(_musicManager);
 	}
-
+	_musicManager->stopBackgroundMusic();
 	_musicManager->playBackgroundMusic("music/peace.mp3");
 }
 /****************************************************************/

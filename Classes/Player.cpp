@@ -1,7 +1,7 @@
 #include <string>
 #include "Player.h"
 #include "Monster.h"
-#inlluce "BagManager.h"
+#include "BagManager.h"
 // update
 void Player::update(float dt) {
     x = getXY().x;
@@ -13,19 +13,9 @@ void Player::update(float dt) {
     }
     else {
         nums = 0;
-      
-        
-        log("player**********************************");
-        log("position:%f %f", pos.x, pos.y);
-        log("hp:%d", hp);
-        log("mp:%d", mp);
-        log("atk:%d", atk);
-        log("def:%d", def);
         
     }
     Vec2 move_by;
-
-   
 
     if (is_moving) {
         if (face_to == 0) {
@@ -269,28 +259,8 @@ void Player::GetBonus(Bonus bonus) {
         level++;
         next_level_exp *= (1 + level * 0.1);
     }
-    srand(0);
-    int a = rand() % 5;
-    if (a == 0) {
-        bag_manager->addItem(bonus.c);
-    }
-    else if (a == 1) {
-        bag_manager->addItem(bonus.w);
-    }
-    else if (a == 2) {
-        bag_manager->addItem(bonus.a);
-    }
-    else if (a == 3) {
-        bag_manager->addItem(bonus.s);
-    }
-    else if (a == 4) {
-        bag_manager->addItem(bonus.ac);
-    }
-   
     coins += bonus.coin;
     // À¢–¬œ‘ æ
-    
-   
 }
 
 // ≈–∂œΩªª•∑∂Œß

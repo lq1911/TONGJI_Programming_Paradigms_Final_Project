@@ -64,6 +64,12 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float y = obstacle["Y"].asFloat();
 				// 保存传送点坐标
 				TeleportList.push_back(TiledMapPosToScenePos(Vec2(x, y), mapID));
+
+				// 设置粒子特效
+				auto particle = ParticleGalaxy::create();
+				particle->setPosition(TiledMapPosToScenePos(Vec2(x, y), mapID));
+				particle->setScale(0.5f);
+				this->addChild(particle);
 			}
 			else if (objectType == "Interaction") {
 				// 根据对象类型读取其属性
@@ -71,10 +77,8 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				float x = obstacle["X"].asFloat();
 				float y = obstacle["Y"].asFloat();
 
-
 				// 保存可交互区域坐标
 				InteractionList.push_back(TiledMapPosToScenePos(Vec2(x, y), mapID));
-				
 			}
 			else if (objectType == "InDoorPoint") {
 				// 根据对象类型读取其属性
@@ -85,6 +89,12 @@ void MapManager::InitialObjects(TMXTiledMap* TiledMap, int mapID) {
 				int NPCIndex = obstacle["NPCIndex"].asInt();
 				int MonsterIndex = obstacle["MonsterIndex"].asInt();
 				int SceneName = obstacle["SceneName"].asInt();
+
+				// 设置粒子特效
+				auto particle = ParticleGalaxy::create();
+				particle->setPosition(TiledMapPosToScenePos(Vec2(x, y), mapID));
+				particle->setScale(0.5f);
+				this->addChild(particle);
 
 				// 保存门坐标
 				InDoorList.push_back({ TiledMapPosToScenePos(Vec2(x, y), mapID), SceneName,NPCIndex,MonsterIndex });
