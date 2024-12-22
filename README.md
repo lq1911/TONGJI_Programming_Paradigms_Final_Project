@@ -124,6 +124,7 @@
   
   <div style="display: flex; align-items: center;">
   <img src="Resources/Role/npc7/1.png" alt="Image 7" width="13%" style="margin-right: 10px;">
+  <img src="Resources/Role/npc8/1.png" alt="Image 8" width="13%" style="margin-right: 10px;">
   </div>
 
    - 免费提供特殊物品的NPC：
@@ -131,6 +132,19 @@
   <div style="display: flex; align-items: center;">
   <img src="Resources/Role/npc6/1.png" alt="Image 6" width="13%" style="margin-right: 10px;">
   </div>
+
+  - 负责钓鱼的NPC：
+
+  <div style="display: flex; align-items: center;">
+  <img src="Resources/Role/npc10/1.png" alt="Image 10" width="13%" style="margin-right: 10px;">
+  </div>
+
+  - 负责聊天的NPC：
+
+  <div style="display: flex; align-items: center;">
+  <img src="Resources/Role/npc9/1.png" alt="Image 9" width="13%" style="margin-right: 10px;">
+  </div>
+
 
 > ### 音乐系统
 
