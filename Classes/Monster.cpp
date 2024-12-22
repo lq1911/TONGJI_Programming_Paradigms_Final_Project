@@ -82,6 +82,7 @@ void Monster::Die() {
  	target->GetBonus(bonus);
 	this->mySprite->retain();
 	this->mySprite->removeFromParentAndCleanup(true);
+
  	Creature::Die();
 }
 void Monster::Attack() {
