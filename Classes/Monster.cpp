@@ -82,7 +82,6 @@ void Monster::Die() {
  	target->GetBonus(bonus);
 	this->mySprite->retain();
 	this->mySprite->removeFromParentAndCleanup(true);
-	if(this->GetType()==1)
 
  	Creature::Die();
 }
@@ -300,6 +299,3 @@ void MonsterRespawn::update(float dt) {
 		}
 	}
 }
-// 返回怪物的种类
-int Monster::GetType()const {
-	return type;
