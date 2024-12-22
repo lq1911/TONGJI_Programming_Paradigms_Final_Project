@@ -202,7 +202,7 @@
 - 背包及任务相关类
 
   - [BagManager](Classes/BagManager.h)
-  - [item](Classes/item.h)
+  - [item](Classes/Item.h)
 
 - 其它类
 
