@@ -158,7 +158,7 @@ void MainGameScene::LoadPlayerToScene() {
 		PlayerY = VisibleSize.height / 2;
 	}
 
-	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, PlayerX, PlayerY, 0.5f, 10000, 50, 2000, 200, 10, 192, 1);
+	PLAYER = new Player("Player" + std::to_string(SetPlayerScene::who + 1), this, PlayerX, PlayerY, 0.5f, 100, 50, 30, 300, 10, 192, 1);
 	
 	this->schedule([=](float dt) {
 		for (auto npc : _npcManager->visitNPC()) {
@@ -170,7 +170,7 @@ void MainGameScene::LoadPlayerToScene() {
 
 void MainGameScene::LoadMonsterRespawnToScene() {
 	// 加怪
-	_monsterRespawn = new MonsterRespawn(PLAYER, this, _mapManager, _Monster_choice);
+	_monsterRespawn = new MonsterRespawn(PLAYER, this, _mapManager, _Monster_choice, _bagManager);
 	
 	// 将怪导入角色
 	PLAYER->Init(_monsterRespawn->GetMonster(), _mapManager);

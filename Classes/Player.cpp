@@ -88,11 +88,13 @@ void Player::Init(vector<Monster*>monster, MapManager* map_manager) {
 // 人物攻击
 // 攻击范围是扇形
 void Player::Attack(vector<Monster*> monster) {
-    int dir = getDir();
-    Vec2 pos_player = mySprite->getPosition();
-    for (int i = 0; i < monster.size(); i++) {
-        Vec2 pos_monster = monster[i]->mySprite->getPosition();
-        float distance = pos_monster.distance(pos_player);
+	int dir = getDir();
+	Vec2 pos_player = mySprite->getPosition();
+	for (int i = 0; i < monster.size(); i++) {
+
+		Vec2 pos_monster = monster[i]->mySprite->getPosition();
+		float distance = pos_monster.distance(pos_player);
+        
         if (distance < atk_range) {
             Vec2 direction = pos_monster - pos_player;// 人物指向怪物
             float k = (direction.x + 1.0 - 1.0) / direction.y;// 斜率
