@@ -58,5 +58,8 @@ public:
 
 	// «–ªª±≥æ∞“Ù¿÷
 	void switchBackgroundMusic(string musicName);
+
+	// ‘›Õ£±≥æ∞“Ù¿÷
+	void stopBackgroundMusic();
 };
 #endif

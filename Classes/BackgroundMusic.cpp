@@ -72,11 +72,10 @@ void music::closeMusicPanel()
 void music::switchBackgroundMusic(string musicName)
 {
 	cocos2d::AudioEngine::pause(audioId);
-	audiod = playBackgroundMusic(musicName);
+	playBackgroundMusic(musicName);
 }
 
 void music::stopBackgroundMusic()
 {
-	cocos2d::
-		AudioEngine::pause(audioId);
+	cocos2d::AudioEngine::pause(audioId);
 }

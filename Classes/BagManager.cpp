@@ -1,4 +1,5 @@
 #include "BagManager.h"
+#include "audio/include/AudioEngine.h"
 
 // µ¥ÀıÊµÀı 
 BagManager* BagManager::_instance = nullptr;
@@ -926,6 +927,8 @@ void BagManager::addItem(item* it)
         // Ìí¼ÓÎïÆ·ÒôĞ§
         cocos2d::AudioEngine::play2d("music/item.mp3");
     }
+    else
+        cocos2d::AudioEngine::play2d("music/lock.mp3");
 }
 
 // ½«ÎïÆ·´Ó±³°üÖĞ¶ªÆú
@@ -1056,4 +1059,8 @@ void BagManager::taskUnlock(const bool type, task* newTask){
     else
         myLineQuest.push_back(newTask);
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8d552d0 (20241222:ä¿®æ”¹äº†Bagmanagerçš„æŠ¥é”™)
