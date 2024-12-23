@@ -124,6 +124,7 @@
   
   <div style="display: flex; align-items: center;">
   <img src="Resources/Role/npc7/1.png" alt="Image 7" width="13%" style="margin-right: 10px;">
+  <img src="Resources/Role/npc8/1.png" alt="Image 8" width="13%" style="margin-right: 10px;">
   </div>
 
    - 免费提供特殊物品的NPC：
@@ -131,6 +132,19 @@
   <div style="display: flex; align-items: center;">
   <img src="Resources/Role/npc6/1.png" alt="Image 6" width="13%" style="margin-right: 10px;">
   </div>
+
+  - 负责钓鱼的NPC：
+
+  <div style="display: flex; align-items: center;">
+  <img src="Resources/Role/npc10/1.png" alt="Image 10" width="13%" style="margin-right: 10px;">
+  </div>
+
+  - 负责聊天的NPC：
+
+  <div style="display: flex; align-items: center;">
+  <img src="Resources/Role/npc9/1.png" alt="Image 9" width="13%" style="margin-right: 10px;">
+  </div>
+
 
 > ### 音乐系统
 
@@ -183,6 +197,28 @@
 - [x] 支持在不同场景播放不同的音乐，战斗时具有不同的音效
 
 - [x] 支持调节声音大小
+
+#### 地图系统
+
+- [x] 地图种类多样且均为原创，各地图均为小组成员使用Tiled自行绘制得到
+
+- [x] 地图完成了碰撞设置，玩家无法在障碍处行走
+  
+- [x] 设置了摄像机，实现摄像机跟随角色移动的功能，确保玩家处于屏幕中央
+
+#### 碰撞系统
+
+- [x] 完成了碰撞框的设置，使得角色与NPC不会重叠
+
+#### 交易功能
+
+- [x] 设置了金币，实现购买武器、装备的功能
+
+#### UI设计
+
+- [x] 画风统一，画面精美；按键均具有初始、按下两种不同的状态，提升了用户的体验感
+
+- [x] 设计丰富多样，除了按键外，还存在滑动条、进度条、血条、滚动框
 
 ## 🌟代码架构
 

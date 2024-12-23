@@ -36,7 +36,7 @@ public:
 	/****************************************************************/
 	////////////////以下为本场景所有用到的初始化函数/////////////////
 	/* 构造函数，获取屏幕的大小*/
-	MainGameScene(int _ODorID = 0, int _NPC_choice = 0, int _Monster_choice = 0);
+	MainGameScene(int _ODorID = 0, int _NPC_choice = 0, int _Monster_choice = 0, Player* player = nullptr);
 
 	/*生成场景函数*/
 	static cocos2d::Scene* createScene();
