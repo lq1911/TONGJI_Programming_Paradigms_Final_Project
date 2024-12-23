@@ -26,7 +26,7 @@ private:
 	Player* target;
 	Monster* monster;
 	float distance;
-	
+
 public:
 	friend class Monster;
 	MonsterAI(Player* target, Monster* monster) : currentState(MonsterState::PATROLLING), target(target), monster(monster) {}//默认为巡逻
@@ -57,7 +57,7 @@ private:
 	MapManager* mapManager;
 public:
 	Monster(string name, int hp, int mp, int atk, int atk_range, int def, int speed, int level, int x, int y,
-		int exp, Bonus bonus, Player* player, int follow_range, float scale, Scene* scene) :
+		int exp, Bonus bonus, Player* player, int follow_range, float scale, Scene* scene, ElementType elementType) :
 		Creature(name, hp, mp, atk, atk_range, def, speed, level, x, y, scale, scene),
 		base_exp(exp), bonus(bonus), follow_range(follow_range),
 		ai(new MonsterAI(player, this)), state(MonsterState::PATROLLING) {
@@ -67,6 +67,7 @@ public:
 		;//暂待
 		target = player;
 		this->scheduleUpdate();
+		setElementType(elementType);
 	}
 	Monster() {
 		role = "Monster2";
@@ -134,7 +135,7 @@ public:
 };
 // 怪物刷新类
 // 在此定义怪的种类
-class MonsterRespawn:Node {
+class MonsterRespawn :Node {
 	vector<Monster*> monster;
 	vector<Vec2> monster_pos;
 	Monster* monster1;
@@ -149,63 +150,63 @@ class MonsterRespawn:Node {
 	int DoorID;
 
 public:
-	
-	MonsterRespawn(Player* player, Scene* scene,MapManager*mapManager,int DoorID) {
+
+	MonsterRespawn(Player* player, Scene* scene, MapManager* mapManager, int DoorID) {
 		Size VisibleSize = Director::getInstance()->getVisibleSize();
 		// name,hp,mp,atk,atk_range,def,speed,level,x,y,exp,bonus,player,follow_range,scale,scene) :
 		MonsterBonus bonus;
 		if (DoorID == 0) {
 			//火山怪物
-			monster5 = new Monster("Monster5", 1000, 600, 20, 100, 5, 100, 2, -1230.8f, 3366.5f, 100, bonus.monster_bonus5, player, 500, 1.0f, scene);
+			monster5 = new Monster("Monster5", 1000, 600, 20, 100, 5, 100, 2, -1230.8f, 3366.5f, 100, bonus.monster_bonus5, player, 500, 1.0f, scene, FIRE);
 			monster5->Init(mapManager);
 			monster.push_back(monster5);
 			monster_pos.push_back(Vec2(-1230.8f, 3366.5f));
 			scene->addChild(monster5);
 
 			//森林怪物
-			monster1 = new Monster("Monster1", 100, 600, 20, 100, 5, 100, 2, -517.39, -1547.87, 100, bonus.monster_bonus1, player, 500, 0.5, scene);
+			monster1 = new Monster("Monster1", 100, 600, 20, 100, 5, 100, 2, -517.39, -1547.87, 100, bonus.monster_bonus1, player, 500, 0.5, scene, GRASS);
 			monster1->Init(mapManager);
 			monster.push_back(monster1);
 			monster_pos.push_back(Vec2(-517.39, -1547.87));
 			scene->addChild(monster1);
 
 			//沙漠怪物
-			monster8 = new Monster("Monster8", 100, 600, 20, 100, 5, 100, 2, 2153.66, -1298.14, 100, bonus.monster_bonus8, player, 500, 0.5, scene);
+			monster8 = new Monster("Monster8", 100, 600, 20, 100, 5, 100, 2, 2153.66, -1298.14, 100, bonus.monster_bonus8, player, 500, 0.5, scene, ROCK);
 			monster8->Init(mapManager);
 			monster.push_back(monster8);
 			monster_pos.push_back(Vec2(2153.66, -1298.14));
 			scene->addChild(monster8);
 
 			//雪地怪物
-			monster2 = new Monster("Monster2", 100, 600, 20, 100, 5, 100, 2, 2209.15, 3217.27, 100, bonus.monster_bonus2, player, 500, 0.5, scene);
+			monster2 = new Monster("Monster2", 100, 600, 20, 100, 5, 100, 2, 2209.15, 3217.27, 100, bonus.monster_bonus2, player, 500, 0.5, scene, ICE);
 			monster2->Init(mapManager);
 			monster.push_back(monster2);
 			monster_pos.push_back(Vec2(2209.15, 3217.27));
 			scene->addChild(monster2);
 		}
 		if (DoorID == 9) {
-			monster6 = new Monster("Monster6", 3000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus6, player, 500, 1.5f, scene);
+			monster6 = new Monster("Monster6", 3000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus6, player, 500, 1.5f, scene, ICE);
 			monster6->Init(mapManager);
 			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
 			monster.push_back(monster6);
 			scene->addChild(monster6);
 		}
 		else if (DoorID == 21) {
-			monster4 = new Monster("Monster4", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus4, player, 500, 1.0f, scene);
+			monster4 = new Monster("Monster4", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus4, player, 500, 1.0f, scene, ICE);
 			monster4->Init(mapManager);
 			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
 			monster.push_back(monster4);
 			scene->addChild(monster4);
 		}
 		else if (DoorID == 31) {
-			monster3 = new Monster("Monster3", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus3, player, 500, 1.0f, scene);
+			monster3 = new Monster("Monster3", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus3, player, 500, 1.0f, scene, ROCK);
 			monster3->Init(mapManager);
 			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
 			monster.push_back(monster3);
 			scene->addChild(monster3);
 		}
 		else if (DoorID == 41) {
-			monster7 = new Monster("Monster7", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus7, player, 500, 1.0f, scene);
+			monster7 = new Monster("Monster7", 1000, 600, 20, 100, 5, 100, 2, VisibleSize.width / 2 + 160, VisibleSize.height / 2, 100, bonus.monster_bonus7, player, 500, 1.0f, scene, GRASS);
 			monster7->Init(mapManager);
 			monster_pos.push_back(Vec2(VisibleSize.width / 2 + 160, VisibleSize.height / 2));
 			monster.push_back(monster7);

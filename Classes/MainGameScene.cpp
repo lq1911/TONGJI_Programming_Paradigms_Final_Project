@@ -4,6 +4,9 @@
 
 USING_NS_CC;
 
+// ¹ÖÎïÉúËÀ×´Ì¬
+vector<bool>isMonsterDead = { false,false,false,false,false };
+
 Scene* MainGameScene::createScene() {
 	return MainGameScene::create();
 }

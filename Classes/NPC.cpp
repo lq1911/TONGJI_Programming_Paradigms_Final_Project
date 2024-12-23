@@ -131,7 +131,7 @@ void NPC::Chat() {
 			});
 		break;
 	case 10:
-		npc9([=]() {
+		npc10([=]() {
 			npcSprite->removeFromParent();
 			chatPanel->removeFromParent();
 			});
@@ -1047,6 +1047,7 @@ void NPC::npc8(std::function<void()> callback) {
 		CloseButton->setPosition(Vec2(who->getXY().x, who->getXY().y - 200));
 		scene->addChild(CloseButton, 2);
 		CloseButton->addClickEventListener([=](Ref* sender) mutable {
+			isChatting = false;
 			npcTxt2_2->removeFromParent();
 			CloseButton->removeFromParent();
 			if (callback) {
@@ -1165,7 +1166,7 @@ void NPC::npc10(std::function<void()> callback) {
 	Ans1Button->setContentSize(Size(40, 40));
 	Ans1Button->setTitleFontSize(24);
 	Ans1Button->setPosition(Vec2(who->getXY().x - 50, who->getXY().y - 210));
-	scene->addChild(Ans1Button, 2);
+	scene->addChild(Ans1Button, 2); 
 	/* »Ø´ðÑ¡Ôñ1 */
 	Ans1Button->addClickEventListener([=](Ref* sender) mutable {
 		cocos2d::AudioEngine::play2d("music/fishing.mp3");
