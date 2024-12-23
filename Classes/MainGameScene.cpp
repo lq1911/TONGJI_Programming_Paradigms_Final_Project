@@ -52,11 +52,13 @@ bool MainGameScene::init() {
 
 /****************************************************************/
 ////////////////以下为本场景所有用到的初始化函数/////////////////
-MainGameScene::MainGameScene(int _ODorID, int NPC_choice, int Monster_choice) {
+MainGameScene::MainGameScene(int _ODorID, int NPC_choice, int Monster_choice, Player* player) {
 	// 初始化场景参数
 	DoorID = _ODorID;
 	_NPC_choice = NPC_choice;
 	_Monster_choice = Monster_choice;
+	this->PLAYER = player;
+
 	//获取屏幕尺寸
 	VisibleSize = Director::getInstance()->getVisibleSize();
 
