@@ -1,4 +1,4 @@
-# 原神风格的开放世界游戏 
+# Echoes of the Lost World
 
 ## 🌟项目简介
 基于 [Cocos2d-x 4.0](https://docs.cocos.com/cocos2d-x/manual) 并参考游戏《原神》、《塞尔达》开发的开放世界探险游戏项目。
